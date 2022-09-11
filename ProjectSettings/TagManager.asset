@@ -3,15 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Thorn
-  - Refresh
-  - SavePoint
-  - auto
-  - even
-  - even1
-  - odd
-  - odd1
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -19,7 +11,7 @@ TagManager:
   - 
   - Water
   - UI
-  - PostProcessing
+  - 
   - 
   - 
   - 
@@ -48,10 +40,4 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Circle
-    uniqueID: 1428392557
-    locked: 0
-  - name: Playerble
-    uniqueID: 1658894455
     locked: 0
