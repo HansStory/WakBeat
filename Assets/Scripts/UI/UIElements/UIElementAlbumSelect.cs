@@ -44,14 +44,21 @@ public class UIElementAlbumSelect : MonoBehaviour
 
     IEnumerator StartAlbumSelectPanel()
     {
+        fadeImage.gameObject.SetActive(true);
         UIManager.Instance.FadeToWhite(fadeImage, fadeTime);
         yield return new WaitForSeconds(fadeTime);
+
+        fadeImage.gameObject.SetActive(false);
     }
 
     IEnumerator SelectAlbumProcedure()
     {
-        UIManager.Instance.FadeToBlack(fadeImage, fadeTime);
-        UIManager.Instance.GoPanelMusicSelect();
+        fadeImage.gameObject.SetActive(true);
+        UIManager.Instance.FadeToBlack(fadeImage, fadeTime);        
         yield return new WaitForSeconds(fadeTime);
+
+        fadeImage.gameObject.SetActive(false);
+        UIManager.Instance.GoPanelMusicSelect();
+
     }
 }
