@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class NetworkManager : MonoBehaviour
+public class NetworkManager : MonoBehaviourSingleton<NetworkManager>
 {
     // Start is called before the first frame update
     void Start()
@@ -10,9 +11,8 @@ public class NetworkManager : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator UnityWebRequestGet()
     {
-        
+        yield return null;
     }
 }
