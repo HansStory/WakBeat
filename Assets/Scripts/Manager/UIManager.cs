@@ -4,22 +4,33 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+
 public class UIManager : MonoBehaviourSingleton<UIManager>
-{    
+{
     // Toggle Fade In Out => bool (isShow)
     public void FadeInOut(Image fadeImage, float fadeTime, bool isShow)
     {
-        // Deep to Black
         if (isShow == true)
         {
-            //Fully fade in Image (1) with the duration of 2
-            fadeImage.CrossFadeAlpha(1, fadeTime, false);
+            fadeImage.CrossFadeAlpha(1f, fadeTime, false);
         }
-        // Deep to White
+
         if (isShow == false)
         {
-            fadeImage.CrossFadeAlpha(0, fadeTime, false);
+            fadeImage.CrossFadeAlpha(0f, fadeTime, false);
         }
+    }
+
+    public void FadeToBlack(Image fadeImage, float fadeTime)
+    {
+        fadeImage.CrossFadeAlpha(0f, 0f, false);
+        fadeImage.CrossFadeAlpha(1f, fadeTime, false);
+    }
+
+    public void FadeToWhite(Image fadeImage, float fadeTime)
+    {
+        fadeImage.CrossFadeAlpha(1f, 0f, false);
+        fadeImage.CrossFadeAlpha(0f, fadeTime, false);
     }
 
     public GameObject[] MainPanels;

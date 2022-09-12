@@ -1,10 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIElementAlbumSelect : MonoBehaviour
 {
+    public Image fadeImage = null;
+    private float fadeTime = 0.5f;
+    private float fadeHoldTime = 1f;
+
     // Start is called before the first frame update
+    private void OnEnable()
+    {
+        StartCoroutine(StartAlbumSelectPanel());
+    }
     void Start()
     {
         
@@ -21,7 +30,7 @@ public class UIElementAlbumSelect : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            UIManager.Instance.GoPanelMusicSelect();
+            StartCoroutine(SelectAlbumProcedure());
         }
     }
 
@@ -31,5 +40,18 @@ public class UIElementAlbumSelect : MonoBehaviour
         {
             UIManager.Instance.GoPanelMain();
         }
+    }
+
+    IEnumerator StartAlbumSelectPanel()
+    {
+        UIManager.Instance.FadeToWhite(fadeImage, fadeTime);
+        yield return new WaitForSeconds(fadeTime);
+    }
+
+    IEnumerator SelectAlbumProcedure()
+    {
+        UIManager.Instance.FadeToBlack(fadeImage, fadeTime);
+        UIManager.Instance.GoPanelMusicSelect();
+        yield return new WaitForSeconds(fadeTime);
     }
 }
