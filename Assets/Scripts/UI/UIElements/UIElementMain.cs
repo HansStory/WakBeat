@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIElementMain : MonoBehaviour
 {
+    [SerializeField] private RectTransform backGround;
+    private float range = 70f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,6 +18,12 @@ public class UIElementMain : MonoBehaviour
     void Update()
     {
         OnClickEsc();
+        BackGroundMove();
+    }
+
+    void BackGroundMove()
+    {
+        backGround.anchoredPosition = Vector3.right * Mathf.Sin(Time.time) * range;
     }
 
     public void OnClickStartButton()
@@ -21,7 +31,7 @@ public class UIElementMain : MonoBehaviour
         UIManager.Instance.GoPanelAlbumSelect();
     }
 
-    void OnClickEsc()
+    public void OnClickEsc()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
