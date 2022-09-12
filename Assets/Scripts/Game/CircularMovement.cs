@@ -54,6 +54,7 @@ public class CircularMovement : MonoBehaviour
 
     public float[,] spawnAngle = new float[MAX_CYCLE, MAX_BEAT];   // 가시가 스폰되는 각도롤 저장하는 배열
 
+    #region Stage Info
     // 리와인드
     public int[,] stage1 = {               // cycle   실제 바퀴수   
 //          1박   2박       3박   4박
@@ -621,6 +622,8 @@ public class CircularMovement : MonoBehaviour
         { 0, 0, 0, 1, 0, 0, 0, 1 },
         { 0, 0, 0, 0, 0, 0, 0, 0 },    // buffer
     };
+    #endregion
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
