@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UIElementResult : MonoBehaviour
 {
+    private string url;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,5 +23,23 @@ public class UIElementResult : MonoBehaviour
         {
             UIManager.Instance.GoPanelMusicSelect();
         }
+    }
+
+    public void OpenWakZooURL()
+    {
+        url = Config.Instance.WakZoo;
+        Application.OpenURL(url);
+    }
+
+    public void OpenOriginURL()
+    {
+        url = Config.Instance.Origin_Rewind;
+        Application.OpenURL(url);
+    }
+
+    public void OpenRemixURL()
+    {
+        url = Config.Instance.ReMix_Rewind;
+        Application.OpenURL(url);
     }
 }
