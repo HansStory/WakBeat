@@ -8,9 +8,13 @@ public class AlbumInformation : ScriptableObject
     [Header("[ Album List (Prefabs) ]")]
     public GameObject[] AlbumLists;
 
-    //[Space(10)]
-    //[Header("[ Album BackGround Images ]")]
-    //public Sprite[] AlbumBackgournds;
+    [Space(10)]
+    [Header("[ Album BackGround Images ]")]
+    public Sprite[] AlbumBackgournds;
+
+    [Space(10)]
+    [Header("[ Album Circle Images ]")]
+    public Sprite[] AlbumCircles;
 
     [Space(10)]
     [Header("[ First Album Music List ]")]
