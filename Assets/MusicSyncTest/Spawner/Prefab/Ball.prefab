@@ -125,7 +125,6 @@ MonoBehaviour:
   angle_dodge: 0
   radian_dodge: 0
   radius_auto: 0
-  savepoint_cycle: 0
 --- !u!50 &6990964583921446965
 Rigidbody2D:
   serializedVersion: 4
