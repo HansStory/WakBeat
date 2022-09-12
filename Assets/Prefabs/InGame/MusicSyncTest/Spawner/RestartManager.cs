@@ -1,14 +1,9 @@
 using UnityEngine;
 
-public class RestartManager : Singleton<RestartManager>
+public class RestartManager : MonoBehaviourSingleton<RestartManager>
 {
     [SerializeField]
     private Spawner m_spawner;
-
-    protected override void Init()
-    {
-        
-    }
 
     public void Restart()
     {
