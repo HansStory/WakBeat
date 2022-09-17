@@ -13,7 +13,31 @@ MonoBehaviour:
   m_Name: SetupAlbumInfo
   m_EditorClassIdentifier: 
   AlbumLists: []
-  FirstAlbumMusicLists: []
-  SecondAlbumMusicLists: []
-  ThirdAlbumMusicLists: []
-  ForthAlbumMusicLists: []
+  AlbumBackgournds:
+  - {fileID: 21300000, guid: 6739c7ff7d0d46241aab5bae250103b2, type: 3}
+  - {fileID: 21300000, guid: 5af2a4a9801b1c94fa07509b57289b30, type: 3}
+  - {fileID: 21300000, guid: 536103cf0e1cb7640a93307a80c778fe, type: 3}
+  - {fileID: 21300000, guid: 18d98381a44ff774ca595231ac8acaa8, type: 3}
+  AlbumCircles:
+  - {fileID: 21300000, guid: 00b381e070af35e4babaeecd2adc54c5, type: 3}
+  - {fileID: 21300000, guid: a237015ff85daff438ad2110c1e97306, type: 3}
+  - {fileID: 21300000, guid: 4c2cb4a37f8e5f348b1604453ee5a076, type: 3}
+  - {fileID: 21300000, guid: d532b445cbe49ca4fb1eb3ab16d972d3, type: 3}
+  FirstAlbumMusicBackground:
+  - {fileID: 21300000, guid: ab7e8359b825e44418b8581ca46c493e, type: 3}
+  - {fileID: 21300000, guid: 3159da1785be4db4ca2a621b5686e421, type: 3}
+  FirstAlbumMusicCircle:
+  - {fileID: 21300000, guid: a935e03e094e44a4c9c0d447f5259744, type: 3}
+  - {fileID: 21300000, guid: 46248930a1a34b64c9c82590664f3752, type: 3}
+  FirstAlbumMusicLevel:
+  - {fileID: 21300000, guid: 43ac9885981fbae4fa54e7b8187ea20f, type: 3}
+  - {fileID: 21300000, guid: ff825246f33775342a676f927ca49e08, type: 3}
+  SecondAlbumMusicBackground: []
+  SecondAlbumMusicCircle: []
+  SecondAlbumMusicLevel: []
+  ThirdAlbumMusicBackground: []
+  ThirdAlbumMusicCircle: []
+  ThirdAlbumMusicLevel: []
+  ForthAlbumMusicBackground: []
+  ForthAlbumMusicCircle: []
+  ForthAlbumMusicLevel: []

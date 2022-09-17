@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "SetupInformation", menuName = "ScriptableObjects/ScriptInformation", order = 1)]
 public class ScriptInformation : ScriptableObject

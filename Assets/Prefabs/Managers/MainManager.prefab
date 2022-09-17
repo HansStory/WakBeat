@@ -73,7 +73,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Information: {fileID: 11400000, guid: edaa916523a20cf439e936e0d4620bc8, type: 2}
-  Album: {fileID: 11400000, guid: bc75b7a83e9e86648ab843902c243fb8, type: 2}
+  Album: {fileID: 11400000, guid: 66b140db730262d4e9688835768e7aab, type: 2}
 --- !u!114 &4970528680280889123
 MonoBehaviour:
   m_ObjectHideFlags: 0
