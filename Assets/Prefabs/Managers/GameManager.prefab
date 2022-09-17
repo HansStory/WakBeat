@@ -52,6 +52,14 @@ MonoBehaviour:
   - {fileID: 4143023116079684940, guid: ddb79bea45e4f8d4c8e798247e0f42bd, type: 3}
   - {fileID: 4143023116079684940, guid: 759a081ac5356a94ab9106fa483130e5, type: 3}
   - {fileID: 4143023116079684940, guid: f8618058bacb2f243a8c1a537d0d6ee9, type: 3}
-  album3GameList: []
-  album4GameList: []
+  album3GameList:
+  - {fileID: 4143023116079684940, guid: d44d89716d83fc94e87ff3b67b8d27f7, type: 3}
+  - {fileID: 4143023116079684940, guid: eb3296b20ba8b6d46847dead0ece5c42, type: 3}
+  - {fileID: 4143023116079684940, guid: 7829b40de9caaf14c98eaa7741a9b094, type: 3}
+  - {fileID: 4143023116079684940, guid: a8b5c49ac63e7314a9e7465f080eac77, type: 3}
+  album4GameList:
+  - {fileID: 4143023116079684940, guid: 42ebe05feedcc984baa5a963b9008975, type: 3}
+  - {fileID: 4143023116079684940, guid: 4d504580bd3715145ac55d3df40bed08, type: 3}
+  - {fileID: 4143023116079684940, guid: 082e73c1bebd3f245b800f4da9f67beb, type: 3}
+  - {fileID: 4143023116079684940, guid: 32a215edd856a0142933578f74217103, type: 3}
   creatGameBase: {fileID: 0}

@@ -28,15 +28,16 @@ public class UIElementGamePlay : MonoBehaviour
         GameManager.Instance.CreateGame();
     }
 
-    private void OnDisable()
-    {
-        GameManager.Instance.DistroyGame();
-    }
+    //private void OnDisable()
+    //{
+    //    GameManager.Instance.DistroyGame();
+    //}
 
     void FinishGame()
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
+            GameManager.Instance.DistroyGame();
             UIManager.Instance.GoPanelResult();
         }
     }
@@ -45,6 +46,7 @@ public class UIElementGamePlay : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            GameManager.Instance.DistroyGame();
             UIManager.Instance.GoPanelMusicSelect();
         }
     }
