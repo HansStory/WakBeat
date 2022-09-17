@@ -44,3 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0dbbeb63eeb2b043bbb5c0725bcd036, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  album1GameList:
+  - {fileID: 4143023116079684940, guid: d32ef6646a6a20b478bd5bd740b57d57, type: 3}
+  - {fileID: 4143023116079684940, guid: 29189efe2942f2342bc83ee2d09186b7, type: 3}
+  album2GameList:
+  - {fileID: 4143023116079684940, guid: 5790ba9e199a01e4197083d27e1f3f75, type: 3}
+  - {fileID: 4143023116079684940, guid: ddb79bea45e4f8d4c8e798247e0f42bd, type: 3}
+  - {fileID: 4143023116079684940, guid: 759a081ac5356a94ab9106fa483130e5, type: 3}
+  - {fileID: 4143023116079684940, guid: f8618058bacb2f243a8c1a537d0d6ee9, type: 3}
+  album3GameList: []
+  album4GameList: []
+  creatGameBase: {fileID: 0}

@@ -4,17 +4,33 @@ using UnityEngine;
 
 public class UIElementGamePlay : MonoBehaviour
 {
+    private void Awake()
+    {
+        SoundManager.Instance.ForceAudioStop();
+    }
     // Start is called before the first frame update
     void Start()
     {
         
     }
 
+
     // Update is called once per frame
     void Update()
     {
         FinishGame();
         OnClickEsc();
+    }
+
+    private void OnEnable()
+    {
+        SoundManager.Instance.ForceAudioStop();
+        GameManager.Instance.CreateGame();
+    }
+
+    private void OnDisable()
+    {
+        GameManager.Instance.DistroyGame();
     }
 
     void FinishGame()
