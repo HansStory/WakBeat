@@ -7,6 +7,8 @@ using TMPro;
 
 public class UIManager : MonoBehaviourSingleton<UIManager>
 {
+    // ----------------------------- Fade --------------------------------
+    #region Fade Management
     // Toggle Fade In Out => bool (isShow)
     public void FadeInOut(Image fadeImage, float fadeTime, bool isShow)
     {
@@ -32,8 +34,13 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
         fadeImage.CrossFadeAlpha(1f, 0f, false);
         fadeImage.CrossFadeAlpha(0f, fadeTime, false);
     }
+    #endregion
 
+
+    // -------------------------------------------------------------------
     public GameObject[] MainPanels;
+    public GameObject PanelSetting;
+    public GameObject ButtonGoHome;
 
     public void WantShowPanel(int index)
     {
@@ -42,8 +49,41 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
             for (int i = 0; i < MainPanels.Length; i++)
             {
                 MainPanels[i].SetActive(index == i);
+                if (index == i)
+                {
+                    GlobalState.Instance.CurrentPanelIndex = i;
+
+                    Debug.Log(GlobalState.Instance.CurrentPanelIndex);
+                }
             }
         }
+
+        switch (index)
+        {
+            case (int)GlobalData.UIMODE.INTRO:
+                break;
+            case (int)GlobalData.UIMODE.MAIN:
+                PanelSetting.SetActive(false);
+                break;
+            case (int)GlobalData.UIMODE.SELECT_ALBUM:
+                PanelSetting.SetActive(true);
+                ButtonGoHome.SetActive(false);
+                break;
+            case (int)GlobalData.UIMODE.SELECT_MUSIC:
+                PanelSetting.SetActive(true);
+                ButtonGoHome.SetActive(true);
+                break;
+            case (int)GlobalData.UIMODE.GAME:
+                PanelSetting.SetActive(false);
+                break;
+            case (int)GlobalData.UIMODE.RESULT:
+                break;
+        }
+    }
+
+    public void ShowSettingPanel(bool isShow)
+    {
+        PanelSetting.SetActive(isShow);
     }
 
     public void GoPanelMain()

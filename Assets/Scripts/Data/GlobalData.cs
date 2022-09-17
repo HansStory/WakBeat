@@ -2,7 +2,15 @@ public class GlobalData : MonoBehaviourSingleton<GlobalData>
 {
     public ScriptInformation Information;
     public AlbumInfo Album;
-    public BGMInfo BGM;
+
+    public enum STAGE
+    {
+        STAGE1,
+        STAGE2,
+        STAGE3,
+        STAGE4,
+        STAGE5,
+    }
 
     public enum ALBUM
     {
@@ -12,12 +20,13 @@ public class GlobalData : MonoBehaviourSingleton<GlobalData>
         WAKALOID,
     }
 
-    public enum STAGE
+    public enum UIMODE
     {
-        STAGE1,
-        STAGE2,
-        STAGE3,
-        STAGE4,
-        STAGE5,
+        INTRO,
+        MAIN,
+        SELECT_ALBUM,
+        SELECT_MUSIC,
+        GAME,
+        RESULT,
     }
 }
