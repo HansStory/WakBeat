@@ -20,6 +20,7 @@ public class UIElementMain : MonoBehaviour
     void Start()
     {
         StartCoroutine(StartMainProcedure());
+        SoundManager.Instance.TurnOnGameBackGround();
         isStart = true;
     }
 

@@ -7,12 +7,12 @@ public class UIElementAlbumSelect : MonoBehaviour
 {
     public Image fadeImage = null;
     private float fadeTime = 0.5f;
-    private float fadeHoldTime = 1f;
 
     // Start is called before the first frame update
     private void OnEnable()
     {
         StartCoroutine(StartAlbumSelectPanel());
+        SoundManager.Instance.TurnOnGameBackGround();
     }
     void Start()
     {
@@ -24,6 +24,33 @@ public class UIElementAlbumSelect : MonoBehaviour
     {
         SelectAlbum();
         OnClickEsc();
+        InputExecute();
+    }
+
+    public void InputExecute()
+    {
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            if (GlobalState.Instance.AlbumIndex <= GlobalData.Instance.Album.AlbumBackgournds.Length)
+            {
+                GlobalState.Instance.AlbumIndex++;
+                if (GlobalState.Instance.AlbumIndex == GlobalData.Instance.Album.AlbumBackgournds.Length)
+                {
+                    GlobalState.Instance.AlbumIndex = 0;
+                }
+            }
+
+            Debug.Log($"Current My Album : {GlobalState.Instance.AlbumIndex}");
+        }
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            if (0 < GlobalState.Instance.StageIndex)
+            {
+                GlobalState.Instance.AlbumIndex--;                
+            }
+
+            Debug.Log($"Current My Album : {GlobalState.Instance.AlbumIndex}");
+        }
     }
 
     void SelectAlbum()
