@@ -15,6 +15,10 @@ public class AlbumInfo : ScriptableObject
     public Sprite[] AlbumCircles;
 
     [Space(10)]
+    [Header("[ Album Title Images ]")]
+    public Sprite[] AlbumTitles;
+
+    [Space(10)]
     [Header("[ First Album Music Information ]")]
     public Sprite[] FirstAlbumMusicBackground;
     public Sprite[] FirstAlbumMusicCircle;

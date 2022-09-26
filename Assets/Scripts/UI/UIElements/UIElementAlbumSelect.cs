@@ -8,6 +8,9 @@ public class UIElementAlbumSelect : MonoBehaviour
     public Image fadeImage = null;
     private float fadeTime = 0.5f;
 
+    [SerializeField] private GameObject album;
+    [SerializeField] private Transform albumBase;
+
     // Start is called before the first frame update
     private void OnEnable()
     {
@@ -16,7 +19,39 @@ public class UIElementAlbumSelect : MonoBehaviour
     }
     void Start()
     {
-        
+        makeAlbums();
+    }
+
+    void makeAlbums()
+    {
+        var albumCircles = GlobalData.Instance.Album.AlbumCircles;
+        var albumTitles = GlobalData.Instance.Album.AlbumTitles;
+
+        int _albumIndex = 0;
+        foreach (var obj in albumCircles)
+        {
+            var _album = GameObject.Instantiate(album, albumBase);
+            var albumInfo = _album.GetComponent<UIObjectAlbum>();
+
+            if (albumInfo)
+            {
+                // null check
+                if (albumCircles.Length == albumTitles.Length)
+                {
+                    albumInfo.name = $"Album_{_albumIndex}";
+                    albumInfo.AlbumCircle = albumCircles[_albumIndex];
+                    albumInfo.AlbumTitle = albumTitles[_albumIndex];
+                    albumInfo.AlbumIndex = _albumIndex;
+                    albumInfo.InitMyIndexPos();
+                }
+                else
+                {
+                    Debug.LogError("리소스가 빠져있습니다.");
+                }
+            }
+
+            _albumIndex++;
+        }
     }
 
     // Update is called once per frame
@@ -31,10 +66,10 @@ public class UIElementAlbumSelect : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            if (GlobalState.Instance.AlbumIndex <= GlobalData.Instance.Album.AlbumBackgournds.Length)
+            if (GlobalState.Instance.AlbumIndex <= GlobalData.Instance.Album.AlbumCircles.Length)
             {
                 GlobalState.Instance.AlbumIndex++;
-                if (GlobalState.Instance.AlbumIndex == GlobalData.Instance.Album.AlbumBackgournds.Length)
+                if (GlobalState.Instance.AlbumIndex == GlobalData.Instance.Album.AlbumCircles.Length)
                 {
                     GlobalState.Instance.AlbumIndex = 0;
                 }
@@ -44,9 +79,13 @@ public class UIElementAlbumSelect : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            if (0 < GlobalState.Instance.StageIndex)
+            if (GlobalState.Instance.AlbumIndex >= 0)
             {
                 GlobalState.Instance.AlbumIndex--;                
+                if (GlobalState.Instance.AlbumIndex < 0)
+                {
+                    GlobalState.Instance.AlbumIndex = GlobalData.Instance.Album.AlbumCircles.Length - 1;
+                }
             }
 
             Debug.Log($"Current My Album : {GlobalState.Instance.AlbumIndex}");
