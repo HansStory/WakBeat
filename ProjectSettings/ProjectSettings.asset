@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: DefaultCompany
   productName: Wakbeat
-  defaultCursor: {fileID: 0}
+  defaultCursor: {fileID: 2800000, guid: bd603e394d22cd9498a59fd7d2930fa0, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 1, g: 1, b: 1, a: 0.6666667}
   m_ShowUnitySplashScreen: 1
