@@ -11,6 +11,8 @@ public class UIElementAlbumSelect : MonoBehaviour
     [SerializeField] private GameObject album;
     [SerializeField] private Transform albumBase;
 
+    [SerializeField] private Image imageBackGround;
+
     // Start is called before the first frame update
     private void OnEnable()
     {
@@ -75,6 +77,7 @@ public class UIElementAlbumSelect : MonoBehaviour
                 }
             }
 
+            ChangeBackGround(GlobalState.Instance.AlbumIndex);
             Debug.Log($"Current My Album : {GlobalState.Instance.AlbumIndex}");
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -88,7 +91,28 @@ public class UIElementAlbumSelect : MonoBehaviour
                 }
             }
 
+            ChangeBackGround(GlobalState.Instance.AlbumIndex);
             Debug.Log($"Current My Album : {GlobalState.Instance.AlbumIndex}");
+        }
+    }
+
+    void ChangeBackGround(int currentAlbumIndex)
+    {
+        switch (GlobalState.Instance.AlbumIndex)
+        {
+            case (int)GlobalData.ALBUM.ISEDOL:
+                break;
+            case (int)GlobalData.ALBUM.CONTEST:
+                break;
+            case (int)GlobalData.ALBUM.GOMIX:
+                break;
+            case (int)GlobalData.ALBUM.WAKALOID:
+                break;
+        }
+
+        if (imageBackGround != null)
+        {
+            imageBackGround.sprite = GlobalData.Instance.Album.AlbumBackgournds[currentAlbumIndex];
         }
     }
 

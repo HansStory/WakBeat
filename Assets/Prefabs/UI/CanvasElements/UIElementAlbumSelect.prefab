@@ -250,6 +250,7 @@ MonoBehaviour:
   fadeImage: {fileID: 5162228891985180004}
   album: {fileID: 8846689123083717952, guid: b68e9b6b95220154aa7962575a531b90, type: 3}
   albumBase: {fileID: 8073148781229515021}
+  imageBackGround: {fileID: 6155114700117050587}
 --- !u!1 &2747896039188784955
 GameObject:
   m_ObjectHideFlags: 0

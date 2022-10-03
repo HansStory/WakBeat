@@ -40,6 +40,28 @@ public class UIObjectAlbum : MonoBehaviour
         }
     }
 
+    public void InputExecute()
+    {
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            ShowMyTitle();
+        }
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            ShowMyTitle();
+        }
+    }
+
+    void SetMyAlbumProcedure()
+    {
+        albumTitle.gameObject.SetActive(GlobalState.Instance.AlbumIndex == AlbumIndex);
+    }
+
+    void ShowMyTitle()
+    {
+        albumTitle.gameObject.SetActive(GlobalState.Instance.AlbumIndex == AlbumIndex);
+    }
+
     private Vector2 upPos = new Vector2(-340f, 420f);
     private Vector2 centerPos = new Vector2(0f, -16f);
     private Vector2 downPos = new Vector2(-340f, -430f);
@@ -58,7 +80,7 @@ public class UIObjectAlbum : MonoBehaviour
 
     void Init()
     {
-
+        ShowMyTitle();
     }
 
     public void InitMyIndexPos()
@@ -86,6 +108,7 @@ public class UIObjectAlbum : MonoBehaviour
     void Update()
     {
         InputTest();
+        InputExecute();
     }
 
     void InputTest()
