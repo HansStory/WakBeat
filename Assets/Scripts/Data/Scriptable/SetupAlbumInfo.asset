@@ -34,6 +34,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: abc305832c485e141aefc2922cf1ce75, type: 3}
   - {fileID: 21300000, guid: af3bc157d13e33345b5dae82defd92bc, type: 3}
   - {fileID: 21300000, guid: 3864f808d63e25846b3a6fb80daad51e, type: 3}
+  album1Stage:
+  - {fileID: 11400000}
+  - {fileID: 11400000}
+  - {fileID: 11400000}
+  - {fileID: 11400000}
   FirstAlbumMusicBackground:
   - {fileID: 21300000, guid: ab7e8359b825e44418b8581ca46c493e, type: 3}
   - {fileID: 21300000, guid: 3159da1785be4db4ca2a621b5686e421, type: 3}
@@ -43,7 +48,9 @@ MonoBehaviour:
   FirstAlbumMusicLevel:
   - {fileID: 21300000, guid: 43ac9885981fbae4fa54e7b8187ea20f, type: 3}
   - {fileID: 21300000, guid: ff825246f33775342a676f927ca49e08, type: 3}
-  SecondAlbumMusicBackground: []
+  SecondAlbumMusicBackground:
+  - {fileID: 21300000, guid: ab7e8359b825e44418b8581ca46c493e, type: 3}
+  - {fileID: 21300000, guid: 3159da1785be4db4ca2a621b5686e421, type: 3}
   SecondAlbumMusicCircle: []
   SecondAlbumMusicLevel: []
   ThirdAlbumMusicBackground: []

@@ -5,8 +5,7 @@ using TMPro;
 
 public class UIObjectAudioSpectrum : MonoBehaviour
 {
-    [SerializeField]
-    private Image[] spectrums;
+    [SerializeField] private Image[] spectrums;
     private AudioSource audio;
     private float[] spectrumData = new float[64];
 

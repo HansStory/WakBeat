@@ -53,7 +53,7 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
                 {
                     GlobalState.Instance.CurrentPanelIndex = i;
 
-                    Debug.Log(GlobalState.Instance.CurrentPanelIndex);
+                    Debug.Log($"{nameof(GlobalState.Instance.CurrentPanelIndex)} : {GlobalState.Instance.CurrentPanelIndex}");
                 }
             }
         }
