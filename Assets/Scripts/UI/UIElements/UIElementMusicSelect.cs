@@ -8,6 +8,7 @@ public class UIElementMusicSelect : MonoBehaviour
     [SerializeField] private GameObject stage;
     [SerializeField] private Transform stageBase;
 
+    [SerializeField] private Image stageText;
     [SerializeField] private Image backGround;
 
     // Start is called before the first frame update
@@ -21,35 +22,70 @@ public class UIElementMusicSelect : MonoBehaviour
     {
         GlobalState.Instance.StageIndex = 0;
         SoundManager.Instance.TurnOnSelectedMusic();
+        MakeAlbumStage();
+        ChangeBackGround();
     }
 
-
-    void test()
+    private void OnDisable()
     {
-
+        DestroyAlbumStage();
     }
 
-    void makeAlbum1Stages()
+    void MakeAlbumStage()
     {
-        var albumCircles = GlobalData.Instance.Album.AlbumCircles;
-        var albumTitles = GlobalData.Instance.Album.AlbumTitles;
-
-        int _albumIndex = 0;
-        foreach (var obj in albumCircles)
+        switch (GlobalState.Instance.AlbumIndex)
         {
-            var _album = GameObject.Instantiate(stage, stageBase);
-            var albumInfo = _album.GetComponent<UIObjectAlbum>();
+            case (int)GlobalData.ALBUM.ISEDOL:
+                makeStages(GlobalData.Instance.Album.FirstAlbumMusicCircle, GlobalData.Instance.Album.FirstAlbumMusicLevel);
+                break;
+            case (int)GlobalData.ALBUM.CONTEST:
+                makeStages(GlobalData.Instance.Album.SecondAlbumMusicCircle, GlobalData.Instance.Album.SecondAlbumMusicLevel);
+                break;
+            case (int)GlobalData.ALBUM.GOMIX:
+                makeStages(GlobalData.Instance.Album.ThirdAlbumMusicCircle, GlobalData.Instance.Album.ThirdAlbumMusicLevel);
+                break;
+            case (int)GlobalData.ALBUM.WAKALOID:
+                makeStages(GlobalData.Instance.Album.ForthAlbumMusicCircle, GlobalData.Instance.Album.ForthAlbumMusicLevel);
+                break;
+        }
+    }
 
-            if (albumInfo)
+    void DestroyAlbumStage()
+    {
+        Transform[] childList = stageBase.gameObject.GetComponentsInChildren<Transform>();
+        if (childList != null)
+        {
+            for (int i = 1; i < childList.Length; i++)
+            {
+                if (childList[i] != transform)
+                {
+                    Destroy(childList[i].gameObject);
+                }
+            }
+        }
+
+    }
+
+    void makeStages(Sprite[] _stageCircles, Sprite[] _stageLevel)
+    {
+        var stageCircles = _stageCircles;
+        var stageLevel = _stageLevel;
+
+        int _stageIndex = 0;
+        foreach (var stages in stageCircles)
+        {
+            var _stage = GameObject.Instantiate(stage, stageBase);
+            var stageInfo = _stage.GetComponent<UIObjectStage>();
+
+            if (stageInfo)
             {
                 // null check
-                if (albumCircles.Length == albumTitles.Length)
+                if (stageCircles.Length == stageLevel.Length)
                 {
-                    albumInfo.name = $"Album_{_albumIndex}";
-                    albumInfo.AlbumCircle = albumCircles[_albumIndex];
-                    albumInfo.AlbumTitle = albumTitles[_albumIndex];
-                    albumInfo.AlbumIndex = _albumIndex;
-                    albumInfo.InitMyIndexPos();
+                    stageInfo.name = $"Album_{_stageIndex}";
+                    stageInfo.StageThumnail = stageCircles[_stageIndex];
+                    stageInfo.StageLevel = stageLevel[_stageIndex];
+                    stageInfo.StageIndex = _stageIndex;
                 }
                 else
                 {
@@ -57,7 +93,7 @@ public class UIElementMusicSelect : MonoBehaviour
                 }
             }
 
-            _albumIndex++;
+            _stageIndex++;
         }
     }
 
@@ -76,7 +112,7 @@ public class UIElementMusicSelect : MonoBehaviour
             if (GlobalState.Instance.StageIndex < SoundManager.Instance.selectedAlbumMusicLength)
             {
                 GlobalState.Instance.StageIndex++;
-                ChangeBackGroound();
+                ChangeBackGround();
 
                 Debug.Log($"Selecte My Stage Index : {GlobalState.Instance.StageIndex}");
                 SoundManager.Instance.TurnOnSelectedMusic();
@@ -87,7 +123,7 @@ public class UIElementMusicSelect : MonoBehaviour
             if (0 < GlobalState.Instance.StageIndex)
             {
                 GlobalState.Instance.StageIndex--;
-                ChangeBackGroound(); 
+                ChangeBackGround(); 
 
                 Debug.Log($"Selecte My Stage Index : {GlobalState.Instance.StageIndex}");
                 SoundManager.Instance.TurnOnSelectedMusic();
@@ -95,7 +131,7 @@ public class UIElementMusicSelect : MonoBehaviour
         }
     }
 
-    void ChangeBackGroound()
+    void ChangeBackGround()
     {
         switch (GlobalState.Instance.AlbumIndex)
         {
@@ -112,6 +148,9 @@ public class UIElementMusicSelect : MonoBehaviour
                 backGround.sprite = GlobalData.Instance.Album.ForthAlbumMusicBackground[GlobalState.Instance.StageIndex];
                 break;
         }
+
+        // stage Text 변경 시켜주는곳
+        stageText.sprite = GlobalData.Instance.Album.StageIcons[GlobalState.Instance.StageIndex];
     }
 
     void SelectMusic()
