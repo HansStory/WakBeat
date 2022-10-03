@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIObjectMusic : MonoBehaviour
+public class UIObjectStage : MonoBehaviour
 {
     [SerializeField] private Image stageThumnail;
     private Sprite _stageThumnail;
