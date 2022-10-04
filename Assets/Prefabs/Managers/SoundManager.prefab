@@ -181,6 +181,25 @@ MonoBehaviour:
   - {fileID: 8300000, guid: aeebf76311b1fef4f84d3e32d4f35919, type: 3}
   - {fileID: 8300000, guid: eb5de20ffa9e4f04391aaddc86817b95, type: 3}
   - {fileID: 8300000, guid: 718366ee8f89f0340b755ad3e53c0ae9, type: 3}
+  album1HighLightClips:
+  - {fileID: 8300000, guid: bb4b074e8ab8e5542bc58df84be15630, type: 3}
+  - {fileID: 8300000, guid: d6c3461bb224d9246a80478f8d74c4a2, type: 3}
+  album2HighLightClips:
+  - {fileID: 8300000, guid: 86da1238e49e1fb47a1c0d96cb150ad0, type: 3}
+  - {fileID: 8300000, guid: 62b14d2fbb6b00a4f92d98af3af9a60d, type: 3}
+  - {fileID: 8300000, guid: 636073182517ec442bb52c77b4727423, type: 3}
+  - {fileID: 8300000, guid: d7e14b9534036c14eb76c0b0bdfedd83, type: 3}
+  album3HighLightClips:
+  - {fileID: 8300000, guid: 818a70a8ded3cbc4093f4c55c4baf430, type: 3}
+  - {fileID: 8300000, guid: b8270fcf4ce55984b945002207539064, type: 3}
+  - {fileID: 8300000, guid: f1126db8877c2404092c55a7ef87ab42, type: 3}
+  - {fileID: 8300000, guid: b5b636e41b59c2f47b7ef3d9a24dfedb, type: 3}
+  album4HighLightClips:
+  - {fileID: 8300000, guid: d235b02ac153ad143a532990b9eee9b0, type: 3}
+  - {fileID: 8300000, guid: f4a2463f1d06efa459676d545105bacd, type: 3}
+  - {fileID: 8300000, guid: ae975784ff7e49e4bbb6642cdf033c1b, type: 3}
+  - {fileID: 8300000, guid: cc4ee0cf064c15a4098034e5182bdc4b, type: 3}
+  selectedAlbumMusicLength: 0
 --- !u!1 &7520883019599040233
 GameObject:
   m_ObjectHideFlags: 0

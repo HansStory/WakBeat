@@ -93,6 +93,12 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  PanelSetting: {fileID: 0}
+  ButtonGoHome: {fileID: 0}
+  ButtonGoStore: {fileID: 0}
+  ButtonGoSetting: {fileID: 0}
+  ButtonGoTrophy: {fileID: 0}
+  ButtonGoPause: {fileID: 0}
 --- !u!114 &263024264
 MonoBehaviour:
   m_ObjectHideFlags: 0
