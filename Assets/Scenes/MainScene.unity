@@ -214,7 +214,7 @@ PrefabInstance:
     - target: {fileID: 4970528680280889123, guid: c3471b3d6bd1b084585a5eb04f316214, type: 3}
       propertyPath: ButtonGoPause
       value: 
-      objectReference: {fileID: 1153698412}
+      objectReference: {fileID: 1612141672}
     - target: {fileID: 4970528680280889123, guid: c3471b3d6bd1b084585a5eb04f316214, type: 3}
       propertyPath: ButtonGoStore
       value: 
@@ -253,11 +253,6 @@ PrefabInstance:
       objectReference: {fileID: 2044885390}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3471b3d6bd1b084585a5eb04f316214, type: 3}
---- !u!1 &1153698412 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1153698412, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
-  m_PrefabInstance: {fileID: 1612141671}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1277628764 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 273732372, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
@@ -516,6 +511,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
+--- !u!1 &1612141672 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 741369062780195708, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
+  m_PrefabInstance: {fileID: 1612141671}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1666094666 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7631017860687547600, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
