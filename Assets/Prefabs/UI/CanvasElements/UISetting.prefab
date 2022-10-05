@@ -324,7 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 450b136b7555cc04aa62b7624a45a445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PanelButton: {fileID: 2348041025040565653}
+  PanelButton: {fileID: 3142938301555560237, guid: f3f2b6c81ddc82b49abb12f7084777ea, type: 3}
 --- !u!1 &8714651688927145792
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,7 +626,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3142938301555560237, guid: f3f2b6c81ddc82b49abb12f7084777ea, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3142938301555560239, guid: f3f2b6c81ddc82b49abb12f7084777ea, type: 3}
       propertyPath: m_Enabled
