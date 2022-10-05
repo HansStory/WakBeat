@@ -40,12 +40,7 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
 
     // -------------------------------------------------------------------
     public GameObject[] MainPanels;
-    public GameObject PanelSetting;
-    public GameObject ButtonGoHome;
-    public GameObject ButtonGoStore;
-    public GameObject ButtonGoSetting;
-    public GameObject ButtonGoTrophy;
-    public GameObject ButtonGoPause;
+    public GameObject UISetting;
 
     public void WantShowPanel(int index)
     {
@@ -64,66 +59,7 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
         }
 
         // 화면 전환 시 버튼 영역 제어
-        switch (index)
-        {
-            case (int)GlobalData.UIMODE.INTRO:
-                ShowSettingPanel(false, 9);
-                break;
-            case (int)GlobalData.UIMODE.MAIN:
-                ShowSettingPanel(true, 0);
-                break;
-            case (int)GlobalData.UIMODE.SELECT_ALBUM:
-                ShowSettingPanel(true, 1);
-                break;
-            case (int)GlobalData.UIMODE.SELECT_MUSIC:
-                ShowSettingPanel(true, 1);
-                break;
-            case (int)GlobalData.UIMODE.GAME:
-                ShowSettingPanel(true, 2);
-                break;
-            case (int)GlobalData.UIMODE.RESULT:
-                ShowSettingPanel(true, 3);
-                break;
-        }
-    }
-
-    // 화면 전환 시 버튼 영역 제어 Function
-    public void ShowSettingPanel(bool isShow, int index)
-    {
-        PanelSetting.SetActive(isShow);
-
-        switch(index) {
-            case 0:
-                ButtonGoHome.SetActive(false);
-                ButtonGoStore.SetActive(false);
-                ButtonGoSetting.SetActive(true);
-                ButtonGoTrophy.SetActive(true);
-                ButtonGoPause.SetActive(false);
-                break;
-            case 1:
-                ButtonGoHome.SetActive(true);
-                ButtonGoStore.SetActive(true);
-                ButtonGoSetting.SetActive(true);
-                ButtonGoTrophy.SetActive(false);
-                ButtonGoPause.SetActive(false);
-                break;
-            case 2:
-                ButtonGoHome.SetActive(false);
-                ButtonGoStore.SetActive(false);
-                ButtonGoSetting.SetActive(false);
-                ButtonGoTrophy.SetActive(false);
-                ButtonGoPause.SetActive(true);
-                break;
-            case 3:
-                ButtonGoHome.SetActive(false);
-                ButtonGoStore.SetActive(false);
-                ButtonGoSetting.SetActive(true);
-                ButtonGoTrophy.SetActive(false);
-                ButtonGoPause.SetActive(false);
-                break;
-            case 9:
-                break;
-        }
+        UISetting.GetComponent<UISetting>().buttonViewController(index);
     }
 
     public void GoPanelIntro()
