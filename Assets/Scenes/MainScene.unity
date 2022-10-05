@@ -123,16 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &38965347 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8455350311967556300, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
-  m_PrefabInstance: {fileID: 1612141671}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &342857046 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5293062328616047184, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
-  m_PrefabInstance: {fileID: 1612141671}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &415405061 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7115691108467356990, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
@@ -204,29 +194,33 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4970528680280889123, guid: c3471b3d6bd1b084585a5eb04f316214, type: 3}
+      propertyPath: UISetting
+      value: 
+      objectReference: {fileID: 8714651688266970557, guid: e530a4d8b384d8047ab5c79d93baafc7, type: 3}
+    - target: {fileID: 4970528680280889123, guid: c3471b3d6bd1b084585a5eb04f316214, type: 3}
       propertyPath: ButtonGoHome
       value: 
-      objectReference: {fileID: 38965347}
+      objectReference: {fileID: 0}
     - target: {fileID: 4970528680280889123, guid: c3471b3d6bd1b084585a5eb04f316214, type: 3}
       propertyPath: PanelSetting
       value: 
-      objectReference: {fileID: 1277628764}
+      objectReference: {fileID: 0}
     - target: {fileID: 4970528680280889123, guid: c3471b3d6bd1b084585a5eb04f316214, type: 3}
       propertyPath: ButtonGoPause
       value: 
-      objectReference: {fileID: 1612141672}
+      objectReference: {fileID: 0}
     - target: {fileID: 4970528680280889123, guid: c3471b3d6bd1b084585a5eb04f316214, type: 3}
       propertyPath: ButtonGoStore
       value: 
-      objectReference: {fileID: 2118723956}
+      objectReference: {fileID: 0}
     - target: {fileID: 4970528680280889123, guid: c3471b3d6bd1b084585a5eb04f316214, type: 3}
       propertyPath: ButtonGoTrophy
       value: 
-      objectReference: {fileID: 1666094666}
+      objectReference: {fileID: 0}
     - target: {fileID: 4970528680280889123, guid: c3471b3d6bd1b084585a5eb04f316214, type: 3}
       propertyPath: ButtonGoSetting
       value: 
-      objectReference: {fileID: 342857046}
+      objectReference: {fileID: 0}
     - target: {fileID: 4970528680280889123, guid: c3471b3d6bd1b084585a5eb04f316214, type: 3}
       propertyPath: MainPanels.Array.data[0]
       value: 
@@ -253,11 +247,6 @@ PrefabInstance:
       objectReference: {fileID: 2044885390}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3471b3d6bd1b084585a5eb04f316214, type: 3}
---- !u!1 &1277628764 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 273732372, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
-  m_PrefabInstance: {fileID: 1612141671}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1441555727 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6122636765823788901, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
@@ -511,16 +500,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
---- !u!1 &1612141672 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 741369062780195708, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
-  m_PrefabInstance: {fileID: 1612141671}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1666094666 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7631017860687547600, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
-  m_PrefabInstance: {fileID: 1612141671}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1682617234 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4909700514306408954, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
@@ -534,11 +513,6 @@ GameObject:
 --- !u!1 &2044885390 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6348713623591929678, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
-  m_PrefabInstance: {fileID: 1612141671}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2118723956 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1228191952348662976, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
   m_PrefabInstance: {fileID: 1612141671}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3257780300154877310

@@ -10,7 +10,7 @@ public class UISetting : MonoBehaviour
     public GameObject PanelButton;
 
     // 버튼 표기 설정
-    public void buttonViewController(int index)
+    public void PanelViewController(int index)
     {
         // Function Parameter
         // 1. true/false : 버튼 영역 자체를 보여 줄 것인지

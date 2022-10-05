@@ -59,7 +59,7 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
         }
 
         // 화면 전환 시 버튼 영역 제어
-        UISetting.GetComponent<UISetting>().buttonViewController(index);
+        UISetting.GetComponent<UISetting>().PanelViewController(index);
     }
 
     public void GoPanelIntro()
