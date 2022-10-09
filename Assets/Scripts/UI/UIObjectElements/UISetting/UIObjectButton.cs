@@ -6,15 +6,11 @@ using UnityEngine.UI;
 
 public class UIObjectButton : MonoBehaviour
 {
-    // 버튼 제어
     public Button btnHome;
     public Button btnStore;
     public Button btnSetting;
     public Button btnTrophy;
     public Button btnPause;
-    // 세팅 화면 오브젝트
-    public GameObject PanelSetting;
-    public GameObject PanelShop;
 
     // Index Detail : 0 > 메인 화면 버튼 제어
     //                        1 > 앨범 선택 및 곡 선택 버튼 제어
@@ -66,24 +62,19 @@ public class UIObjectButton : MonoBehaviour
     //  홈 버튼 클릭 시 화면 제어
     public void buttonHomeClick()
     {
-        // 메인 화면으로 이동
-        UIManager.Instance.GoPanelMain();
-        // BGM 제거
-        SoundManager.Instance.ForceAudioStop();
+        Debug.Log(">>>>>>>>>>>> Home Button Click.");
     }
 
     //  상점 버튼 클릭 시 화면 제어
     public void buttonStoreClick()
     {
-        // 팝업 오픈
-        PanelShop.SetActive(true);
+        Debug.Log(">>>>>>>>>>>> Home Store Click.");
     }
 
     // 설정 버튼 클릭 시 화면 제어
     public void buttonSettingClick()
     {
-        // 팝업 오픈
-        PanelSetting.SetActive(true);
+        Debug.Log(">>>>>>>>>>>> Home Setting Click.");
     }
 
     // 트로피 버튼 클릭 시 화면 제어
