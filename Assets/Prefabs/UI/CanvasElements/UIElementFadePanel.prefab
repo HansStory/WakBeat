@@ -245,7 +245,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8924182854407708256
 RectTransform:
   m_ObjectHideFlags: 0
@@ -550,7 +550,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &663158267631886796
 RectTransform:
   m_ObjectHideFlags: 0
@@ -855,13 +855,14 @@ GameObject:
   - component: {fileID: 6903847392039780701}
   - component: {fileID: 5103034336672402426}
   - component: {fileID: 9040905563106240182}
+  - component: {fileID: 866029160648582413}
   m_Layer: 5
   m_Name: UIElementFadePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6903847392039780701
 RectTransform:
   m_ObjectHideFlags: 0
@@ -923,3 +924,15 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &866029160648582413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8490450046735716376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f05d9ec5f0588764aa5a17aa959b5bc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

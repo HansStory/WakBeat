@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEditor.UIElements;
-using System.Net.Http.Headers;
 
 public class UIManager : MonoBehaviourSingleton<UIManager>
 {
@@ -59,8 +57,11 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
             }
         }
 
-        // 화면 전환 시 버튼 영역 제어
-        UIElementSetting.GetComponent<UISetting>().PanelViewController(index);
+        //// 화면 전환 시 버튼 영역 제어  // 잠시 하이드 처리하겠습니다 KD_Han
+        //if (UIElementSetting.GetComponent<UIElementSetting>() != null)
+        //{
+        //    UIElementSetting.GetComponent<UIElementSetting>().PanelViewController(index);
+        //}
     }
 
     public void GoPanelIntro()

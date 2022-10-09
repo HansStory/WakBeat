@@ -176,7 +176,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5613520598877090023
 RectTransform:
   m_ObjectHideFlags: 0
@@ -330,7 +330,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8636825316583147385
 RectTransform:
   m_ObjectHideFlags: 0
@@ -986,6 +986,10 @@ PrefabInstance:
     - target: {fileID: 8714651688266970557, guid: e530a4d8b384d8047ab5c79d93baafc7, type: 3}
       propertyPath: m_Name
       value: UIElementSetting
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714651688266970557, guid: e530a4d8b384d8047ab5c79d93baafc7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8714651688266970558, guid: e530a4d8b384d8047ab5c79d93baafc7, type: 3}
       propertyPath: m_Pivot.x
@@ -1646,6 +1650,10 @@ PrefabInstance:
     - target: {fileID: 6530340645559801672, guid: 29fc5796273903d4e9f7f5d35f1187ad, type: 3}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7437387250348812894, guid: 29fc5796273903d4e9f7f5d35f1187ad, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29fc5796273903d4e9f7f5d35f1187ad, type: 3}

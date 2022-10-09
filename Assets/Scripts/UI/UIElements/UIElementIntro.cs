@@ -25,7 +25,7 @@ public class UIElementIntro : MonoBehaviour
 
     IEnumerator IntroProcedure()
     {
-        UIManager.Instance.GoPanelIntro();
+        //UIManager.Instance.GoPanelIntro();
 
         UIManager.Instance.FadeInOut(fadeImage, fadeTime, wantFade);
         yield return new WaitForSeconds(fadeTime + fadeHoldTime);

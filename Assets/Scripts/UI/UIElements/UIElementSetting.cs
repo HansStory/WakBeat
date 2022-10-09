@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
-public class UISetting : MonoBehaviour
+public class UIElementSetting : MonoBehaviour
 {
     public GameObject PanelButton;
 
