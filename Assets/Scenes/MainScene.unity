@@ -128,11 +128,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7115691108467356990, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
   m_PrefabInstance: {fileID: 1612141671}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &711524228 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7554495542619584682, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
-  m_PrefabInstance: {fileID: 1612141671}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &822128471 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2640554224447896394, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
@@ -201,7 +196,7 @@ PrefabInstance:
     - target: {fileID: 4970528680280889123, guid: c3471b3d6bd1b084585a5eb04f316214, type: 3}
       propertyPath: UISetting
       value: 
-      objectReference: {fileID: 1694927556}
+      objectReference: {fileID: 0}
     - target: {fileID: 4970528680280889123, guid: c3471b3d6bd1b084585a5eb04f316214, type: 3}
       propertyPath: ButtonGoHome
       value: 
@@ -502,7 +497,15 @@ PrefabInstance:
     - target: {fileID: 3509349733617617024, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
       propertyPath: PanelButton
       value: 
-      objectReference: {fileID: 711524228}
+      objectReference: {fileID: 0}
+    - target: {fileID: 6442906341067433311, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1591623806}
+    - target: {fileID: 6442906341067433311, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9011292345269450756, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
       propertyPath: m_Name
       value: MainCanvas
@@ -513,11 +516,6 @@ PrefabInstance:
 --- !u!1 &1682617234 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4909700514306408954, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
-  m_PrefabInstance: {fileID: 1612141671}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1694927556 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3509349733617617026, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
   m_PrefabInstance: {fileID: 1612141671}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1755113289 stripped
