@@ -17,7 +17,7 @@ public class UIObjectButton : MonoBehaviour
     //                        2 > 인게임 화면 버튼 제어
     //                        3 > 결과 화면 버튼 제어
     //                        9 > 전체 버튼 미출력 (ex. 인트로 화면 등)
-    public void buttonViewController(int index)
+    public void ButtonViewController(int index)
     {
         switch (index)
         {
@@ -59,6 +59,22 @@ public class UIObjectButton : MonoBehaviour
         }
     }
 
+    // 각 버튼 별 이벤트 정의
+    public void SetButtonEvent()
+    {
+        btnHome.onClick.AddListener(buttonHomeClick);
+        btnStore.onClick.AddListener(buttonStoreClick);
+        btnSetting.onClick.AddListener(buttonSettingClick);
+        btnTrophy.onClick.AddListener(buttonTrophyClick);
+        btnPause.onClick.AddListener(buttonPauseClick);
+    }
+
+    // 각 버튼 별 클릭 이벤트 정의
+    public void SetButtonClickEvent(string Division) 
+    {
+
+    }
+
     //  홈 버튼 클릭 시 화면 제어
     public void buttonHomeClick()
     {
@@ -92,11 +108,7 @@ public class UIObjectButton : MonoBehaviour
     void Start()
     {
         // 각 버튼 별 클릭 이벤트 생성
-        btnHome.onClick.AddListener(buttonHomeClick);
-        btnStore.onClick.AddListener(buttonStoreClick);
-        btnSetting.onClick.AddListener(buttonSettingClick);
-        btnTrophy.onClick.AddListener(buttonTrophyClick);
-        btnPause.onClick.AddListener(buttonPauseClick);
+        
     }
 
     void Update()

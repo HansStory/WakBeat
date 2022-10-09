@@ -8,6 +8,9 @@ using UnityEngine.UIElements;
 public class UIElementSetting : MonoBehaviour
 {
     public GameObject PanelButton;
+    public GameObject PanelSetting;
+    public GameObject PanelShop;
+    public GameObject PanelTrophy;
 
     // 버튼 표기 설정
     public void PanelViewController(int index)
@@ -49,7 +52,8 @@ public class UIElementSetting : MonoBehaviour
         // 버튼 영역 View 여부
         PanelButton.SetActive(isShow);
         // 각 버튼 별 View 여부 제어 Function
-        PanelButton.GetComponent<UIObjectButton>().buttonViewController(index);
+        //PanelButton.GetComponent<UIObjectButton>().buttonViewController(index);
+        PanelButton.transform.Find("UIObjectButton").GetComponent<UIObjectButton>().ButtonViewController(index);
     }
 
     void Start()
