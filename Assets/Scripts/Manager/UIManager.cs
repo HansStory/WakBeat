@@ -40,7 +40,8 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
 
     // -------------------------------------------------------------------
     public GameObject[] MainPanels;
-    public GameObject UISetting;
+    public GameObject UIElementSetting;
+    public GameObject UIElementFadePanel;
 
     public void WantShowPanel(int index)
     {
@@ -59,7 +60,7 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
         }
 
         // 화면 전환 시 버튼 영역 제어
-        UISetting.GetComponent<UISetting>().PanelViewController(index);
+        UIElementSetting.GetComponent<UISetting>().PanelViewController(index);
     }
 
     public void GoPanelIntro()
