@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 397c8529e4e04ba4fa8266c6c854da76, type: 3}
+  m_Name: AnimCurve_Yellow
+  m_EditorClassIdentifier: 
+  animCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0013771057
+      value: -0.00064086914
+      inSlope: 0.25283724
+      outSlope: 0.25283724
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.09228203
+    - serializedVersion: 3
+      time: 2.6134403
+      value: 0.80084103
+      inSlope: 0.26186025
+      outSlope: 0.26186025
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.20117591
+      outWeight: 0.2207811
+    - serializedVersion: 3
+      time: 3.9993322
+      value: 0.99996805
+      inSlope: -0.0039693867
+      outSlope: -0.0039693867
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.11487892
+    - serializedVersion: 3
+      time: 7.9994926
+      value: 0.9988049
+      inSlope: 0.00032792395
+      outSlope: 0.00032792395
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.42164603
+    - serializedVersion: 3
+      time: 10.79891
+      value: 0.15881237
+      inSlope: -0.20478205
+      outSlope: -0.20478205
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.1012497
+      outWeight: 0.24109215
+    - serializedVersion: 3
+      time: 11.995602
+      value: 0.0008493494
+      inSlope: -0.049623817
+      outSlope: -0.049623817
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.22997358
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
