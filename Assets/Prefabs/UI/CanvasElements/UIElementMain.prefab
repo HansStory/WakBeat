@@ -343,6 +343,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Orbit_or_Wak_Logo
       objectReference: {fileID: 0}
+    - target: {fileID: 6603622332373333147, guid: 7e1ac572b9d0f504da9eed0b551f1607, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e1ac572b9d0f504da9eed0b551f1607, type: 3}
 --- !u!224 &5817517100326005469 stripped
@@ -360,6 +364,10 @@ PrefabInstance:
     - target: {fileID: 6320039549677124192, guid: 71e5776a18f490c46a6a3577ad491e1a, type: 3}
       propertyPath: m_Name
       value: Orbit_Start_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6320039549677124192, guid: 71e5776a18f490c46a6a3577ad491e1a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6320039549677124193, guid: 71e5776a18f490c46a6a3577ad491e1a, type: 3}
       propertyPath: m_Pivot.x

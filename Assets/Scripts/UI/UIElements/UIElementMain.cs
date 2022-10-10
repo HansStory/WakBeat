@@ -53,9 +53,11 @@ public class UIElementMain : MonoBehaviour
         }
     }
 
+    int SFX_Move_01 = 2;
     public void OnClickStartButton()
     {
         StartCoroutine(GoToAlbumSelectPanel());
+        SoundManager.Instance.PlaySoundFX(SFX_Move_01);
     }
 
     public void OnClickEsc()
