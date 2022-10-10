@@ -176,7 +176,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SFXAudioSource: {fileID: 2232593344520345185}
   MusicAudioSource: {fileID: 3925706872222184334}
-  soundFXClip: {fileID: 8300000, guid: 77434a81d6b4ed144a7d94a9a8217ca1, type: 3}
+  soundFXClip:
+  - {fileID: 8300000, guid: 044b31ff7c64ea744bdbb6d454e4a5ca, type: 3}
+  - {fileID: 8300000, guid: 3ae0cf1c4dfd7a14f964faa2541a8d8e, type: 3}
+  - {fileID: 8300000, guid: 82cb96d42f5015848a4328fbfa680725, type: 3}
+  - {fileID: 8300000, guid: 5f7a3687c5236884fb761b5a3bc75bbe, type: 3}
+  - {fileID: 8300000, guid: e3c421cb894547f478bbb9424ec81a78, type: 3}
   backgroundClips:
   - {fileID: 8300000, guid: aeebf76311b1fef4f84d3e32d4f35919, type: 3}
   - {fileID: 8300000, guid: eb5de20ffa9e4f04391aaddc86817b95, type: 3}
