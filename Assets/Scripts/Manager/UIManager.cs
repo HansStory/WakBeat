@@ -66,32 +66,32 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
 
     public void GoPanelIntro()
     {
-        WantShowPanel(0);
+        WantShowPanel((int)GlobalData.UIMODE.INTRO);
     }
 
     public void GoPanelMain()
     {
-        WantShowPanel(1);
+        WantShowPanel((int)GlobalData.UIMODE.MAIN);
     }
 
     public void GoPanelAlbumSelect()
     {
-        WantShowPanel(2);
+        WantShowPanel((int)GlobalData.UIMODE.SELECT_ALBUM);
     }
 
     public void GoPanelMusicSelect()
     {
-        WantShowPanel(3);
+        WantShowPanel((int)GlobalData.UIMODE.SELECT_MUSIC);
     }
 
     public void GoPanelGamePlay()
     {
-        WantShowPanel(4);
+        WantShowPanel((int)GlobalData.UIMODE.GAME);
     }
 
     public void GoPanelResult()
     {
-        WantShowPanel(5);
+        WantShowPanel((int)GlobalData.UIMODE.RESULT);
     }
 
 

@@ -14,7 +14,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     [SerializeField] private AudioSource MusicAudioSource;
 
     [Space(10)]
-    [SerializeField] private AudioClip soundFXClip;
+    [SerializeField] private AudioClip[] soundFXClip;
 
     [SerializeField] private AudioClip[] backgroundClips;
 
@@ -66,10 +66,10 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         }
     }
 
-    public void PlaySoundFX()
+    public void PlaySoundFX(int index)
     {
         SFXAudioSource.Stop();
-        SFXAudioSource.PlayOneShot(soundFXClip);
+        SFXAudioSource.PlayOneShot(soundFXClip[index]);
     }
 
     public void CtrlSFXVolume(float volume)
