@@ -1,7 +1,18 @@
+using System;
 using UnityEngine;
 
 public class GlobalState : MonoBehaviourSingleton<GlobalState>
 {
+    private int _playTime = 0;
+    public int PlayTime
+    {
+        get { return _playTime; }
+        set
+        {
+            _playTime = value;
+        }
+    }
+
     private int _currentPanelIndex = 0;
     /// <summary>
     /// Current Opened Panel Index
@@ -77,5 +88,13 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
             value = Mathf.Clamp01(value);
             _musicVolume = value;
         }
+    }
+
+    public JsonUserData UserData { get; set; } = new JsonUserData();
+
+    private void Start()
+    {
+        //Debug.Log(DateTime.Now.ToString(("yyyy-MM-dd HH:mm:ss:tt")));
+
     }
 }

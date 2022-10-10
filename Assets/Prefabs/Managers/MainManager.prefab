@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9150312737242918723}
   - component: {fileID: 5233807698224911530}
   - component: {fileID: 263024264}
+  - component: {fileID: 2543171890323714320}
   m_Layer: 0
   m_Name: MainManager
   m_TagString: Untagged
@@ -73,6 +74,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Information: {fileID: 11400000, guid: edaa916523a20cf439e936e0d4620bc8, type: 2}
   Album: {fileID: 11400000, guid: 66b140db730262d4e9688835768e7aab, type: 2}
+  AnimCurve: {fileID: 0}
 --- !u!114 &263024264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83,5 +85,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 981ded55004ee2645a362cb2291bdf24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2543171890323714320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1009232191549287856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3db8785e8a53344c9e626268bca6d09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
