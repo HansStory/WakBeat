@@ -25,7 +25,8 @@ public class UIElementIntro : MonoBehaviour
 
     IEnumerator IntroProcedure()
     {
-        //UIManager.Instance.GoPanelIntro();
+        // 주석 해제 > Yesoa : 이 함수 미 호출 시 Intro에서 버튼 출력
+        UIManager.Instance.GoPanelIntro();
 
         UIManager.Instance.FadeInOut(fadeImage, fadeTime, wantFade);
         yield return new WaitForSeconds(fadeTime + fadeHoldTime);

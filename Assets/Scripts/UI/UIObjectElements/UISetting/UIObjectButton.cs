@@ -6,11 +6,13 @@ using UnityEngine.UI;
 
 public class UIObjectButton : MonoBehaviour
 {
-    public Button btnHome;
-    public Button btnStore;
-    public Button btnSetting;
-    public Button btnTrophy;
-    public Button btnPause;
+    public Button ButtonHome;
+    public Button ButtonSetting;
+    public Button ButtonShop;
+    public Button ButtonTrophy;
+    public Button ButtonPause;
+    const int SFX_Home = 1;
+    const int SFX_Setting = 4;
 
     // Index Detail : 0 > 메인 화면 버튼 제어
     //                        1 > 앨범 선택 및 곡 선택 버튼 제어
@@ -22,39 +24,39 @@ public class UIObjectButton : MonoBehaviour
         switch (index)
         {
             case 0:
-                btnHome.gameObject.SetActive(false);
-                btnStore.gameObject.SetActive(false);
-                btnSetting.gameObject.SetActive(true);
-                btnTrophy.gameObject.SetActive(true);
-                btnPause.gameObject.SetActive(false);
+                ButtonHome.gameObject.SetActive(false);
+                ButtonSetting.gameObject.SetActive(true);
+                ButtonShop.gameObject.SetActive(false);
+                ButtonTrophy.gameObject.SetActive(true);
+                ButtonPause.gameObject.SetActive(false);
                 break;
             case 1:
-                btnHome.gameObject.SetActive(true);
-                btnStore.gameObject.SetActive(true);
-                btnSetting.gameObject.SetActive(true);
-                btnTrophy.gameObject.SetActive(false);
-                btnPause.gameObject.SetActive(false);
+                ButtonHome.gameObject.SetActive(true);
+                ButtonSetting.gameObject.SetActive(true);
+                ButtonShop.gameObject.SetActive(true);
+                ButtonTrophy.gameObject.SetActive(false);
+                ButtonPause.gameObject.SetActive(false);
                 break;
             case 2:
-                btnHome.gameObject.SetActive(false);
-                btnStore.gameObject.SetActive(false);
-                btnSetting.gameObject.SetActive(false);
-                btnTrophy.gameObject.SetActive(false);
-                btnPause.gameObject.SetActive(true);
+                ButtonHome.gameObject.SetActive(false);
+                ButtonSetting.gameObject.SetActive(false);
+                ButtonShop.gameObject.SetActive(false);
+                ButtonTrophy.gameObject.SetActive(false);
+                ButtonPause.gameObject.SetActive(true);
                 break;
             case 3:
-                btnHome.gameObject.SetActive(false);
-                btnStore.gameObject.SetActive(false);
-                btnSetting.gameObject.SetActive(true);
-                btnTrophy.gameObject.SetActive(false);
-                btnPause.gameObject.SetActive(false);
+                ButtonHome.gameObject.SetActive(false);
+                ButtonSetting.gameObject.SetActive(true);
+                ButtonShop.gameObject.SetActive(false);
+                ButtonTrophy.gameObject.SetActive(false);
+                ButtonPause.gameObject.SetActive(false);
                 break;
             case 9:
-                btnHome.gameObject.SetActive(false);
-                btnStore.gameObject.SetActive(false);
-                btnSetting.gameObject.SetActive(false);
-                btnTrophy.gameObject.SetActive(false);
-                btnPause.gameObject.SetActive(false);
+                ButtonHome.gameObject.SetActive(false);
+                ButtonSetting.gameObject.SetActive(false);
+                ButtonShop.gameObject.SetActive(false);
+                ButtonTrophy.gameObject.SetActive(false);
+                ButtonPause.gameObject.SetActive(false);
                 break;
         }
     }
@@ -62,53 +64,49 @@ public class UIObjectButton : MonoBehaviour
     // 각 버튼 별 이벤트 정의
     public void SetButtonEvent()
     {
-        btnHome.onClick.AddListener(buttonHomeClick);
-        btnStore.onClick.AddListener(buttonStoreClick);
-        btnSetting.onClick.AddListener(buttonSettingClick);
-        btnTrophy.onClick.AddListener(buttonTrophyClick);
-        btnPause.onClick.AddListener(buttonPauseClick);
+        ButtonHome.onClick.AddListener(() => SetButtonClickEvent("goHome"));
+        ButtonSetting.onClick.AddListener(() => SetButtonClickEvent("goSetting"));
+        ButtonShop.onClick.AddListener(() => SetButtonClickEvent("goShop"));
+        ButtonTrophy.onClick.AddListener(() => SetButtonClickEvent("goTrophy"));
+        ButtonPause.onClick.AddListener(() => SetButtonClickEvent("goPause"));
     }
 
     // 각 버튼 별 클릭 이벤트 정의
     public void SetButtonClickEvent(string Division) 
     {
-
-    }
-
-    //  홈 버튼 클릭 시 화면 제어
-    public void buttonHomeClick()
-    {
-        Debug.Log(">>>>>>>>>>>> Home Button Click.");
-    }
-
-    //  상점 버튼 클릭 시 화면 제어
-    public void buttonStoreClick()
-    {
-        Debug.Log(">>>>>>>>>>>> Home Store Click.");
-    }
-
-    // 설정 버튼 클릭 시 화면 제어
-    public void buttonSettingClick()
-    {
-        Debug.Log(">>>>>>>>>>>> Home Setting Click.");
-    }
-
-    // 트로피 버튼 클릭 시 화면 제어
-    public void buttonTrophyClick()
-    {
-        Debug.Log(">>>>>>>>>>>> Home Trophy Click.");
-    }
-
-    // 일시정지 버튼 클릭 시 화면 제어
-    public void buttonPauseClick()
-    {
-        Debug.Log(">>>>>>>>>>>> Home Pause Click.");
+        if(Division.Equals("goHome"))
+        {
+            //  홈 버튼 클릭 시 화면 제어
+            // 메인 화면으로 이동
+            UIManager.Instance.GoPanelMain();
+            // BGM 멈춤
+            SoundManager.Instance.ForceAudioStop();
+        }
+        else if (Division.Equals("goSetting"))
+        {
+            // 설정 버튼 클릭 시 화면 제어
+            UIElementSetting.Instance.ButtonClickControll("Setting");
+        }
+        else if (Division.Equals("goShop"))
+        {
+            //  상점 버튼 클릭 시 화면 제어
+            UIElementSetting.Instance.ButtonClickControll("Shop");
+        }
+        else if (Division.Equals("goTrophy"))
+        {
+            // 트로피 버튼 클릭 시 화면 제어
+            UIElementSetting.Instance.ButtonClickControll("Trophy");
+        }
+        else if (Division.Equals("goPause"))
+        {
+            // 일시정지 버튼 클릭 시 화면 제어
+        }
     }
 
     void Start()
     {
         // 각 버튼 별 클릭 이벤트 생성
-        
+        SetButtonEvent();
     }
 
     void Update()

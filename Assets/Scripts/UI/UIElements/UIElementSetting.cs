@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
-public class UIElementSetting : MonoBehaviour
+public class UIElementSetting : MonoBehaviourSingleton<UIElementSetting>
 {
     public GameObject PanelButton;
     public GameObject PanelSetting;
@@ -54,6 +54,23 @@ public class UIElementSetting : MonoBehaviour
         // 각 버튼 별 View 여부 제어 Function
         //PanelButton.GetComponent<UIObjectButton>().buttonViewController(index);
         PanelButton.transform.Find("UIObjectButton").GetComponent<UIObjectButton>().ButtonViewController(index);
+    }
+
+    // 버튼 클릭 시 화면 제어 이벤트
+    public void ButtonClickControll(string Division)
+    {
+        if(Division.Equals("Setting"))
+        {
+            PanelSetting.SetActive(true);
+        }
+        else if (Division.Equals("Shop"))
+        {
+            PanelShop.SetActive(true);
+        }
+        else if (Division.Equals("Trophy"))
+        {
+            PanelTrophy.SetActive(true);
+        }
     }
 
     void Start()
