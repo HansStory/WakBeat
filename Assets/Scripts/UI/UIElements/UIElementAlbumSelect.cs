@@ -116,11 +116,13 @@ public class UIElementAlbumSelect : MonoBehaviour
         }
     }
 
+    int SFX_Move_02 = 3;
     void SelectAlbum()
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
             StartCoroutine(SelectAlbumProcedure());
+            SoundManager.Instance.PlaySoundFX(SFX_Move_02);
         }
     }
 
