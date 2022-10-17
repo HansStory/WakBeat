@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 public class UIElementSetting : MonoBehaviourSingleton<UIElementSetting>
 {
     public GameObject PanelButton;
+    public GameObject Background;
     public GameObject PanelSetting;
     public GameObject PanelShop;
     public GameObject PanelTrophy;
@@ -57,19 +58,46 @@ public class UIElementSetting : MonoBehaviourSingleton<UIElementSetting>
     }
 
     // 버튼 클릭 시 화면 제어 이벤트
-    public void ButtonClickControll(string Division)
+    public void ButtonClickControll(string Division, string OpenYN)
     {
         if(Division.Equals("Setting"))
         {
-            PanelSetting.SetActive(true);
+            if(OpenYN.Equals("Open"))
+            {
+                Background.SetActive(true);
+                PanelSetting.SetActive(true);
+            }
+            else
+            {
+                Background.SetActive(false);
+                PanelSetting.SetActive(false);
+            }
         }
         else if (Division.Equals("Shop"))
         {
-            PanelShop.SetActive(true);
+            if(OpenYN.Equals("Open"))
+            {
+                Background.SetActive(true);
+                PanelShop.SetActive(true);
+            }
+            else
+            {
+                Background.SetActive(false);
+                PanelShop.SetActive(false);
+            }
         }
         else if (Division.Equals("Trophy"))
         {
-            PanelTrophy.SetActive(true);
+            if (OpenYN.Equals("Open"))
+            {
+                Background.SetActive(true);
+                PanelTrophy.SetActive(true);
+            }
+            else
+            {
+                Background.SetActive(false);
+                PanelTrophy.SetActive(false);
+            }
         }
     }
 

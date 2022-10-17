@@ -21,6 +21,8 @@ public class UIObjectButton : MonoBehaviour
     //                        9 > 전체 버튼 미출력 (ex. 인트로 화면 등)
     public void ButtonViewController(int index)
     {
+        Debug.Log(">>>>>>>>>>>>>>> ButtonViewController : " + index);
+
         switch (index)
         {
             case 0:
@@ -80,22 +82,25 @@ public class UIObjectButton : MonoBehaviour
             // 메인 화면으로 이동
             UIManager.Instance.GoPanelMain();
             // BGM 멈춤
+            SoundManager.Instance.PlaySoundFX(SFX_Home);
             SoundManager.Instance.ForceAudioStop();
         }
         else if (Division.Equals("goSetting"))
         {
             // 설정 버튼 클릭 시 화면 제어
-            UIElementSetting.Instance.ButtonClickControll("Setting");
+            SoundManager.Instance.PlaySoundFX(SFX_Setting);
+            UIElementSetting.Instance.ButtonClickControll("Setting", "Open");
         }
         else if (Division.Equals("goShop"))
         {
             //  상점 버튼 클릭 시 화면 제어
-            UIElementSetting.Instance.ButtonClickControll("Shop");
+            SoundManager.Instance.PlaySoundFX(SFX_Home);
+            UIElementSetting.Instance.ButtonClickControll("Shop", "Open");
         }
         else if (Division.Equals("goTrophy"))
         {
             // 트로피 버튼 클릭 시 화면 제어
-            UIElementSetting.Instance.ButtonClickControll("Trophy");
+            UIElementSetting.Instance.ButtonClickControll("Trophy", "Open");
         }
         else if (Division.Equals("goPause"))
         {
