@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class UIManager : MonoBehaviourSingleton<UIManager>
 {
@@ -38,18 +39,30 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
 
     // -------------------------------------------------------------------
     public GameObject[] MainPanels;
-    public GameObject UIElementSetting;
 
+    [SerializeField] private UIElementSetting uiElementSetting;
     [SerializeField] private UIElementFadePanel uiElementFadePanel;
+
+    private const int startPanel = 0;
 
     void Start()
     {
-
+        Init();
     }
 
     private void Init()
     {
+        if (uiElementSetting == null)
+        {
+            Debug.LogError("UIElementSetting 이 없습니다.");
+        }
 
+        if (uiElementFadePanel == null)
+        {
+            Debug.LogError("UIElementFadePanel 이 없습니다.");
+        }
+
+        WantShowPanel(startPanel);
     }
 
     public void WantShowPanel(int index)
@@ -69,8 +82,9 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
         }
 
         //// 화면 전환 시 버튼 영역 제어  // 잠시 하이드 처리하겠습니다 KD_Han
-        UIElementSetting.GetComponent<UIElementSetting>().PanelViewController(index);
+        uiElementSetting.PanelViewController(index);
     }
+
 
     public void GoPanelIntro()
     {
@@ -79,40 +93,66 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
 
     public void GoPanelMain()
     {
-        WantShowPanel((int)GlobalData.UIMODE.MAIN);
+        if (GlobalState.Instance.CurrentPanelIndex == (int)GlobalData.UIMODE.SELECT_ALBUM)
+        {
+            if (uiElementFadePanel)
+            {
+                uiElementFadePanel.BetweenMainToAlbumTransition();
+                uiElementFadePanel.TransitionSequence.InsertCallback(1f, () => WantShowPanel((int)GlobalData.UIMODE.MAIN));
+            }
+        }
+        else if(GlobalState.Instance.CurrentPanelIndex == (int)GlobalData.UIMODE.INTRO)
+        {
+            if (uiElementFadePanel)
+            {
+                uiElementFadePanel.IntroToMain(2f, 2f, 0.5f, 2f);
+                uiElementFadePanel.TransitionSequence.InsertCallback(4.5f, () => WantShowPanel((int)GlobalData.UIMODE.MAIN));
+            }
+        }
     }
 
     public void GoPanelAlbumSelect()
     {
-        WantShowPanel((int)GlobalData.UIMODE.SELECT_ALBUM);
+        if (GlobalState.Instance.CurrentPanelIndex == (int)GlobalData.UIMODE.SELECT_MUSIC)
+        {
+            WantShowPanel((int)GlobalData.UIMODE.SELECT_ALBUM);
+        }
+        else if (GlobalState.Instance.CurrentPanelIndex == (int)GlobalData.UIMODE.MAIN)
+        {
+            if (uiElementFadePanel)
+            {
+                uiElementFadePanel.BetweenMainToAlbumTransition();
+                uiElementFadePanel.TransitionSequence.InsertCallback(1f, () => WantShowPanel((int)GlobalData.UIMODE.SELECT_ALBUM));
+            }
+        }
     }
 
     public void GoPanelMusicSelect()
     {
-        WantShowPanel((int)GlobalData.UIMODE.SELECT_MUSIC);
+        if (GlobalState.Instance.CurrentPanelIndex == (int)GlobalData.UIMODE.SELECT_ALBUM)
+        {
+            WantShowPanel((int)GlobalData.UIMODE.SELECT_MUSIC);
+        }
+        else if (GlobalState.Instance.CurrentPanelIndex == (int)GlobalData.UIMODE.GAME)
+        {
+            WantShowPanel((int)GlobalData.UIMODE.SELECT_MUSIC);
+        }
+        else
+        {
+            WantShowPanel((int)GlobalData.UIMODE.SELECT_MUSIC);
+        }
     }
 
     public void GoPanelGamePlay()
     {
-        WantShowPanel((int)GlobalData.UIMODE.GAME);
+        if (GlobalState.Instance.CurrentPanelIndex == (int)GlobalData.UIMODE.SELECT_MUSIC)
+        {
+            WantShowPanel((int)GlobalData.UIMODE.GAME);
+        }
     }
 
     public void GoPanelResult()
     {
         WantShowPanel((int)GlobalData.UIMODE.RESULT);
-    }
-
-    public void OnClickStartButton()
-    {
-        if (uiElementFadePanel)
-        {
-            uiElementFadePanel.MainToAlbumTransition();
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
