@@ -39,7 +39,18 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
     // -------------------------------------------------------------------
     public GameObject[] MainPanels;
     public GameObject UIElementSetting;
-    public GameObject UIElementFadePanel;
+
+    [SerializeField] private UIElementFadePanel uiElementFadePanel;
+
+    void Start()
+    {
+
+    }
+
+    private void Init()
+    {
+
+    }
 
     public void WantShowPanel(int index)
     {
@@ -91,11 +102,12 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
         WantShowPanel((int)GlobalData.UIMODE.RESULT);
     }
 
-
-    // Start is called before the first frame update
-    void Start()
+    public void OnClickStartButton()
     {
-        
+        if (uiElementFadePanel)
+        {
+            uiElementFadePanel.MainToAlbumTransition();
+        }
     }
 
     // Update is called once per frame

@@ -2,7 +2,7 @@ public class GlobalData : MonoBehaviourSingleton<GlobalData>
 {
     public ScriptInformation Information;
     public AlbumInfo Album;
-    public AnimCurve AnimCurve;
+    //public AnimCurve AnimCurve;
 
     public enum STAGE
     {

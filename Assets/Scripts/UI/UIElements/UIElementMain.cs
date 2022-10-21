@@ -57,7 +57,7 @@ public class UIElementMain : MonoBehaviour
     public void OnClickStartButton()
     {
         StartCoroutine(GoToAlbumSelectPanel());
-        SoundManager.Instance.PlaySoundFX(SFX_Move_01);
+        //SoundManager.Instance.PlaySoundFX(SFX_Move_01);
     }
 
     public void OnClickEsc()
@@ -80,9 +80,7 @@ public class UIElementMain : MonoBehaviour
 
     IEnumerator GoToAlbumSelectPanel()
     {
-        fadeImage.color = Color.black;
-        fadeImage.gameObject.SetActive(true);
-        UIManager.Instance.FadeToBlack(fadeImage, fadeTime);
+        UIManager.Instance.OnClickStartButton();
         yield return new WaitForSeconds(fadeTime + fadeHoldTime);
 
         fadeImage.gameObject.SetActive(false);
@@ -91,9 +89,7 @@ public class UIElementMain : MonoBehaviour
    
     IEnumerator BackToMain()
     {
-        fadeImage.color = Color.black;
-        fadeImage.gameObject.SetActive(true);
-        UIManager.Instance.FadeToWhite(fadeImage, fadeTime);
+        UIManager.Instance.OnClickStartButton();
         yield return new WaitForSeconds(fadeTime);
 
         fadeImage.gameObject.SetActive(false);

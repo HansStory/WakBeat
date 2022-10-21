@@ -28,18 +28,22 @@ public class UIElementFadePanel : MonoBehaviour
 
     public void MainToAlbumTransition()
     {
+        transitionPanel.SetActive(true);
+
         fadeClear.transform.DOScale(Vector3.zero, TransitionTime).SetEase(curveClear.Curve);
         fadeRed.transform.DOScale(Vector3.zero, TransitionTime).SetEase(curveRed.Curve);
         fadeYellow.transform.DOScale(Vector3.zero, TransitionTime).SetEase(curveYellow.Curve);
         fadeOrange.transform.DOScale(Vector3.zero, TransitionTime).SetEase(curveOrange.Curve);
-        fadeIvory.transform.DOScale(Vector3.zero, TransitionTime).SetEase(curveIvory.Curve);
+        Tween tween = fadeIvory.transform.DOScale(Vector3.zero, TransitionTime).SetEase(curveIvory.Curve);
 
         SoundManager.Instance.PlaySoundFX(0);
+
+        tween.OnComplete(() => { transitionPanel.SetActive(false);});
     }
     // Start is called before the first frame update
     void Start()
     {
-        Invoke(nameof(MainToAlbumTransition), 2f); 
+        //Invoke(nameof(MainToAlbumTransition), 2f); 
     }
 
     // Update is called once per frame

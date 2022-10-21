@@ -668,7 +668,7 @@ MonoBehaviour:
   - {fileID: 4909700514306408954}
   - {fileID: 6348713623591929678}
   UIElementSetting: {fileID: 4791045139548083714}
-  UIElementFadePanel: {fileID: 3997654550900680948}
+  uiElementFadePanel: {fileID: 5668455341216472545}
 --- !u!1001 &126084238971799201
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1200,10 +1200,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2951244076088501815}
     m_Modifications:
-    - target: {fileID: 4788751448200988560, guid: 0e00f369b5327f844a182c6fad5f2704, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6903847392039780701, guid: 0e00f369b5327f844a182c6fad5f2704, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1288,21 +1284,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7741998616848485314, guid: 0e00f369b5327f844a182c6fad5f2704, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8359383720785753182, guid: 0e00f369b5327f844a182c6fad5f2704, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8490450046735716376, guid: 0e00f369b5327f844a182c6fad5f2704, type: 3}
       propertyPath: m_Name
       value: UIElementFadePanel
-      objectReference: {fileID: 0}
-    - target: {fileID: 8490450046735716376, guid: 0e00f369b5327f844a182c6fad5f2704, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e00f369b5327f844a182c6fad5f2704, type: 3}
@@ -1311,11 +1295,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6903847392039780701, guid: 0e00f369b5327f844a182c6fad5f2704, type: 3}
   m_PrefabInstance: {fileID: 4804961434314815724}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &3997654550900680948 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8490450046735716376, guid: 0e00f369b5327f844a182c6fad5f2704, type: 3}
+--- !u!114 &5668455341216472545 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 866029160648582413, guid: 0e00f369b5327f844a182c6fad5f2704, type: 3}
   m_PrefabInstance: {fileID: 4804961434314815724}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f05d9ec5f0588764aa5a17aa959b5bc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4964877236301726891
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1642,6 +1632,10 @@ PrefabInstance:
     - target: {fileID: 5553617868523981644, guid: 29fc5796273903d4e9f7f5d35f1187ad, type: 3}
       propertyPath: m_Name
       value: UIElementMain
+      objectReference: {fileID: 0}
+    - target: {fileID: 5918829337308287302, guid: 29fc5796273903d4e9f7f5d35f1187ad, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5974796807556483806, guid: 29fc5796273903d4e9f7f5d35f1187ad, type: 3}
       propertyPath: m_RootOrder
