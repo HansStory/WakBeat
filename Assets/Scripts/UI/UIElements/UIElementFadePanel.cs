@@ -9,7 +9,7 @@ public class UIElementFadePanel : MonoBehaviourSingleton<UIElementFadePanel>
     [Header("For Fade In Out Effect")]
     // For Fade White Transition
     [SerializeField] private Image imageWhite;
-    [SerializeField] private AnimCurve fadeCurve;
+    //[SerializeField] private AnimCurve fadeCurve;
     private Color whiteAlpha0 = new Vector4(1f, 1f, 1f, 0f);
 
     // For Fade Black Transition
@@ -126,7 +126,7 @@ public class UIElementFadePanel : MonoBehaviourSingleton<UIElementFadePanel>
 
             TransitionTween = fadeIvory.transform.DOScale(Vector3.zero, TransitionTime).SetEase(curveIvory.Curve);
             TransitionTween.OnComplete(() => { transitionPanel.SetActive(false); });
-            TransitionTween.OnComplete(() => { TransitionTween = null; });
+            //TransitionTween.OnComplete(() => { TransitionTween = null; });
         });
 
         SoundManager.Instance.PlaySoundFX(0);
