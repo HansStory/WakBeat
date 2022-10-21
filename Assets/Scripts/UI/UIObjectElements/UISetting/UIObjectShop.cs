@@ -25,6 +25,7 @@ public class UIObjectShop : MonoBehaviour
         TabObject.transform.Find("TabVideo").Find("TabOff").GetComponent<Button>().onClick.AddListener(() => SetButtonClickEvent("VideoOff"));
 
         // 상점 > 스킨 상점 버튼 이벤트
+        /*
         SkinGroup.transform.Find("SkinItems").Find("ItemBlack").Find("ItemButtons").Find("ButtonBuy").GetComponent<Button>().onClick.AddListener(() => SetButtonClickEvent("BlackBuy"));
         SkinGroup.transform.Find("SkinItems").Find("ItemBlack").Find("ItemButtons").Find("ButtonOn").GetComponent<Button>().onClick.AddListener(() => SetButtonClickEvent("BlackOn"));
         SkinGroup.transform.Find("SkinItems").Find("ItemBlack").Find("ItemButtons").Find("ButtonOff").GetComponent<Button>().onClick.AddListener(() => SetButtonClickEvent("BlackOff"));
@@ -37,8 +38,10 @@ public class UIObjectShop : MonoBehaviour
         SkinGroup.transform.Find("SkinItems").Find("ItemOrange").Find("ItemButtons").Find("ButtonBuy").GetComponent<Button>().onClick.AddListener(() => SetButtonClickEvent("OrangeBuy"));
         SkinGroup.transform.Find("SkinItems").Find("ItemOrange").Find("ItemButtons").Find("ButtonOn").GetComponent<Button>().onClick.AddListener(() => SetButtonClickEvent("OrangeOn"));
         SkinGroup.transform.Find("SkinItems").Find("ItemOrange").Find("ItemButtons").Find("ButtonOff").GetComponent<Button>().onClick.AddListener(() => SetButtonClickEvent("OrangeOff"));
+        */
 
         // 상점 > 스킬 상점 버튼 이벤트
+        /*
         SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill1").Find("Open").Find("SkillButton").Find("ButtonOn").GetComponent<Button>().onClick.AddListener(() => SetButtonClickEvent("Skill1On"));
         SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill1").Find("Open").Find("SkillButton").Find("ButtonOff").GetComponent<Button>().onClick.AddListener(() => SetButtonClickEvent("Skill1Off"));
         SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill2").Find("Open").Find("SkillButton").Find("ButtonOn").GetComponent<Button>().onClick.AddListener(() => SetButtonClickEvent("Skill2On"));
@@ -54,6 +57,7 @@ public class UIObjectShop : MonoBehaviour
         SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill3").Find("Lock").Find("SkillButton").Find("ButtonLock").GetComponent<Button>().onClick.AddListener(() => SetButtonClickEvent("Skill3Lock"));
         SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill4").Find("Lock").Find("SkillButton").Find("ButtonLock").GetComponent<Button>().onClick.AddListener(() => SetButtonClickEvent("Skill4Lock"));
         SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill5").Find("Lock").Find("SkillButton").Find("ButtonLock").GetComponent<Button>().onClick.AddListener(() => SetButtonClickEvent("Skill5Lock"));
+        */
         // 상점 > 비디오 상점 버튼 이벤트
     }
 
@@ -107,6 +111,7 @@ public class UIObjectShop : MonoBehaviour
             TabObject.transform.Find("TabVideo").Find("TabOn").gameObject.SetActive(true);
             TabObject.transform.Find("TabVideo").Find("TabOff").gameObject.SetActive(true);
         }
+        /*
         else if (Division.Equals("BlackBuy"))
         {
             SkinGroup.transform.Find("SkinItems").Find("ItemBlack").Find("ItemButtons").Find("ButtonBuy").gameObject.SetActive(false);
@@ -269,6 +274,7 @@ public class UIObjectShop : MonoBehaviour
         {
             SetUnLock(5);
         }
+        */
     }
 
     // 기본 공 세팅

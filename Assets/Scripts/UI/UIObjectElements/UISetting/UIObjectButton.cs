@@ -21,8 +21,6 @@ public class UIObjectButton : MonoBehaviour
     //                        9 > 전체 버튼 미출력 (ex. 인트로 화면 등)
     public void ButtonViewController(int index)
     {
-        Debug.Log(">>>>>>>>>>>>>>> ButtonViewController : " + index);
-
         switch (index)
         {
             case 0:
