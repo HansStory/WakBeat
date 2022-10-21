@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 
 public class UIObjectSetting : MonoBehaviour
 {
@@ -12,6 +14,8 @@ public class UIObjectSetting : MonoBehaviour
     public Button ButtonClose;
     public Button ButtonExit;
     public GameObject ButtonKeySetting;
+    const int SFX_Home = 1;
+    const int SFX_Setting = 4;
     // 효과/배경음 슬라이더 선언
     public Slider SFXSlider;
     public Slider BGMSlider;
@@ -22,6 +26,10 @@ public class UIObjectSetting : MonoBehaviour
     public Button SeparationClose;
     public GameObject SeparationInBoxs;
     public GameObject SeparationOutBoxs;
+    public Sprite OnBoxImage;
+    public Sprite OffBoxImage;
+    public string[] InBoxValues = new string[4];
+    public string[] OutBoxValues = new string[4];
 
     // 각 버튼 별 이벤트 정의
     public void SetButtonEvent()
@@ -35,37 +43,20 @@ public class UIObjectSetting : MonoBehaviour
         ButtonKeySetting.transform.Find("ButtonSeparationOff").GetComponent<Button>().onClick.AddListener(() => SetButtonClickEvent("SeparationOff"));
 
         // 효과/배경음 변경 이벤트
-        SFXSlider.onValueChanged.AddListener(delegate { setSoundChange("SFX"); });
-        BGMSlider.onValueChanged.AddListener(delegate { setSoundChange("BGM"); });
+        SFXSlider.onValueChanged.AddListener(delegate { setSFXSoundChange(); });
+        BGMSlider.onValueChanged.AddListener(delegate { setBGMSoundChange(); });
 
         // 설정 > 키 설정 > 분리 팝업 버튼 이벤트
         SeparationClose.onClick.AddListener(() => SetButtonClickEvent("SeparationClose"));
-        SeparationInBoxs.transform.Find("SeparationInBox1").Find("BoxOn").GetComponent<InputField>().onValueChanged.AddListener(delegate { SetSeparationInputField(1, "In", false); });
-        SeparationInBoxs.transform.Find("SeparationInBox1").Find("BoxOff").GetComponent<Button>().onClick.AddListener(() => SetSeparationInputClick(1, "In"));
-        SeparationInBoxs.transform.Find("SeparationInBox2").Find("BoxOn").GetComponent<InputField>().onValueChanged.AddListener(delegate { SetSeparationInputField(2, "In", false); });
-        SeparationInBoxs.transform.Find("SeparationInBox2").Find("BoxOff").GetComponent<Button>().onClick.AddListener(() => SetSeparationInputClick(2, "In"));
-        SeparationInBoxs.transform.Find("SeparationInBox3").Find("BoxOn").GetComponent<InputField>().onValueChanged.AddListener(delegate { SetSeparationInputField(3, "In", false); });
-        SeparationInBoxs.transform.Find("SeparationInBox3").Find("BoxOff").GetComponent<Button>().onClick.AddListener(() => SetSeparationInputClick(3, "In"));
-        SeparationInBoxs.transform.Find("SeparationInBox4").Find("BoxOn").GetComponent<InputField>().onValueChanged.AddListener(delegate { SetSeparationInputField(4, "In", false); });
-        SeparationInBoxs.transform.Find("SeparationInBox4").Find("BoxOff").GetComponent<Button>().onClick.AddListener(() => SetSeparationInputClick(4, "In"));
-        SeparationOutBoxs.transform.Find("SeparationOutBox1").Find("BoxOn").GetComponent<InputField>().onValueChanged.AddListener(delegate { SetSeparationInputField(1, "Out", false); });
-        SeparationOutBoxs.transform.Find("SeparationOutBox1").Find("BoxOff").GetComponent<Button>().onClick.AddListener(() => SetSeparationInputClick(1, "Out"));
-        SeparationOutBoxs.transform.Find("SeparationOutBox2").Find("BoxOn").GetComponent<InputField>().onValueChanged.AddListener(delegate { SetSeparationInputField(2, "Out", false); });
-        SeparationOutBoxs.transform.Find("SeparationOutBox2").Find("BoxOff").GetComponent<Button>().onClick.AddListener(() => SetSeparationInputClick(2, "Out"));
-        SeparationOutBoxs.transform.Find("SeparationOutBox3").Find("BoxOn").GetComponent<InputField>().onValueChanged.AddListener(delegate { SetSeparationInputField(3, "Out", false); });
-        SeparationOutBoxs.transform.Find("SeparationOutBox3").Find("BoxOff").GetComponent<Button>().onClick.AddListener(() => SetSeparationInputClick(3, "Out"));
-        SeparationOutBoxs.transform.Find("SeparationOutBox4").Find("BoxOn").GetComponent<InputField>().onValueChanged.AddListener(delegate { SetSeparationInputField(4, "Out", false); });
-        SeparationOutBoxs.transform.Find("SeparationOutBox4").Find("BoxOff").GetComponent<Button>().onClick.AddListener(() => SetSeparationInputClick(4, "Out"));
 
-        // 입력창 forcus out 이벤트
-        SeparationInBoxs.transform.Find("SeparationInBox1").Find("BoxOn").GetComponent<InputField>().onEndEdit.AddListener(delegate { SetSeparationInputField(1, "In", true); });
-        SeparationInBoxs.transform.Find("SeparationInBox2").Find("BoxOn").GetComponent<InputField>().onEndEdit.AddListener(delegate { SetSeparationInputField(2, "In", true); });
-        SeparationInBoxs.transform.Find("SeparationInBox3").Find("BoxOn").GetComponent<InputField>().onEndEdit.AddListener(delegate { SetSeparationInputField(3, "In", true); });
-        SeparationInBoxs.transform.Find("SeparationInBox4").Find("BoxOn").GetComponent<InputField>().onEndEdit.AddListener(delegate { SetSeparationInputField(4, "In", true); });
-        SeparationOutBoxs.transform.Find("SeparationOutBox1").Find("BoxOn").GetComponent<InputField>().onEndEdit.AddListener(delegate { SetSeparationInputField(1, "Out", true); });
-        SeparationOutBoxs.transform.Find("SeparationOutBox2").Find("BoxOn").GetComponent<InputField>().onEndEdit.AddListener(delegate { SetSeparationInputField(2, "Out", true); });
-        SeparationOutBoxs.transform.Find("SeparationOutBox3").Find("BoxOn").GetComponent<InputField>().onEndEdit.AddListener(delegate { SetSeparationInputField(3, "Out", true); });
-        SeparationOutBoxs.transform.Find("SeparationOutBox4").Find("BoxOn").GetComponent<InputField>().onEndEdit.AddListener(delegate { SetSeparationInputField(4, "Out", true); });
+        SeparationInBoxs.transform.Find("SeparationInBox1").GetComponent<InputField>().onEndEdit.AddListener(delegate { SetSeparationOffInputField("In", 1); });
+        SeparationInBoxs.transform.Find("SeparationInBox2").GetComponent<InputField>().onEndEdit.AddListener(delegate { SetSeparationOffInputField("In", 2); });
+        SeparationInBoxs.transform.Find("SeparationInBox3").GetComponent<InputField>().onEndEdit.AddListener(delegate { SetSeparationOffInputField("In", 3); });
+        SeparationInBoxs.transform.Find("SeparationInBox4").GetComponent<InputField>().onEndEdit.AddListener(delegate { SetSeparationOffInputField("In", 4); });
+        SeparationOutBoxs.transform.Find("SeparationOutBox1").GetComponent<InputField>().onEndEdit.AddListener(delegate { SetSeparationOffInputField("Out", 1); });
+        SeparationOutBoxs.transform.Find("SeparationOutBox2").GetComponent<InputField>().onEndEdit.AddListener(delegate { SetSeparationOffInputField("Out", 2); });
+        SeparationOutBoxs.transform.Find("SeparationOutBox3").GetComponent<InputField>().onEndEdit.AddListener(delegate { SetSeparationOffInputField("Out", 3); });
+        SeparationOutBoxs.transform.Find("SeparationOutBox4").GetComponent<InputField>().onEndEdit.AddListener(delegate { SetSeparationOffInputField("Out", 4); });
     }
 
     // 각 버튼 별 클릭 이벤트 정의
@@ -142,97 +133,116 @@ public class UIObjectSetting : MonoBehaviour
         }
     }
 
-    // 효과/배경음 변경 이벤트
-    public void setSoundChange(string Division)
+    // 배경음 변경 이벤트
+    public void setBGMSoundChange()
     {
-        if (Division.Equals("SFX"))
+        BGMGauge = BGMSlider.value;
+        SoundManager.Instance.CtrlBGMVolume(BGMGauge);
+    }
+
+    // 효과음 변경 시 1회 효과음 출력
+    public void setSFXSoundChange()
+    {
+        SFXGauge = SFXSlider.value;
+        SoundManager.Instance.CtrlSFXVolume(SFXGauge);
+        SoundManager.Instance.PlaySoundFX(SFX_Home);
+    }
+
+    // 포커스 나갈 시 Input Field 비활성화
+    public void SetSeparationOffInputField(string Division, int Index)
+    {
+        if(Division.Equals("In"))
         {
-            SFXGauge = SFXSlider.value;
-            SoundManager.Instance.CtrlSFXVolume(SFXGauge);
+            var inputFieldImage = SeparationInBoxs.transform.Find("Separation" + Division + "Box" + Index).GetComponent<Image>();
+            var inputField = SeparationInBoxs.transform.Find("Separation" + Division + "Box" + Index).GetComponent<InputField>();
+
+            inputField.readOnly = true;
+            inputFieldImage.sprite = OffBoxImage;
+
+            InBoxValues[Index - 1] = inputField.text;
         }
         else
         {
-            BGMGauge = BGMSlider.value;
-            SoundManager.Instance.CtrlBGMVolume(BGMGauge);
+            var inputFieldImage = SeparationOutBoxs.transform.Find("Separation" + Division + "Box" + Index).GetComponent<Image>();
+            var inputField = SeparationOutBoxs.transform.Find("Separation" + Division + "Box" + Index).GetComponent<InputField>();
+
+            inputField.readOnly = true;
+            inputFieldImage.sprite = OffBoxImage;
+
+            OutBoxValues[Index - 1] = inputField.text;
         }
     }
 
-    // 키 설정 > 분리 > Input Box Click 이벤트
-    public void SetSeparationInputClick(int Index, string Division)
+    // 포커스 들어올 시 Input Field 활성화
+    public void SetSeparationOnInputField()
     {
-        if (Division.Equals("In"))
+        if (SeparationInBoxs.transform.Find("SeparationInBox1").GetComponent<InputField>().isFocused)
         {
-            SeparationInBoxs.transform.Find("Separation" + Division + "Box" + Index).Find("BoxOn").gameObject.SetActive(true);
-            SeparationInBoxs.transform.Find("Separation" + Division + "Box" + Index).Find("BoxOff").gameObject.SetActive(false);
+            SeparationInBoxs.transform.Find("SeparationInBox1").GetComponent<InputField>().readOnly = false;
+            SeparationInBoxs.transform.Find("SeparationInBox1").GetComponent<Image>().sprite = OnBoxImage;
         }
-        else if (Division.Equals("Out"))
+        else if (SeparationInBoxs.transform.Find("SeparationInBox2").GetComponent<InputField>().isFocused)
         {
-            SeparationOutBoxs.transform.Find("Separation" + Division + "Box" + Index).Find("BoxOn").gameObject.SetActive(true);
-            SeparationOutBoxs.transform.Find("Separation" + Division + "Box" + Index).Find("BoxOff").gameObject.SetActive(false);
+            SeparationInBoxs.transform.Find("SeparationInBox2").GetComponent<InputField>().readOnly = false;
+            SeparationInBoxs.transform.Find("SeparationInBox2").GetComponent<Image>().sprite = OnBoxImage;
+        }
+        else if (SeparationInBoxs.transform.Find("SeparationInBox3").GetComponent<InputField>().isFocused)
+        {
+            SeparationInBoxs.transform.Find("SeparationInBox3").GetComponent<InputField>().readOnly = false;
+            SeparationInBoxs.transform.Find("SeparationInBox3").GetComponent<Image>().sprite = OnBoxImage;
+        }
+        else if (SeparationInBoxs.transform.Find("SeparationInBox4").GetComponent<InputField>().isFocused)
+        {
+            SeparationInBoxs.transform.Find("SeparationInBox4").GetComponent<InputField>().readOnly = false;
+            SeparationInBoxs.transform.Find("SeparationInBox4").GetComponent<Image>().sprite = OnBoxImage;
+        }
+        else if (SeparationOutBoxs.transform.Find("SeparationOutBox1").GetComponent<InputField>().isFocused)
+        {
+            SeparationOutBoxs.transform.Find("SeparationOutBox1").GetComponent<InputField>().readOnly = false;
+            SeparationOutBoxs.transform.Find("SeparationOutBox1").GetComponent<Image>().sprite = OnBoxImage;
+        }
+        else if (SeparationOutBoxs.transform.Find("SeparationOutBox2").GetComponent<InputField>().isFocused)
+        {
+            SeparationOutBoxs.transform.Find("SeparationOutBox2").GetComponent<InputField>().readOnly = false;
+            SeparationOutBoxs.transform.Find("SeparationOutBox2").GetComponent<Image>().sprite = OnBoxImage;
+        }
+        else if (SeparationOutBoxs.transform.Find("SeparationOutBox3").GetComponent<InputField>().isFocused)
+        {
+            SeparationOutBoxs.transform.Find("SeparationOutBox3").GetComponent<InputField>().readOnly = false;
+            SeparationOutBoxs.transform.Find("SeparationOutBox3").GetComponent<Image>().sprite = OnBoxImage;
+        }
+        else if (SeparationOutBoxs.transform.Find("SeparationOutBox4").GetComponent<InputField>().isFocused)
+        {
+            SeparationOutBoxs.transform.Find("SeparationOutBox4").GetComponent<InputField>().readOnly = false;
+            SeparationOutBoxs.transform.Find("SeparationOutBox4").GetComponent<Image>().sprite = OnBoxImage;
         }
     }
 
-    // 키 설정 > 분리 > Input box Field 이벤트
-    public void SetSeparationInputField(int Index, string Division, Boolean flag)
+    // 글로벌 변수 화면 세팅
+    public void GetGlobalValue()
     {
-        string InputValue = Division.Equals("In") ?
-            SeparationInBoxs.transform.Find("Separation" + Division + "Box" + Index).Find("BoxOn").GetComponent<InputField>().text :
-                SeparationOutBoxs.transform.Find("Separation" + Division + "Box" + Index).Find("BoxOn").GetComponent<InputField>().text;
-
-        // 입력창에서 입력 후 Backspace 를 누르거나 마우스 포커스 아웃 일 때 입력 창 비활성화
-        if (Input.GetKey(KeyCode.Backspace) || flag == true)
-        {
-            if (Division.Equals("In"))
-            {
-                SeparationInBoxs.transform.Find("Separation" + Division + "Box" + Index).Find("BoxOn").gameObject.SetActive(false);
-                SeparationInBoxs.transform.Find("Separation" + Division + "Box" + Index).Find("BoxOff").gameObject.SetActive(true);
-            }
-            else if (Division.Equals("Out"))
-            {
-                SeparationOutBoxs.transform.Find("Separation" + Division + "Box" + Index).Find("BoxOn").gameObject.SetActive(false);
-                SeparationOutBoxs.transform.Find("Separation" + Division + "Box" + Index).Find("BoxOff").gameObject.SetActive(true);
-            }
-        }
+        SetButtonClickEvent("IntegrationOff");
     }
 
-    // 1. Out 버튼을 교체 해야 함 > 입력 후 비활성화 시 입력 된 값이 비활성화에 출력 되며 입력 값이 이미지가 바뀜
-    //     - 버튼에 입력 받은 텍스트에 대한 이미지 출력
-    // 2. 글로벌 변수에 값 세팅 하는 프로세스 작업
-
-    // 글로벌 변수 세팅 
+    // 글로벌 변수 저장
     public void SetGlobalValue()
     {
-        /*
-        string InputValue = Division.Equals("In") ?
-            SeparationInBoxs.transform.Find("Separation" + Division + "Box" + Index).Find("BoxOn").GetComponent<InputField>().text :
-                SeparationOutBoxs.transform.Find("Separation" + Division + "Box" + Index).Find("BoxOn").GetComponent<InputField>().text;
-        */
-        string[] Inner = new string[4];
-        string[] Outer = new string[4];
         float SFXValue = SFXSlider.value;
         float BGMValue = BGMSlider.value;
-
-        for (int Index = 1; Index >= 4; Index++)
-        {
-            string InBoxValue = SeparationInBoxs.transform.Find("SeparationInBox" + Index).Find("BoxOn").GetComponent<InputField>().text;
-            string OutBoxValue = SeparationOutBoxs.transform.Find("SeparationOutBox" + Index).Find("BoxOn").GetComponent<InputField>().text;
-
-            Inner.Append(InBoxValue);
-            Outer.Append(OutBoxValue);
-        }
-
-        Debug.Log(">>>>>>>>>>>>>>>>>>>>> Sound : " + SFXValue + " // " + BGMValue);
     }
 
     void Start()
     {
+        // 버튼 이벤트 설정
         SetButtonEvent();
 
-        SetButtonClickEvent("IntegrationOff");
+        // 글로벌 변수 화면 적용
+        GetGlobalValue();
     }
 
     void Update()
     {
-        
+        // Input Field 포커스 시 활성화
+        SetSeparationOnInputField();
     }
 }
