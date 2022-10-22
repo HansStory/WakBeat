@@ -5,14 +5,20 @@ using UnityEngine;
 using System.IO;
 using DG.Tweening.Plugins.Core.PathCore;
 using UnityEditorInternal;
+using static UnityEngine.Rendering.DebugUI;
 
 public class DataManager : MonoBehaviourSingleton<DataManager>
 {
+    // 글로벌 데이터 세팅
+    // 설정 화면 변수
     static string[] _InnerOperationKey;
     static string[] _OuterOperationKey;
     static string _KeyDivision;
     static float _BGMValue = 1f;
     static float _SFXValue = 1f;
+    // 상점 화면 변수
+    static int _SkinCount = 4;
+    static int _SkillCount = 5;
 
     public static string GetUserData()
     {
@@ -37,6 +43,11 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
         userData.data.KeyDivision = (null == _KeyDivision || "".Equals(_KeyDivision)) ? "Integration" : _KeyDivision;
         userData.data.InnerOperationKey = _InnerOperationKey;
         userData.data.OuterOperationKey = _OuterOperationKey;
+
+        // 상점 화면 글로벌 데이터 세팅
+        //userData.data.SkinCount = _SkinCount;
+        //userData.data.SkillCount = _SkillCount;
+
 
         return userData.ToJson();
     }
@@ -101,6 +112,20 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
     public static string[] SetOuterOperationKey
     {
         set { _OuterOperationKey = value; }
+    }
+
+    // 상점 스킨 개수
+    public static int SetSkinCount
+    {
+        get { return _SkinCount; }
+        set { _SkinCount = value;  }
+    }
+
+    // 상점 스킬 개수
+    public static int SetSkillCount
+    {
+        get { return _SkillCount; }
+        set { _SkillCount = value;  }
     }
 
     // Start is called before the first frame update

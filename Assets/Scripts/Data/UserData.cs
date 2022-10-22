@@ -65,6 +65,11 @@ public class UserData
     public string[] OuterOperationKey = new string[4];
 
     // 상점 관련 글로벌 데이터
+    // 스킨 개수
+    public int SkinCount;
+    // 스킬 개수
+    public int SkillCount;
+
     // 스킨 관련 데이터
     // 현재 볼 종류 > Black, Blue, Green, Orange
     public string currentBall;

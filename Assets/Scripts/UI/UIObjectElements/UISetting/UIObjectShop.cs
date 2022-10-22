@@ -1,3 +1,5 @@
+using Mono.Cecil;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -8,13 +10,18 @@ public class UIObjectShop : MonoBehaviour
 {
     public Button ButtonClose;
     public GameObject TabObject;
+    // 스킨 아이템 오브젝트
     public GameObject SkinGroup;
+    // 스킬 아이템 오브젝트
     public GameObject SkillGroup;
     public GameObject VideoGroup;
 
     // 각 버튼 별 이벤트 정의
     public void SetButtonEvent()
     {
+        int SkinCount = DataManager.SetSkinCount;
+        int SkillCount = DataManager.SetSkillCount;
+
         // 상점 버튼 이벤트
         ButtonClose.onClick.AddListener(() => SetButtonClickEvent("Close"));
         TabObject.transform.Find("TabSkin").Find("TabOn").GetComponent<Button>().onClick.AddListener(() => SetButtonClickEvent("SkinOn"));
@@ -23,6 +30,35 @@ public class UIObjectShop : MonoBehaviour
         TabObject.transform.Find("TabSkill").Find("TabOff").GetComponent<Button>().onClick.AddListener(() => SetButtonClickEvent("SkillOff"));
         TabObject.transform.Find("TabVideo").Find("TabOn").GetComponent<Button>().onClick.AddListener(() => SetButtonClickEvent("VideoOn"));
         TabObject.transform.Find("TabVideo").Find("TabOff").GetComponent<Button>().onClick.AddListener(() => SetButtonClickEvent("VideoOff"));
+
+        /*
+        for (int Index = 1; Index <= SkinCount; Index++)
+        {
+            //SkinGroup.transform.Find("SkinItems").Find("Viewport").Find("Content")
+
+            Debug.Log(">>>>>>>>>>> " + (SkinGroup.transform.Find("SkinItems") == null));
+            Debug.Log(">>>>>>>>>>> " + (SkinGroup.transform.Find("SkinItems").Find("Viewport") == null));
+            Debug.Log(">>>>>>>>>>> " + (SkinGroup.transform.Find("SkinItems").Find("Viewport").Find("Content") == null));
+
+            //Debug.Log(">>>>>>>>>>> " + (SkinGroup.transform.Find("SkinItems").Find("Viewport").Find("Content") == null));
+
+            Debug.Log(">>>>>>>>>> Index : " + Index);
+            Debug.Log(">>>>>>>>>> Index : " + .GetChild(0).gameObject.name);
+            Debug.Log(">>>>>>>>>> Index : " + SkinGroup.transform.Find("SkinItems").Find("Viewport").Find("Content").GetChild(1).gameObject.name);
+            //SkinGroup.transform.Find("SkinItems").Find("Viewport").Find("Content").Find("Skin_Prefab_" + Index).Find("ItemButtons").Find("ButtonBuy").GetComponent<Button>().onClick.AddListener(() => SetSkinButtonEvent(Index, "Buy"));
+
+    
+            Debug.Log(">>>>>>>>>>> " + (SkinGroup.transform.Find("SkinItems").Find("Viewport").Find("Content").Find("Skin_Prefab_" + Index).Find("ItemButtons") == null));
+            Debug.Log(">>>>>>>>>>> " + (SkinGroup.transform.Find("SkinItems").Find("Viewport").Find("Content").Find("Skin_Prefab_" + Index).Find("ItemButtons").Find("ButtonBuy") == null));
+
+            SkinGroup.transform.Find("Skin_Prefab_" + Index).Find("ButtonOn").GetComponent<Button>().onClick.AddListener(() => SetSkinButtonEvent(Index, "On"));
+            SkinGroup.transform.Find("Skin_Prefab_" + Index).Find("ButtonOff").GetComponent<Button>().onClick.AddListener(() => SetSkinButtonEvent(Index, "Off"));
+
+            SkinGroup.transform.Find("ButtonBuy").GetComponent<Button>().onClick.AddListener(() => SetSkinButtonEvent(Index, "Buy"));
+            SkinGroup.transform.Find("Skin_Prefab_" + Index).Find("ButtonOn").GetComponent<Button>().onClick.AddListener(() => SetSkinButtonEvent(Index, "On"));
+            SkinGroup.transform.Find("Skin_Prefab_" + Index).Find("ButtonOff").GetComponent<Button>().onClick.AddListener(() => SetSkinButtonEvent(Index, "Off"));
+        }
+        */
 
         // 상점 > 스킨 상점 버튼 이벤트
         /*
@@ -59,6 +95,44 @@ public class UIObjectShop : MonoBehaviour
         SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill5").Find("Lock").Find("SkillButton").Find("ButtonLock").GetComponent<Button>().onClick.AddListener(() => SetButtonClickEvent("Skill5Lock"));
         */
         // 상점 > 비디오 상점 버튼 이벤트
+    }
+
+    // 상점 > 스킨 > 버튼 이벤트 정의
+    public void SetSkinButtonEvent(int Index, string Division)
+    {
+        Debug.Log(">>>>>>>>>> SetSkinButtonEvent : " + Index + " // " + Division);
+
+        if(Division.Equals("Buy"))
+        {
+            // 해금 미구현
+
+        }
+        else if (Division.Equals("On"))
+        {
+            // 사용
+        }
+        else if (Division.Equals("Off"))
+        {
+            // 미사용
+        }
+    }
+
+    // 상점 > 스킬 > 버튼 이벤트 정의
+    public void SetSkillButtonEvent(int Index, string Division)
+    {
+        if (Division.Equals("Lock"))
+        {
+            // 잠금 해제
+
+        }
+        else if (Division.Equals("On"))
+        {
+            // 사용
+        }
+        else if (Division.Equals("Off"))
+        {
+            // 미사용
+        }
     }
 
     // 각 버튼 별 클릭 이벤트 정의
@@ -280,6 +354,7 @@ public class UIObjectShop : MonoBehaviour
     // 기본 공 세팅
     public void setDefaultSkin()
     {
+        /*
         if (SkinGroup.transform.Find("SkinItems").Find("ItemBlack").Find("ItemButtons").Find("ButtonOff").gameObject.activeSelf == true
             && SkinGroup.transform.Find("SkinItems").Find("ItemBlue").Find("ItemButtons").Find("ButtonOff").gameObject.activeSelf == true
                 && SkinGroup.transform.Find("SkinItems").Find("ItemOrange").Find("ItemButtons").Find("ButtonOff").gameObject.activeSelf == true
@@ -288,11 +363,13 @@ public class UIObjectShop : MonoBehaviour
             SkinGroup.transform.Find("SkinItems").Find("ItemBlack").Find("ItemButtons").Find("ButtonOn").gameObject.SetActive(true);
             SkinGroup.transform.Find("SkinItems").Find("ItemBlack").Find("ItemButtons").Find("ButtonOff").gameObject.SetActive(false);
         }
+        */
     }
 
     // 스킬 UnLock 
     public void SetUnLock(int Index)
     {
+        /*
         switch(Index)
         {
             case 1: 
@@ -311,6 +388,7 @@ public class UIObjectShop : MonoBehaviour
                 SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill5").Find("Lock").gameObject.SetActive(false);
                 break;
         }
+        */
     }
 
     // 글로벌 변수 세팅 
