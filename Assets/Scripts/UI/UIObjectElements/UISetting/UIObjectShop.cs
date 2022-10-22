@@ -8,20 +8,58 @@ using UnityEngine.UI;
 
 public class UIObjectShop : MonoBehaviour
 {
+    [SerializeField] ShopInfo ShopInfo;
     public Button ButtonClose;
     public GameObject TabObject;
+
     // 스킨 아이템 오브젝트
     public GameObject SkinGroup;
+    [SerializeField] UIObjectShopSkinItem SkinItemPrefab;
+
     // 스킬 아이템 오브젝트
     public GameObject SkillGroup;
+    [SerializeField] UIObjectShopSkillItem SkillItemPrefab;
+
+    // 비디오 아이템 오브젝트
     public GameObject VideoGroup;
+
+    public void SetPrefab()
+    {
+        int SkinCount = DataManager.SetSkinCount;
+        int SkillCount = DataManager.SetSkillCount;
+        int SkinIndex = 1;
+        int SkillIndex = 1;
+
+        foreach (var info in ShopInfo.SkinItemInfos)
+        {
+            var item = Instantiate(SkinItemPrefab, SkinItemPrefab.transform.parent);
+            item.SetSkin(info);
+            item.name = "Skin_Prefab_" + SkinIndex;
+            item.gameObject.transform.Find("ItemButtons").Find("ButtonBuy").GetComponent<Button>().onClick.AddListener(() => SetSkinButtonEvent(item.name, "Buy"));
+            item.gameObject.transform.Find("ItemButtons").Find("ButtonOn").GetComponent<Button>().onClick.AddListener(() => SetSkinButtonEvent(item.name, "On"));
+            item.gameObject.transform.Find("ItemButtons").Find("ButtonOff").GetComponent<Button>().onClick.AddListener(() => SetSkinButtonEvent(item.name, "Off"));
+            item.gameObject.SetActive(true);
+
+            SkinIndex++;
+        }
+
+        foreach (var info in ShopInfo.SkillItemInfos)
+        {
+            var item = Instantiate(SkillItemPrefab, SkillItemPrefab.transform.parent);
+            item.SetSkill(info);
+            item.name = "Skill_Prefab_" + SkillIndex;
+            item.gameObject.transform.Find("Open").Find("SkillButton").Find("ButtonOn").GetComponent<Button>().onClick.AddListener(() => SetSkillButtonEvent(item.name, "On"));
+            item.gameObject.transform.Find("Open").Find("SkillButton").Find("ButtonOff").GetComponent<Button>().onClick.AddListener(() => SetSkillButtonEvent(item.name, "Off"));
+            item.gameObject.transform.Find("Lock").Find("SkillButton").Find("ButtonLock").GetComponent<Button>().onClick.AddListener(() => SetSkillButtonEvent(item.name, "Lock"));
+            item.gameObject.SetActive(true);
+
+            SkillIndex++;
+        }
+    }
 
     // 각 버튼 별 이벤트 정의
     public void SetButtonEvent()
     {
-        int SkinCount = DataManager.SetSkinCount;
-        int SkillCount = DataManager.SetSkillCount;
-
         // 상점 버튼 이벤트
         ButtonClose.onClick.AddListener(() => SetButtonClickEvent("Close"));
         TabObject.transform.Find("TabSkin").Find("TabOn").GetComponent<Button>().onClick.AddListener(() => SetButtonClickEvent("SkinOn"));
@@ -30,6 +68,8 @@ public class UIObjectShop : MonoBehaviour
         TabObject.transform.Find("TabSkill").Find("TabOff").GetComponent<Button>().onClick.AddListener(() => SetButtonClickEvent("SkillOff"));
         TabObject.transform.Find("TabVideo").Find("TabOn").GetComponent<Button>().onClick.AddListener(() => SetButtonClickEvent("VideoOn"));
         TabObject.transform.Find("TabVideo").Find("TabOff").GetComponent<Button>().onClick.AddListener(() => SetButtonClickEvent("VideoOff"));
+
+        
 
         /*
         for (int Index = 1; Index <= SkinCount; Index++)
@@ -98,9 +138,9 @@ public class UIObjectShop : MonoBehaviour
     }
 
     // 상점 > 스킨 > 버튼 이벤트 정의
-    public void SetSkinButtonEvent(int Index, string Division)
+    public void SetSkinButtonEvent(string Name, string Division)
     {
-        Debug.Log(">>>>>>>>>> SetSkinButtonEvent : " + Index + " // " + Division);
+        Debug.Log(">>>>>>>>>> SetSkinButtonEvent : " + Name + " // " + Division);
 
         if(Division.Equals("Buy"))
         {
@@ -118,8 +158,10 @@ public class UIObjectShop : MonoBehaviour
     }
 
     // 상점 > 스킬 > 버튼 이벤트 정의
-    public void SetSkillButtonEvent(int Index, string Division)
+    public void SetSkillButtonEvent(string Name, string Division)
     {
+        Debug.Log(">>>>>>>>>> SetSkinButtonEvent : " + Name + " // " + Division);
+
         if (Division.Equals("Lock"))
         {
             // 잠금 해제
@@ -399,6 +441,9 @@ public class UIObjectShop : MonoBehaviour
 
     void Start()
     {
+        // 아이템 / 스킬 프리펩 인스턴스화
+        SetPrefab();
+
         // 각 버튼 별 클릭 이벤트 생성
         SetButtonEvent();
 
