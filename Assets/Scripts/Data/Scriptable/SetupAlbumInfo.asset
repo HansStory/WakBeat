@@ -41,13 +41,13 @@ MonoBehaviour:
   - {fileID: 11400000}
   FirstAlbumMusicBackground:
   - {fileID: 21300000, guid: ab7e8359b825e44418b8581ca46c493e, type: 3}
-  - {fileID: 21300000, guid: 3159da1785be4db4ca2a621b5686e421, type: 3}
+  - {fileID: 21300000, guid: 6b34cec4b2816a946912adfeed3588d4, type: 3}
   FirstAlbumMusicCircle:
   - {fileID: 21300000, guid: a935e03e094e44a4c9c0d447f5259744, type: 3}
-  - {fileID: 21300000, guid: 46248930a1a34b64c9c82590664f3752, type: 3}
+  - {fileID: 21300000, guid: da4253ce3bcaba949b7dc05f0a4b8e4c, type: 3}
   FirstAlbumMusicLevel:
   - {fileID: 21300000, guid: 43ac9885981fbae4fa54e7b8187ea20f, type: 3}
-  - {fileID: 21300000, guid: 4977b8f60558e6744acb3361d55c5956, type: 3}
+  - {fileID: 21300000, guid: a3dd20654d0b9e549998490a670b01c2, type: 3}
   SecondAlbumMusicBackground:
   - {fileID: 21300000, guid: 72d40efdef180584d856e665bbf3af58, type: 3}
   - {fileID: 21300000, guid: 27da3e5dc4451514fa83718c01e7a7af, type: 3}
@@ -64,32 +64,35 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2de2aaf0871428e479e30d4e51321323, type: 3}
   - {fileID: 21300000, guid: acfee8762a2f87f4eb61834ce63fb3e5, type: 3}
   ThirdAlbumMusicBackground:
-  - {fileID: 21300000, guid: 72d40efdef180584d856e665bbf3af58, type: 3}
-  - {fileID: 21300000, guid: 27da3e5dc4451514fa83718c01e7a7af, type: 3}
-  - {fileID: 21300000, guid: c67871c5d232d1a4e8a612b041419e85, type: 3}
-  - {fileID: 21300000, guid: c2bccbbe6566c7c4396ec3bf44b1ec5a, type: 3}
+  - {fileID: 21300000, guid: ab7e8359b825e44418b8581ca46c493e, type: 3}
+  - {fileID: 21300000, guid: ab7e8359b825e44418b8581ca46c493e, type: 3}
+  - {fileID: 21300000, guid: ab7e8359b825e44418b8581ca46c493e, type: 3}
+  - {fileID: 21300000, guid: ab7e8359b825e44418b8581ca46c493e, type: 3}
+  - {fileID: 21300000, guid: ab7e8359b825e44418b8581ca46c493e, type: 3}
   ThirdAlbumMusicCircle:
-  - {fileID: 21300000, guid: 2627acbaca9bb13449c6e4b5b5c3a57f, type: 3}
-  - {fileID: 21300000, guid: 9336da8ab7a178c4f98300ccd45323e8, type: 3}
-  - {fileID: 21300000, guid: 0a5ad61b5faec804ab956e3dc8a70f7d, type: 3}
-  - {fileID: 21300000, guid: 57fec0d1a3c9df9429f5a8365cd31247, type: 3}
+  - {fileID: 21300000, guid: a935e03e094e44a4c9c0d447f5259744, type: 3}
+  - {fileID: 21300000, guid: a935e03e094e44a4c9c0d447f5259744, type: 3}
+  - {fileID: 21300000, guid: a935e03e094e44a4c9c0d447f5259744, type: 3}
+  - {fileID: 21300000, guid: a935e03e094e44a4c9c0d447f5259744, type: 3}
+  - {fileID: 21300000, guid: a935e03e094e44a4c9c0d447f5259744, type: 3}
   ThirdAlbumMusicLevel:
-  - {fileID: 21300000, guid: 4e066370efad9bd41891f40d564a1335, type: 3}
-  - {fileID: 21300000, guid: eb61c5f6319ffef4e92ed44a55e8789a, type: 3}
-  - {fileID: 21300000, guid: 2de2aaf0871428e479e30d4e51321323, type: 3}
-  - {fileID: 21300000, guid: acfee8762a2f87f4eb61834ce63fb3e5, type: 3}
+  - {fileID: 21300000, guid: a428bf16d0c2dbd458ca9cce12ab20aa, type: 3}
+  - {fileID: 21300000, guid: dee1681c39f4dd34caf1c14a02711dcf, type: 3}
+  - {fileID: 21300000, guid: d07f9bd8fa5950042a0086d9962227bc, type: 3}
+  - {fileID: 21300000, guid: 29ceda17de1682943bf9462f6b0db795, type: 3}
+  - {fileID: 21300000, guid: 766c67b78288d394c8dea83ae356a977, type: 3}
   ForthAlbumMusicBackground:
-  - {fileID: 21300000, guid: 72d40efdef180584d856e665bbf3af58, type: 3}
-  - {fileID: 21300000, guid: 27da3e5dc4451514fa83718c01e7a7af, type: 3}
-  - {fileID: 21300000, guid: c67871c5d232d1a4e8a612b041419e85, type: 3}
-  - {fileID: 21300000, guid: c2bccbbe6566c7c4396ec3bf44b1ec5a, type: 3}
+  - {fileID: 21300000, guid: ab7e8359b825e44418b8581ca46c493e, type: 3}
+  - {fileID: 21300000, guid: 34ca5f2bf81439340a7083505f418169, type: 3}
+  - {fileID: 21300000, guid: 9d5e6cc55c1a2b84a9a668993619a8a8, type: 3}
+  - {fileID: 21300000, guid: 702e47d0998e6a94e9ba37a7640ec91c, type: 3}
   ForthAlbumMusicCircle:
-  - {fileID: 21300000, guid: 90409c833fc4f6c44b21ba0238acfe83, type: 3}
-  - {fileID: 21300000, guid: 8c4ccc7b8229f1d47854390f03eb7661, type: 3}
-  - {fileID: 21300000, guid: 1b9b1782f324ec34688e12af4da6c82d, type: 3}
-  - {fileID: 21300000, guid: c06cede30caf2a94c9e90f7e97b4a66d, type: 3}
+  - {fileID: 21300000, guid: a935e03e094e44a4c9c0d447f5259744, type: 3}
+  - {fileID: 21300000, guid: 25c9b6910a40b76448b30c3a766b585e, type: 3}
+  - {fileID: 21300000, guid: bf1966cf6981da44bb0aebd0da72049b, type: 3}
+  - {fileID: 21300000, guid: 7bf0d5b81dc6ed94c8a2232868db13a5, type: 3}
   ForthAlbumMusicLevel:
-  - {fileID: 21300000, guid: 4e066370efad9bd41891f40d564a1335, type: 3}
-  - {fileID: 21300000, guid: eb61c5f6319ffef4e92ed44a55e8789a, type: 3}
-  - {fileID: 21300000, guid: 2de2aaf0871428e479e30d4e51321323, type: 3}
-  - {fileID: 21300000, guid: acfee8762a2f87f4eb61834ce63fb3e5, type: 3}
+  - {fileID: 21300000, guid: 69a7c08b153a42c43ad77a60e4968ee4, type: 3}
+  - {fileID: 21300000, guid: b64c1638eb034ad4bafed43f37034a21, type: 3}
+  - {fileID: 21300000, guid: 09c56e25d189e4347ad60ab321aa1e99, type: 3}
+  - {fileID: 21300000, guid: a1ce7c5b2e395b144816eeb5e99b982d, type: 3}
