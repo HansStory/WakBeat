@@ -27,24 +27,31 @@ public class UIObjectButton : MonoBehaviour
                 ButtonHome.gameObject.SetActive(false);
                 ButtonSetting.gameObject.SetActive(true);
                 ButtonShop.gameObject.SetActive(false);
-                ButtonTrophy.gameObject.SetActive(true);
+                ButtonTrophy.gameObject.SetActive(false);
                 ButtonPause.gameObject.SetActive(false);
                 break;
             case 1:
-                ButtonHome.gameObject.SetActive(true);
+                ButtonHome.gameObject.SetActive(false);
                 ButtonSetting.gameObject.SetActive(true);
                 ButtonShop.gameObject.SetActive(true);
                 ButtonTrophy.gameObject.SetActive(false);
                 ButtonPause.gameObject.SetActive(false);
                 break;
             case 2:
+                ButtonHome.gameObject.SetActive(true);
+                ButtonSetting.gameObject.SetActive(true);
+                ButtonShop.gameObject.SetActive(true);
+                ButtonTrophy.gameObject.SetActive(false);
+                ButtonPause.gameObject.SetActive(false);
+                break;
+            case 3:
                 ButtonHome.gameObject.SetActive(false);
                 ButtonSetting.gameObject.SetActive(false);
                 ButtonShop.gameObject.SetActive(false);
                 ButtonTrophy.gameObject.SetActive(false);
                 ButtonPause.gameObject.SetActive(true);
                 break;
-            case 3:
+            case 4:
                 ButtonHome.gameObject.SetActive(false);
                 ButtonSetting.gameObject.SetActive(true);
                 ButtonShop.gameObject.SetActive(false);
