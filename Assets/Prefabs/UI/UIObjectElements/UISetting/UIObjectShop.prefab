@@ -910,7 +910,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2874283559978380594}
   - component: {fileID: 6555475109158448597}
-  - component: {fileID: 7394299061577352110}
   m_Layer: 5
   m_Name: ShopSkillGroup
   m_TagString: Untagged
@@ -947,20 +946,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2780292137202456149}
   m_CullTransparentMesh: 1
---- !u!114 &7394299061577352110
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2780292137202456149}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d3b126cbd9838f47abdcdf02cec6a66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShopInfo: {fileID: 11400000, guid: dbecb26b32772324080a1e61d75459a6, type: 2}
-  SkillItemPrefab: {fileID: 4929607880408049384}
 --- !u!1 &2831505109747531008
 GameObject:
   m_ObjectHideFlags: 0
@@ -1937,10 +1922,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c223ac005bda8a342be7f960a4797056, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShopInfo: {fileID: 11400000, guid: dbecb26b32772324080a1e61d75459a6, type: 2}
   ButtonClose: {fileID: 3538287314403545269}
   TabObject: {fileID: 1744790136519028718}
   SkinGroup: {fileID: 5972279600751532548}
+  SkinItemPrefab: {fileID: 6244261705724465315}
   SkillGroup: {fileID: 2780292137202456149}
+  SkillItemPrefab: {fileID: 4929607880408049384}
   VideoGroup: {fileID: 7947798634137861094}
 --- !u!1 &5972279600751532548
 GameObject:
@@ -1952,7 +1940,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6109319166051014241}
   - component: {fileID: 7758770649198955719}
-  - component: {fileID: 2269105127620578339}
   m_Layer: 5
   m_Name: ShopSkinGroup
   m_TagString: Untagged
@@ -1989,20 +1976,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5972279600751532548}
   m_CullTransparentMesh: 1
---- !u!114 &2269105127620578339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5972279600751532548}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a04a80659bc790498aa94a697ec2ca7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShopInfo: {fileID: 11400000, guid: dbecb26b32772324080a1e61d75459a6, type: 2}
-  SkinItemPrefab: {fileID: 6244261705724465315}
 --- !u!1 &6038493431499203506
 GameObject:
   m_ObjectHideFlags: 0
