@@ -15,4 +15,9 @@ public class UIObjectTrophy : MonoBehaviour
     {
         
     }
+
+    public void OnClickHide()
+    {
+        this.transform.parent.gameObject.SetActive(false);
+    }
 }

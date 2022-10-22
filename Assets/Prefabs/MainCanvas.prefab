@@ -176,7 +176,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5613520598877090023
 RectTransform:
   m_ObjectHideFlags: 0
@@ -253,7 +253,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3098887668493016216
 RectTransform:
   m_ObjectHideFlags: 0
@@ -596,7 +596,7 @@ Canvas:
   m_GameObject: {fileID: 9011292345269450756}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -679,7 +679,7 @@ PrefabInstance:
     - target: {fileID: 3195040341693840867, guid: 0adaecda691ee5840b90149027bfc87c, type: 3}
       propertyPath: fadeImage
       value: 
-      objectReference: {fileID: 8232399110014482390}
+      objectReference: {fileID: 0}
     - target: {fileID: 3670266356148043184, guid: 0adaecda691ee5840b90149027bfc87c, type: 3}
       propertyPath: m_Color.b
       value: 0.7529412
@@ -799,17 +799,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4703795047517393186, guid: 0adaecda691ee5840b90149027bfc87c, type: 3}
   m_PrefabInstance: {fileID: 126084238971799201}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8232399110014482390 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8322840871336096119, guid: 0adaecda691ee5840b90149027bfc87c, type: 3}
-  m_PrefabInstance: {fileID: 126084238971799201}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &3939395603358912395
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1641,7 +1630,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5918829337308287302, guid: 29fc5796273903d4e9f7f5d35f1187ad, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5974796807556483806, guid: 29fc5796273903d4e9f7f5d35f1187ad, type: 3}
       propertyPath: m_RootOrder
