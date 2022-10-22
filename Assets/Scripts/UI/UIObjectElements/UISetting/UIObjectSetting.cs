@@ -1,7 +1,9 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -43,20 +45,27 @@ public class UIObjectSetting : MonoBehaviour
         ButtonKeySetting.transform.Find("ButtonSeparationOff").GetComponent<Button>().onClick.AddListener(() => SetButtonClickEvent("SeparationOff"));
 
         // 효과/배경음 변경 이벤트
-        SFXSlider.onValueChanged.AddListener(delegate { setSFXSoundChange(); });
+        //SFXSlider.onValueChanged.AddListener(delegate { setSFXSoundChange(); });
         BGMSlider.onValueChanged.AddListener(delegate { setBGMSoundChange(); });
 
         // 설정 > 키 설정 > 분리 팝업 버튼 이벤트
         SeparationClose.onClick.AddListener(() => SetButtonClickEvent("SeparationClose"));
-
         SeparationInBoxs.transform.Find("SeparationInBox1").GetComponent<InputField>().onEndEdit.AddListener(delegate { SetSeparationOffInputField("In", 1); });
+        SeparationInBoxs.transform.Find("SeparationInBox1").GetComponent<InputField>().onValueChanged.AddListener((word) => SeparationInBoxs.transform.Find("SeparationInBox1").GetComponent<InputField>().text = Regex.Replace(word, @"[^a-z]", ""));
         SeparationInBoxs.transform.Find("SeparationInBox2").GetComponent<InputField>().onEndEdit.AddListener(delegate { SetSeparationOffInputField("In", 2); });
+        SeparationInBoxs.transform.Find("SeparationInBox2").GetComponent<InputField>().onValueChanged.AddListener((word) => SeparationInBoxs.transform.Find("SeparationInBox2").GetComponent<InputField>().text = Regex.Replace(word, @"[^a-z]", ""));
         SeparationInBoxs.transform.Find("SeparationInBox3").GetComponent<InputField>().onEndEdit.AddListener(delegate { SetSeparationOffInputField("In", 3); });
+        SeparationInBoxs.transform.Find("SeparationInBox3").GetComponent<InputField>().onValueChanged.AddListener((word) => SeparationInBoxs.transform.Find("SeparationInBox3").GetComponent<InputField>().text = Regex.Replace(word, @"[^a-z]", ""));
         SeparationInBoxs.transform.Find("SeparationInBox4").GetComponent<InputField>().onEndEdit.AddListener(delegate { SetSeparationOffInputField("In", 4); });
+        SeparationInBoxs.transform.Find("SeparationInBox4").GetComponent<InputField>().onValueChanged.AddListener((word) => SeparationInBoxs.transform.Find("SeparationInBox4").GetComponent<InputField>().text = Regex.Replace(word, @"[^a-z]", ""));
         SeparationOutBoxs.transform.Find("SeparationOutBox1").GetComponent<InputField>().onEndEdit.AddListener(delegate { SetSeparationOffInputField("Out", 1); });
+        SeparationOutBoxs.transform.Find("SeparationOutBox1").GetComponent<InputField>().onValueChanged.AddListener((word) => SeparationOutBoxs.transform.Find("SeparationOutBox1").GetComponent<InputField>().text = Regex.Replace(word, @"[^a-z]", ""));
         SeparationOutBoxs.transform.Find("SeparationOutBox2").GetComponent<InputField>().onEndEdit.AddListener(delegate { SetSeparationOffInputField("Out", 2); });
+        SeparationOutBoxs.transform.Find("SeparationOutBox2").GetComponent<InputField>().onValueChanged.AddListener((word) => SeparationOutBoxs.transform.Find("SeparationOutBox2").GetComponent<InputField>().text = Regex.Replace(word, @"[^a-z]", ""));
         SeparationOutBoxs.transform.Find("SeparationOutBox3").GetComponent<InputField>().onEndEdit.AddListener(delegate { SetSeparationOffInputField("Out", 3); });
+        SeparationOutBoxs.transform.Find("SeparationOutBox3").GetComponent<InputField>().onValueChanged.AddListener((word) => SeparationOutBoxs.transform.Find("SeparationOutBox3").GetComponent<InputField>().text = Regex.Replace(word, @"[^a-z]", ""));
         SeparationOutBoxs.transform.Find("SeparationOutBox4").GetComponent<InputField>().onEndEdit.AddListener(delegate { SetSeparationOffInputField("Out", 4); });
+        SeparationOutBoxs.transform.Find("SeparationOutBox4").GetComponent<InputField>().onValueChanged.AddListener((word) => SeparationOutBoxs.transform.Find("SeparationOutBox4").GetComponent<InputField>().text = Regex.Replace(word, @"[^a-z]", ""));
     }
 
     // 각 버튼 별 클릭 이벤트 정의
@@ -104,12 +113,7 @@ public class UIObjectSetting : MonoBehaviour
         else if (Division.Equals("SeparationOn"))
         {
             // 키 설정 > 분리 On 클릭 이벤트
-            ButtonKeySetting.transform.Find("ButtonIntegrationOn").gameObject.SetActive(true);
-            ButtonKeySetting.transform.Find("ButtonIntegrationOff").gameObject.SetActive(false);
-            ButtonKeySetting.transform.Find("ButtonSeparationOn").gameObject.SetActive(false);
-            ButtonKeySetting.transform.Find("ButtonSeparationOff").gameObject.SetActive(true);
-            
-            SeparationGroup.SetActive(false);
+            SeparationGroup.SetActive(true);
         }
         else if (Division.Equals("SeparationOff"))
         {
@@ -124,10 +128,10 @@ public class UIObjectSetting : MonoBehaviour
         else if (Division.Equals("SeparationClose"))
         {
             // 키 설정 > 분리 > 팝업 닫기 버튼 이벤트
-            ButtonKeySetting.transform.Find("ButtonIntegrationOn").gameObject.SetActive(true);
-            ButtonKeySetting.transform.Find("ButtonIntegrationOff").gameObject.SetActive(false);
-            ButtonKeySetting.transform.Find("ButtonSeparationOn").gameObject.SetActive(false);
-            ButtonKeySetting.transform.Find("ButtonSeparationOff").gameObject.SetActive(true);
+            ButtonKeySetting.transform.Find("ButtonIntegrationOn").gameObject.SetActive(false);
+            ButtonKeySetting.transform.Find("ButtonIntegrationOff").gameObject.SetActive(true);
+            ButtonKeySetting.transform.Find("ButtonSeparationOn").gameObject.SetActive(true);
+            ButtonKeySetting.transform.Find("ButtonSeparationOff").gameObject.SetActive(false);
 
             SeparationGroup.SetActive(false);
         }
@@ -221,7 +225,34 @@ public class UIObjectSetting : MonoBehaviour
     // 글로벌 변수 화면 세팅
     public void GetGlobalValue()
     {
-        SetButtonClickEvent("IntegrationOff");
+        string KeyDivision = GlobalState.Instance.UserData.data.KeyDivision.Equals("Integration") ? "IntegrationOff" : "SeparationOff";
+
+        SFXSlider.value = GlobalState.Instance.UserData.data.SFXValue;
+        BGMSlider.value = GlobalState.Instance.UserData.data.BGMValue;
+        InBoxValues = GlobalState.Instance.UserData.data.InnerOperationKey;
+        OutBoxValues = GlobalState.Instance.UserData.data.OuterOperationKey;
+
+        for (int i = 0; i < GlobalState.Instance.UserData.data.InnerOperationKey.Length; i++)
+        {
+            if(null != GlobalState.Instance.UserData.data.InnerOperationKey[i] && !"".Equals(GlobalState.Instance.UserData.data.InnerOperationKey[i]))
+            {
+                SeparationInBoxs.transform.Find("SeparationInBox" + (i + 1)).GetComponent<InputField>().text = GlobalState.Instance.UserData.data.InnerOperationKey[i];
+            }
+            SeparationInBoxs.transform.Find("SeparationInBox" + (i + 1)).GetComponent<InputField>().readOnly = true;
+            SeparationInBoxs.transform.Find("SeparationInBox" + (i + 1)).GetComponent<Image>().sprite = OffBoxImage;
+        }
+
+        for (int i = 0; i < GlobalState.Instance.UserData.data.OuterOperationKey.Length; i++)
+        {
+            if (null != GlobalState.Instance.UserData.data.OuterOperationKey[i] && !"".Equals(GlobalState.Instance.UserData.data.OuterOperationKey[i]))
+            {
+                SeparationOutBoxs.transform.Find("SeparationOutBox" + (i + 1)).GetComponent<InputField>().text = GlobalState.Instance.UserData.data.OuterOperationKey[i];
+            }
+            SeparationOutBoxs.transform.Find("SeparationOutBox" + (i + 1)).GetComponent<InputField>().readOnly = true;
+            SeparationOutBoxs.transform.Find("SeparationOutBox" + (i + 1)).GetComponent<Image>().sprite = OffBoxImage;
+        }
+
+        SetButtonClickEvent(KeyDivision);
     }
 
     // 글로벌 변수 저장
@@ -229,6 +260,48 @@ public class UIObjectSetting : MonoBehaviour
     {
         float SFXValue = SFXSlider.value;
         float BGMValue = BGMSlider.value;
+        string KeyDivision = "";
+
+        if(ButtonKeySetting.transform.Find("ButtonSeparationOn").gameObject.activeSelf)
+        {
+            Boolean SeparationYn = false;
+            for(int i = 0; i < InBoxValues.Length; i++)
+            {
+                if(null != InBoxValues[i] && !"".Equals(InBoxValues[i]))
+                {
+                    SeparationYn = true;
+                }
+            }
+            for (int i = 0; i < OutBoxValues.Length; i++)
+            {
+                if (null != OutBoxValues[i] && !"".Equals(OutBoxValues[i]))
+                {
+                    SeparationYn = true;
+                }
+            }
+
+            if (SeparationYn)
+            {
+                KeyDivision = "Separation";
+            } else
+            {
+                KeyDivision = "Integration";
+            }
+        }
+        else
+        {
+            KeyDivision = "Integration";
+        }
+
+        // 설정 데이터 변경
+        DataManager.SetKeyDivision = KeyDivision;
+        DataManager.SetBGMValue = BGMValue;
+        DataManager.SetSFXValue = SFXValue;
+        DataManager.SetInnerOperationKey = InBoxValues;
+        DataManager.SetOuterOperationKey = OutBoxValues;
+
+        // 설정 데이터 변경 후 파일 저장
+        DataManager.SaveUserData();
     }
 
     void Start()

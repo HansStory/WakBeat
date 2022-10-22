@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public interface IUserData
@@ -42,14 +43,31 @@ public class UserData
     public string playTime;
     public string dateTime;
     public int coin;
-    public string currentBall;
-    public string[] InnerOperationKey;
-    public string[] OuterOperationKey;
+    //public string currentBall;
+    //public string[] InnerOperationKey;
+    //public string[] OuterOperationKey;
     public int clearStageCount;
     public int statusAlbum_01;
     public int statusAlbum_02;
     public int statusAlbum_03;
     public int statusAlbum_04;
+
+    // 설정 관련 글로벌 데이터
+    // 배경음 크기
+    public float BGMValue;
+    // 효과음 크기
+    public float SFXValue;
+    // 키 설정 구분 > Integration : 통합, Separation : 분리
+    public string KeyDivision;
+    // 키 설정 구분 > 분리 > 안쪽 이동 
+    public string[] InnerOperationKey = new string[4];
+    // 키 설정 구분 > 분리 > 바깥 이동
+    public string[] OuterOperationKey = new string[4];
+
+    // 상점 관련 글로벌 데이터
+    // 스킨 관련 데이터
+    // 현재 볼 종류 > Black, Blue, Green, Orange
+    public string currentBall;
 }
 
 [Serializable]
