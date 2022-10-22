@@ -6,30 +6,29 @@ using TMPro;
 public class UIObjectAudioSpectrum : MonoBehaviour
 {
     [SerializeField] private Image[] spectrums;
-    private AudioSource audio;
     private float[] spectrumData = new float[64];
 
     [SerializeField] private float sensibility;
     [SerializeField] private float spectrumHeight;
-    [SerializeField] private TMP_Text songText;
+    [SerializeField] private Image imageBGMText;
 
     private void Start()
     {
-        audio = SoundManager.Instance.MusicAudio;
         ResetSpectrums();
 
         SoundManager.Instance.OnChanged += OnChanged;
-        OnChanged(SoundManager.Instance.CurrentSongTitle);
+        OnChanged(SoundManager.Instance.CurrentSongSprite);
     }
 
-    private void OnChanged(string songTitle)
+    private void OnChanged(Sprite songTitle)
     {
-        songText.text = string.Format("¢Ü {0}", songTitle);
+        imageBGMText.sprite = songTitle;
+        imageBGMText.SetNativeSize();
     }
 
     private void OnDestroy()
     {
-        //SoundManager.Instance.OnChanged -= OnChanged;
+
     }
 
     private void OnDisable()
@@ -39,12 +38,12 @@ public class UIObjectAudioSpectrum : MonoBehaviour
 
     void Update()
     {
-        if (audio == null)
+        if (SoundManager.Instance.MusicAudio == null)
         {
             return;
         }
 
-        audio.GetSpectrumData(spectrumData, 0, FFTWindow.Rectangular);
+        SoundManager.Instance.MusicAudio.GetSpectrumData(spectrumData, 0, FFTWindow.Rectangular);
 
         for (int i = 0; i < spectrums.Length; i++)
         {

@@ -118,6 +118,7 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
         if (GlobalState.Instance.CurrentPanelIndex == (int)GlobalData.UIMODE.SELECT_MUSIC)
         {
             WantShowPanel((int)GlobalData.UIMODE.SELECT_ALBUM);
+            SoundManager.Instance.TurnOnGameBackGround();
         }
         else if (GlobalState.Instance.CurrentPanelIndex == (int)GlobalData.UIMODE.MAIN)
         {

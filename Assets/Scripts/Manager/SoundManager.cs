@@ -5,7 +5,7 @@ using UnityEngine;
 public class SoundManager : MonoBehaviourSingleton<SoundManager>
 {
     #region Events
-    public delegate void AudioChangeHandler(string songTitle);
+    public delegate void AudioChangeHandler(Sprite songTitle);
     #endregion
     public event AudioChangeHandler OnChanged;
 
@@ -17,6 +17,8 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     [SerializeField] private AudioClip[] soundFXClip;
 
     [SerializeField] private AudioClip[] backgroundClips;
+
+    [SerializeField] private Sprite[] bgmTextSprites;
 
     [SerializeField] private AudioClip[] album1HighLightClips;
     [SerializeField] private AudioClip[] album2HighLightClips;
@@ -36,6 +38,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
 
     private bool isPlayBackground = false;
     public string CurrentSongTitle => MusicAudioSource.clip.name;
+    public Sprite CurrentSongSprite => bgmTextSprites[GlobalState.Instance.BGMIndex];
 
     public AudioSource MusicAudio => MusicAudioSource;
 
@@ -55,14 +58,26 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         CtrlBGMVolume(GlobalState.Instance.MusicVolume);
     }
 
+    public bool isBackGroundPlay()
+    {
+        if (!MusicAudioSource.isPlaying && isPlayBackground)
+        {
+
+        }
+        return true;
+    }
+
     private void Update()
     {
         if (!MusicAudioSource.isPlaying && isPlayBackground)
         {
             MusicAudioSource.clip = backgroundClips[BackgroundMusicIndex];
-            BackgroundMusicIndex++;
             MusicAudioSource.Play();
-            OnChanged?.Invoke(MusicAudioSource.clip.name);
+            GlobalState.Instance.BGMIndex = BackgroundMusicIndex;
+
+            OnChanged?.Invoke(bgmTextSprites[GlobalState.Instance.BGMIndex]);
+
+            BackgroundMusicIndex++;
         }
     }
 

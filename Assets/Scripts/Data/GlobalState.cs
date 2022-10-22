@@ -3,6 +3,16 @@ using UnityEngine;
 
 public class GlobalState : MonoBehaviourSingleton<GlobalState>
 {
+    private int _bgmIndex = 0;
+    public int BGMIndex
+    {
+        get { return _bgmIndex; }
+        set
+        {
+            _bgmIndex = value;
+        }
+    }
+
     private int _playTime = 0;
     public int PlayTime
     {
