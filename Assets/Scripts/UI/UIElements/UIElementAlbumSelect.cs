@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UIElementAlbumSelect : MonoBehaviour
 {
-    public Image fadeImage = null;
+    //public Image fadeImage = null;
     private float fadeTime = 0.5f;
 
     [SerializeField] private GameObject album;
@@ -13,10 +13,13 @@ public class UIElementAlbumSelect : MonoBehaviour
 
     [SerializeField] private Image imageBackGround;
 
+    [SerializeField] private GameObject albumInfo;
+    [SerializeField] private Transform albumInfoBase;
+
     // Start is called before the first frame update
     private void OnEnable()
     {
-        StartCoroutine(StartAlbumSelectPanel());
+        //StartCoroutine(StartAlbumSelectPanel());
         SoundManager.Instance.TurnOnGameBackGround();
     }
     void Start()
@@ -45,6 +48,8 @@ public class UIElementAlbumSelect : MonoBehaviour
                     albumInfo.AlbumTitle = albumTitles[_albumIndex];
                     albumInfo.AlbumIndex = _albumIndex;
                     albumInfo.InitMyIndexPos();
+
+                    albumInfo.UIElementAlbumSelect = this;
                 }
                 else
                 {
@@ -56,10 +61,15 @@ public class UIElementAlbumSelect : MonoBehaviour
         }
     }
 
+    public void ShowAlbumInfo()
+    {
+        var _albumInfo = GameObject.Instantiate(albumInfo, albumInfoBase);
+    }
+
     // Update is called once per frame
     void Update()
     {
-        SelectAlbum();
+        //SelectAlbum();
         OnClickEsc();
         InputExecute();
     }
@@ -77,6 +87,7 @@ public class UIElementAlbumSelect : MonoBehaviour
                 }
             }
 
+            SoundManager.Instance.PlaySoundFX(2);
             ChangeBackGround(GlobalState.Instance.AlbumIndex);
             Debug.Log($"Current My Album : {GlobalState.Instance.AlbumIndex}");
         }
@@ -91,6 +102,7 @@ public class UIElementAlbumSelect : MonoBehaviour
                 }
             }
 
+            SoundManager.Instance.PlaySoundFX(2);
             ChangeBackGround(GlobalState.Instance.AlbumIndex);
             Debug.Log($"Current My Album : {GlobalState.Instance.AlbumIndex}");
         }
@@ -117,14 +129,14 @@ public class UIElementAlbumSelect : MonoBehaviour
     }
 
     int SFX_Move_02 = 3;
-    void SelectAlbum()
-    {
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            StartCoroutine(SelectAlbumProcedure());
-            SoundManager.Instance.PlaySoundFX(SFX_Move_02);
-        }
-    }
+    //void SelectAlbum()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Return))
+    //    {
+    //        StartCoroutine(SelectAlbumProcedure());
+    //        SoundManager.Instance.PlaySoundFX(SFX_Move_02);
+    //    }
+    //}
 
     void OnClickEsc()
     {
@@ -134,23 +146,23 @@ public class UIElementAlbumSelect : MonoBehaviour
         }
     }
 
-    IEnumerator StartAlbumSelectPanel()
-    {
-        fadeImage.gameObject.SetActive(true);
-        UIManager.Instance.FadeToWhite(fadeImage, fadeTime);
-        yield return new WaitForSeconds(fadeTime);
+    //IEnumerator StartAlbumSelectPanel()
+    //{
+    //    fadeImage.gameObject.SetActive(true);
+    //    UIManager.Instance.FadeToWhite(fadeImage, fadeTime);
+    //    yield return new WaitForSeconds(fadeTime);
 
-        fadeImage.gameObject.SetActive(false);
-    }
+    //    fadeImage.gameObject.SetActive(false);
+    //}
 
-    IEnumerator SelectAlbumProcedure()
-    {
-        fadeImage.gameObject.SetActive(true);
-        UIManager.Instance.FadeToBlack(fadeImage, fadeTime);        
-        yield return new WaitForSeconds(fadeTime);
+    //IEnumerator SelectAlbumProcedure()
+    //{
+    //    fadeImage.gameObject.SetActive(true);
+    //    UIManager.Instance.FadeToBlack(fadeImage, fadeTime);        
+    //    yield return new WaitForSeconds(fadeTime);
 
-        fadeImage.gameObject.SetActive(false);
-        UIManager.Instance.GoPanelMusicSelect();
+    //    fadeImage.gameObject.SetActive(false);
+    //    UIManager.Instance.GoPanelMusicSelect();
 
-    }
+    //}
 }
