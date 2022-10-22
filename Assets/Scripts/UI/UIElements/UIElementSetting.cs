@@ -36,13 +36,13 @@ public class UIElementSetting : MonoBehaviourSingleton<UIElementSetting>
                 ShowSettingPanel(true, 1);
                 break;
             case (int)GlobalData.UIMODE.SELECT_MUSIC:
-                ShowSettingPanel(true, 1);
-                break;
-            case (int)GlobalData.UIMODE.GAME:
                 ShowSettingPanel(true, 2);
                 break;
-            case (int)GlobalData.UIMODE.RESULT:
+            case (int)GlobalData.UIMODE.GAME:
                 ShowSettingPanel(true, 3);
+                break;
+            case (int)GlobalData.UIMODE.RESULT:
+                ShowSettingPanel(true, 4);
                 break;
         }
     }
