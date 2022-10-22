@@ -17,13 +17,18 @@ public class UIElementMain : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SoundManager.Instance.TurnOnGameBackGround();
+        //SoundManager.Instance.TurnOnGameBackGround();
         isStart = true;
     }
 
     private void OnEnable()
     {
+        Invoke($"{nameof(LogoPlay)}", 1f);
+    }
 
+    void LogoPlay()
+    {
+        MainLogoAnim.Play();
     }
 
     // Update is called once per frame
@@ -50,10 +55,11 @@ public class UIElementMain : MonoBehaviour
             AppManager.Instance.Quit();
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            MainLogoAnim.Play();
-        }
+        // For Test
+        //if (Input.GetKeyDown(KeyCode.Alpha1))
+        //{
+        //    LogoPlay();
+        //}
     }
 
     void BackGroundMove()

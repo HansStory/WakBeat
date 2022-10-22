@@ -9,7 +9,6 @@ public class UIElementFadePanel : MonoBehaviourSingleton<UIElementFadePanel>
     [Header("For Fade In Out Effect")]
     // For Fade White Transition
     [SerializeField] private Image imageWhite;
-    //[SerializeField] private AnimCurve fadeCurve;
     private Color whiteAlpha0 = new Vector4(1f, 1f, 1f, 0f);
 
     // For Fade Black Transition
@@ -22,6 +21,7 @@ public class UIElementFadePanel : MonoBehaviourSingleton<UIElementFadePanel>
 
     public Sequence TransitionSequence;
     public Tween TransitionTween = null;
+
     [SerializeField] private GameObject fadeClear;
     [SerializeField] private AnimCurve curveClear;
     private Vector3 fadeClearOriginScale;
@@ -107,7 +107,8 @@ public class UIElementFadePanel : MonoBehaviourSingleton<UIElementFadePanel>
             blackToClearTween.OnComplete(() => { imageWhite.color = whiteAlpha0; });
 
             imageWhite.DOColor(Color.white, toWhiteTime).SetDelay(blackToClear + holdTime);
-            TransitionTween = imageWhite.DOColor(Color.clear, toClearTime).SetDelay(blackToClear + holdTime + toWhiteTime);
+
+            TransitionTween = imageWhite.DOColor(Color.clear, toClearTime).SetDelay(blackToClear + holdTime + toWhiteTime).SetEase(Ease.InExpo);
             TransitionTween.OnComplete(() => { imageWhite.gameObject.SetActive(false); });
         });
     }
@@ -126,7 +127,6 @@ public class UIElementFadePanel : MonoBehaviourSingleton<UIElementFadePanel>
 
             TransitionTween = fadeIvory.transform.DOScale(Vector3.zero, TransitionTime).SetEase(curveIvory.Curve);
             TransitionTween.OnComplete(() => { transitionPanel.SetActive(false); });
-            //TransitionTween.OnComplete(() => { TransitionTween = null; });
         });
 
         SoundManager.Instance.PlaySoundFX(0);

@@ -105,8 +105,10 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
         {
             if (uiElementFadePanel)
             {
-                uiElementFadePanel.IntroToMain(2f, 2f, 0.5f, 2f);
-                uiElementFadePanel.TransitionSequence.InsertCallback(4.5f, () => WantShowPanel((int)GlobalData.UIMODE.MAIN));
+                uiElementFadePanel.IntroToMain(1f, 1f, 1f, 2f);
+
+                uiElementFadePanel.TransitionSequence.InsertCallback(2f, () => SoundManager.Instance.TurnOnGameBackGround());
+                uiElementFadePanel.TransitionSequence.InsertCallback(3f, () => WantShowPanel((int)GlobalData.UIMODE.MAIN));
             }
         }
     }
