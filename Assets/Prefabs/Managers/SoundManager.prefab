@@ -183,9 +183,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5f7a3687c5236884fb761b5a3bc75bbe, type: 3}
   - {fileID: 8300000, guid: e3c421cb894547f478bbb9424ec81a78, type: 3}
   backgroundClips:
-  - {fileID: 8300000, guid: aeebf76311b1fef4f84d3e32d4f35919, type: 3}
   - {fileID: 8300000, guid: eb5de20ffa9e4f04391aaddc86817b95, type: 3}
+  - {fileID: 8300000, guid: aeebf76311b1fef4f84d3e32d4f35919, type: 3}
   - {fileID: 8300000, guid: 718366ee8f89f0340b755ad3e53c0ae9, type: 3}
+  - {fileID: 8300000, guid: 639a6b334ef2e7b4f9969577b4408f2f, type: 3}
   album1HighLightClips:
   - {fileID: 8300000, guid: bb4b074e8ab8e5542bc58df84be15630, type: 3}
   - {fileID: 8300000, guid: d6c3461bb224d9246a80478f8d74c4a2, type: 3}
