@@ -42,6 +42,10 @@ public class UIObjectAlbum : MonoBehaviour
         }
     }
 
+    [SerializeField] private AnimCurve curveAlbumCircle;
+    [SerializeField] private AnimCurve curveAlbumTitle;
+
+
     public void InputExecute()
     {
         if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -59,16 +63,25 @@ public class UIObjectAlbum : MonoBehaviour
         albumTitle.gameObject.SetActive(GlobalState.Instance.AlbumIndex == AlbumIndex);
     }
 
+    private Vector3 startTitleVector = new Vector3(-680f, 0f, 0f);
+
     void ShowMyTitle()
     {
         albumTitle.gameObject.SetActive(GlobalState.Instance.AlbumIndex == AlbumIndex);
+
+        if (GlobalState.Instance.AlbumIndex == AlbumIndex)
+        {
+            DOTween.PauseAll();
+            albumTitle.rectTransform.localPosition = startTitleVector;
+            albumTitle.rectTransform.DOLocalMove(Vector3.zero, 1f).SetEase(curveAlbumTitle.Curve);
+        }
     }
 
-    private Vector2 upPos = new Vector2(-340f, 420f);
-    private Vector2 centerPos = new Vector2(0f, -16f);
-    private Vector2 downPos = new Vector2(-340f, -430f);
+    private Vector2 upPos = new Vector2(-333f, 415f);
+    private Vector2 centerPos = new Vector2(12f, -16f);
+    private Vector2 downPos = new Vector2(-333f, -430f);
 
-    private Vector3 centerSize = Vector3.one;
+    private Vector3 centerSize = new Vector3(1f, 1f, 1f);
     private Vector3 smallSize = new Vector3(0.6f, 0.6f, 0.6f);
 
     [SerializeField] private float _slideDuration = 2f;
@@ -82,28 +95,51 @@ public class UIObjectAlbum : MonoBehaviour
 
     void Init()
     {
-        ShowMyTitle();
+        albumTitle.gameObject.SetActive(GlobalState.Instance.AlbumIndex == AlbumIndex);
+
+        if (GlobalState.Instance.AlbumIndex == AlbumIndex)
+        {
+            albumTitle.rectTransform.localPosition = startTitleVector;
+            albumTitle.rectTransform.DOLocalMove(Vector3.zero, 1f).SetEase(curveAlbumTitle.Curve).SetDelay(1f);
+        }
     }
 
+    private void OnEnable()
+    {
+        //InitMyIndexPos();
+    }
+
+    float _duration = 2f;
     public void InitMyIndexPos()
     {
         switch (AlbumIndex)
         {
             case (int)GlobalData.ALBUM.ISEDOL:
+                myRectTransform.anchoredPosition = centerPos;
+                myRectTransform.localScale = centerSize;
+                albumCircle.rectTransform.DOScale(Vector3.one, _duration).SetEase(curveAlbumCircle.Curve);
                 break;
             case (int)GlobalData.ALBUM.CONTEST:
                 myRectTransform.anchoredPosition = downPos;
                 myRectTransform.localScale = smallSize;
+                albumCircle.rectTransform.DOScale(Vector3.one, _duration).SetEase(curveAlbumCircle.Curve).SetDelay(0.1f);
                 break;
             case (int)GlobalData.ALBUM.GOMIX:
                 myRectTransform.anchoredPosition = downPos + downPos;
                 myRectTransform.localScale = smallSize;
+                albumCircle.rectTransform.DOScale(Vector3.one, _duration).SetEase(curveAlbumCircle.Curve);
                 break;
             case (int)GlobalData.ALBUM.WAKALOID:
                 myRectTransform.anchoredPosition = upPos;
                 myRectTransform.localScale = smallSize;
+                albumCircle.rectTransform.DOScale(Vector3.one, _duration).SetEase(curveAlbumCircle.Curve).SetDelay(0.2f);
                 break;
         }
+    }
+
+    void CircleTween()
+    {
+
     }
 
     public void OnClickInfoButton()

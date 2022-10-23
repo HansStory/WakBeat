@@ -5,8 +5,10 @@ using UnityEngine.UI;
 
 public class UIElementAlbumSelect : MonoBehaviour
 {
-    //public Image fadeImage = null;
+    public Image fadeImage = null;
     private float fadeTime = 0.5f;
+
+    public List<GameObject> Albums;
 
     [SerializeField] private GameObject album;
     [SerializeField] private Transform albumBase;
@@ -20,7 +22,7 @@ public class UIElementAlbumSelect : MonoBehaviour
     private void OnEnable()
     {
         //StartCoroutine(StartAlbumSelectPanel());
-        SoundManager.Instance.TurnOnGameBackGround();
+        //SoundManager.Instance.TurnOnGameBackGround();
     }
     void Start()
     {
@@ -37,6 +39,8 @@ public class UIElementAlbumSelect : MonoBehaviour
         {
             var _album = GameObject.Instantiate(album, albumBase);
             var albumInfo = _album.GetComponent<UIObjectAlbum>();
+
+            Albums.Add(_album);
 
             if (albumInfo)
             {
@@ -69,7 +73,7 @@ public class UIElementAlbumSelect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //SelectAlbum();
+        SelectAlbum();
         OnClickEsc();
         InputExecute();
     }
@@ -78,33 +82,49 @@ public class UIElementAlbumSelect : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            if (GlobalState.Instance.AlbumIndex <= GlobalData.Instance.Album.AlbumCircles.Length)
-            {
-                GlobalState.Instance.AlbumIndex++;
-                if (GlobalState.Instance.AlbumIndex == GlobalData.Instance.Album.AlbumCircles.Length)
-                {
-                    GlobalState.Instance.AlbumIndex = 0;
-                }
-            }
-
+            InputDownChangeAlbumIndex();
             SoundManager.Instance.PlaySoundFX(2);
             ChangeBackGround(GlobalState.Instance.AlbumIndex);
+
             Debug.Log($"Current My Album : {GlobalState.Instance.AlbumIndex}");
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            if (GlobalState.Instance.AlbumIndex >= 0)
-            {
-                GlobalState.Instance.AlbumIndex--;                
-                if (GlobalState.Instance.AlbumIndex < 0)
-                {
-                    GlobalState.Instance.AlbumIndex = GlobalData.Instance.Album.AlbumCircles.Length - 1;
-                }
-            }
-
+            InputUpChangeAlbumIndex();
             SoundManager.Instance.PlaySoundFX(2);
             ChangeBackGround(GlobalState.Instance.AlbumIndex);
+
             Debug.Log($"Current My Album : {GlobalState.Instance.AlbumIndex}");
+        }
+
+    }
+
+    void InputDownChangeAlbumIndex()
+    {
+        if (GlobalState.Instance.AlbumIndex <= GlobalData.Instance.Album.AlbumCircles.Length)
+        {
+            GlobalState.Instance.AlbumIndex++;
+            if (GlobalState.Instance.AlbumIndex == GlobalData.Instance.Album.AlbumCircles.Length)
+            {
+                GlobalState.Instance.AlbumIndex = 0;
+            }
+        }
+    }
+
+    void MoveCircles()
+    {
+
+    }
+
+    void InputUpChangeAlbumIndex()
+    {
+        if (GlobalState.Instance.AlbumIndex >= 0)
+        {
+            GlobalState.Instance.AlbumIndex--;
+            if (GlobalState.Instance.AlbumIndex < 0)
+            {
+                GlobalState.Instance.AlbumIndex = GlobalData.Instance.Album.AlbumCircles.Length - 1;
+            }
         }
     }
 
@@ -129,14 +149,14 @@ public class UIElementAlbumSelect : MonoBehaviour
     }
 
     int SFX_Move_02 = 3;
-    //void SelectAlbum()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.Return))
-    //    {
-    //        StartCoroutine(SelectAlbumProcedure());
-    //        SoundManager.Instance.PlaySoundFX(SFX_Move_02);
-    //    }
-    //}
+    void SelectAlbum()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            StartCoroutine(SelectAlbumProcedure());
+            SoundManager.Instance.PlaySoundFX(SFX_Move_02);
+        }
+    }
 
     void OnClickEsc()
     {
@@ -146,23 +166,23 @@ public class UIElementAlbumSelect : MonoBehaviour
         }
     }
 
-    //IEnumerator StartAlbumSelectPanel()
-    //{
-    //    fadeImage.gameObject.SetActive(true);
-    //    UIManager.Instance.FadeToWhite(fadeImage, fadeTime);
-    //    yield return new WaitForSeconds(fadeTime);
+    IEnumerator StartAlbumSelectPanel()
+    {
+        fadeImage.gameObject.SetActive(true);
+        UIManager.Instance.FadeToWhite(fadeImage, fadeTime);
+        yield return new WaitForSeconds(fadeTime);
 
-    //    fadeImage.gameObject.SetActive(false);
-    //}
+        fadeImage.gameObject.SetActive(false);
+    }
 
-    //IEnumerator SelectAlbumProcedure()
-    //{
-    //    fadeImage.gameObject.SetActive(true);
-    //    UIManager.Instance.FadeToBlack(fadeImage, fadeTime);        
-    //    yield return new WaitForSeconds(fadeTime);
+    IEnumerator SelectAlbumProcedure()
+    {
+        fadeImage.gameObject.SetActive(true);
+        UIManager.Instance.FadeToBlack(fadeImage, fadeTime);
+        yield return new WaitForSeconds(fadeTime);
 
-    //    fadeImage.gameObject.SetActive(false);
-    //    UIManager.Instance.GoPanelMusicSelect();
+        fadeImage.gameObject.SetActive(false);
+        UIManager.Instance.GoPanelMusicSelect();
 
-    //}
+    }
 }
