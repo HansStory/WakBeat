@@ -18,7 +18,7 @@ public class UIElementAlbumSelect : MonoBehaviour
     [SerializeField] private GameObject albumInfo;
     [SerializeField] private Transform albumInfoBase;
 
-    // Start is called before the first frame update
+
     private void OnEnable()
     {
         //StartCoroutine(StartAlbumSelectPanel());
@@ -148,13 +148,13 @@ public class UIElementAlbumSelect : MonoBehaviour
         }
     }
 
-    int SFX_Move_02 = 3;
+    //int SFX_Move_02 = 3;
     void SelectAlbum()
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            StartCoroutine(SelectAlbumProcedure());
-            SoundManager.Instance.PlaySoundFX(SFX_Move_02);
+            //StartCoroutine(SelectAlbumProcedure());
+            //SoundManager.Instance.PlaySoundFX(SFX_Move_02);
         }
     }
 

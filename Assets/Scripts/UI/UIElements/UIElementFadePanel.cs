@@ -132,6 +132,11 @@ public class UIElementFadePanel : MonoBehaviourSingleton<UIElementFadePanel>
         SoundManager.Instance.PlaySoundFX(0);
     }
 
+    public void BetweenAlbumToMusicTransition()
+    {
+
+    }
+
     private void InitBetweenMainToTransitionTweening()
     {
         DOTween.PauseAll();

@@ -40,10 +40,19 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
     // -------------------------------------------------------------------
     public GameObject[] MainPanels;
 
+    [Header("UI Main Panels")]
+    [SerializeField] private UIElementIntro uiElementIntro;
+    [SerializeField] private UIElementMain uiElementMain;
+    [SerializeField] private UIElementAlbumSelect uiElementAlbumSelect;
+    [SerializeField] private UIElementMusicSelect uiElementMusicSelect;
+    [SerializeField] private UIElementGamePlay uiElementGamePlay;
+    [SerializeField] private UIElementResult uiElementResult;
+    [Header("UI Setting Panel")]
     [SerializeField] private UIElementSetting uiElementSetting;
+    [Header("UI Fade Panel")]
     [SerializeField] private UIElementFadePanel uiElementFadePanel;
 
-    private const int startPanel = 0;
+    public const int startPanel = 0;
 
     void Start()
     {
@@ -118,6 +127,8 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
         if (GlobalState.Instance.CurrentPanelIndex == (int)GlobalData.UIMODE.SELECT_MUSIC)
         {
             WantShowPanel((int)GlobalData.UIMODE.SELECT_ALBUM);
+
+            uiElementFadePanel.BetweenAlbumToMusicTransition();
             SoundManager.Instance.TurnOnGameBackGround();
         }
         else if (GlobalState.Instance.CurrentPanelIndex == (int)GlobalData.UIMODE.MAIN)
@@ -134,6 +145,8 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
     {
         if (GlobalState.Instance.CurrentPanelIndex == (int)GlobalData.UIMODE.SELECT_ALBUM)
         {
+            uiElementFadePanel.BetweenAlbumToMusicTransition();
+
             WantShowPanel((int)GlobalData.UIMODE.SELECT_MUSIC);
         }
         else if (GlobalState.Instance.CurrentPanelIndex == (int)GlobalData.UIMODE.GAME)

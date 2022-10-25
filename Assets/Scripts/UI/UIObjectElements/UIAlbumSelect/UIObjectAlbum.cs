@@ -45,38 +45,6 @@ public class UIObjectAlbum : MonoBehaviour
     [SerializeField] private AnimCurve curveAlbumCircle;
     [SerializeField] private AnimCurve curveAlbumTitle;
 
-
-    public void InputExecute()
-    {
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            ShowMyTitle();
-        }
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            ShowMyTitle();
-        }
-    }
-
-    void SetMyAlbumProcedure()
-    {
-        albumTitle.gameObject.SetActive(GlobalState.Instance.AlbumIndex == AlbumIndex);
-    }
-
-    private Vector3 startTitleVector = new Vector3(-680f, 0f, 0f);
-
-    void ShowMyTitle()
-    {
-        albumTitle.gameObject.SetActive(GlobalState.Instance.AlbumIndex == AlbumIndex);
-
-        if (GlobalState.Instance.AlbumIndex == AlbumIndex)
-        {
-            DOTween.PauseAll();
-            albumTitle.rectTransform.localPosition = startTitleVector;
-            albumTitle.rectTransform.DOLocalMove(Vector3.zero, 1f).SetEase(curveAlbumTitle.Curve);
-        }
-    }
-
     private Vector2 upPos = new Vector2(-333f, 415f);
     private Vector2 centerPos = new Vector2(12f, -16f);
     private Vector2 downPos = new Vector2(-333f, -430f);
@@ -87,31 +55,100 @@ public class UIObjectAlbum : MonoBehaviour
     [SerializeField] private float _slideDuration = 2f;
     [SerializeField] private RectTransform myRectTransform;
 
-    // Start is called before the first frame update
+
+    public Tween TitleTween;
     void Start()
     {
         Init();
     }
 
-    void Init()
+    private void OnEnable()
     {
-        albumTitle.gameObject.SetActive(GlobalState.Instance.AlbumIndex == AlbumIndex);
+        ShowMyTitle(1f);
+    }
 
-        if (GlobalState.Instance.AlbumIndex == AlbumIndex)
+    void Update()
+    {
+        InputExecute();
+        InputTest();
+    }
+
+    public void InputExecute()
+    {
+        if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            albumTitle.rectTransform.localPosition = startTitleVector;
-            albumTitle.rectTransform.DOLocalMove(Vector3.zero, 1f).SetEase(curveAlbumTitle.Curve).SetDelay(1f);
+            ShowMyTitle(0f);
+        }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            ShowMyTitle(0f);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            SelectAlbum();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ExitAlbumSelect();
         }
     }
 
-    private void OnEnable()
+    //void SetMyAlbumProcedure()
+    //{
+    //    albumTitle.gameObject.SetActive(GlobalState.Instance.AlbumIndex == AlbumIndex);
+    //}
+
+    private Vector3 startTitleVector = new Vector3(-680f, 0f, 0f);
+
+    void ShowMyTitle(float delay)
     {
-        //InitMyIndexPos();
+        albumTitle.gameObject.SetActive(GlobalState.Instance.AlbumIndex == AlbumIndex);
+        TitleTween.Pause();
+
+        if (GlobalState.Instance.AlbumIndex == AlbumIndex)
+        {            
+            albumTitle.rectTransform.localPosition = startTitleVector;
+            TitleTween = albumTitle.rectTransform.DOLocalMove(Vector3.zero, 1f).SetEase(curveAlbumTitle.Curve);
+            TitleTween.SetDelay(delay);
+        }
+    }
+
+    int SFX_Move_02 = 3;
+    void SelectAlbum()
+    {
+        if (GlobalState.Instance.AlbumIndex == AlbumIndex)
+        {
+            DOTween.PauseAll();
+            albumTitle.rectTransform.localPosition = Vector3.zero;
+            Tween TitleClose = albumTitle.rectTransform.DOLocalMove(startTitleVector, 1f).SetEase(curveAlbumTitle.Curve);
+            TitleClose.OnComplete(() => { UIManager.Instance.GoPanelMusicSelect(); });
+
+            SoundManager.Instance.PlaySoundFX(SFX_Move_02);
+        }
+    }
+
+    void ExitAlbumSelect()
+    {
+        UIManager.Instance.GoPanelMain();
+    }
+
+
+    void Init()
+    {
+        albumTitle.gameObject.SetActive(GlobalState.Instance.AlbumIndex == AlbumIndex);
     }
 
     float _duration = 2f;
     public void InitMyIndexPos()
     {
+        //for (int i = 0; i < length; i++)
+        //{
+
+        //}
+
         switch (AlbumIndex)
         {
             case (int)GlobalData.ALBUM.ISEDOL:
@@ -137,23 +174,12 @@ public class UIObjectAlbum : MonoBehaviour
         }
     }
 
-    void CircleTween()
-    {
-
-    }
-
     public void OnClickInfoButton()
     {
         UIElementAlbumSelect.ShowAlbumInfo();
         Debug.Log($"Click Info Button. My Album Index = {_albumIndex}");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        InputTest();
-        InputExecute();
-    }
 
     void InputTest()
     {
