@@ -5,11 +5,17 @@ using UnityEngine.UI;
 
 public class UIElementMusicSelect : MonoBehaviour
 {
-    [SerializeField] private GameObject stage;
-    [SerializeField] private Transform stageBase;
+    [SerializeField] private GameObject uiObjectStage;
+    [SerializeField] private Transform uiObjectStageBase;
 
     [SerializeField] private Image stageText;
     [SerializeField] private Image backGround;
+
+    [SerializeField] private GameObject uiObjectProgressBar;
+    [SerializeField] private Transform uiObjectProgressBarBase;
+
+    [SerializeField] private GameObject uiObjectProgressCircle;
+    [SerializeField] private Transform uiObjectProgressCircleBase;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +34,7 @@ public class UIElementMusicSelect : MonoBehaviour
 
     private void OnDisable()
     {
-        DestroyAlbumStage();
+        DestroyAlbumObjects();
     }
 
     void MakeAlbumStage()
@@ -37,22 +43,38 @@ public class UIElementMusicSelect : MonoBehaviour
         {
             case (int)GlobalData.ALBUM.ISEDOL:
                 makeStages(GlobalData.Instance.Album.FirstAlbumMusicCircle, GlobalData.Instance.Album.FirstAlbumMusicLevel);
+                MakeProgressBar(GlobalData.Instance.Album.FirstAlbumMusicCircle);
+                MakeProgressCicle(GlobalData.Instance.Album.FirstAlbumMusicCircle);
                 break;
             case (int)GlobalData.ALBUM.CONTEST:
                 makeStages(GlobalData.Instance.Album.SecondAlbumMusicCircle, GlobalData.Instance.Album.SecondAlbumMusicLevel);
+                MakeProgressBar(GlobalData.Instance.Album.SecondAlbumMusicCircle);
+                MakeProgressCicle(GlobalData.Instance.Album.SecondAlbumMusicCircle);
                 break;
             case (int)GlobalData.ALBUM.GOMIX:
                 makeStages(GlobalData.Instance.Album.ThirdAlbumMusicCircle, GlobalData.Instance.Album.ThirdAlbumMusicLevel);
+                MakeProgressBar(GlobalData.Instance.Album.ThirdAlbumMusicCircle);
+                MakeProgressCicle(GlobalData.Instance.Album.ThirdAlbumMusicCircle);
                 break;
             case (int)GlobalData.ALBUM.WAKALOID:
                 makeStages(GlobalData.Instance.Album.ForthAlbumMusicCircle, GlobalData.Instance.Album.ForthAlbumMusicLevel);
+                MakeProgressBar(GlobalData.Instance.Album.ForthAlbumMusicCircle);
+                MakeProgressCicle(GlobalData.Instance.Album.ForthAlbumMusicCircle);
                 break;
         }
     }
 
+    void DestroyAlbumObjects()
+    {
+        DestroyAlbumStage();
+        DestroyProgressBar();
+        DestroyProgressCircle();
+    }
+
     void DestroyAlbumStage()
     {
-        Transform[] childList = stageBase.gameObject.GetComponentsInChildren<Transform>();
+        Transform[] childList = uiObjectStageBase.gameObject.GetComponentsInChildren<Transform>();
+
         if (childList != null)
         {
             for (int i = 1; i < childList.Length; i++)
@@ -63,7 +85,38 @@ public class UIElementMusicSelect : MonoBehaviour
                 }
             }
         }
+    }
 
+    void DestroyProgressBar()
+    {
+        Transform[] childList = uiObjectProgressBarBase.gameObject.GetComponentsInChildren<Transform>();
+
+        if (childList != null)
+        {
+            for (int i = 2; i < childList.Length; i++)
+            {
+                if (childList[i] != transform)
+                {
+                    Destroy(childList[i].gameObject);
+                }
+            }
+        }
+    }
+
+    void DestroyProgressCircle()
+    {
+        Transform[] childList = uiObjectProgressCircleBase.gameObject.GetComponentsInChildren<Transform>();
+
+        if (childList != null)
+        {
+            for (int i = 1; i < childList.Length; i++)
+            {
+                if (childList[i] != transform)
+                {
+                    Destroy(childList[i].gameObject);
+                }
+            }
+        }
     }
 
     void makeStages(Sprite[] _stageCircles, Sprite[] _stageLevel)
@@ -74,7 +127,7 @@ public class UIElementMusicSelect : MonoBehaviour
         int _stageIndex = 0;
         foreach (var stages in stageCircles)
         {
-            var _stage = GameObject.Instantiate(stage, stageBase);
+            var _stage = GameObject.Instantiate(uiObjectStage, uiObjectStageBase);
             var stageInfo = _stage.GetComponent<UIObjectStage>();
 
             if (stageInfo)
@@ -94,6 +147,40 @@ public class UIElementMusicSelect : MonoBehaviour
             }
 
             _stageIndex++;
+        }
+    }
+
+    void MakeProgressBar(Sprite[] _stageCircles)
+    {
+        int _progressIndex = 1;
+
+        for (int i = 1; i < _stageCircles.Length; i++)
+        {
+            var progressBar = GameObject.Instantiate(uiObjectProgressBar, uiObjectProgressBarBase);
+            if (progressBar)
+            {
+                progressBar.name = $"ProgressCircle_{_progressIndex}";
+            }
+
+            _progressIndex++;
+        }
+    }
+
+    void MakeProgressCicle(Sprite[] _stageCircles)
+    {
+        //var stageCircles = _stageCircles;
+
+        int _progressIndex = 0;
+        foreach (var stage in _stageCircles)
+        {
+            var progressCircle = GameObject.Instantiate(uiObjectProgressCircle, uiObjectProgressCircleBase);
+            //var progressCircleInfo = progressCircle.GetComponent<UIObjectProgressCircle>();
+            if (progressCircle)
+            {
+                progressCircle.name = $"ProgressCircle_{_progressIndex + 1}";
+            }
+
+            _progressIndex++;
         }
     }
 

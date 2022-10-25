@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 4924752872825999426}
   - component: {fileID: 2180820225313183535}
   m_Layer: 5
-  m_Name: UIObjectMusic
+  m_Name: UIObjectStage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
