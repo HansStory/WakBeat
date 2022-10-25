@@ -135,7 +135,7 @@ public class UIElementMusicSelect : MonoBehaviour
                 // null check
                 if (stageCircles.Length == stageLevel.Length)
                 {
-                    stageInfo.name = $"Album_{_stageIndex}";
+                    stageInfo.name = $"Stage_{_stageIndex}";
                     stageInfo.StageThumnail = stageCircles[_stageIndex];
                     stageInfo.StageLevel = stageLevel[_stageIndex];
                     stageInfo.StageIndex = _stageIndex;
@@ -157,19 +157,17 @@ public class UIElementMusicSelect : MonoBehaviour
         for (int i = 1; i < _stageCircles.Length; i++)
         {
             var progressBar = GameObject.Instantiate(uiObjectProgressBar, uiObjectProgressBarBase);
+
             if (progressBar)
             {
-                progressBar.name = $"ProgressCircle_{_progressIndex}";
+                progressBar.name = $"ProgressBar_{_progressIndex}";
             }
-
             _progressIndex++;
         }
     }
 
     void MakeProgressCicle(Sprite[] _stageCircles)
     {
-        //var stageCircles = _stageCircles;
-
         int _progressIndex = 0;
         foreach (var stage in _stageCircles)
         {
