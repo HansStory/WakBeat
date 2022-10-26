@@ -434,5 +434,5 @@ MonoBehaviour:
   curveAlbumCircle: {fileID: 11400000, guid: 851c9649b084ad343912ef22f4171b70, type: 2}
   circleTweenDuration: 1
   curveAlbumTitle: {fileID: 11400000, guid: 8af3063e0dde9e246b928e92c91ef53a, type: 2}
-  titleTweenDuration: 0.5
+  titleTweenDuration: 1
   myRectTransform: {fileID: 8133759807000362710}
