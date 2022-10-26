@@ -2,19 +2,22 @@ using UnityEngine;
 
 public class AppManager : MonoBehaviourSingleton<AppManager>
 {
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        Screen.SetResolution(1920, 1080, true);
+
+        Screen.SetResolution(Screen.width, (Screen.width * 9) / 16, true);
+    }
+
     void Start()
     {
 
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    Quit();
-        //}
+
     }
 
     public void Quit()
