@@ -6,19 +6,30 @@ using System.IO;
 using DG.Tweening.Plugins.Core.PathCore;
 //using UnityEditorInternal;
 using static UnityEngine.Rendering.DebugUI;
+using UnityEditorInternal;
 
 public class DataManager : MonoBehaviourSingleton<DataManager>
 {
     // 글로벌 데이터 세팅
+    static Boolean _FileYn;
+    static int _ClearStageCount;
+
     // 설정 화면 변수
     static string[] _InnerOperationKey;
     static string[] _OuterOperationKey;
     static string _KeyDivision;
-    static float _BGMValue = 1f;
-    static float _SFXValue = 1f;
+    static float? _BGMValue;
+    static float? _SFXValue;
     // 상점 화면 변수
     static int _SkinCount = 4;
     static int _SkillCount = 5;
+    static string[] _SkinUnLockYn;
+    static string[] _SkinUsingYn;
+    static int[] _SkinUnLockCondition;
+    static string[] _SkillUnLockYn;
+    static string[] _SkillUsingYn;
+    static int[] _SkillUnLockCondition;
+    static Boolean _ShopCompulsionActive;
 
     public static string GetUserData()
     {
@@ -31,42 +42,47 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
         userData.data.dateTime = DateTime.Now.ToString(("yyyy-MM-dd HH:mm:ss:tt"));
         userData.data.coin = 0;
 
-        userData.data.clearStageCount = 0;
+        userData.data.ClearStageCount = 0;
         userData.data.statusAlbum_01 = 0;
         userData.data.statusAlbum_02 = 0;
         userData.data.statusAlbum_03 = 0;
         userData.data.statusAlbum_04 = 0;
 
         // 설정 화면 글로벌 데이터 세팅
-        userData.data.BGMValue = _BGMValue;
-        userData.data.SFXValue = _SFXValue;
-        userData.data.KeyDivision = (null == _KeyDivision || "".Equals(_KeyDivision)) ? "Integration" : _KeyDivision;
-        userData.data.InnerOperationKey = _InnerOperationKey;
-        userData.data.OuterOperationKey = _OuterOperationKey;
+        userData.data.BGMValue = _BGMValue ?? GlobalState.Instance.UserData.data.BGMValue;
+        userData.data.SFXValue = _SFXValue ?? GlobalState.Instance.UserData.data.SFXValue;
+        userData.data.KeyDivision = _KeyDivision ?? (GlobalState.Instance.UserData.data.KeyDivision ?? "Integration");
+        userData.data.InnerOperationKey = _InnerOperationKey ?? GlobalState.Instance.UserData.data.InnerOperationKey;
+        userData.data.OuterOperationKey = _OuterOperationKey ?? GlobalState.Instance.UserData.data.OuterOperationKey;
 
         // 상점 화면 글로벌 데이터 세팅
-        //userData.data.SkinCount = _SkinCount;
-        //userData.data.SkillCount = _SkillCount;
-
+        userData.data.SkinCount = _SkinCount;
+        userData.data.SkillCount = _SkillCount;
+        userData.data.SkinUnLockYn = _SkinUnLockYn ?? GlobalState.Instance.UserData.data.SkinUnLockYn;
+        userData.data.SkinUsingYn = _SkinUsingYn ?? GlobalState.Instance.UserData.data.SkinUsingYn;
+        userData.data.SkillUnLockYn = _SkillUnLockYn ?? GlobalState.Instance.UserData.data.SkillUnLockYn;
+        userData.data.SkillUsingYn = _SkillUsingYn ?? GlobalState.Instance.UserData.data.SkillUsingYn;
 
         return userData.ToJson();
     }
-
 
     static string path;
     static string _fileName = "save";
 
     public static void SaveUserData()
     {
+        // Json 데이터 가져옴
         var userData = GetUserData();
 
+        // 파일에 데이터 작성하여 저장
         File.WriteAllText(path + _fileName, userData);
     }
 
     public void LoadUserData()
     {
-        if (File.ReadAllText(path + _fileName) != null)
+        if (File.Exists(path + _fileName))
         {
+            // 파일에서 데이터 불러옴
             var userData = File.ReadAllText(path + _fileName);
             GlobalState.Instance.UserData = JsonUtility.FromJson<JsonUserData>(userData);
 
@@ -74,7 +90,21 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
             SoundManager.Instance.CtrlBGMVolume(GlobalState.Instance.UserData.data.BGMValue);
             SoundManager.Instance.CtrlSFXVolume(GlobalState.Instance.UserData.data.SFXValue);
 
+            // 파일 여부 확인
+            _FileYn = true;
+            GlobalState.Instance.UserData.data.FileYn = _FileYn;
+
             Debug.Log($"Load User Data : {userData}");
+        } 
+        else
+        {
+            // 파일 여부 확인
+            _FileYn = false;
+            GlobalState.Instance.UserData.data.FileYn = _FileYn;
+
+            // 파일 없을 시
+            SoundManager.Instance.CtrlBGMVolume(0.5f);
+            SoundManager.Instance.CtrlSFXVolume(0.5f);
         }
     }
 
@@ -82,6 +112,20 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
     {
         path = Application.dataPath + "/StreamingAssets/";
         LoadUserData();
+    }
+
+    // 파일 조회 여부
+    public static Boolean SetFileYn
+    {
+        get { return _FileYn; }
+        set { _FileYn = value; }
+    }
+
+    // 클리어 스테이지 수
+    public static int SetClearStageCount
+    {
+        get { return _ClearStageCount; }
+        set { _ClearStageCount = value; }
     }
 
     // 설정 > 키 설정 구분 값 세팅
@@ -126,6 +170,48 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
     {
         get { return _SkillCount; }
         set { _SkillCount = value;  }
+    }
+
+    // 상점 스킬 사용 여부
+    public static string[] SetSkillUsingYn
+    {
+        set { _SkillUsingYn = value; }
+    }
+
+    // 상점 스킨 해금 여부
+    public static string[] SetSkinUnLockYn
+    {
+        set { _SkinUnLockYn = value; }
+    }
+
+    // 상점 스킨 사용 여부
+    public static string[] SetSkinUsingYn
+    {
+        set { _SkinUsingYn = value; }
+    }
+
+    // 상점 스킬 해금 요건
+    public static int[] SetSkinUnLockCondition
+    {
+        set { _SkinUnLockCondition = value; }
+    }
+
+    // 상점 스킬 해금 여부
+    public static string[] SetSkillUnLockYn
+    {
+        set { _SkillUnLockYn = value; }
+    }
+
+    // 상점 스킬 사용 여부
+    public static Boolean SetShopCompulsionActive
+    {
+        set { _ShopCompulsionActive = value; }
+    }
+
+    // 상점 스킬 해금 요건
+    public static int[] SetSkillUnLockCondition
+    {
+        set { _SkillUnLockCondition = value; }
     }
 
     // Start is called before the first frame update

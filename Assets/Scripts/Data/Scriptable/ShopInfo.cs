@@ -5,10 +5,23 @@ using UnityEngine;
 
 public class ShopInfo : ScriptableObject
 {
-    [Header("[ Shop List (Prefabs) ]")]
+    [Space(10)]
+    [Header("[ Shop Skin Info]")]
+    public Sprite[] SkinTitle;
+    public Sprite[] SkinIcon;
+
+    [Space(10)]
+    [Header("[ Shop Skill Info]")]
+    public Sprite[] SkillTitle;
+    public Sprite[] SkillExplanation;
+    public Sprite[] SkillIcon;
+    public Sprite[] SkillLockExplanation;
+
+    /*
+    [Header("[ Shop Info List (Prefabs) ]")]
     public List<SkillItemInfo> SkillItemInfos;
     public List<SkinItemInfo> SkinItemInfos;
-
+    */
     /*
     [Header("[ Shop List (Prefabs) ]")]
     public GameObject[] SkinLists;

@@ -12,51 +12,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0142207f8585bf842a38c6eece52ab9a, type: 3}
   m_Name: SetupShopInfo
   m_EditorClassIdentifier: 
-  SkillItemInfos:
-  - TitleSprite: {fileID: 21300000, guid: e68417b6f9ed13c4f829d7d73afa00f8, type: 3}
-    ExplanationSprite: {fileID: 21300000, guid: c9544e0e2735ecd4db6e157d7950d980, type: 3}
-    IconSprite: {fileID: 21300000, guid: bc7a9e2fc84c28549adf1af19a1122e4, type: 3}
-    LockExplanationSprite: {fileID: 21300000, guid: 5f441a22c085d00489b465af8d2dc0f1, type: 3}
-  - TitleSprite: {fileID: 21300000, guid: 1f6dadcb666bd4941a7afbf19d6cab95, type: 3}
-    ExplanationSprite: {fileID: 21300000, guid: ac0263d201fc76d489b5b32c979ff8e8, type: 3}
-    IconSprite: {fileID: 21300000, guid: 2901a835c3a3bca46a2b9af0f12a46a2, type: 3}
-    LockExplanationSprite: {fileID: 21300000, guid: d37ab7ba2d68a794b98b5707ff5960bb, type: 3}
-  - TitleSprite: {fileID: 21300000, guid: 0921ac80f4adefd4ea2bf3f0cfb74273, type: 3}
-    ExplanationSprite: {fileID: 21300000, guid: fd59bc5daa4f26946a9e044222f08f57, type: 3}
-    IconSprite: {fileID: 21300000, guid: e9fe7e89df1055241911c424f7fd83fc, type: 3}
-    LockExplanationSprite: {fileID: 21300000, guid: 1f4c3d7119504c443a3671a85e21133d, type: 3}
-  - TitleSprite: {fileID: 21300000, guid: 1e44989d96c3ba04a86bc53708fdb3ea, type: 3}
-    ExplanationSprite: {fileID: 21300000, guid: f104e2c5fa5bbc24380050b50aa511fa, type: 3}
-    IconSprite: {fileID: 21300000, guid: c3df9906446b0a840b6e123b3fe1350a, type: 3}
-    LockExplanationSprite: {fileID: 21300000, guid: 072a1193a57153844a5c2272b351b777, type: 3}
-  - TitleSprite: {fileID: 21300000, guid: 0f0be60004bc34843a1031be0eef3a71, type: 3}
-    ExplanationSprite: {fileID: 21300000, guid: 845d51f00f2bab94a8236979fd2e8561, type: 3}
-    IconSprite: {fileID: 21300000, guid: 13f14eb2850ac2043bbe4c9b842e8afb, type: 3}
-    LockExplanationSprite: {fileID: 21300000, guid: 4d5f80c4f9f673a46b31e934dc0c3183, type: 3}
-  SkinItemInfos:
-  - TitleSprite: {fileID: 21300000, guid: 4ab85586dd94dd74c8213d83b3c97a9f, type: 3}
-    IconSprite: {fileID: 21300000, guid: f9f7d38f2d3f794429e9e6c9564afd25, type: 3}
-  - TitleSprite: {fileID: 21300000, guid: 87fb1324b20005b49b23390aa00bd6a3, type: 3}
-    IconSprite: {fileID: 21300000, guid: 061dc330e6270b64b801ec15ed65836f, type: 3}
-  - TitleSprite: {fileID: 21300000, guid: c36b30385e89d2b4baaa8a87cb9055de, type: 3}
-    IconSprite: {fileID: 21300000, guid: 93e1e2e1830f0ed40a3480367de10871, type: 3}
-  - TitleSprite: {fileID: 21300000, guid: 1a5373a8c0785bd499f98f82226a55a5, type: 3}
-    IconSprite: {fileID: 21300000, guid: 78f1138216b749046b103639a61e68ee, type: 3}
-  SkinLists: []
-  SkillLists: []
-  SkinBackgournds: []
-  SkinTitles: []
-  SkinIcons: []
-  SkinButtonOns: []
-  SkinButtonOffs: []
-  SkinButtonBuys: []
-  SkillOpenBackgournds: []
-  SkillOpenTitles: []
-  SkillOpenTexts: []
-  SkillOpenIcons: []
-  SkillOpenButtonOns: []
-  SkillOpenButtonOffs: []
-  SkillLockBackgournds: []
-  SkillLockTexts: []
-  SkillLockIcons: []
-  SkillLockButtonUnlocks: []
+  SkinTitle:
+  - {fileID: 21300000, guid: 4ab85586dd94dd74c8213d83b3c97a9f, type: 3}
+  - {fileID: 21300000, guid: 87fb1324b20005b49b23390aa00bd6a3, type: 3}
+  - {fileID: 21300000, guid: c36b30385e89d2b4baaa8a87cb9055de, type: 3}
+  - {fileID: 21300000, guid: 1a5373a8c0785bd499f98f82226a55a5, type: 3}
+  SkinIcon:
+  - {fileID: 21300000, guid: f9f7d38f2d3f794429e9e6c9564afd25, type: 3}
+  - {fileID: 21300000, guid: 061dc330e6270b64b801ec15ed65836f, type: 3}
+  - {fileID: 21300000, guid: 93e1e2e1830f0ed40a3480367de10871, type: 3}
+  - {fileID: 21300000, guid: 78f1138216b749046b103639a61e68ee, type: 3}
+  SkillTitle:
+  - {fileID: 21300000, guid: e68417b6f9ed13c4f829d7d73afa00f8, type: 3}
+  - {fileID: 21300000, guid: 1f6dadcb666bd4941a7afbf19d6cab95, type: 3}
+  - {fileID: 21300000, guid: 0921ac80f4adefd4ea2bf3f0cfb74273, type: 3}
+  - {fileID: 21300000, guid: 1e44989d96c3ba04a86bc53708fdb3ea, type: 3}
+  - {fileID: 21300000, guid: 0f0be60004bc34843a1031be0eef3a71, type: 3}
+  SkillExplanation:
+  - {fileID: 21300000, guid: c9544e0e2735ecd4db6e157d7950d980, type: 3}
+  - {fileID: 21300000, guid: ac0263d201fc76d489b5b32c979ff8e8, type: 3}
+  - {fileID: 21300000, guid: fd59bc5daa4f26946a9e044222f08f57, type: 3}
+  - {fileID: 21300000, guid: f104e2c5fa5bbc24380050b50aa511fa, type: 3}
+  - {fileID: 21300000, guid: 845d51f00f2bab94a8236979fd2e8561, type: 3}
+  SkillIcon:
+  - {fileID: 21300000, guid: bc7a9e2fc84c28549adf1af19a1122e4, type: 3}
+  - {fileID: 21300000, guid: 2901a835c3a3bca46a2b9af0f12a46a2, type: 3}
+  - {fileID: 21300000, guid: e9fe7e89df1055241911c424f7fd83fc, type: 3}
+  - {fileID: 21300000, guid: c3df9906446b0a840b6e123b3fe1350a, type: 3}
+  - {fileID: 21300000, guid: 13f14eb2850ac2043bbe4c9b842e8afb, type: 3}
+  SkillLockExplanation:
+  - {fileID: 21300000, guid: 5f441a22c085d00489b465af8d2dc0f1, type: 3}
+  - {fileID: 21300000, guid: d37ab7ba2d68a794b98b5707ff5960bb, type: 3}
+  - {fileID: 21300000, guid: 1f4c3d7119504c443a3671a85e21133d, type: 3}
+  - {fileID: 21300000, guid: 072a1193a57153844a5c2272b351b777, type: 3}
+  - {fileID: 21300000, guid: 4d5f80c4f9f673a46b31e934dc0c3183, type: 3}

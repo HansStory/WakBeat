@@ -38,6 +38,8 @@ public enum BallType
 [Serializable]
 public class UserData
 {
+    public Boolean FileYn;
+
     public string fileName;
     public string version;
     public string playTime;
@@ -46,7 +48,7 @@ public class UserData
     //public string currentBall;
     //public string[] InnerOperationKey;
     //public string[] OuterOperationKey;
-    public int clearStageCount;
+    public int ClearStageCount;
     public int statusAlbum_01;
     public int statusAlbum_02;
     public int statusAlbum_03;
@@ -69,10 +71,20 @@ public class UserData
     public int SkinCount;
     // 스킬 개수
     public int SkillCount;
-
-    // 스킨 관련 데이터
-    // 현재 볼 종류 > Black, Blue, Green, Orange
-    public string currentBall;
+    // 스킨&스킬 강제 해금 버튼 활성화 여부
+    public Boolean ShopCompulsionActive = true;
+    // 스킨 해금 여부
+    public string[] SkinUnLockYn = new string[DataManager.SetSkinCount];
+    // 스킨 사용 여부
+    public string[] SkinUsingYn = new string[DataManager.SetSkinCount];
+    // 스킨 해금 요건
+    public int[] SkinUnLockCondition = new int[DataManager.SetSkinCount];
+    // 스킬 해금 여부
+    public string[] SkillUnLockYn = new string[DataManager.SetSkillCount];
+    // 스킬 사용 여부
+    public string[] SkillUsingYn = new string[DataManager.SetSkillCount];
+    // 스킬 해금 요건
+    public int[] SkillUnLockCondition = {1, 2, 3, 5, 7};
 }
 
 [Serializable]
