@@ -96,6 +96,7 @@ public class UIElementFadePanel : MonoBehaviourSingleton<UIElementFadePanel>
     }
     #endregion
 
+    #region Transition Intro To Main
     public void IntroToMain(float blackToClear, float toWhiteTime, float holdTime, float toClearTime)
     {
         imageWhite.gameObject.SetActive(true);
@@ -112,7 +113,9 @@ public class UIElementFadePanel : MonoBehaviourSingleton<UIElementFadePanel>
             TransitionTween.OnComplete(() => { imageWhite.gameObject.SetActive(false); });
         });
     }
+    #endregion
 
+    #region Transition Between Main To Album
     public void BetweenMainToAlbumTransition()
     {
         InitBetweenMainToTransitionTweening();
@@ -132,11 +135,6 @@ public class UIElementFadePanel : MonoBehaviourSingleton<UIElementFadePanel>
         SoundManager.Instance.PlaySoundFX(0);
     }
 
-    public void BetweenAlbumToMusicTransition()
-    {
-
-    }
-
     private void InitBetweenMainToTransitionTweening()
     {
         DOTween.PauseAll();
@@ -145,4 +143,11 @@ public class UIElementFadePanel : MonoBehaviourSingleton<UIElementFadePanel>
         fadeYellow.transform.localScale = Vector3.one;
         fadeOrange.transform.localScale = Vector3.one;
     }
+    #endregion
+
+    public void BetweenAlbumToMusicTransition()
+    {
+
+    }
+
 }

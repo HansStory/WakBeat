@@ -330,8 +330,6 @@ MonoBehaviour:
   imageBackGround: {fileID: 6155114700117050587}
   albumInfo: {fileID: 8456678900480369091, guid: 331dc120d6bb78a4ea6a8afcd41bcfda, type: 3}
   albumInfoBase: {fileID: 6874890300032960467}
-  curveAlbumCircle: {fileID: 11400000, guid: 851c9649b084ad343912ef22f4171b70, type: 2}
-  curveAlbumTitle: {fileID: 11400000, guid: 8af3063e0dde9e246b928e92c91ef53a, type: 2}
 --- !u!1 &2747896039188784955
 GameObject:
   m_ObjectHideFlags: 0
@@ -1176,6 +1174,14 @@ PrefabInstance:
     - target: {fileID: 3740049901607097256, guid: 1c5ee0386e82a7f4ab32f3c0347c8e54, type: 3}
       propertyPath: m_Name
       value: UIObjectAudioSpectrum
+      objectReference: {fileID: 0}
+    - target: {fileID: 7708046356052773415, guid: 1c5ee0386e82a7f4ab32f3c0347c8e54, type: 3}
+      propertyPath: sensibility
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7708046356052773415, guid: 1c5ee0386e82a7f4ab32f3c0347c8e54, type: 3}
+      propertyPath: spectrumHeight
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c5ee0386e82a7f4ab32f3c0347c8e54, type: 3}

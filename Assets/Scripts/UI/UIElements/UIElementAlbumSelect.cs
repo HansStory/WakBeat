@@ -13,7 +13,7 @@ public class UIElementAlbumSelect : MonoBehaviour
 
     [SerializeField] private GameObject album;
     [SerializeField] private Transform albumBase;
-    [SerializeField] private UIObjectAlbum uiObjectAlbum;
+    //[SerializeField] private UIObjectAlbum uiObjectAlbum;
 
     [SerializeField] private Image imageBackGround;
 
@@ -107,6 +107,8 @@ public class UIElementAlbumSelect : MonoBehaviour
     {
         InputDownChangeAlbumIndex();
         SoundManager.Instance.PlaySoundFX(2);
+
+        // 팀장님의 부탁으로 BackGround는 변하지 않는걸로 수정
         //ChangeBackGround(GlobalState.Instance.AlbumIndex);
 
         Debug.Log($"Current My Album : {GlobalState.Instance.AlbumIndex}");
@@ -116,6 +118,8 @@ public class UIElementAlbumSelect : MonoBehaviour
     {
         InputUpChangeAlbumIndex();
         SoundManager.Instance.PlaySoundFX(2);
+
+        // 팀장님의 부탁으로 BackGround는 변하지 않는걸로 수정
         //ChangeBackGround(GlobalState.Instance.AlbumIndex);
 
         Debug.Log($"Current My Album : {GlobalState.Instance.AlbumIndex}");
@@ -168,7 +172,7 @@ public class UIElementAlbumSelect : MonoBehaviour
     //int SFX_Move_02 = 3;
     public void SelectAlbum()
     {
-        uiObjectAlbum.SelectAlbum();
+        //uiObjectAlbum.SelectAlbum();
     }
 
     public Tween ShowHideAlbum;
