@@ -30,8 +30,9 @@ public class UIObjectSetting : MonoBehaviour
     public GameObject SeparationOutBoxs;
     public Sprite OnBoxImage;
     public Sprite OffBoxImage;
-    public string[] InBoxValues = new string[4];
-    public string[] OutBoxValues = new string[4];
+    public int SeparationSize = 4;
+    public string[] _InBoxValues = new string[4];
+    public string[] _OutBoxValues = new string[4];
 
     // 각 버튼 별 이벤트 정의
     public void SetButtonEvent()
@@ -155,7 +156,7 @@ public class UIObjectSetting : MonoBehaviour
     // 포커스 나갈 시 Input Field 비활성화
     public void SetSeparationOffInputField(string Division, int Index)
     {
-        if(Division.Equals("In"))
+        if (Division.Equals("In"))
         {
             var inputFieldImage = SeparationInBoxs.transform.Find("Separation" + Division + "Box" + Index).GetComponent<Image>();
             var inputField = SeparationInBoxs.transform.Find("Separation" + Division + "Box" + Index).GetComponent<InputField>();
@@ -163,7 +164,9 @@ public class UIObjectSetting : MonoBehaviour
             inputField.readOnly = true;
             inputFieldImage.sprite = OffBoxImage;
 
-            InBoxValues[Index - 1] = inputField.text;
+            if (_InBoxValues.Length <= 0) { _InBoxValues = new string[SeparationSize]; }
+
+            _InBoxValues[Index - 1] = inputField.text;
         }
         else
         {
@@ -173,7 +176,9 @@ public class UIObjectSetting : MonoBehaviour
             inputField.readOnly = true;
             inputFieldImage.sprite = OffBoxImage;
 
-            OutBoxValues[Index - 1] = inputField.text;
+            if (_OutBoxValues.Length <= 0) { _OutBoxValues = new string[SeparationSize]; }
+
+            _OutBoxValues[Index - 1] = inputField.text;
         }
     }
 
@@ -223,33 +228,58 @@ public class UIObjectSetting : MonoBehaviour
     }
 
     // 글로벌 변수 화면 세팅
-    public void GetGlobalValue()
+    public void GetGlobalValue(Boolean flag)
     {
-        string KeyDivision = GlobalState.Instance.UserData.data.KeyDivision.Equals("Integration") ? "IntegrationOff" : "SeparationOff";
+        string KeyDivision = "";
 
-        SFXSlider.value = GlobalState.Instance.UserData.data.SFXValue;
-        BGMSlider.value = GlobalState.Instance.UserData.data.BGMValue;
-        InBoxValues = GlobalState.Instance.UserData.data.InnerOperationKey;
-        OutBoxValues = GlobalState.Instance.UserData.data.OuterOperationKey;
-
-        for (int i = 0; i < GlobalState.Instance.UserData.data.InnerOperationKey.Length; i++)
+        // 저장 파일 불러오기 성공 시
+        if (flag)
         {
-            if(null != GlobalState.Instance.UserData.data.InnerOperationKey[i] && !"".Equals(GlobalState.Instance.UserData.data.InnerOperationKey[i]))
-            {
-                SeparationInBoxs.transform.Find("SeparationInBox" + (i + 1)).GetComponent<InputField>().text = GlobalState.Instance.UserData.data.InnerOperationKey[i];
-            }
-            SeparationInBoxs.transform.Find("SeparationInBox" + (i + 1)).GetComponent<InputField>().readOnly = true;
-            SeparationInBoxs.transform.Find("SeparationInBox" + (i + 1)).GetComponent<Image>().sprite = OffBoxImage;
-        }
+            KeyDivision = GlobalState.Instance.UserData.data.KeyDivision.Equals("Integration") ? "IntegrationOff" : "SeparationOff";
 
-        for (int i = 0; i < GlobalState.Instance.UserData.data.OuterOperationKey.Length; i++)
-        {
-            if (null != GlobalState.Instance.UserData.data.OuterOperationKey[i] && !"".Equals(GlobalState.Instance.UserData.data.OuterOperationKey[i]))
+            SFXSlider.value = GlobalState.Instance.UserData.data.SFXValue;
+            BGMSlider.value = GlobalState.Instance.UserData.data.BGMValue;
+            _InBoxValues = GlobalState.Instance.UserData.data.InnerOperationKey;
+            _OutBoxValues = GlobalState.Instance.UserData.data.OuterOperationKey;
+
+            for (int i = 0; i < GlobalState.Instance.UserData.data.InnerOperationKey.Length; i++)
             {
-                SeparationOutBoxs.transform.Find("SeparationOutBox" + (i + 1)).GetComponent<InputField>().text = GlobalState.Instance.UserData.data.OuterOperationKey[i];
+                if (null != GlobalState.Instance.UserData.data.InnerOperationKey[i] && !"".Equals(GlobalState.Instance.UserData.data.InnerOperationKey[i]))
+                {
+                    SeparationInBoxs.transform.Find("SeparationInBox" + (i + 1)).GetComponent<InputField>().text = GlobalState.Instance.UserData.data.InnerOperationKey[i];
+                }
+                SeparationInBoxs.transform.Find("SeparationInBox" + (i + 1)).GetComponent<InputField>().readOnly = true;
+                SeparationInBoxs.transform.Find("SeparationInBox" + (i + 1)).GetComponent<Image>().sprite = OffBoxImage;
             }
-            SeparationOutBoxs.transform.Find("SeparationOutBox" + (i + 1)).GetComponent<InputField>().readOnly = true;
-            SeparationOutBoxs.transform.Find("SeparationOutBox" + (i + 1)).GetComponent<Image>().sprite = OffBoxImage;
+
+            for (int i = 0; i < GlobalState.Instance.UserData.data.OuterOperationKey.Length; i++)
+            {
+                if (null != GlobalState.Instance.UserData.data.OuterOperationKey[i] && !"".Equals(GlobalState.Instance.UserData.data.OuterOperationKey[i]))
+                {
+                    SeparationOutBoxs.transform.Find("SeparationOutBox" + (i + 1)).GetComponent<InputField>().text = GlobalState.Instance.UserData.data.OuterOperationKey[i];
+                }
+                SeparationOutBoxs.transform.Find("SeparationOutBox" + (i + 1)).GetComponent<InputField>().readOnly = true;
+                SeparationOutBoxs.transform.Find("SeparationOutBox" + (i + 1)).GetComponent<Image>().sprite = OffBoxImage;
+            }
+        } 
+        else
+        {
+            KeyDivision = "IntegrationOff";
+
+            for (int Index = 1; Index < 5; Index++)
+            {
+                var inputInFieldImage = SeparationInBoxs.transform.Find("SeparationInBox" + Index).GetComponent<Image>();
+                var inputInField = SeparationInBoxs.transform.Find("SeparationInBox" + Index).GetComponent<InputField>();
+
+                inputInField.readOnly = true;
+                inputInFieldImage.sprite = OffBoxImage;
+
+                var inputOutFieldImage = SeparationOutBoxs.transform.Find("SeparationOutBox" + Index).GetComponent<Image>();
+                var inputOutField = SeparationOutBoxs.transform.Find("SeparationOutBox" + Index).GetComponent<InputField>();
+
+                inputOutField.readOnly = true;
+                inputOutFieldImage.sprite = OffBoxImage;
+            }
         }
 
         SetButtonClickEvent(KeyDivision);
@@ -265,16 +295,16 @@ public class UIObjectSetting : MonoBehaviour
         if(ButtonKeySetting.transform.Find("ButtonSeparationOn").gameObject.activeSelf)
         {
             Boolean SeparationYn = false;
-            for(int i = 0; i < InBoxValues.Length; i++)
+            for(int i = 0; i < _InBoxValues.Length; i++)
             {
-                if(null != InBoxValues[i] && !"".Equals(InBoxValues[i]))
+                if(null != _InBoxValues[i] && !"".Equals(_InBoxValues[i]))
                 {
                     SeparationYn = true;
                 }
             }
-            for (int i = 0; i < OutBoxValues.Length; i++)
+            for (int i = 0; i < _OutBoxValues.Length; i++)
             {
-                if (null != OutBoxValues[i] && !"".Equals(OutBoxValues[i]))
+                if (null != _OutBoxValues[i] && !"".Equals(_OutBoxValues[i]))
                 {
                     SeparationYn = true;
                 }
@@ -297,8 +327,8 @@ public class UIObjectSetting : MonoBehaviour
         DataManager.SetKeyDivision = KeyDivision;
         DataManager.SetBGMValue = BGMValue;
         DataManager.SetSFXValue = SFXValue;
-        DataManager.SetInnerOperationKey = InBoxValues;
-        DataManager.SetOuterOperationKey = OutBoxValues;
+        DataManager.SetInnerOperationKey = _InBoxValues;
+        DataManager.SetOuterOperationKey = _OutBoxValues;
 
         // 설정 데이터 변경 후 파일 저장
         DataManager.SaveUserData();
@@ -310,7 +340,7 @@ public class UIObjectSetting : MonoBehaviour
         SetButtonEvent();
 
         // 글로벌 변수 화면 적용
-        GetGlobalValue();
+        GetGlobalValue(GlobalState.Instance.UserData.data.FileYn);
     }
 
     void Update()
