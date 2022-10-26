@@ -58,8 +58,8 @@ MonoBehaviour:
   - {fileID: 2754620918101821726}
   - {fileID: 3030508281460818834}
   - {fileID: 8437147438912858964}
-  sensibility: 2
-  spectrumHeight: 3
+  sensibility: 5
+  spectrumHeight: 5
   imageBGMText: {fileID: 2469245423112449148}
 --- !u!1 &3966669092842990960
 GameObject:

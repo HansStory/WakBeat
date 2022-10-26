@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class UIElementAlbumSelect : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class UIElementAlbumSelect : MonoBehaviour
 
     [SerializeField] private GameObject album;
     [SerializeField] private Transform albumBase;
+    [SerializeField] private UIObjectAlbum uiObjectAlbum;
 
     [SerializeField] private Image imageBackGround;
 
@@ -82,21 +84,41 @@ public class UIElementAlbumSelect : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            InputDownChangeAlbumIndex();
-            SoundManager.Instance.PlaySoundFX(2);
-            ChangeBackGround(GlobalState.Instance.AlbumIndex);
-
-            Debug.Log($"Current My Album : {GlobalState.Instance.AlbumIndex}");
+            InputDown();
         }
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            InputUpChangeAlbumIndex();
-            SoundManager.Instance.PlaySoundFX(2);
-            ChangeBackGround(GlobalState.Instance.AlbumIndex);
-
-            Debug.Log($"Current My Album : {GlobalState.Instance.AlbumIndex}");
+            InputUp();
         }
 
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            UIManager.Instance.GoPanelMusicSelect();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            UIManager.Instance.GoPanelMain();
+        }
+    }
+
+    void InputDown()
+    {
+        InputDownChangeAlbumIndex();
+        SoundManager.Instance.PlaySoundFX(2);
+        //ChangeBackGround(GlobalState.Instance.AlbumIndex);
+
+        Debug.Log($"Current My Album : {GlobalState.Instance.AlbumIndex}");
+    }
+
+    void InputUp()
+    {
+        InputUpChangeAlbumIndex();
+        SoundManager.Instance.PlaySoundFX(2);
+        //ChangeBackGround(GlobalState.Instance.AlbumIndex);
+
+        Debug.Log($"Current My Album : {GlobalState.Instance.AlbumIndex}");
     }
 
     void InputDownChangeAlbumIndex()
@@ -109,11 +131,6 @@ public class UIElementAlbumSelect : MonoBehaviour
                 GlobalState.Instance.AlbumIndex = 0;
             }
         }
-    }
-
-    void MoveCircles()
-    {
-
     }
 
     void InputUpChangeAlbumIndex()
@@ -149,12 +166,24 @@ public class UIElementAlbumSelect : MonoBehaviour
     }
 
     //int SFX_Move_02 = 3;
-    void SelectAlbum()
+    public void SelectAlbum()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        uiObjectAlbum.SelectAlbum();
+    }
+
+    public Tween ShowHideAlbum;
+    private bool isShowAlbum = true;
+    public void ShowHideAlbumList()
+    {
+        isShowAlbum = !isShowAlbum;
+
+        if (isShowAlbum)
         {
-            //StartCoroutine(SelectAlbumProcedure());
-            //SoundManager.Instance.PlaySoundFX(SFX_Move_02);
+
+        }
+        else
+        {
+
         }
     }
 
