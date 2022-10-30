@@ -82,24 +82,27 @@ public class UIElementAlbumSelect : MonoBehaviour
 
     public void InputExecute()
     {
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (GlobalState.Instance.UserData.data.BackgroundProcActive)
         {
-            InputDown();
-        }
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                InputDown();
+            }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            InputUp();
-        }
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                InputUp();
+            }
 
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            UIManager.Instance.GoPanelMusicSelect();
-        }
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                UIManager.Instance.GoPanelMusicSelect();
+            }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            UIManager.Instance.GoPanelMain();
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                UIManager.Instance.GoPanelMain();
+            }
         }
     }
 
@@ -193,9 +196,12 @@ public class UIElementAlbumSelect : MonoBehaviour
 
     void OnClickEsc()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (GlobalState.Instance.UserData.data.BackgroundProcActive)
         {
-            UIManager.Instance.GoPanelMain();
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                UIManager.Instance.GoPanelMain();
+            }
         }
     }
 

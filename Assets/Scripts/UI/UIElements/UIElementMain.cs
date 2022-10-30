@@ -45,21 +45,24 @@ public class UIElementMain : MonoBehaviour
 
     void InputExcute()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (GlobalState.Instance.UserData.data.BackgroundProcActive)
         {
-            OnClickStartButton();
-        }
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                OnClickStartButton();
+            }
+        
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                AppManager.Instance.Quit();
+            }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            AppManager.Instance.Quit();
+            // For Test
+            //if (Input.GetKeyDown(KeyCode.Alpha1))
+            //{
+            //    LogoPlay();
+            //}
         }
-
-        // For Test
-        //if (Input.GetKeyDown(KeyCode.Alpha1))
-        //{
-        //    LogoPlay();
-        //}
     }
 
     void BackGroundMove()

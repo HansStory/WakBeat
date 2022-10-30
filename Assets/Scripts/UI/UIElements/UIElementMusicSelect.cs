@@ -192,26 +192,29 @@ public class UIElementMusicSelect : MonoBehaviour
 
     public void InputExecute()
     {
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (GlobalState.Instance.UserData.data.BackgroundProcActive)
         {
-            if (GlobalState.Instance.StageIndex < SoundManager.Instance.selectedAlbumMusicLength)
+            if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                GlobalState.Instance.StageIndex++;
-                ChangeBackGround();
+                if (GlobalState.Instance.StageIndex < SoundManager.Instance.selectedAlbumMusicLength)
+                {
+                    GlobalState.Instance.StageIndex++;
+                    ChangeBackGround();
 
-                Debug.Log($"Selecte My Stage Index : {GlobalState.Instance.StageIndex}");
-                SoundManager.Instance.TurnOnSelectedMusic();
+                    Debug.Log($"Selecte My Stage Index : {GlobalState.Instance.StageIndex}");
+                    SoundManager.Instance.TurnOnSelectedMusic();
+                }
             }
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            if (0 < GlobalState.Instance.StageIndex)
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                GlobalState.Instance.StageIndex--;
-                ChangeBackGround(); 
+                if (0 < GlobalState.Instance.StageIndex)
+                {
+                    GlobalState.Instance.StageIndex--;
+                    ChangeBackGround();
 
-                Debug.Log($"Selecte My Stage Index : {GlobalState.Instance.StageIndex}");
-                SoundManager.Instance.TurnOnSelectedMusic();
+                    Debug.Log($"Selecte My Stage Index : {GlobalState.Instance.StageIndex}");
+                    SoundManager.Instance.TurnOnSelectedMusic();
+                }
             }
         }
     }
@@ -240,18 +243,24 @@ public class UIElementMusicSelect : MonoBehaviour
 
     void SelectMusic()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (GlobalState.Instance.UserData.data.BackgroundProcActive)
         {
-            UIManager.Instance.GoPanelGamePlay();
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                UIManager.Instance.GoPanelGamePlay();
+            }
         }
     }
 
     void OnClickEsc()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (GlobalState.Instance.UserData.data.BackgroundProcActive)
         {
-            UIManager.Instance.GoPanelAlbumSelect();
-            SoundManager.Instance.ForceAudioStop();
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                UIManager.Instance.GoPanelAlbumSelect();
+                SoundManager.Instance.ForceAudioStop();
+            }
         }
     }
 }

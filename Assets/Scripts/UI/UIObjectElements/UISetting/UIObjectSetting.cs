@@ -16,6 +16,7 @@ public class UIObjectSetting : MonoBehaviour
     public Button ButtonClose;
     public Button ButtonExit;
     public GameObject ButtonKeySetting;
+    // 버튼 사운드
     const int SFX_Home = 1;
     const int SFX_Setting = 4;
     // 효과/배경음 슬라이더 선언
@@ -77,9 +78,14 @@ public class UIObjectSetting : MonoBehaviour
             // 입력 되 있는 모든 값 가져와서 글로벌에 저장
             SetGlobalValue();
 
+            // 버튼 이벤트 Unlock
+            GlobalState.Instance.UserData.data.BackgroundProcActive = true;
+
             // 창 닫기 버튼 이벤트
             UIElementSetting.Instance.ButtonClickControll("Setting", "Close");
 
+            // 버튼 사운드 출력
+            SoundManager.Instance.PlaySoundFX(SFX_Setting);
         }
         else if (Division.Equals("Exit"))
         {
@@ -90,6 +96,9 @@ public class UIObjectSetting : MonoBehaviour
             UIElementSetting.Instance.ButtonClickControll("Setting", "Close");
             UIManager.Instance.GoPanelMain();
             SoundManager.Instance.ForceAudioStop();
+
+            // 버튼 사운드 출력
+            SoundManager.Instance.PlaySoundFX(SFX_Setting);
         }
         else if (Division.Equals("IntegrationOn"))
         {
@@ -100,6 +109,9 @@ public class UIObjectSetting : MonoBehaviour
             ButtonKeySetting.transform.Find("ButtonSeparationOff").gameObject.SetActive(false);
             
             SeparationGroup.SetActive(true);
+
+            // 버튼 사운드 출력
+            SoundManager.Instance.PlaySoundFX(SFX_Setting);
         }
         else if (Division.Equals("IntegrationOff"))
         {
@@ -110,11 +122,17 @@ public class UIObjectSetting : MonoBehaviour
             ButtonKeySetting.transform.Find("ButtonSeparationOff").gameObject.SetActive(true);
            
             SeparationGroup.SetActive(false);
+
+            // 버튼 사운드 출력
+            SoundManager.Instance.PlaySoundFX(SFX_Setting);
         }
         else if (Division.Equals("SeparationOn"))
         {
             // 키 설정 > 분리 On 클릭 이벤트
             SeparationGroup.SetActive(true);
+
+            // 버튼 사운드 출력
+            SoundManager.Instance.PlaySoundFX(SFX_Setting);
         }
         else if (Division.Equals("SeparationOff"))
         {
@@ -125,6 +143,9 @@ public class UIObjectSetting : MonoBehaviour
             ButtonKeySetting.transform.Find("ButtonSeparationOff").gameObject.SetActive(false);
 
             SeparationGroup.SetActive(true);
+
+            // 버튼 사운드 출력
+            SoundManager.Instance.PlaySoundFX(SFX_Setting);
         }
         else if (Division.Equals("SeparationClose"))
         {
@@ -134,7 +155,13 @@ public class UIObjectSetting : MonoBehaviour
             ButtonKeySetting.transform.Find("ButtonSeparationOn").gameObject.SetActive(true);
             ButtonKeySetting.transform.Find("ButtonSeparationOff").gameObject.SetActive(false);
 
+            // 키 설정 > 분리 안/밖 중 하나만 있을 경우 데이터 제거
+            SetCompatibiltityBlankValue();
+
             SeparationGroup.SetActive(false);
+
+            // 버튼 사운드 출력
+            SoundManager.Instance.PlaySoundFX(SFX_Setting);
         }
     }
 
@@ -180,6 +207,9 @@ public class UIObjectSetting : MonoBehaviour
 
             _OutBoxValues[Index - 1] = inputField.text;
         }
+
+        // 중복 값 입력 방지
+        SetCompatibiltityReDuplication();
     }
 
     // 포커스 들어올 시 Input Field 활성화
@@ -266,16 +296,16 @@ public class UIObjectSetting : MonoBehaviour
         {
             KeyDivision = "IntegrationOff";
 
-            for (int Index = 1; Index < 5; Index++)
+            for (int Index = 0; Index < GlobalState.Instance.UserData.data.InnerOperationKey.Length; Index++)
             {
-                var inputInFieldImage = SeparationInBoxs.transform.Find("SeparationInBox" + Index).GetComponent<Image>();
-                var inputInField = SeparationInBoxs.transform.Find("SeparationInBox" + Index).GetComponent<InputField>();
+                var inputInFieldImage = SeparationInBoxs.transform.Find("SeparationInBox" + (Index + 1)).GetComponent<Image>();
+                var inputInField = SeparationInBoxs.transform.Find("SeparationInBox" + (Index + 1)).GetComponent<InputField>();
 
                 inputInField.readOnly = true;
                 inputInFieldImage.sprite = OffBoxImage;
 
-                var inputOutFieldImage = SeparationOutBoxs.transform.Find("SeparationOutBox" + Index).GetComponent<Image>();
-                var inputOutField = SeparationOutBoxs.transform.Find("SeparationOutBox" + Index).GetComponent<InputField>();
+                var inputOutFieldImage = SeparationOutBoxs.transform.Find("SeparationOutBox" + (Index + 1)).GetComponent<Image>();
+                var inputOutField = SeparationOutBoxs.transform.Find("SeparationOutBox" + (Index + 1)).GetComponent<InputField>();
 
                 inputOutField.readOnly = true;
                 inputOutFieldImage.sprite = OffBoxImage;
@@ -332,6 +362,67 @@ public class UIObjectSetting : MonoBehaviour
 
         // 설정 데이터 변경 후 파일 저장
         DataManager.SaveUserData();
+    }
+
+    // 데이터 정합성 검증
+    public void SetCompatibiltityBlankValue()
+    {
+        // 키 설정 > 분리 안/밖 중 하나만 있을 경우 값 제거
+        for (int InIndex = 0; InIndex < GlobalState.Instance.UserData.data.InnerOperationKey.Length; InIndex++)
+        {
+            for (int OutIndex = 0; OutIndex < GlobalState.Instance.UserData.data.OuterOperationKey.Length; OutIndex++)
+            {
+                if(InIndex == OutIndex)
+                {
+                    if (!_InBoxValues[InIndex].Equals("") && _OutBoxValues[OutIndex].Equals(""))
+                    {
+                        _InBoxValues[InIndex] = "";
+                        SeparationInBoxs.transform.Find("SeparationInBox" + (InIndex + 1)).GetComponent<InputField>().text = "";
+                    }
+                    if (_InBoxValues[InIndex].Equals("") && !_OutBoxValues[OutIndex].Equals(""))
+                    {
+                        _OutBoxValues[OutIndex] = "";
+                        SeparationOutBoxs.transform.Find("SeparationOutBox" + (OutIndex + 1)).GetComponent<InputField>().text = "";
+                    }
+                }
+            }
+        }
+    }
+
+    // 데이터 정합성 검증
+    public void SetCompatibiltityReDuplication()
+    {
+        // 키 설정 > 분리 같은 키 중복 입력 금지
+        for(int InIndex = 0; InIndex < GlobalState.Instance.UserData.data.InnerOperationKey.Length; InIndex++)
+        {
+            for (int OutIndex = 0; OutIndex < GlobalState.Instance.UserData.data.OuterOperationKey.Length; OutIndex++)
+            {
+                if (_InBoxValues[InIndex] == _OutBoxValues[OutIndex])
+                {
+                    _InBoxValues[InIndex] = "";
+                    _OutBoxValues[OutIndex] = "";
+                    SeparationInBoxs.transform.Find("SeparationInBox" + (InIndex + 1)).GetComponent<InputField>().text = "";
+                    SeparationOutBoxs.transform.Find("SeparationOutBox" + (OutIndex + 1)).GetComponent<InputField>().text = "";
+                }
+                if(InIndex != OutIndex)
+                {
+                    if(_InBoxValues[InIndex] == _InBoxValues[OutIndex])
+                    {
+                        _InBoxValues[InIndex] = "";
+                        _InBoxValues[OutIndex] = "";
+                        SeparationInBoxs.transform.Find("SeparationInBox" + (InIndex + 1)).GetComponent<InputField>().text = "";
+                        SeparationInBoxs.transform.Find("SeparationInBox" + (OutIndex + 1)).GetComponent<InputField>().text = "";
+                    }
+                    if(_OutBoxValues[InIndex] == _OutBoxValues[OutIndex])
+                    {
+                        _OutBoxValues[InIndex] = "";
+                        _OutBoxValues[OutIndex] = "";
+                        SeparationOutBoxs.transform.Find("SeparationOutBox" + (InIndex + 1)).GetComponent<InputField>().text = "";
+                        SeparationOutBoxs.transform.Find("SeparationOutBox" + (OutIndex + 1)).GetComponent<InputField>().text = "";
+                    }
+                }
+            }
+        }
     }
 
     void Start()

@@ -19,9 +19,12 @@ public class UIElementResult : MonoBehaviour
 
     void OnClickCheckButton()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            UIManager.Instance.GoPanelMusicSelect();
+         if (GlobalState.Instance.UserData.data.BackgroundProcActive)
+         {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                UIManager.Instance.GoPanelMusicSelect();
+            }
         }
     }
 

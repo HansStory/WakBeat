@@ -82,24 +82,27 @@ public class UIObjectAlbum : MonoBehaviour
 
     public void InputExecute()
     {
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (GlobalState.Instance.UserData.data.BackgroundProcActive)
         {
-            ShowMyTitle(0f);
-        }
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                ShowMyTitle(0f);
+            }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            ShowMyTitle(0f);
-        }
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                ShowMyTitle(0f);
+            }
 
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            SelectAlbum();
-        }
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                SelectAlbum();
+            }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            ExitAlbumSelect();
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                ExitAlbumSelect();
+            }
         }
     }
 

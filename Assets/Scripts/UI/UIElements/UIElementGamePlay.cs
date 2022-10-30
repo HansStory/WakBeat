@@ -35,19 +35,25 @@ public class UIElementGamePlay : MonoBehaviour
 
     void FinishGame()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (GlobalState.Instance.UserData.data.BackgroundProcActive)
         {
-            GameManager.Instance.DistroyGame();
-            UIManager.Instance.GoPanelResult();
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                GameManager.Instance.DistroyGame();
+                UIManager.Instance.GoPanelResult();
+            }
         }
     }
 
     void OnClickEsc()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (GlobalState.Instance.UserData.data.BackgroundProcActive)
         {
-            GameManager.Instance.DistroyGame();
-            UIManager.Instance.GoPanelMusicSelect();
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                GameManager.Instance.DistroyGame();
+                UIManager.Instance.GoPanelMusicSelect();
+            }
         }
     }
 }

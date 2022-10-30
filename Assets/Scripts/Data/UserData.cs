@@ -73,6 +73,8 @@ public class UserData
     public int SkillCount;
     // 스킨&스킬 강제 해금 버튼 활성화 여부
     public Boolean ShopCompulsionActive = true;
+    // 배경 프로세스 진행 멈춤
+    public Boolean BackgroundProcActive = true;
     // 스킨 해금 여부
     public string[] SkinUnLockYn = new string[DataManager.SetSkinCount];
     // 스킨 사용 여부

@@ -95,21 +95,30 @@ public class UIObjectButton : MonoBehaviour
             // 설정 버튼 클릭 시 화면 제어
             SoundManager.Instance.PlaySoundFX(SFX_Setting);
             UIElementSetting.Instance.ButtonClickControll("Setting", "Open");
+            // 버튼 이벤트 Lock
+            GlobalState.Instance.UserData.data.BackgroundProcActive = false;
         }
         else if (Division.Equals("goShop"))
         {
             //  상점 버튼 클릭 시 화면 제어
             SoundManager.Instance.PlaySoundFX(SFX_Home);
             UIElementSetting.Instance.ButtonClickControll("Shop", "Open");
+            // 버튼 이벤트 Lock
+            GlobalState.Instance.UserData.data.BackgroundProcActive = false;
         }
         else if (Division.Equals("goTrophy"))
         {
             // 트로피 버튼 클릭 시 화면 제어
             UIElementSetting.Instance.ButtonClickControll("Trophy", "Open");
+            // 버튼 이벤트 Lock
+            GlobalState.Instance.UserData.data.BackgroundProcActive = false;
         }
         else if (Division.Equals("goPause"))
         {
             // 일시정지 버튼 클릭 시 화면 제어
+
+            // 버튼 이벤트 Lock
+            GlobalState.Instance.UserData.data.BackgroundProcActive = false;
         }
     }
 

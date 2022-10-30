@@ -30,6 +30,7 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
     static string[] _SkillUsingYn;
     static int[] _SkillUnLockCondition;
     static Boolean _ShopCompulsionActive;
+    static Boolean _BackgroundProcActive;
 
     public static string GetUserData()
     {
@@ -205,6 +206,7 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
     // 상점 스킬 사용 여부
     public static Boolean SetShopCompulsionActive
     {
+        get { return _ShopCompulsionActive; }
         set { _ShopCompulsionActive = value; }
     }
 
@@ -212,6 +214,13 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
     public static int[] SetSkillUnLockCondition
     {
         set { _SkillUnLockCondition = value; }
+    }
+
+    // 상점 스킬 사용 여부
+    public static Boolean SetBackgroundProcActive
+    {
+        get { return _BackgroundProcActive; }
+        set { _BackgroundProcActive = value; }
     }
 
     // Start is called before the first frame update
