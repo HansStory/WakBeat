@@ -9,7 +9,9 @@ public class UIObjectShopSkillItem : MonoBehaviour
     public Button buttonOff;
     public Button buttonLock;
     public GameObject LockObject;
-
+    // 버튼 사운드
+    const int SFX_Home = 1;
+    const int SFX_Setting = 4;
     public UIObjectShop UIObjectShop { get; set; }
 
     // 스킬 정보 > 타이틀
@@ -91,6 +93,9 @@ public class UIObjectShopSkillItem : MonoBehaviour
     private void Unlock()
     {
         LockObject.SetActive(false);
+
+        // 버튼 사운드 출력
+        SoundManager.Instance.PlaySoundFX(SFX_Setting);
     }
 
     // 스킬 사용 > 미사용
@@ -98,6 +103,9 @@ public class UIObjectShopSkillItem : MonoBehaviour
     {
         buttonOn.gameObject.SetActive(false);
         buttonOff.gameObject.SetActive(true);
+
+        // 버튼 사운드 출력
+        SoundManager.Instance.PlaySoundFX(SFX_Setting);
     }
 
     // 스킬 미사용 > 사용
@@ -105,5 +113,8 @@ public class UIObjectShopSkillItem : MonoBehaviour
     {
         buttonOn.gameObject.SetActive(true);
         buttonOff.gameObject.SetActive(false);
+
+        // 버튼 사운드 출력
+        SoundManager.Instance.PlaySoundFX(SFX_Setting);
     }
 }

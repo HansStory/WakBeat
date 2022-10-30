@@ -17,20 +17,19 @@ public class UIObjectShop : MonoBehaviour
     public GameObject TabObject;
     private int SkinCount = DataManager.SetSkinCount;
     private int SkillCount = DataManager.SetSkillCount;
-
+    // 버튼 사운드
+    const int SFX_Home = 1;
+    const int SFX_Setting = 4;
     // 스킨 아이템 오브젝트
     public GameObject SkinGroup;
     [SerializeField] private GameObject SkinPrefab;
     [SerializeField] private Transform SkinPanel;
-
     // 스킬 아이템 오브젝트
     public GameObject SkillGroup;
     [SerializeField] private GameObject SkillPrefab;
     [SerializeField] private Transform SkillPanel;
-
     // 비디오 아이템 오브젝트
     public GameObject VideoGroup;
-
     // 글로벌 데이터 용 전역변수
     public string[] _SkinUnLockYn = new string[DataManager.SetSkinCount];
     public string[] _SkinUsingYn = new string[DataManager.SetSkinCount];
@@ -111,6 +110,7 @@ public class UIObjectShop : MonoBehaviour
         TabObject.transform.Find("TabVideo").Find("TabOn").GetComponent<Button>().onClick.AddListener(() => SetButtonClickEvent("VideoOn"));
         TabObject.transform.Find("TabVideo").Find("TabOff").GetComponent<Button>().onClick.AddListener(() => SetButtonClickEvent("VideoOff"));
 
+        // 스킨 버튼 이벤트 > 스킬 버튼은 생성자에 들어가 있음 > 스킨은 하나만 On 되야 하는 구문 때문에 이쪽에서 작성
         for(int Index = 0; Index < SkinCount; Index++)
         {
             var Prefab = SkinGroup.transform.Find("SkinItems").Find("Viewport").Find("Content").Find("Skin_Prefab_" + Index).GetComponent<UIObjectShopSkinItem>();
@@ -133,6 +133,9 @@ public class UIObjectShop : MonoBehaviour
             // 상점 창 초기화
             SetButtonClickEvent("SkinOn");
 
+            // 버튼 이벤트 Unlock
+            GlobalState.Instance.UserData.data.BackgroundProcActive = true;
+
             // 창 닫기 버튼 이벤트
             UIElementSetting.Instance.ButtonClickControll("Shop", "Close");
         }
@@ -148,6 +151,9 @@ public class UIObjectShop : MonoBehaviour
             TabObject.transform.Find("TabSkill").Find("TabOff").gameObject.SetActive(true);
             TabObject.transform.Find("TabVideo").Find("TabOn").gameObject.SetActive(false);
             TabObject.transform.Find("TabVideo").Find("TabOff").gameObject.SetActive(true);
+
+            // 버튼 사운드 출력
+            SoundManager.Instance.PlaySoundFX(SFX_Setting);
         }
         else if (Division.Equals("SkillOn") || Division.Equals("SkillOff"))
         {
@@ -161,6 +167,9 @@ public class UIObjectShop : MonoBehaviour
             TabObject.transform.Find("TabSkill").Find("TabOff").gameObject.SetActive(false);
             TabObject.transform.Find("TabVideo").Find("TabOn").gameObject.SetActive(false);
             TabObject.transform.Find("TabVideo").Find("TabOff").gameObject.SetActive(true);
+
+            // 버튼 사운드 출력
+            SoundManager.Instance.PlaySoundFX(SFX_Setting);
         }
         else if (Division.Equals("VideoOn") || Division.Equals("VideoOff"))
         {
@@ -174,6 +183,9 @@ public class UIObjectShop : MonoBehaviour
             TabObject.transform.Find("TabSkill").Find("TabOff").gameObject.SetActive(true);
             TabObject.transform.Find("TabVideo").Find("TabOn").gameObject.SetActive(true);
             TabObject.transform.Find("TabVideo").Find("TabOff").gameObject.SetActive(true);
+
+            // 버튼 사운드 출력
+            SoundManager.Instance.PlaySoundFX(SFX_Setting);
         }
     }
 
@@ -211,6 +223,8 @@ public class UIObjectShop : MonoBehaviour
 
         // 모두 Off 일때 0번 스킨 On
         SetSkinButtonDefault();
+
+        SoundManager.Instance.PlaySoundFX(SFX_Setting);
     }
 
     // 스킨 버튼 모두 Off 일때 0번 스킨 On
