@@ -3,10 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using DG.Tweening.Plugins.Core.PathCore;
-//using UnityEditorInternal;
-using static UnityEngine.Rendering.DebugUI;
-using UnityEditorInternal;
 
 public class DataManager : MonoBehaviourSingleton<DataManager>
 {

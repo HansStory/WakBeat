@@ -1,14 +1,9 @@
-using DG.Tweening;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using UnityEngine.UI.Extensions;
+using DG.Tweening;
+
 
 public class UIObjectSetting : MonoBehaviour
 {
@@ -34,6 +29,13 @@ public class UIObjectSetting : MonoBehaviour
     public int SeparationSize = 4;
     public string[] _InBoxValues = new string[4];
     public string[] _OutBoxValues = new string[4];
+
+    private float _duration = 0.2f;
+    private void OnEnable()
+    {
+        this.transform.localScale = Vector3.zero;
+        this.transform.DOScale(Vector3.one, _duration).SetEase(Ease.InCubic);
+    }
 
     // 각 버튼 별 이벤트 정의
     public void SetButtonEvent()
