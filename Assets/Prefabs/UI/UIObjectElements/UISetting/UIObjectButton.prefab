@@ -95,8 +95,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ButtonHome: {fileID: 7412480546490819184}
-  ButtonShop: {fileID: 7643529937452611012}
   ButtonSetting: {fileID: 4823915002559658290}
+  ButtonShop: {fileID: 7643529937452611012}
   ButtonTrophy: {fileID: 8061732354323590696}
   ButtonPause: {fileID: 6618529796477282649}
 --- !u!1 &4221737250731118841
@@ -461,19 +461,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3042123150314708797}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11500000, guid: 450b136b7555cc04aa62b7624a45a445, type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &7127308834557251177
 GameObject:
   m_ObjectHideFlags: 0

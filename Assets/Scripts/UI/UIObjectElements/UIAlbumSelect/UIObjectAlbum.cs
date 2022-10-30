@@ -124,16 +124,18 @@ public class UIObjectAlbum : MonoBehaviour
     int SFX_Move_02 = 3;
     public void SelectAlbum()
     {
+        TitleTween.Pause();
+
         if (GlobalState.Instance.AlbumIndex == AlbumIndex)
         {
-            DOTween.PauseAll();
             albumTitle.rectTransform.localPosition = Vector3.zero;
-            Tween TitleClose = albumTitle.rectTransform.DOLocalMove(startTitleVector, titleTweenDuration).SetEase(curveAlbumTitle.Curve);
-            TitleClose.OnComplete(() => { UIManager.Instance.GoPanelMusicSelect(); });
+            TitleTween = albumTitle.rectTransform.DOLocalMove(startTitleVector, titleTweenDuration).SetEase(curveAlbumTitle.Curve);
+            TitleTween.OnComplete(() => { UIElementAlbumSelect.ShowHideAlbumList(0f); });
 
             SoundManager.Instance.PlaySoundFX(SFX_Move_02);
         }
     }
+
 
     public void ExitAlbumSelect()
     {

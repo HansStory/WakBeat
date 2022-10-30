@@ -126,9 +126,9 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
     {
         if (GlobalState.Instance.CurrentPanelIndex == (int)GlobalData.UIMODE.SELECT_MUSIC)
         {
-            WantShowPanel((int)GlobalData.UIMODE.SELECT_ALBUM);
-
-            uiElementFadePanel.BetweenAlbumToMusicTransition();
+            uiElementAlbumSelect.ShowHideAlbumList(0f);
+            uiElementFadePanel.BetweenAlbumToMusicTransition(1f, 0f);
+            uiElementFadePanel.TransitionSequence.InsertCallback(1f, () => WantShowPanel((int)GlobalData.UIMODE.SELECT_ALBUM));
             SoundManager.Instance.TurnOnGameBackGround();
         }
         else if (GlobalState.Instance.CurrentPanelIndex == (int)GlobalData.UIMODE.MAIN)
@@ -145,9 +145,10 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
     {
         if (GlobalState.Instance.CurrentPanelIndex == (int)GlobalData.UIMODE.SELECT_ALBUM)
         {
-            uiElementFadePanel.BetweenAlbumToMusicTransition();
-
-            WantShowPanel((int)GlobalData.UIMODE.SELECT_MUSIC);
+            //uiElementAlbumSelect.SelectAlbum();
+            uiElementFadePanel.BetweenAlbumToMusicTransition(0.5f, 0f);
+            uiElementFadePanel.TransitionSequence.InsertCallback(1f, () => WantShowPanel((int)GlobalData.UIMODE.SELECT_MUSIC));
+            //WantShowPanel((int)GlobalData.UIMODE.SELECT_MUSIC);
         }
         else if (GlobalState.Instance.CurrentPanelIndex == (int)GlobalData.UIMODE.GAME)
         {

@@ -327,6 +327,7 @@ MonoBehaviour:
   Albums: []
   album: {fileID: 8846689123083717952, guid: b68e9b6b95220154aa7962575a531b90, type: 3}
   albumBase: {fileID: 8073148781229515021}
+  uiObjectAlbum: {fileID: 5777482547393258073, guid: b68e9b6b95220154aa7962575a531b90, type: 3}
   imageBackGround: {fileID: 6155114700117050587}
   albumInfo: {fileID: 8456678900480369091, guid: 331dc120d6bb78a4ea6a8afcd41bcfda, type: 3}
   albumInfoBase: {fileID: 6874890300032960467}
@@ -365,10 +366,10 @@ RectTransform:
   m_Father: {fileID: 6874890300032960467}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4134446332000410656
 CanvasRenderer:

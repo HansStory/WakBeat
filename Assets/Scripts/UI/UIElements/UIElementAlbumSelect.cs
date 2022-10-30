@@ -13,7 +13,8 @@ public class UIElementAlbumSelect : MonoBehaviour
 
     [SerializeField] private GameObject album;
     [SerializeField] private Transform albumBase;
-    //[SerializeField] private UIObjectAlbum uiObjectAlbum;
+    //[SerializeField] private RectTransform tweenPanel;
+    [SerializeField] private UIObjectAlbum uiObjectAlbum;
 
     [SerializeField] private Image imageBackGround;
 
@@ -75,7 +76,6 @@ public class UIElementAlbumSelect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SelectAlbum();
         OnClickEsc();
         InputExecute();
     }
@@ -96,7 +96,7 @@ public class UIElementAlbumSelect : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                UIManager.Instance.GoPanelMusicSelect();
+                //UIManager.Instance.GoPanelMusicSelect();
             }
 
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -172,56 +172,79 @@ public class UIElementAlbumSelect : MonoBehaviour
         }
     }
 
+
     //int SFX_Move_02 = 3;
     public void SelectAlbum()
     {
-        //uiObjectAlbum.SelectAlbum();
+        ShowHideAlbumList(1.5f);
+        //ShowHideAlbum.OnComplete(() => { UIManager.Instance.WantShowPanel((int)GlobalData.UIMODE.SELECT_MUSIC); });
     }
 
     public Tween ShowHideAlbum;
+    public Sequence ShowHideSequence;
     private bool isShowAlbum = true;
-    public void ShowHideAlbumList()
+    Vector3 hideTartgetVector = new Vector3(-1000f, 0f, 0f);
+    public void ShowHideAlbumList(float delay)
     {
-        isShowAlbum = !isShowAlbum;
 
         if (isShowAlbum)
         {
-
+            HideAlbumList(delay);
+            ShowHideSequence.InsertCallback(0.5f, () => UIManager.Instance.GoPanelMusicSelect());
+            //ShowHideAlbum.OnComplete(() => { UIManager.Instance.GoPanelMusicSelect(); });
+            //UIManager.Instance.WantShowPanel((int)GlobalData.UIMODE.SELECT_MUSIC);
         }
         else
         {
-
+            albumBase.transform.localPosition = hideTartgetVector;
+            ShowHideAlbum = albumBase.DOLocalMove(Vector3.zero, 1f);
+            ShowHideAlbum.SetDelay(delay);
         }
+
+        isShowAlbum = !isShowAlbum;
+    }
+
+    void HideAlbumList(float delay)
+    {
+        ShowHideSequence = DOTween.Sequence().SetAutoKill(false).OnStart(() =>
+        {
+            albumBase.transform.localPosition = Vector3.zero;
+            ShowHideAlbum = albumBase.DOLocalMove(hideTartgetVector, 0.5f);
+            ShowHideAlbum.SetDelay(delay);
+        });
     }
 
     void OnClickEsc()
     {
-        if (GlobalState.Instance.UserData.data.BackgroundProcActive)
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (GlobalState.Instance.UserData.data.BackgroundProcActive)
             {
-                UIManager.Instance.GoPanelMain();
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    UIManager.Instance.GoPanelMain();
+                }
             }
         }
-    }
 
-    IEnumerator StartAlbumSelectPanel()
-    {
-        fadeImage.gameObject.SetActive(true);
-        UIManager.Instance.FadeToWhite(fadeImage, fadeTime);
-        yield return new WaitForSeconds(fadeTime);
+        //IEnumerator StartAlbumSelectPanel()
+        //{
+        //    fadeImage.gameObject.SetActive(true);
+        //    UIManager.Instance.FadeToWhite(fadeImage, fadeTime);
+        //    yield return new WaitForSeconds(fadeTime);
 
-        fadeImage.gameObject.SetActive(false);
-    }
+        //    fadeImage.gameObject.SetActive(false);
+        //}
 
-    IEnumerator SelectAlbumProcedure()
-    {
-        fadeImage.gameObject.SetActive(true);
-        UIManager.Instance.FadeToBlack(fadeImage, fadeTime);
-        yield return new WaitForSeconds(fadeTime);
+        //IEnumerator SelectAlbumProcedure()
+        //{
+        //    fadeImage.gameObject.SetActive(true);
+        //    UIManager.Instance.FadeToBlack(fadeImage, fadeTime);
+        //    yield return new WaitForSeconds(fadeTime);
 
-        fadeImage.gameObject.SetActive(false);
-        UIManager.Instance.GoPanelMusicSelect();
+        //    fadeImage.gameObject.SetActive(false);
+        //    UIManager.Instance.GoPanelMusicSelect();
 
+        //}
     }
 }
+

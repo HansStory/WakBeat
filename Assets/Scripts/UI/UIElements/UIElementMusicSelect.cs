@@ -37,6 +37,14 @@ public class UIElementMusicSelect : MonoBehaviour
         DestroyAlbumObjects();
     }
 
+    void Update()
+    {
+        SelectMusic();
+        OnClickEsc();
+        InputExecute();
+    }
+
+    #region Make Album Stages
     void MakeAlbumStage()
     {
         switch (GlobalState.Instance.AlbumIndex)
@@ -61,61 +69,6 @@ public class UIElementMusicSelect : MonoBehaviour
                 MakeProgressBar(GlobalData.Instance.Album.ForthAlbumMusicCircle);
                 MakeProgressCicle(GlobalData.Instance.Album.ForthAlbumMusicCircle);
                 break;
-        }
-    }
-
-    void DestroyAlbumObjects()
-    {
-        DestroyAlbumStage();
-        DestroyProgressBar();
-        DestroyProgressCircle();
-    }
-
-    void DestroyAlbumStage()
-    {
-        Transform[] childList = uiObjectStageBase.gameObject.GetComponentsInChildren<Transform>();
-
-        if (childList != null)
-        {
-            for (int i = 1; i < childList.Length; i++)
-            {
-                if (childList[i] != transform)
-                {
-                    Destroy(childList[i].gameObject);
-                }
-            }
-        }
-    }
-
-    void DestroyProgressBar()
-    {
-        Transform[] childList = uiObjectProgressBarBase.gameObject.GetComponentsInChildren<Transform>();
-
-        if (childList != null)
-        {
-            for (int i = 2; i < childList.Length; i++)
-            {
-                if (childList[i] != transform)
-                {
-                    Destroy(childList[i].gameObject);
-                }
-            }
-        }
-    }
-
-    void DestroyProgressCircle()
-    {
-        Transform[] childList = uiObjectProgressCircleBase.gameObject.GetComponentsInChildren<Transform>();
-
-        if (childList != null)
-        {
-            for (int i = 1; i < childList.Length; i++)
-            {
-                if (childList[i] != transform)
-                {
-                    Destroy(childList[i].gameObject);
-                }
-            }
         }
     }
 
@@ -181,17 +134,70 @@ public class UIElementMusicSelect : MonoBehaviour
             _progressIndex++;
         }
     }
+    #endregion
+
+    #region Clear Maked Album Object (Destroy)
+    void DestroyAlbumObjects()
+    {
+        DestroyAlbumStage();
+        DestroyProgressBar();
+        DestroyProgressCircle();
+    }
+
+    void DestroyAlbumStage()
+    {
+        Transform[] childList = uiObjectStageBase.gameObject.GetComponentsInChildren<Transform>();
+
+        if (childList != null)
+        {
+            for (int i = 1; i < childList.Length; i++)
+            {
+                if (childList[i] != transform)
+                {
+                    Destroy(childList[i].gameObject);
+                }
+            }
+        }
+    }
+
+    void DestroyProgressBar()
+    {
+        Transform[] childList = uiObjectProgressBarBase.gameObject.GetComponentsInChildren<Transform>();
+
+        if (childList != null)
+        {
+            for (int i = 2; i < childList.Length; i++)
+            {
+                if (childList[i] != transform)
+                {
+                    Destroy(childList[i].gameObject);
+                }
+            }
+        }
+    }
+
+    void DestroyProgressCircle()
+    {
+        Transform[] childList = uiObjectProgressCircleBase.gameObject.GetComponentsInChildren<Transform>();
+
+        if (childList != null)
+        {
+            for (int i = 1; i < childList.Length; i++)
+            {
+                if (childList[i] != transform)
+                {
+                    Destroy(childList[i].gameObject);
+                }
+            }
+        }
+    }
+    #endregion
 
     // Update is called once per frame
-    void Update()
-    {
-        SelectMusic();
-        OnClickEsc();
-        InputExecute();
-    }
 
     public void InputExecute()
     {
+
         if (GlobalState.Instance.UserData.data.BackgroundProcActive)
         {
             if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -217,6 +223,7 @@ public class UIElementMusicSelect : MonoBehaviour
                 }
             }
         }
+
     }
 
     void ChangeBackGround()
@@ -263,4 +270,6 @@ public class UIElementMusicSelect : MonoBehaviour
             }
         }
     }
+
 }
+

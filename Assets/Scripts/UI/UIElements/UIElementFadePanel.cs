@@ -38,6 +38,8 @@ public class UIElementFadePanel : MonoBehaviourSingleton<UIElementFadePanel>
     [SerializeField] private Image fadeIvory;
     [SerializeField] private AnimCurve curveIvory;
 
+
+    [SerializeField] private Image fadeBackGround;
     public float TransitionTime = 2f;
 
     void Start()
@@ -119,7 +121,6 @@ public class UIElementFadePanel : MonoBehaviourSingleton<UIElementFadePanel>
     public void BetweenMainToAlbumTransition()
     {
         InitBetweenMainToTransitionTweening();
-        transitionPanel.SetActive(true);
 
         TransitionSequence = DOTween.Sequence().SetAutoKill(false).OnStart(() =>
         {
@@ -138,6 +139,8 @@ public class UIElementFadePanel : MonoBehaviourSingleton<UIElementFadePanel>
     private void InitBetweenMainToTransitionTweening()
     {
         DOTween.PauseAll();
+        transitionPanel.SetActive(true);
+
         fadeClear.transform.localScale = fadeClearOriginScale;
         fadeRed.transform.localScale = Vector3.one;
         fadeYellow.transform.localScale = Vector3.one;
@@ -145,9 +148,48 @@ public class UIElementFadePanel : MonoBehaviourSingleton<UIElementFadePanel>
     }
     #endregion
 
-    public void BetweenAlbumToMusicTransition()
+    Tween fadeInTween;
+    Tween fadeOutTween;
+    public void BetweenAlbumToMusicTransition(float transitionTime, float delay)
     {
+        InitBetweenAlbumToMusicTransitionTweening();
 
+        TransitionSequence = DOTween.Sequence().SetAutoKill(false).OnStart(() =>
+        {
+            fadeInTween = fadeBackGround.DOColor(Color.white, transitionTime);
+            fadeInTween.SetDelay(delay);
+            fadeInTween.OnComplete(() => { fadeOutTween = fadeBackGround.DOColor(whiteAlpha0, transitionTime + transitionTime).SetDelay(0.5f).OnComplete(() => { fadeBackGround.gameObject.SetActive(false); }); });
+        });
+
+    }
+
+    void InitBetweenAlbumToMusicTransitionTweening()
+    {
+        if (fadeBackGround)
+        {
+            fadeBackGround.gameObject.SetActive(true);
+            fadeBackGround.color = whiteAlpha0;
+            SetFadeBackGroundImages();
+        }
+    }
+
+    void SetFadeBackGroundImages()
+    {
+        switch (GlobalState.Instance.AlbumIndex)
+        {
+            case (int)GlobalData.ALBUM.ISEDOL:
+                fadeBackGround.sprite = GlobalData.Instance.Album.FirstAlbumMusicBackground[GlobalState.Instance.StageIndex];
+                break;
+            case (int)GlobalData.ALBUM.CONTEST:
+                fadeBackGround.sprite = GlobalData.Instance.Album.SecondAlbumMusicBackground[GlobalState.Instance.StageIndex];
+                break;
+            case (int)GlobalData.ALBUM.GOMIX:
+                fadeBackGround.sprite = GlobalData.Instance.Album.ThirdAlbumMusicBackground[GlobalState.Instance.StageIndex];
+                break;
+            case (int)GlobalData.ALBUM.WAKALOID:
+                fadeBackGround.sprite = GlobalData.Instance.Album.ForthAlbumMusicBackground[GlobalState.Instance.StageIndex];
+                break;
+        }
     }
 
 }
