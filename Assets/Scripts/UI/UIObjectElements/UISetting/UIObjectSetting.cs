@@ -11,6 +11,8 @@ public class UIObjectSetting : MonoBehaviour
     public Button ButtonClose;
     public Button ButtonExit;
     public GameObject ButtonKeySetting;
+    // 팝업창 호출 시 UI 제어
+    private float _duration = 0.15f;
     // 버튼 사운드
     const int SFX_Home = 1;
     const int SFX_Setting = 4;
@@ -29,13 +31,6 @@ public class UIObjectSetting : MonoBehaviour
     public int SeparationSize = 4;
     public string[] _InBoxValues = new string[4];
     public string[] _OutBoxValues = new string[4];
-
-    private float _duration = 0.2f;
-    private void OnEnable()
-    {
-        this.transform.localScale = Vector3.zero;
-        this.transform.DOScale(Vector3.one, _duration).SetEase(Ease.InCubic);
-    }
 
     // 각 버튼 별 이벤트 정의
     public void SetButtonEvent()
@@ -425,6 +420,15 @@ public class UIObjectSetting : MonoBehaviour
                 }
             }
         }
+    }
+
+    // 팝업 창 호출 시 UI 출력 제어
+    private void OnEnable()
+    {
+        // 사이즈 0부터 시작
+        this.transform.localScale = Vector3.zero;
+        // 1까지 커지면서 시간은 0.2초, 변환 시 큐빅 형태로 등장
+        this.transform.DOScale(Vector3.one, _duration).SetEase(Ease.InCubic);
     }
 
     void Start()
