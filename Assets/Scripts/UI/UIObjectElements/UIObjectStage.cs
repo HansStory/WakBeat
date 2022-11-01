@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class UIObjectStage : MonoBehaviour
 {
@@ -38,15 +39,68 @@ public class UIObjectStage : MonoBehaviour
             _stageIndex = value;
         }
     }
-    // Start is called before the first frame update
+
+    [SerializeField] private RectTransform panelStage;
+    float smallSize = 0.8f;
+
     void Start()
     {
-        
+        Init();
     }
 
-    // Update is called once per frame
+    private void Init()
+    {
+        if (StageIndex != GlobalState.Instance.StageIndex)
+        {
+            stageLevel.gameObject.SetActive(false);
+            panelStage.localScale = Vector3.one * smallSize;
+        }
+    }
+
+
     void Update()
     {
-        
+        InputExecute();
+    }
+
+    public void InputExecute()
+    {
+        if (GlobalState.Instance.UserData.data.BackgroundProcActive)
+        {
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                ShowMyIndex();
+            }
+
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                ShowMyIndex();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                //SelectAlbum();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                //ExitAlbumSelect();
+            }
+        }
+    }
+
+    float _duration = 0.5f;
+    void ShowMyIndex()
+    {
+        if (GlobalState.Instance.StageIndex == StageIndex)
+        {
+            stageLevel.gameObject.SetActive(GlobalState.Instance.StageIndex == StageIndex);
+            panelStage.DOScale(Vector3.one, _duration);
+        }
+        else
+        {
+            stageLevel.gameObject.SetActive(GlobalState.Instance.StageIndex == StageIndex);
+            panelStage.DOScale(Vector3.one * smallSize, _duration);
+        }
     }
 }

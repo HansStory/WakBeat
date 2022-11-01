@@ -245,7 +245,7 @@ MonoBehaviour:
     m_Right: 600
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 7
   m_Spacing: 100
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
@@ -792,7 +792,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 1231211995838327652}
-  m_Horizontal: 1
+  m_Horizontal: 0
   m_Vertical: 0
   m_MovementType: 1
   m_Elasticity: 0.1
@@ -2239,6 +2239,7 @@ MonoBehaviour:
   uiObjectProgressBarBase: {fileID: 327196779073382223}
   uiObjectProgressCircle: {fileID: 7270189117128891702, guid: 5312cec2809604b4eb4657ace1dede99, type: 3}
   uiObjectProgressCircleBase: {fileID: 3540137803790492285}
+  scrollRect: {fileID: 3438493075930980602}
 --- !u!1 &7212678813710706899
 GameObject:
   m_ObjectHideFlags: 0

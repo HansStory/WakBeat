@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class UIElementMusicSelect : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class UIElementMusicSelect : MonoBehaviour
 
     [SerializeField] private GameObject uiObjectProgressCircle;
     [SerializeField] private Transform uiObjectProgressCircleBase;
+
+    [SerializeField] private ScrollRect scrollRect;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +37,7 @@ public class UIElementMusicSelect : MonoBehaviour
 
     private void OnDisable()
     {
+        GlobalState.Instance.StageIndex = 0;
         DestroyAlbumObjects();
     }
 
@@ -205,10 +209,11 @@ public class UIElementMusicSelect : MonoBehaviour
                 if (GlobalState.Instance.StageIndex < SoundManager.Instance.selectedAlbumMusicLength)
                 {
                     GlobalState.Instance.StageIndex++;
+                    SoundManager.Instance.TurnOnSelectedMusic();
                     ChangeBackGround();
+                    MoveScrollRect();
 
                     Debug.Log($"Selecte My Stage Index : {GlobalState.Instance.StageIndex}");
-                    SoundManager.Instance.TurnOnSelectedMusic();
                 }
             }
             else if (Input.GetKeyDown(KeyCode.LeftArrow))
@@ -216,16 +221,38 @@ public class UIElementMusicSelect : MonoBehaviour
                 if (0 < GlobalState.Instance.StageIndex)
                 {
                     GlobalState.Instance.StageIndex--;
+                    SoundManager.Instance.TurnOnSelectedMusic();
                     ChangeBackGround();
+                    MoveScrollRect();
 
                     Debug.Log($"Selecte My Stage Index : {GlobalState.Instance.StageIndex}");
-                    SoundManager.Instance.TurnOnSelectedMusic();
                 }
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            scrollRect.DOHorizontalNormalizedPos(1f, 1f);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            scrollRect.DOHorizontalNormalizedPos(0f, 1f);
+        }
+
+
     }
 
+    float _duration = 0.5f;
+    void MoveScrollRect()
+    {
+        float StageLength = SoundManager.Instance.selectedAlbumMusicLength;
+        float currentStage = GlobalState.Instance.StageIndex;
+
+        float wantScrollRect = currentStage / StageLength;
+
+        scrollRect.DOHorizontalNormalizedPos(wantScrollRect, _duration);
+    }
     void ChangeBackGround()
     {
         switch (GlobalState.Instance.AlbumIndex)
