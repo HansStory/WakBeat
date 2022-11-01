@@ -6,14 +6,10 @@ using DG.Tweening;
 
 public class UIElementAlbumSelect : MonoBehaviour
 {
-    public Image fadeImage = null;
-    private float fadeTime = 0.5f;
-
-    public List<GameObject> Albums;
+    public List<GameObject> AlbumList;
 
     [SerializeField] private GameObject album;
     [SerializeField] private Transform albumBase;
-    //[SerializeField] private RectTransform tweenPanel;
     [SerializeField] private UIObjectAlbum uiObjectAlbum;
 
     [SerializeField] private Image imageBackGround;
@@ -24,8 +20,7 @@ public class UIElementAlbumSelect : MonoBehaviour
 
     private void OnEnable()
     {
-        //StartCoroutine(StartAlbumSelectPanel());
-        //SoundManager.Instance.TurnOnGameBackGround();
+
     }
     void Start()
     {
@@ -43,7 +38,7 @@ public class UIElementAlbumSelect : MonoBehaviour
             var _album = GameObject.Instantiate(album, albumBase);
             var albumInfo = _album.GetComponent<UIObjectAlbum>();
 
-            Albums.Add(_album);
+            AlbumList.Add(_album);
 
             if (albumInfo)
             {
@@ -130,27 +125,146 @@ public class UIElementAlbumSelect : MonoBehaviour
 
     void InputDownChangeAlbumIndex()
     {
-        if (GlobalState.Instance.AlbumIndex <= GlobalData.Instance.Album.AlbumCircles.Length)
+        GlobalState.Instance.AlbumIndex++;
+        if (GlobalState.Instance.AlbumIndex == GlobalData.Instance.Album.AlbumCircles.Length)
         {
-            GlobalState.Instance.AlbumIndex++;
-            if (GlobalState.Instance.AlbumIndex == GlobalData.Instance.Album.AlbumCircles.Length)
-            {
-                GlobalState.Instance.AlbumIndex = 0;
-            }
+            GlobalState.Instance.AlbumIndex = 0;
         }
+
+        CalculateAlbumBoundary();
+        MoveUpAlbums();
     }
 
     void InputUpChangeAlbumIndex()
     {
-        if (GlobalState.Instance.AlbumIndex >= 0)
+        GlobalState.Instance.AlbumIndex--;
+
+        if (GlobalState.Instance.AlbumIndex < 0)
         {
-            GlobalState.Instance.AlbumIndex--;
-            if (GlobalState.Instance.AlbumIndex < 0)
+            GlobalState.Instance.AlbumIndex = GlobalData.Instance.Album.AlbumCircles.Length - 1;
+        }
+
+        CalculateAlbumBoundary();
+        MoveDownAlbums();
+    }
+
+    private int _upIndex;
+    private int _outUpIndex;
+    private int _downIndex;
+    private int _outDownIndex;
+    void CalculateAlbumBoundary()
+    {
+        _upIndex = GlobalState.Instance.AlbumIndex - 1;
+        _outUpIndex = GlobalState.Instance.AlbumIndex - 2;
+
+        _downIndex = GlobalState.Instance.AlbumIndex + 1;
+        _outDownIndex = GlobalState.Instance.AlbumIndex + 2;
+
+        if (_upIndex < 0)
+        {
+            _upIndex = GlobalData.Instance.Album.AlbumCircles.Length - 1;
+        }
+
+        if (_outUpIndex < 0)
+        {
+            if (GlobalState.Instance.AlbumIndex == 0)
             {
-                GlobalState.Instance.AlbumIndex = GlobalData.Instance.Album.AlbumCircles.Length - 1;
+                _outUpIndex = GlobalData.Instance.Album.AlbumCircles.Length - 2;
+            }
+            else
+            {
+                _outUpIndex = GlobalData.Instance.Album.AlbumCircles.Length - 1;
+            }
+        }
+
+        if (_downIndex > GlobalData.Instance.Album.AlbumCircles.Length - 1)
+        {
+            _downIndex = 0;
+        }
+
+        if (_outDownIndex > GlobalData.Instance.Album.AlbumCircles.Length - 1)
+        {
+            if (GlobalState.Instance.AlbumIndex == GlobalData.Instance.Album.AlbumCircles.Length - 1)
+            {
+                _outDownIndex = 1;
+            }
+            else
+            {
+                _outDownIndex = 0;
             }
         }
     }
+
+    private Vector2 centerPos = new Vector2(12f, -16f);
+    private Vector2 downPos = new Vector2(-333f, -430f);
+    private Vector2 outDownPos = new Vector2(-700f, -750f);
+    private Vector2 upPos = new Vector2(-333f, 415f);
+    private Vector2 outUpPos = new Vector2(-700f, 750f);
+
+    private Vector3 centerSize = new Vector3(1f, 1f, 1f);
+    private Vector3 smallSize = new Vector3(0.6f, 0.6f, 0.6f);
+
+    public Tween AlbumMoveTween;
+    public bool isAlbumMove = false;
+    private float AlbumMoveSpeed = 0.5f;
+    void MoveUpAlbums()
+    {
+        DOTween.PauseAll();
+
+        //isAlbumMove = true;
+
+        AlbumList[GlobalState.Instance.AlbumIndex].transform.DOLocalMove(centerPos, AlbumMoveSpeed);
+        AlbumList[GlobalState.Instance.AlbumIndex].transform.DOScale(centerSize, AlbumMoveSpeed);
+
+        AlbumList[_upIndex].transform.DOLocalMove(upPos, AlbumMoveSpeed);
+        AlbumList[_upIndex].transform.DOScale(smallSize, AlbumMoveSpeed);
+
+        AlbumList[_downIndex].transform.localPosition = outDownPos;
+        AlbumList[_downIndex].transform.DOLocalMove(downPos, AlbumMoveSpeed);
+        AlbumList[_downIndex].transform.DOScale(smallSize, AlbumMoveSpeed);
+
+        AlbumMoveTween = AlbumList[_outUpIndex].transform.DOLocalMove(outUpPos, AlbumMoveSpeed);
+        //AlbumMoveTween.OnComplete(() => { isAlbumMove = false; });
+    }
+
+    void MoveDownAlbums()
+    {
+        DOTween.PauseAll();
+
+        //isAlbumMove = true;
+
+        AlbumList[GlobalState.Instance.AlbumIndex].transform.DOLocalMove(centerPos, AlbumMoveSpeed);
+        AlbumList[GlobalState.Instance.AlbumIndex].transform.DOScale(centerSize, AlbumMoveSpeed);
+
+        AlbumList[_upIndex].transform.localPosition = outUpPos;
+        AlbumList[_upIndex].transform.DOLocalMove(upPos, AlbumMoveSpeed);
+        AlbumList[_upIndex].transform.DOScale(smallSize, AlbumMoveSpeed);
+
+        AlbumList[_downIndex].transform.DOLocalMove(downPos, AlbumMoveSpeed);
+        AlbumList[_downIndex].transform.DOScale(smallSize, AlbumMoveSpeed);
+
+        AlbumMoveTween = AlbumList[_outUpIndex].transform.DOLocalMove(outDownPos, AlbumMoveSpeed);
+        //AlbumMoveTween.OnComplete(() => { isAlbumMove = false; });
+    }
+
+
+    // TO DO : 앨범 증가시 불필요한 앨범은 SetAcitive 할것
+    //void SetActiveAlbum()
+    //{
+    //    isAlbumMove = false;
+
+    //    for (int i = 0; i < GlobalData.Instance.Album.AlbumCircles.Length; i++)
+    //    {
+    //        if (i == _upIndex || i == GlobalState.Instance.AlbumIndex || i == _downIndex)
+    //        {
+    //            Albums[i].SetActive(true);
+    //        }
+    //        else
+    //        {
+    //            Albums[i].SetActive(false);
+    //        }
+    //    }
+    //}
 
     void ChangeBackGround(int currentAlbumIndex)
     {
@@ -225,26 +339,6 @@ public class UIElementAlbumSelect : MonoBehaviour
                 }
             }
         }
-
-        //IEnumerator StartAlbumSelectPanel()
-        //{
-        //    fadeImage.gameObject.SetActive(true);
-        //    UIManager.Instance.FadeToWhite(fadeImage, fadeTime);
-        //    yield return new WaitForSeconds(fadeTime);
-
-        //    fadeImage.gameObject.SetActive(false);
-        //}
-
-        //IEnumerator SelectAlbumProcedure()
-        //{
-        //    fadeImage.gameObject.SetActive(true);
-        //    UIManager.Instance.FadeToBlack(fadeImage, fadeTime);
-        //    yield return new WaitForSeconds(fadeTime);
-
-        //    fadeImage.gameObject.SetActive(false);
-        //    UIManager.Instance.GoPanelMusicSelect();
-
-        //}
     }
 }
 

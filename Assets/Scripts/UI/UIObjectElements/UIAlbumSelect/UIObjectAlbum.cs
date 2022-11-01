@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -48,16 +46,15 @@ public class UIObjectAlbum : MonoBehaviour
     [SerializeField] private AnimCurve curveAlbumTitle;
     [SerializeField] private float titleTweenDuration;
 
-    private Vector2 upPos = new Vector2(-333f, 415f);
-    private Vector2 centerPos = new Vector2(12f, -16f);
-    private Vector2 downPos = new Vector2(-333f, -430f);
+    //TO DO : Initialization을 UIElementAlbumSelect에서 하도록 수정
+    private  Vector2 centerPos = new Vector2(12f, -16f);
+    private  Vector2 downPos = new Vector2(-333f, -430f);
+    private  Vector2 upPos = new Vector2(-333f, 415f);
 
     private Vector3 centerSize = new Vector3(1f, 1f, 1f);
     private Vector3 smallSize = new Vector3(0.6f, 0.6f, 0.6f);
 
     private Vector3 startAlbumCircleSize = new Vector3(0.9f, 0.9f, 0.9f);
-
-    private float _slideDuration = 2f;
     [SerializeField] private RectTransform myRectTransform;
 
     public Tween CircleTween;
@@ -70,14 +67,12 @@ public class UIObjectAlbum : MonoBehaviour
 
     private void OnEnable()
     {
-        InitMyIndexPos();
         ShowMyTitle(1f);
     }
 
     void Update()
     {
         InputExecute();
-        InputTest();
     }
 
     public void InputExecute()
@@ -107,7 +102,6 @@ public class UIObjectAlbum : MonoBehaviour
     }
 
     private Vector3 startTitleVector = new Vector3(-700f, 0f, 0f);
-
     void ShowMyTitle(float delay)
     {
         albumTitle.gameObject.SetActive(GlobalState.Instance.AlbumIndex == AlbumIndex);
@@ -136,7 +130,6 @@ public class UIObjectAlbum : MonoBehaviour
         }
     }
 
-
     public void ExitAlbumSelect()
     {
         UIManager.Instance.GoPanelMain();
@@ -149,7 +142,6 @@ public class UIObjectAlbum : MonoBehaviour
 
     public void InitMyIndexPos()
     {
-
         switch (AlbumIndex)
         {
             case (int)GlobalData.ALBUM.ISEDOL:
@@ -186,41 +178,5 @@ public class UIObjectAlbum : MonoBehaviour
     {
         UIElementAlbumSelect.ShowAlbumInfo();
         Debug.Log($"Click Info Button. My Album Index = {_albumIndex}");
-    }
-
-
-    void InputTest()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            myRectTransform.DOAnchorPos(upPos, _slideDuration, false);
-            myRectTransform.DOScale(smallSize, _slideDuration);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            myRectTransform.DOAnchorPos(centerPos, _slideDuration, false);
-            myRectTransform.DOScale(centerSize, _slideDuration);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            myRectTransform.DOAnchorPos(downPos, _slideDuration, false);
-            myRectTransform.DOScale(smallSize, _slideDuration);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
-
-        }
     }
 }
