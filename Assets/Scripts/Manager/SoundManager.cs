@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class SoundManager : MonoBehaviourSingleton<SoundManager>
 {
@@ -71,6 +72,8 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     {
         if (!MusicAudioSource.isPlaying && isPlayBackground)
         {
+            MusicAudioSource.volume = GlobalState.Instance.MusicVolume;
+
             MusicAudioSource.clip = backgroundClips[BackgroundMusicIndex];
             MusicAudioSource.Play();
             GlobalState.Instance.BGMIndex = BackgroundMusicIndex;
@@ -143,6 +146,18 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         isPlayBackground = false;
         MusicAudioSource.Stop();
         MusicAudioSource.loop = true;
+    }
+
+    public void FadeOutMusicVolume(float duration)
+    {
+        MusicAudioSource.volume = GlobalState.Instance.MusicVolume;
+        MusicAudioSource.DOFade(0f, duration);
+    }
+
+    public void FadeInMusicVolume(float duration)
+    {
+        MusicAudioSource.volume = 0f;
+        MusicAudioSource.DOFade(GlobalState.Instance.MusicVolume, duration);
     }
 
     public void ForceAudioStop()

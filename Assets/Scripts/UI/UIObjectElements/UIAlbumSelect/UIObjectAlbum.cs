@@ -133,6 +133,7 @@ public class UIObjectAlbum : MonoBehaviour
                 isTitleMove = true;
             }
 
+            SoundManager.Instance.FadeOutMusicVolume(1f);
             SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.AlbumSelect);
         }
     }

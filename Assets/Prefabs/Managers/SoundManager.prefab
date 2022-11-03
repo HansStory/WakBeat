@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2473687354809298430}
   - component: {fileID: 3925706872222184334}
   m_Layer: 0
-  m_Name: Music
+  m_Name: Music_Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -197,10 +197,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: bb4b074e8ab8e5542bc58df84be15630, type: 3}
   - {fileID: 8300000, guid: d6c3461bb224d9246a80478f8d74c4a2, type: 3}
   album2HighLightClips:
-  - {fileID: 8300000, guid: 86da1238e49e1fb47a1c0d96cb150ad0, type: 3}
   - {fileID: 8300000, guid: 62b14d2fbb6b00a4f92d98af3af9a60d, type: 3}
   - {fileID: 8300000, guid: 636073182517ec442bb52c77b4727423, type: 3}
   - {fileID: 8300000, guid: d7e14b9534036c14eb76c0b0bdfedd83, type: 3}
+  - {fileID: 8300000, guid: 86da1238e49e1fb47a1c0d96cb150ad0, type: 3}
   album3HighLightClips:
   - {fileID: 8300000, guid: b5b636e41b59c2f47b7ef3d9a24dfedb, type: 3}
   - {fileID: 8300000, guid: 7b56f3c46e44b22429a17d4be4d01b46, type: 3}
@@ -208,8 +208,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 818a70a8ded3cbc4093f4c55c4baf430, type: 3}
   - {fileID: 8300000, guid: f1126db8877c2404092c55a7ef87ab42, type: 3}
   album4HighLightClips:
-  - {fileID: 8300000, guid: d235b02ac153ad143a532990b9eee9b0, type: 3}
   - {fileID: 8300000, guid: f4a2463f1d06efa459676d545105bacd, type: 3}
+  - {fileID: 8300000, guid: d235b02ac153ad143a532990b9eee9b0, type: 3}
   - {fileID: 8300000, guid: ae975784ff7e49e4bbb6642cdf033c1b, type: 3}
   - {fileID: 8300000, guid: cc4ee0cf064c15a4098034e5182bdc4b, type: 3}
   selectedAlbumMusicLength: 0
@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 6715264977599093829}
   - component: {fileID: 2232593344520345185}
   m_Layer: 0
-  m_Name: SFX
+  m_Name: SFX_Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

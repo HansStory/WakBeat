@@ -26,11 +26,14 @@ public class UIElementMusicSelect : MonoBehaviour
         GlobalState.Instance.StageIndex = 0;
         SoundManager.Instance.TurnOffGameBackground();
         SoundManager.Instance.TurnOnSelectedMusic();
+        SoundManager.Instance.FadeInMusicVolume(1f);
     }
     private void OnEnable()
     {
         GlobalState.Instance.StageIndex = 0;
         SoundManager.Instance.TurnOnSelectedMusic();
+        SoundManager.Instance.FadeInMusicVolume(1f);
+        scrollRect.content.anchoredPosition = Vector2.zero;
         MakeAlbumStage();
         ChangeBackGround();
     }
