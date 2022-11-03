@@ -153,7 +153,7 @@ public class UIObjectShop : MonoBehaviour
             TabObject.transform.Find("TabVideo").Find("TabOff").gameObject.SetActive(true);
 
             // 버튼 사운드 출력
-            SoundManager.Instance.PlaySoundFX(SFX_Setting);
+            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
         }
         else if (Division.Equals("SkillOn") || Division.Equals("SkillOff"))
         {
@@ -169,7 +169,7 @@ public class UIObjectShop : MonoBehaviour
             TabObject.transform.Find("TabVideo").Find("TabOff").gameObject.SetActive(true);
 
             // 버튼 사운드 출력
-            SoundManager.Instance.PlaySoundFX(SFX_Setting);
+            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
         }
         else if (Division.Equals("VideoOn") || Division.Equals("VideoOff"))
         {
@@ -185,7 +185,7 @@ public class UIObjectShop : MonoBehaviour
             TabObject.transform.Find("TabVideo").Find("TabOff").gameObject.SetActive(true);
 
             // 버튼 사운드 출력
-            SoundManager.Instance.PlaySoundFX(SFX_Setting);
+            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
         }
     }
 
@@ -224,7 +224,7 @@ public class UIObjectShop : MonoBehaviour
         // 모두 Off 일때 0번 스킨 On
         SetSkinButtonDefault();
 
-        SoundManager.Instance.PlaySoundFX(SFX_Setting);
+        SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
     }
 
     // 스킨 버튼 모두 Off 일때 0번 스킨 On
