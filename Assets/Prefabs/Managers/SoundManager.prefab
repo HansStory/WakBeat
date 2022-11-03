@@ -202,11 +202,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 636073182517ec442bb52c77b4727423, type: 3}
   - {fileID: 8300000, guid: d7e14b9534036c14eb76c0b0bdfedd83, type: 3}
   album3HighLightClips:
-  - {fileID: 8300000, guid: 818a70a8ded3cbc4093f4c55c4baf430, type: 3}
+  - {fileID: 8300000, guid: b5b636e41b59c2f47b7ef3d9a24dfedb, type: 3}
+  - {fileID: 8300000, guid: 7b56f3c46e44b22429a17d4be4d01b46, type: 3}
   - {fileID: 8300000, guid: b8270fcf4ce55984b945002207539064, type: 3}
+  - {fileID: 8300000, guid: 818a70a8ded3cbc4093f4c55c4baf430, type: 3}
   - {fileID: 8300000, guid: f1126db8877c2404092c55a7ef87ab42, type: 3}
-  - {fileID: 8300000, guid: b5b636e41b59c2f47b7ef3d9a24dfedb, type: 3}
-  - {fileID: 8300000, guid: b5b636e41b59c2f47b7ef3d9a24dfedb, type: 3}
   album4HighLightClips:
   - {fileID: 8300000, guid: d235b02ac153ad143a532990b9eee9b0, type: 3}
   - {fileID: 8300000, guid: f4a2463f1d06efa459676d545105bacd, type: 3}
