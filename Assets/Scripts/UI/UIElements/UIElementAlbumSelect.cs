@@ -10,13 +10,25 @@ public class UIElementAlbumSelect : MonoBehaviour
 
     [SerializeField] private GameObject album;
     [SerializeField] private Transform albumBase;
-    [SerializeField] private UIObjectAlbum uiObjectAlbum;
 
     [SerializeField] private Image imageBackGround;
 
     [SerializeField] private GameObject albumInfo;
     [SerializeField] private Transform albumInfoBase;
 
+    private Vector2 centerPos = new Vector2(12f, -16f);
+    private Vector2 downPos = new Vector2(-333f, -430f);
+    private Vector2 outDownPos = new Vector2(-700f, -750f);
+    private Vector2 upPos = new Vector2(-333f, 415f);
+    private Vector2 outUpPos = new Vector2(-700f, 750f);
+
+    private Vector3 centerSize = new Vector3(1f, 1f, 1f);
+    private Vector3 smallSize = new Vector3(0.6f, 0.6f, 0.6f);
+
+    private int _upIndex;
+    private int _outUpIndex;
+    private int _downIndex;
+    private int _outDownIndex;
 
     private void OnEnable()
     {
@@ -46,12 +58,12 @@ public class UIElementAlbumSelect : MonoBehaviour
                 if (albumCircles.Length == albumTitles.Length)
                 {
                     albumInfo.name = $"Album_{_albumIndex}";
-                    albumInfo.AlbumCircle = albumCircles[_albumIndex];
-                    albumInfo.AlbumTitle = albumTitles[_albumIndex];
+                    albumInfo.AlbumCircle.sprite = albumCircles[_albumIndex];
+                    albumInfo.AlbumTitle.sprite = albumTitles[_albumIndex];
                     albumInfo.AlbumIndex = _albumIndex;
-                    albumInfo.InitMyIndexPos();
-
                     albumInfo.UIElementAlbumSelect = this;
+
+                    InitAlbumPos(_albumIndex, albumInfo.MyRectTransform, albumInfo.AlbumCircle, albumInfo.CurveAlbumCircle);
                 }
                 else
                 {
@@ -63,12 +75,45 @@ public class UIElementAlbumSelect : MonoBehaviour
         }
     }
 
+    void InitAlbumPos(int albumIndex, RectTransform rectTransform, Image albumCircle, AnimCurve animCurve)
+    {
+        switch (albumIndex)
+        {
+            case (int)GlobalData.ALBUM.ISEDOL:
+                rectTransform.anchoredPosition = centerPos;
+                rectTransform.localScale = centerSize;
+                InitAlbumTween(albumCircle, animCurve, 1f, 0.5f);
+                break;
+            case (int)GlobalData.ALBUM.CONTEST:
+                rectTransform.anchoredPosition = downPos;
+                rectTransform.localScale = smallSize;
+                InitAlbumTween(albumCircle, animCurve, 1f, 0.6f);
+                break;
+            case (int)GlobalData.ALBUM.GOMIX:
+                rectTransform.anchoredPosition = outDownPos;
+                rectTransform.localScale = smallSize;
+                InitAlbumTween(albumCircle, animCurve, 1f, 0.8f);
+                break;
+            case (int)GlobalData.ALBUM.WAKALOID:
+                rectTransform.anchoredPosition = upPos;
+                rectTransform.localScale = smallSize;
+                InitAlbumTween(albumCircle, animCurve, 1f, 0.7f);
+                break;
+        }
+    }
+
+    void InitAlbumTween(Image albumCircle, AnimCurve animCurve, float duration, float delay)
+    {
+        albumCircle.rectTransform.localScale = Vector3.one * 0.9f;
+        albumCircle.rectTransform.DOScale(Vector3.one, duration).SetEase(animCurve.Curve).SetDelay(delay);
+    }
+
     public void ShowAlbumInfo()
     {
         var _albumInfo = GameObject.Instantiate(albumInfo, albumInfoBase);
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         OnClickEsc();
@@ -96,31 +141,43 @@ public class UIElementAlbumSelect : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                UIManager.Instance.GoPanelMain();
+                //UIManager.Instance.GoPanelMain();
             }
         }
     }
 
     void InputDown()
     {
-        InputDownChangeAlbumIndex();
-        SoundManager.Instance.PlaySoundFX(2);
+        if (!isAlbumMove)
+        {
+            InputDownChangeAlbumIndex();
+            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.AlbumMove);
 
-        // 팀장님의 부탁으로 BackGround는 변하지 않는걸로 수정
-        //ChangeBackGround(GlobalState.Instance.AlbumIndex);
+            CalculateAlbumBoundary();
+            MoveUpAlbums();
 
-        Debug.Log($"Current My Album : {GlobalState.Instance.AlbumIndex}");
+            // 팀장님의 부탁으로 BackGround는 변하지 않는걸로 수정
+            //ChangeBackGround(GlobalState.Instance.AlbumIndex);
+
+            Debug.Log($"Current My Album : {GlobalState.Instance.AlbumIndex}");
+        }
     }
 
     void InputUp()
     {
-        InputUpChangeAlbumIndex();
-        SoundManager.Instance.PlaySoundFX(2);
+        if (!isAlbumMove)
+        {
+            InputUpChangeAlbumIndex();
+            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.AlbumMove);
 
-        // 팀장님의 부탁으로 BackGround는 변하지 않는걸로 수정
-        //ChangeBackGround(GlobalState.Instance.AlbumIndex);
+            CalculateAlbumBoundary();
+            MoveDownAlbums();
 
-        Debug.Log($"Current My Album : {GlobalState.Instance.AlbumIndex}");
+            // 팀장님의 부탁으로 BackGround는 변하지 않는걸로 수정
+            //ChangeBackGround(GlobalState.Instance.AlbumIndex);
+
+            Debug.Log($"Current My Album : {GlobalState.Instance.AlbumIndex}");
+        }
     }
 
     void InputDownChangeAlbumIndex()
@@ -130,9 +187,6 @@ public class UIElementAlbumSelect : MonoBehaviour
         {
             GlobalState.Instance.AlbumIndex = 0;
         }
-
-        CalculateAlbumBoundary();
-        MoveUpAlbums();
     }
 
     void InputUpChangeAlbumIndex()
@@ -143,15 +197,8 @@ public class UIElementAlbumSelect : MonoBehaviour
         {
             GlobalState.Instance.AlbumIndex = GlobalData.Instance.Album.AlbumCircles.Length - 1;
         }
-
-        CalculateAlbumBoundary();
-        MoveDownAlbums();
     }
 
-    private int _upIndex;
-    private int _outUpIndex;
-    private int _downIndex;
-    private int _outDownIndex;
     void CalculateAlbumBoundary()
     {
         _upIndex = GlobalState.Instance.AlbumIndex - 1;
@@ -195,55 +242,50 @@ public class UIElementAlbumSelect : MonoBehaviour
         }
     }
 
-    private Vector2 centerPos = new Vector2(12f, -16f);
-    private Vector2 downPos = new Vector2(-333f, -430f);
-    private Vector2 outDownPos = new Vector2(-700f, -750f);
-    private Vector2 upPos = new Vector2(-333f, 415f);
-    private Vector2 outUpPos = new Vector2(-700f, 750f);
-
-    private Vector3 centerSize = new Vector3(1f, 1f, 1f);
-    private Vector3 smallSize = new Vector3(0.6f, 0.6f, 0.6f);
-
     public Tween AlbumMoveTween;
     public bool isAlbumMove = false;
-    private float AlbumMoveSpeed = 0.5f;
+    private float AlbumMoveSpeed = 0.3f;
     void MoveUpAlbums()
-    {
-        DOTween.PauseAll();
+    {       
+        if (!isAlbumMove)
+        {
+            AlbumList[GlobalState.Instance.AlbumIndex].transform.DOLocalMove(centerPos, AlbumMoveSpeed);
+            AlbumList[GlobalState.Instance.AlbumIndex].transform.DOScale(centerSize, AlbumMoveSpeed);
 
-        //isAlbumMove = true;
+            AlbumList[_upIndex].transform.DOLocalMove(upPos, AlbumMoveSpeed);
+            AlbumList[_upIndex].transform.DOScale(smallSize, AlbumMoveSpeed);
 
-        AlbumList[GlobalState.Instance.AlbumIndex].transform.DOLocalMove(centerPos, AlbumMoveSpeed);
-        AlbumList[GlobalState.Instance.AlbumIndex].transform.DOScale(centerSize, AlbumMoveSpeed);
+            AlbumList[_downIndex].transform.localPosition = outDownPos;
+            AlbumList[_downIndex].transform.DOLocalMove(downPos, AlbumMoveSpeed);
+            AlbumList[_downIndex].transform.DOScale(smallSize, AlbumMoveSpeed);
 
-        AlbumList[_upIndex].transform.DOLocalMove(upPos, AlbumMoveSpeed);
-        AlbumList[_upIndex].transform.DOScale(smallSize, AlbumMoveSpeed);
+            AlbumMoveTween = AlbumList[_outUpIndex].transform.DOLocalMove(outUpPos, AlbumMoveSpeed);
 
-        AlbumList[_downIndex].transform.localPosition = outDownPos;
-        AlbumList[_downIndex].transform.DOLocalMove(downPos, AlbumMoveSpeed);
-        AlbumList[_downIndex].transform.DOScale(smallSize, AlbumMoveSpeed);
+            isAlbumMove = true;
+        }
 
-        AlbumMoveTween = AlbumList[_outUpIndex].transform.DOLocalMove(outUpPos, AlbumMoveSpeed);
         //AlbumMoveTween.OnComplete(() => { isAlbumMove = false; });
     }
 
     void MoveDownAlbums()
     {
-        DOTween.PauseAll();
+        if (!isAlbumMove)
+        {
+            AlbumList[GlobalState.Instance.AlbumIndex].transform.DOLocalMove(centerPos, AlbumMoveSpeed);
+            AlbumList[GlobalState.Instance.AlbumIndex].transform.DOScale(centerSize, AlbumMoveSpeed);
 
-        //isAlbumMove = true;
+            AlbumList[_upIndex].transform.localPosition = outUpPos;
+            AlbumList[_upIndex].transform.DOLocalMove(upPos, AlbumMoveSpeed);
+            AlbumList[_upIndex].transform.DOScale(smallSize, AlbumMoveSpeed);
 
-        AlbumList[GlobalState.Instance.AlbumIndex].transform.DOLocalMove(centerPos, AlbumMoveSpeed);
-        AlbumList[GlobalState.Instance.AlbumIndex].transform.DOScale(centerSize, AlbumMoveSpeed);
+            AlbumList[_downIndex].transform.DOLocalMove(downPos, AlbumMoveSpeed);
+            AlbumList[_downIndex].transform.DOScale(smallSize, AlbumMoveSpeed);
 
-        AlbumList[_upIndex].transform.localPosition = outUpPos;
-        AlbumList[_upIndex].transform.DOLocalMove(upPos, AlbumMoveSpeed);
-        AlbumList[_upIndex].transform.DOScale(smallSize, AlbumMoveSpeed);
+            AlbumMoveTween = AlbumList[_outUpIndex].transform.DOLocalMove(outDownPos, AlbumMoveSpeed);
 
-        AlbumList[_downIndex].transform.DOLocalMove(downPos, AlbumMoveSpeed);
-        AlbumList[_downIndex].transform.DOScale(smallSize, AlbumMoveSpeed);
+            isAlbumMove = true;
+        }
 
-        AlbumMoveTween = AlbumList[_outUpIndex].transform.DOLocalMove(outDownPos, AlbumMoveSpeed);
         //AlbumMoveTween.OnComplete(() => { isAlbumMove = false; });
     }
 

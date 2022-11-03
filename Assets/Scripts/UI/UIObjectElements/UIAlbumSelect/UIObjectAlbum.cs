@@ -7,26 +7,22 @@ public class UIObjectAlbum : MonoBehaviour
     public UIElementAlbumSelect UIElementAlbumSelect { get; set; }
 
     [SerializeField] private Image albumTitle; 
-    private Sprite _albumTitle;
-    public Sprite AlbumTitle
+    public Image AlbumTitle
     {
-        get { return _albumTitle; }
+        get { return albumTitle; }
         set
         {
-            _albumTitle = value;
-            albumTitle.sprite = _albumTitle;
+            albumTitle = value;
         }
     }
 
     [SerializeField] private Image albumCircle;
-    private Sprite _albumCircle;
-    public Sprite AlbumCircle
+    public Image AlbumCircle
     {
-        get { return _albumCircle; }
+        get { return albumCircle; }
         set
         {
-            _albumCircle = value;
-            albumCircle.sprite = _albumCircle;
+            albumCircle = value;
         }
     }
 
@@ -40,25 +36,24 @@ public class UIObjectAlbum : MonoBehaviour
         }
     }
 
-    [SerializeField] private AnimCurve curveAlbumCircle;
-    [SerializeField] private float circleTweenDuration;
-
-    [SerializeField] private AnimCurve curveAlbumTitle;
-    [SerializeField] private float titleTweenDuration;
-
-    //TO DO : Initialization을 UIElementAlbumSelect에서 하도록 수정
-    private  Vector2 centerPos = new Vector2(12f, -16f);
-    private  Vector2 downPos = new Vector2(-333f, -430f);
-    private  Vector2 upPos = new Vector2(-333f, 415f);
-
-    private Vector3 centerSize = new Vector3(1f, 1f, 1f);
-    private Vector3 smallSize = new Vector3(0.6f, 0.6f, 0.6f);
-
-    private Vector3 startAlbumCircleSize = new Vector3(0.9f, 0.9f, 0.9f);
     [SerializeField] private RectTransform myRectTransform;
+    public RectTransform MyRectTransform
+    {
+        get { return myRectTransform; }
+        set
+        {
+            myRectTransform = value;
+        }
+    }
+
+    public AnimCurve CurveAlbumCircle;
 
     public Tween CircleTween;
     public Tween TitleTween;
+
+    [SerializeField] private AnimCurve curveAlbumTitle;
+    private float titleTweenDuration = 0.4f;
+    private bool isTitleMove = false;
 
     void Start()
     {
@@ -67,7 +62,7 @@ public class UIObjectAlbum : MonoBehaviour
 
     private void OnEnable()
     {
-        ShowMyTitle(1f);
+        ShowMyTitle(1f,1f);
     }
 
     void Update()
@@ -81,12 +76,12 @@ public class UIObjectAlbum : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-                ShowMyTitle(0f);
+                ShowMyTitle(titleTweenDuration, 0.1f);
             }
 
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                ShowMyTitle(0f);
+                ShowMyTitle(titleTweenDuration, 0.1f);
             }
 
             if (Input.GetKeyDown(KeyCode.Return))
@@ -102,32 +97,51 @@ public class UIObjectAlbum : MonoBehaviour
     }
 
     private Vector3 startTitleVector = new Vector3(-700f, 0f, 0f);
-    void ShowMyTitle(float delay)
+    void ShowMyTitle(float duration, float delay)
     {
         albumTitle.gameObject.SetActive(GlobalState.Instance.AlbumIndex == AlbumIndex);
-        TitleTween.Pause();
 
         if (GlobalState.Instance.AlbumIndex == AlbumIndex)
-        {            
-            albumTitle.rectTransform.localPosition = startTitleVector;
-            TitleTween = albumTitle.rectTransform.DOLocalMove(Vector3.zero, titleTweenDuration).SetEase(curveAlbumTitle.Curve);
-            TitleTween.SetDelay(delay);
+        {                              
+            if (!isTitleMove)
+            {
+                albumTitle.rectTransform.localPosition = startTitleVector;
+                TitleTween = albumTitle.rectTransform.DOLocalMove(Vector3.zero, duration).SetEase(curveAlbumTitle.Curve);
+                TitleTween.SetDelay(delay);
+                TitleTween.OnComplete(() => { CheckEndTween(); });
+                isTitleMove = true;
+            }         
         }
     }
 
-    int SFX_Move_02 = 3;
+    void CheckEndTween()
+    {
+        isTitleMove = false;
+        UIElementAlbumSelect.isAlbumMove = false;
+    }
+
     public void SelectAlbum()
     {
-        TitleTween.Pause();
-
         if (GlobalState.Instance.AlbumIndex == AlbumIndex)
         {
-            albumTitle.rectTransform.localPosition = Vector3.zero;
-            TitleTween = albumTitle.rectTransform.DOLocalMove(startTitleVector, titleTweenDuration).SetEase(curveAlbumTitle.Curve);
-            TitleTween.OnComplete(() => { UIElementAlbumSelect.ShowHideAlbumList(0f); });
+            if (!isTitleMove)
+            {
+                albumTitle.rectTransform.localPosition = Vector3.zero;
+                TitleTween = albumTitle.rectTransform.DOLocalMove(startTitleVector, titleTweenDuration).SetEase(curveAlbumTitle.Curve);
+                TitleTween.OnComplete(() => { AlbumToMusic(); });
 
-            SoundManager.Instance.PlaySoundFX(SFX_Move_02);
+                isTitleMove = true;
+            }
+
+            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.AlbumSelect);
         }
+    }
+
+    void AlbumToMusic()
+    {
+        isTitleMove = false;
+        UIElementAlbumSelect.isAlbumMove = false;
+        UIElementAlbumSelect.ShowHideAlbumList(0f);
     }
 
     public void ExitAlbumSelect()
@@ -138,40 +152,6 @@ public class UIObjectAlbum : MonoBehaviour
     void Init()
     {
         albumTitle.gameObject.SetActive(GlobalState.Instance.AlbumIndex == AlbumIndex);
-    }
-
-    public void InitMyIndexPos()
-    {
-        switch (AlbumIndex)
-        {
-            case (int)GlobalData.ALBUM.ISEDOL:
-                InitMyCircle(centerPos, centerSize, 0.5f);
-                break;
-            case (int)GlobalData.ALBUM.CONTEST:
-                InitMyCircle(downPos, smallSize, 0.6f);
-                break;
-            case (int)GlobalData.ALBUM.GOMIX:
-                InitMyCircle(downPos + downPos, smallSize, 0.5f);
-                break;
-            case (int)GlobalData.ALBUM.WAKALOID:
-                InitMyCircle(upPos, smallSize, 0.7f);
-                break;
-        }
-    }
-
-    void InitMyCircle(Vector3 initPos, Vector3 initSize, float delay)
-    {
-        myRectTransform.anchoredPosition = initPos;
-        myRectTransform.localScale = initSize;
-        AlbumCircleTween(delay);
-    }
-
-    void AlbumCircleTween(float delay)
-    {
-        CircleTween.Pause();
-
-        albumCircle.rectTransform.localScale = startAlbumCircleSize;
-        CircleTween = albumCircle.rectTransform.DOScale(Vector3.one, circleTweenDuration).SetEase(curveAlbumCircle.Curve).SetDelay(delay);
     }
 
     public void OnClickInfoButton()
