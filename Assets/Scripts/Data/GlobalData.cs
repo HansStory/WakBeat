@@ -31,4 +31,14 @@ public class GlobalData : MonoBehaviourSingleton<GlobalData>
         GAME,
         RESULT,
     }
+
+    public enum SFX
+    {
+        MainSelect,
+        AlbumMove,
+        AlbumSelect,
+        SettingOut,
+        SettingIn,
+        VolumeControl,
+    }
 }

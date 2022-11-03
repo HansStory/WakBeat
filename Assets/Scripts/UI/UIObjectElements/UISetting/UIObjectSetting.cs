@@ -13,9 +13,9 @@ public class UIObjectSetting : MonoBehaviour
     public GameObject ButtonKeySetting;
     // 팝업창 호출 시 UI 제어
     private float _duration = 0.15f;
-    // 버튼 사운드
-    const int SFX_Home = 1;
-    const int SFX_Setting = 4;
+    // 버튼 사운드 --> Global Data에서 가져와서 쓰는 방법으로 변경
+    //const int SFX_Home = 1;
+    //const int SFX_Setting = 4;
     // 효과/배경음 슬라이더 선언
     public Slider SFXSlider;
     public Slider BGMSlider;
@@ -82,7 +82,7 @@ public class UIObjectSetting : MonoBehaviour
             UIElementSetting.Instance.ButtonClickControll("Setting", "Close");
 
             // 버튼 사운드 출력
-            SoundManager.Instance.PlaySoundFX(SFX_Setting);
+            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
         }
         else if (Division.Equals("Exit"))
         {
@@ -95,7 +95,7 @@ public class UIObjectSetting : MonoBehaviour
             SoundManager.Instance.ForceAudioStop();
 
             // 버튼 사운드 출력
-            SoundManager.Instance.PlaySoundFX(SFX_Setting);
+            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
         }
         else if (Division.Equals("IntegrationOn"))
         {
@@ -108,7 +108,7 @@ public class UIObjectSetting : MonoBehaviour
             SeparationGroup.SetActive(true);
 
             // 버튼 사운드 출력
-            SoundManager.Instance.PlaySoundFX(SFX_Setting);
+            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
         }
         else if (Division.Equals("IntegrationOff"))
         {
@@ -121,7 +121,7 @@ public class UIObjectSetting : MonoBehaviour
             SeparationGroup.SetActive(false);
 
             // 버튼 사운드 출력
-            SoundManager.Instance.PlaySoundFX(SFX_Setting);
+            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
         }
         else if (Division.Equals("SeparationOn"))
         {
@@ -129,7 +129,7 @@ public class UIObjectSetting : MonoBehaviour
             SeparationGroup.SetActive(true);
 
             // 버튼 사운드 출력
-            SoundManager.Instance.PlaySoundFX(SFX_Setting);
+            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
         }
         else if (Division.Equals("SeparationOff"))
         {
@@ -142,7 +142,7 @@ public class UIObjectSetting : MonoBehaviour
             SeparationGroup.SetActive(true);
 
             // 버튼 사운드 출력
-            SoundManager.Instance.PlaySoundFX(SFX_Setting);
+            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
         }
         else if (Division.Equals("SeparationClose"))
         {
@@ -158,7 +158,7 @@ public class UIObjectSetting : MonoBehaviour
             SeparationGroup.SetActive(false);
 
             // 버튼 사운드 출력
-            SoundManager.Instance.PlaySoundFX(SFX_Setting);
+            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
         }
     }
 
@@ -174,7 +174,7 @@ public class UIObjectSetting : MonoBehaviour
     {
         SFXGauge = SFXSlider.value;
         SoundManager.Instance.CtrlSFXVolume(SFXGauge);
-        SoundManager.Instance.PlaySoundFX(SFX_Home);
+        SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.VolumeControl);
     }
 
     // 포커스 나갈 시 Input Field 비활성화

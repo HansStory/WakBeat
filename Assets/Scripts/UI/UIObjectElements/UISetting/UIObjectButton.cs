@@ -11,8 +11,9 @@ public class UIObjectButton : MonoBehaviour
     public Button ButtonShop;
     public Button ButtonTrophy;
     public Button ButtonPause;
-    const int SFX_Home = 1;
-    const int SFX_Setting = 4;
+    // 버튼 사운드 --> Global Data에서 가져와서 쓰는 방법으로 변경
+    //const int SFX_Home = 1;
+    //const int SFX_Setting = 4;
 
     // Index Detail : 0 > 메인 화면 버튼 제어
     //                        1 > 앨범 선택 및 곡 선택 버튼 제어
@@ -87,13 +88,13 @@ public class UIObjectButton : MonoBehaviour
             // 메인 화면으로 이동
             UIManager.Instance.GoPanelMain();
             // BGM 멈춤
-            SoundManager.Instance.PlaySoundFX(SFX_Home);
+            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingOut);
             SoundManager.Instance.ForceAudioStop();
         }
         else if (Division.Equals("goSetting"))
         {
             // 설정 버튼 클릭 시 화면 제어
-            SoundManager.Instance.PlaySoundFX(SFX_Setting);
+            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingOut);
             UIElementSetting.Instance.ButtonClickControll("Setting", "Open");
             // 버튼 이벤트 Lock
             GlobalState.Instance.UserData.data.BackgroundProcActive = false;
@@ -101,7 +102,7 @@ public class UIObjectButton : MonoBehaviour
         else if (Division.Equals("goShop"))
         {
             //  상점 버튼 클릭 시 화면 제어
-            SoundManager.Instance.PlaySoundFX(SFX_Home);
+            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingOut);
             UIElementSetting.Instance.ButtonClickControll("Shop", "Open");
             // 버튼 이벤트 Lock
             GlobalState.Instance.UserData.data.BackgroundProcActive = false;

@@ -133,7 +133,7 @@ public class UIElementFadePanel : MonoBehaviourSingleton<UIElementFadePanel>
             TransitionTween.OnComplete(() => { transitionPanel.SetActive(false); });
         });
 
-        SoundManager.Instance.PlaySoundFX(0);
+        SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.MainSelect);
     }
 
     private void InitBetweenMainToTransitionTweening()
