@@ -25,13 +25,13 @@ public class UIElementGamePlay : MonoBehaviour
     private void OnEnable()
     {
         SoundManager.Instance.ForceAudioStop();
-        GameFactory.Instance.CreateGame();
+        GameFactory.Instance.CreateStage();
     }
 
-    //private void OnDisable()
-    //{
-    //    GameManager.Instance.DistroyGame();
-    //}
+    private void OnDisable()
+    {
+        GameFactory.Instance.DistroyStage();
+    }
 
     void FinishGame()
     {
@@ -39,7 +39,7 @@ public class UIElementGamePlay : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                GameFactory.Instance.DistroyGame();
+                GameFactory.Instance.DistroyStage();
                 UIManager.Instance.GoPanelResult();
             }
         }
@@ -51,7 +51,7 @@ public class UIElementGamePlay : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                GameFactory.Instance.DistroyGame();
+                GameFactory.Instance.DistroyStage();
                 UIManager.Instance.GoPanelMusicSelect();
             }
         }

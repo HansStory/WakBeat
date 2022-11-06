@@ -4,33 +4,44 @@ using UnityEngine;
 
 public class GameFactory : MonoBehaviourSingleton<GameFactory>
 {
-    [SerializeField] private GameObject[] album1GameList;
-    [SerializeField] private GameObject[] album2GameList;
-    [SerializeField] private GameObject[] album3GameList;
-    [SerializeField] private GameObject[] album4GameList;
+    [SerializeField] private GameObject[] album1StageList;
+    [SerializeField] private GameObject[] album2StageList;
+    [SerializeField] private GameObject[] album3StageList;
+    [SerializeField] private GameObject[] album4StageList;
 
     [SerializeField] private Transform creatGameBase;
 
-    private GameObject game;
+    private GameObject stage;
     // Start is called before the first frame update
     void Start()
     {
         DontDestroyOnLoad(this);
     }
 
-    public void CreateGame()
+    public void CreateStage()
     {
-        if (game == null)
+        switch (GlobalState.Instance.AlbumIndex)
         {
-            game = GameObject.Instantiate(album1GameList[1].gameObject, creatGameBase);
+            case (int)GlobalData.ALBUM.ISEDOL:
+                stage = GameObject.Instantiate(album1StageList[GlobalState.Instance.StageIndex], creatGameBase);
+                break;
+            case (int)GlobalData.ALBUM.CONTEST:
+                stage = GameObject.Instantiate(album2StageList[GlobalState.Instance.StageIndex], creatGameBase);
+                break;
+            case (int)GlobalData.ALBUM.GOMIX:
+                stage = GameObject.Instantiate(album3StageList[GlobalState.Instance.StageIndex], creatGameBase);
+                break;
+            case (int)GlobalData.ALBUM.WAKALOID:
+                stage = GameObject.Instantiate(album4StageList[GlobalState.Instance.StageIndex], creatGameBase);
+                break;
         }
     }
 
-    public void DistroyGame()
+    public void DistroyStage()
     {
-        if (game != null)
+        if (stage != null)
         {
-            Destroy(game);
+            Destroy(stage);
         }
     }
 
