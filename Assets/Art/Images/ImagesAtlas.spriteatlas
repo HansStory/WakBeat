@@ -68,6 +68,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: d1b707127883e9f46b0b37de2421f8d1, type: 3}
   - {fileID: 21300000, guid: ba8f6552bcd6032488c211f31a4cf1e9, type: 3}
   - {fileID: 21300000, guid: ab8883e2be469754ebaf09ee8c12ee96, type: 3}
+  - {fileID: 21300000, guid: 5ce125e2625631547b95d9a66ea484c8, type: 3}
   - {fileID: 21300000, guid: c71db803688a50945aeb279cb46cfbe9, type: 3}
   - {fileID: 21300000, guid: 5caf1e73f1f495e4ea1703ba547f771c, type: 3}
   - {fileID: 21300000, guid: abc305832c485e141aefc2922cf1ce75, type: 3}
@@ -85,6 +86,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: b1c9d51526a73ae438dcad9f593e59e3, type: 3}
   - {fileID: 21300000, guid: a4979225264110845937324c4a34db3d, type: 3}
   - {fileID: 21300000, guid: d532b445cbe49ca4fb1eb3ab16d972d3, type: 3}
+  - {fileID: 21300000, guid: 82cf6465bca4f2342ba71fea5f872740, type: 3}
   - {fileID: 21300000, guid: c67871c5d232d1a4e8a612b041419e85, type: 3}
   - {fileID: 21300000, guid: 9d5e6cc55c1a2b84a9a668993619a8a8, type: 3}
   - {fileID: 21300000, guid: c08be41632e485a4aa10c61a71fee1ba, type: 3}
@@ -112,6 +114,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 299c827aacfef27449ff4bfead7c1d36, type: 3}
   - {fileID: 21300000, guid: a7480d7a397e8354e96556a63ebd61fd, type: 3}
   - {fileID: 21300000, guid: 9336da8ab7a178c4f98300ccd45323e8, type: 3}
+  - {fileID: 21300000, guid: 6722f89a85abc7d4db7dea1fcdf5766e, type: 3}
   - {fileID: 21300000, guid: 2627acbaca9bb13449c6e4b5b5c3a57f, type: 3}
   - {fileID: 21300000, guid: 0a5ad61b5faec804ab956e3dc8a70f7d, type: 3}
   - {fileID: 21300000, guid: ff28fe1b4ebb2504fb2854c70ea92533, type: 3}
@@ -166,6 +169,7 @@ SpriteAtlas:
   - BGMTitle_02
   - 06_music_gauge_1
   - graph_2
+  - Obstacle_Triangle
   - BGMTitle_03
   - 03_store
   - 03_stage3
@@ -183,6 +187,7 @@ SpriteAtlas:
   - Headset
   - album_4_1_bg
   - AlbumCircle_04
+  - PlayCircle_Nomal
   - 03_WakGoodAroma100_BG
   - album_4_3_bg
   - album_3_3_icon
@@ -210,6 +215,7 @@ SpriteAtlas:
   - album_3_3_text
   - 08_music_gauge_3
   - 02_Wakaloid_Circle
+  - Ball_Black
   - 01_NovelLick_Circle
   - 03_WakGoodAroma100_Circle
   - team logo
