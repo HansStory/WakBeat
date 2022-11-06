@@ -40,7 +40,6 @@ public class UIElementMusicSelect : MonoBehaviour
 
     private void OnDisable()
     {
-        GlobalState.Instance.StageIndex = 0;
         DestroyAlbumObjects();
     }
 

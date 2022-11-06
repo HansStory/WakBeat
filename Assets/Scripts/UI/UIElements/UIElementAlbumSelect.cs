@@ -124,12 +124,12 @@ public class UIElementAlbumSelect : MonoBehaviour
     {
         if (GlobalState.Instance.UserData.data.BackgroundProcActive)
         {
-            if (Input.GetKeyDown(KeyCode.DownArrow))
+            if (Input.GetKey(KeyCode.DownArrow))
             {
                 InputDown();
             }
 
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            if (Input.GetKey(KeyCode.UpArrow))
             {
                 InputUp();
             }
