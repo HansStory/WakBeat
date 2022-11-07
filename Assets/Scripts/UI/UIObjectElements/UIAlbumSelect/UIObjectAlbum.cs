@@ -74,12 +74,12 @@ public class UIObjectAlbum : MonoBehaviour
     {
         if (GlobalState.Instance.UserData.data.BackgroundProcActive)
         {
-            if (Input.GetKeyDown(KeyCode.DownArrow))
+            if (Input.GetKey(KeyCode.DownArrow))
             {
                 ShowMyTitle(titleTweenDuration, 0.1f);
             }
 
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            if (Input.GetKey(KeyCode.UpArrow))
             {
                 ShowMyTitle(titleTweenDuration, 0.1f);
             }
@@ -131,10 +131,11 @@ public class UIObjectAlbum : MonoBehaviour
                 TitleTween.OnComplete(() => { AlbumToMusic(); });
 
                 isTitleMove = true;
+
+                SoundManager.Instance.FadeOutMusicVolume(1f);
+                SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.AlbumSelect);
             }
 
-            SoundManager.Instance.FadeOutMusicVolume(1f);
-            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.AlbumSelect);
         }
     }
 
