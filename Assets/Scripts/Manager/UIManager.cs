@@ -126,8 +126,8 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
     {
         if (GlobalState.Instance.CurrentPanelIndex == (int)GlobalData.UIMODE.SELECT_MUSIC)
         {
-            uiElementAlbumSelect.ShowHideAlbumList(0f);
-            uiElementFadePanel.BetweenAlbumToMusicTransition(1f, 0f);
+            uiElementAlbumSelect.ShowHideAlbumList(1.5f);
+            uiElementFadePanel.BetweenAlbumToMusicTransition(0.5f, 0f);
             uiElementFadePanel.TransitionSequence.InsertCallback(1f, () => WantShowPanel((int)GlobalData.UIMODE.SELECT_ALBUM));
             SoundManager.Instance.TurnOnGameBackGround();
         }
