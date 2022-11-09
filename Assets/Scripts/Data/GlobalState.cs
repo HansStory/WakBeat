@@ -107,4 +107,57 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
         //Debug.Log(DateTime.Now.ToString(("yyyy-MM-dd HH:mm:ss:tt")));
 
     }
+    private string _resourceFolder = string.Empty;
+    public string ResourceFolder
+    {
+        get
+        {
+            switch (AlbumIndex)
+            {
+                case (int)GlobalData.ALBUM.ISEDOL:
+                    _resourceFolder = Application.streamingAssetsPath + "/BMW/Album_01";
+                    break;
+                case (int)GlobalData.ALBUM.CONTEST:
+                    _resourceFolder = Application.streamingAssetsPath + "/BMW/Album_02";
+                    break;
+                case (int)GlobalData.ALBUM.GOMIX:
+                    _resourceFolder = Application.streamingAssetsPath + "/BMW/Album_03";
+                    break;
+                case (int)GlobalData.ALBUM.WAKALOID:
+                    _resourceFolder = Application.streamingAssetsPath + "/BMW/Album_04";
+                    break;
+            }
+
+            return _resourceFolder;
+        }
+    }
+
+    private string _bmwFile = string.Empty;
+    private string bmw = ".bmw"; //.bmw = Beat Making Wakgood
+    public string BMWFile
+    {
+        get
+        {
+            switch (StageIndex)
+            {
+                case (int)GlobalData.STAGE.STAGE1:
+                    _bmwFile = "Stage_01" + bmw;
+                    break;
+                case (int)GlobalData.STAGE.STAGE2:
+                    _bmwFile = "Stage_02" + bmw;
+                    break;
+                case (int)GlobalData.STAGE.STAGE3:
+                    _bmwFile = "Stage_03" + bmw;
+                    break;
+                case (int)GlobalData.STAGE.STAGE4:
+                    _bmwFile = "Stage_04" + bmw;
+                    break;
+                case (int)GlobalData.STAGE.STAGE5:
+                    _bmwFile = "Stage_05" + bmw;
+                    break;
+            }
+
+            return _bmwFile;
+        }
+    }
 }
