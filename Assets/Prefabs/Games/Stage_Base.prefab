@@ -162,9 +162,9 @@ GameObject:
   - component: {fileID: 3569041610793075511}
   - component: {fileID: 4112936762514861922}
   - component: {fileID: 3899145957695815704}
-  - component: {fileID: 7594146391149000706}
+  - component: {fileID: 764574679980237713}
   m_Layer: 5
-  m_Name: Stage_01
+  m_Name: Stage_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -230,7 +230,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7594146391149000706
+--- !u!114 &764574679980237713
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -239,7 +239,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4143023116079684940}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e088698e5d363743a6e7330f98c9632, type: 3}
+  m_Script: {fileID: 11500000, guid: 3430d753173bd0e468add73e772ae9b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   BallSkin: {fileID: 3254397787788899670}
