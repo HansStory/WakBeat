@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameTest : MonoBehaviour
+public class ChartingTest : MonoBehaviour
 {
     [SerializeField] private GameObject center;
     [SerializeField] private GameObject obstacle;

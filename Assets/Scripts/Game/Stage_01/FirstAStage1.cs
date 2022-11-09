@@ -1,15 +1,12 @@
 
 public class FirstAStage1 : Stage
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    protected override void Init()
     {
-        
+        base.Init();
+
+        SetCircleSprite(GlobalData.Instance.StageInfo.CircleSkins[0]);
+        SetBackGroundSprite(GlobalData.Instance.StageInfo.BackGroundSkins[0]);
     }
 }

@@ -1,15 +1,12 @@
 
 public class SecondAStage1 : Stage
 {
-    // Start is called before the first frame update
-    void Start()
+    protected override void Init()
     {
-        
-    }
+        base.Init();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        SetBallSkin(GlobalData.Instance.StageInfo.BallSkins[4]);
+        SetCircleSprite(GlobalData.Instance.StageInfo.CircleSkins[1]);
+        SetBackGroundSprite(GlobalData.Instance.StageInfo.BackGroundSkins[1]);
     }
 }
