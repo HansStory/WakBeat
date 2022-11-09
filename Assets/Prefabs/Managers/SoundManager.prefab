@@ -212,6 +212,25 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d235b02ac153ad143a532990b9eee9b0, type: 3}
   - {fileID: 8300000, guid: ae975784ff7e49e4bbb6642cdf033c1b, type: 3}
   - {fileID: 8300000, guid: cc4ee0cf064c15a4098034e5182bdc4b, type: 3}
+  album1StageClips:
+  - {fileID: 8300000, guid: 9b520a9b46b941845a26ea389f6f01d7, type: 3}
+  - {fileID: 8300000, guid: 36b9ead65b94b524b9185f1613a98f92, type: 3}
+  album2StageClips:
+  - {fileID: 8300000, guid: 0e6053f390505a64bbaeda4bbaf804dc, type: 3}
+  - {fileID: 8300000, guid: 9cd0b8a1ed05d8a4cb566fa3ebe2e38e, type: 3}
+  - {fileID: 8300000, guid: a51d120583f3fe74abc2d4794936c5ea, type: 3}
+  - {fileID: 8300000, guid: ae3238c6437ec584eb49781bbd955999, type: 3}
+  album3StageClips:
+  - {fileID: 8300000, guid: 55c3dae3fb994b342a05c0be9c217352, type: 3}
+  - {fileID: 8300000, guid: a5c74664b9737d94bb2a34f0a3c1efae, type: 3}
+  - {fileID: 8300000, guid: f78ae7fff6052e0498c8054efb75b092, type: 3}
+  - {fileID: 8300000, guid: 3de10c37e5b4b4944bb7afa3c5b91044, type: 3}
+  - {fileID: 8300000, guid: df3db2a2d04eba74d94a1e5144270020, type: 3}
+  album4StageClips:
+  - {fileID: 8300000, guid: c93678150f26b1341aa1367c93644766, type: 3}
+  - {fileID: 8300000, guid: aa685a8631006e74d972d5d3e0744072, type: 3}
+  - {fileID: 8300000, guid: b5c0bb572ffcb4549868c828b58d73e8, type: 3}
+  - {fileID: 8300000, guid: 227ac6e775459e446ae0db1c85de8370, type: 3}
   selectedAlbumMusicLength: 0
 --- !u!1 &7520883019599040233
 GameObject:

@@ -26,6 +26,11 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     [SerializeField] private AudioClip[] album3HighLightClips;
     [SerializeField] private AudioClip[] album4HighLightClips;
 
+    [SerializeField] private AudioClip[] album1StageClips;
+    [SerializeField] private AudioClip[] album2StageClips;
+    [SerializeField] private AudioClip[] album3StageClips;
+    [SerializeField] private AudioClip[] album4StageClips;
+
 
     private int backgroundMusicIndex;
     public int BackgroundMusicIndex
@@ -130,6 +135,33 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
                 MusicAudioSource.clip = album4HighLightClips[GlobalState.Instance.StageIndex];
                 MusicAudioSource.Play();
                 MusicAudioSource.loop = true;
+                break;
+        }
+    }
+
+    public void TurnOnStageMusic()
+    {
+        switch (GlobalState.Instance.AlbumIndex)
+        {
+            case (int)GlobalData.ALBUM.ISEDOL:
+                MusicAudioSource.clip = album1StageClips[GlobalState.Instance.StageIndex];
+                MusicAudioSource.Play();
+                MusicAudioSource.loop = false;
+                break;
+            case (int)GlobalData.ALBUM.CONTEST:
+                MusicAudioSource.clip = album2StageClips[GlobalState.Instance.StageIndex];
+                MusicAudioSource.Play();
+                MusicAudioSource.loop = false;
+                break;
+            case (int)GlobalData.ALBUM.GOMIX:
+                MusicAudioSource.clip = album3StageClips[GlobalState.Instance.StageIndex];
+                MusicAudioSource.Play();
+                MusicAudioSource.loop = false;
+                break;
+            case (int)GlobalData.ALBUM.WAKALOID:
+                MusicAudioSource.clip = album4StageClips[GlobalState.Instance.StageIndex];
+                MusicAudioSource.Play();
+                MusicAudioSource.loop = false;
                 break;
         }
     }

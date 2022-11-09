@@ -75,6 +75,7 @@ MonoBehaviour:
   Information: {fileID: 11400000, guid: edaa916523a20cf439e936e0d4620bc8, type: 2}
   Album: {fileID: 11400000, guid: 66b140db730262d4e9688835768e7aab, type: 2}
   Shop: {fileID: 11400000, guid: dbecb26b32772324080a1e61d75459a6, type: 2}
+  StageInfo: {fileID: 11400000, guid: 00c4414569e546649b3d4cd4f22fbf26, type: 2}
 --- !u!114 &263024264
 MonoBehaviour:
   m_ObjectHideFlags: 0
