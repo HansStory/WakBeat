@@ -9,4 +9,9 @@ public class FirstAStage1 : Stage
         SetCircleSprite(GlobalData.Instance.StageInfo.CircleSkins[0]);
         SetBackGroundSprite(GlobalData.Instance.StageInfo.BackGroundSkins[0]);
     }
+
+    protected override void Update()
+    {
+        base.Update();
+    }
 }

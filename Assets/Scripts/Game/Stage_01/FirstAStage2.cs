@@ -6,4 +6,9 @@ public class FirstAStage2 : Stage
     {
         base.Init();
     }
+
+    protected override void Update()
+    {
+        base.Update();
+    }
 }

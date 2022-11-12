@@ -451,7 +451,7 @@ public abstract class Stage : MonoBehaviour
     public int dodgelistars = 0;
     private float timer = 0f;
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         timer += Time.deltaTime;
         Center.transform.Rotate(0f, 0f, (Time.deltaTime / beatTime) * -speed);
