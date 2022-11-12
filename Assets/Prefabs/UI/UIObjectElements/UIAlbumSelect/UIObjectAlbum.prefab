@@ -429,9 +429,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2d1252052555e94d9e34f2c412f626d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UIElementPopUp: {fileID: 5955706999031344976, guid: 2a916a2a440c0ff46a1c4d81b1f6c20d, type: 3}
   albumTitle: {fileID: 4926656261035248334}
   albumCircle: {fileID: 4190020388326644122}
-  CurveAlbumCircle: {fileID: 11400000, guid: 851c9649b084ad343912ef22f4171b70, type: 2}
-  circleTweenDuration: 1
-  curveAlbumTitle: {fileID: 11400000, guid: 8af3063e0dde9e246b928e92c91ef53a, type: 2}
   myRectTransform: {fileID: 8133759807000362710}
+  CurveAlbumCircle: {fileID: 11400000, guid: 851c9649b084ad343912ef22f4171b70, type: 2}
+  curveAlbumTitle: {fileID: 11400000, guid: 8af3063e0dde9e246b928e92c91ef53a, type: 2}

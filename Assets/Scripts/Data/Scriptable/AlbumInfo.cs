@@ -49,4 +49,8 @@ public class AlbumInfo : ScriptableObject
     public Sprite[] ForthAlbumMusicBackground;
     public Sprite[] ForthAlbumMusicCircle;
     public Sprite[] ForthAlbumMusicLevel;
+
+    [Space(10)]
+    [Header("[ Album Infomation Image ]")]
+    public Sprite[] AlbumInfomationImage;
 }

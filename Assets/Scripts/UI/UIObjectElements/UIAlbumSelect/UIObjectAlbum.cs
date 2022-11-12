@@ -156,9 +156,9 @@ public class UIObjectAlbum : MonoBehaviour
         albumTitle.gameObject.SetActive(GlobalState.Instance.AlbumIndex == AlbumIndex);
     }
 
+    // ¾Ù¹ü Á¤º¸ ÆË¾÷ Ãâ·Â
     public void OnClickInfoButton()
     {
-        UIElementAlbumSelect.ShowAlbumInfo();
-        Debug.Log($"Click Info Button. My Album Index = {_albumIndex}");
+        UIElementAlbumSelect.ShowAlbumInfo(_albumIndex);
     }
 }

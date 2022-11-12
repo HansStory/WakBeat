@@ -323,14 +323,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a697da6d813aa5d44b5ca1c1568aaca5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeImage: {fileID: 2649954894721383559}
-  Albums: []
+  AlbumList: []
   album: {fileID: 8846689123083717952, guid: b68e9b6b95220154aa7962575a531b90, type: 3}
   albumBase: {fileID: 8073148781229515021}
-  uiObjectAlbum: {fileID: 5777482547393258073, guid: b68e9b6b95220154aa7962575a531b90, type: 3}
   imageBackGround: {fileID: 6155114700117050587}
-  albumInfo: {fileID: 8456678900480369091, guid: 331dc120d6bb78a4ea6a8afcd41bcfda, type: 3}
-  albumInfoBase: {fileID: 6874890300032960467}
+  UIElementPopUp: {fileID: 0}
+  isAlbumMove: 0
 --- !u!1 &2747896039188784955
 GameObject:
   m_ObjectHideFlags: 0

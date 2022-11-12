@@ -32,6 +32,7 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
     {
         JsonUserData userData = new JsonUserData();
 
+        userData.data.FileYn = GlobalState.Instance.UserData.data.FileYn;
         userData.data.fileName = _fileName;
         userData.data.version = GlobalData.Instance.Information.Version;
 

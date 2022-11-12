@@ -96,3 +96,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ae1e25670afb0cd4498de0f283ea247c, type: 3}
   - {fileID: 21300000, guid: 667d75efbfa2d524fb0e9ec0231c9ab0, type: 3}
   - {fileID: 21300000, guid: 3c26ceed537893f4fae51b14613d1461, type: 3}
+  AlbumInfomationImage:
+  - {fileID: 21300000, guid: 5ffc543a6f8d2b543a988f6fb17dbddb, type: 3}
+  - {fileID: 21300000, guid: 158d961069a26ab4db8b655d34f727ab, type: 3}
+  - {fileID: 21300000, guid: 74d168d1faf7a384b855d8d4415970f5, type: 3}
+  - {fileID: 21300000, guid: 871c331c10a21614e882a4fbadfba951, type: 3}
