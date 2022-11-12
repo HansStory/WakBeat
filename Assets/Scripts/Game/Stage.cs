@@ -438,10 +438,11 @@ public abstract class Stage : MonoBehaviour
     {
         var beatItem = bmwReader.ChartingItem[currentItem];
 
-        CenterPivot.transform.Rotate(0f, 0f, beatItem.SavePoint * _spawnAngle);
-
         if (beatItem.SavePoint != -1)
         {
+            CenterPivot.transform.localEulerAngles = Vector3.zero;
+
+            CenterPivot.transform.Rotate(0f, 0f, beatItem.SavePoint * _spawnAngle);
             CreateSavePoint(0);
         }
     }
