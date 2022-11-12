@@ -160,4 +160,25 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
             return _bmwFile;
         }
     }
+
+    private bool _isAutoMode = false;
+    public bool AutoMode
+    {
+        get { return _isAutoMode; }
+        set
+        {
+            _isAutoMode = value;
+        }
+    }
+
+    private bool _isShowDodge = false;
+    public bool ShowDodge
+    {
+        get { return _isShowDodge; }
+        set
+        {
+            _isShowDodge = value;
+        }
+    }
+
 }

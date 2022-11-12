@@ -5,6 +5,14 @@ public class GlobalData : MonoBehaviourSingleton<GlobalData>
     public ShopInfo Shop;
     public StageInfo StageInfo;
 
+    public enum OBJTYPE
+    {
+        UNKOWN,
+        Obstacle,
+        SavePoint,
+        DodgePoint,
+    }
+
     public enum STAGE
     {
         STAGE1,

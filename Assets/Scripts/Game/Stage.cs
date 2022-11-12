@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 //using System.IO;
-//using DG.Tweening;
+using DG.Tweening;
 
 public abstract class Stage : MonoBehaviour
 {
@@ -13,24 +13,51 @@ public abstract class Stage : MonoBehaviour
     public Image CircleSkin;
     public Image BackGroundSkin;
 
-    [SerializeField] private GameObject center;
-    [SerializeField] private GameObject Ball;
+    public RectTransform PlayGround;
+    public GameObject Center;
+    public GameObject Ball;
 
-    [SerializeField] private GameObject DodgePoint;
-    [SerializeField] private Transform DodgePointBase;
-    private static float dodgeRadius = 334f;
+    [Header("[ Instance Object Container ]")]
+    public Transform Container;
+    public GameObject CenterPivot;
 
-    [Header("[ Obstacle ]")]
-    [SerializeField] private GameObject[] Obstacles;
-    [SerializeField] private Transform ObstacleInBase;
-    [SerializeField] private Transform ObstacleOutBase;
-    private static float OutRadius = 355f;
-    private static float InRadius = 312f;
+    [Header("[ Dodge Point ]")]
+    public GameObject DodgePoint;
+    public Transform DodgePointBase;
+    public List<GameObject> DodgePointList = new List<GameObject>();
 
-    private float speed = 180f;
-    private static float BallRadius = 0;
+
+    [Header("[ Obstacles ]")]
+    public GameObject[] Obstacles;
+
+    public Transform ObstacleInBase;
+    public List<GameObject> InObstacleList = new List<GameObject>();
+
+    public Transform ObstacleOutBase;
+    public List<GameObject> OutObstacleList = new List<GameObject>();
+
+    [Header("[ Save Point ]")]
+    public GameObject[] SavePoint;
+
+    //---------------------------------------------------
+    private float dodgeRadius = 334f;
+    private float outRadius = 355f;
+    private float inRadius = 312f;
+    private float ballRadius = 0;
+
+    private float variableRadius;
+    private float speed = 360;
 
     private BMWReader bmwReader = null;
+    private AudioSource audioSource = null;
+
+    private string _title = "";                          // 곡 제목
+    private string _artist = "";                         // 작곡가
+    private float _bpm = 0;                           // Beat Per Minute
+    private int _totalBeatCount = 0;                // 총 Beat 수
+    private float _musicPlayTime = 0f;              // 곡의 총 시간
+
+    private static float _spawnAngle = -5f;
 
     public virtual string Directory
     {
@@ -59,19 +86,50 @@ public abstract class Stage : MonoBehaviour
 
     protected virtual void Init()
     {
+        // Read .bmw file
         bmwReader = new BMWReader();
         bmwReader.ReadFile(Directory + "/" + BMWFile);
 
+        //Get User Data (.json file)
         GetBallSkin();
-        //SetCircleSprite(GlobalData.Instance.StageInfo.CircleSkins[0]);
-        //SetBackGroundSprite(GlobalData.Instance.StageInfo.BackGroundSkins[0]);
 
+        // Create Stage Objects
         CreateDodgePoint();
         CreateObstacles();
 
-        BallRadius = OutRadius;
+        // Get Values
+        InitBallPosition();
+        GetMusicInfo();
 
+        // Calculate Beat
+        _totalBeatCount = bmwReader.ChartingItem.Count;
+        CalculateTick();
+
+        // Sound 제어 부
+        audioSource = SoundManager.Instance.MusicAudio;
         SoundManager.Instance.TurnOnStageMusic();
+    }
+
+    void GetMusicInfo()
+    {
+        if (bmwReader)
+        {
+            _title = bmwReader.MusicInfoItem.Title;
+            _artist = bmwReader.MusicInfoItem.Artist;
+            _bpm = bmwReader.MusicInfoItem.BPM;
+        }
+    }
+
+    void InitBallPosition()
+    {
+        variableRadius = outRadius;
+        ballRadius = variableRadius;     // Init Ball Position 
+
+        // Init Start Ball Rotation
+        float ballAngle = bmwReader.ChartingItem[_currentBeat].BallAngle;
+        Center.transform.localEulerAngles = new Vector3(0f, 0f, -ballAngle);
+
+        Ball.transform.localPosition = Center.transform.localPosition + Center.transform.up * ballRadius;
     }
 
     public void GetBallSkin()
@@ -88,7 +146,7 @@ public abstract class Stage : MonoBehaviour
         }
     }
 
-    public virtual void SetBallSkin(Sprite ball)
+    protected virtual void SetBallSkin(Sprite ball)
     {
         if (BallSkin)
         {
@@ -96,7 +154,7 @@ public abstract class Stage : MonoBehaviour
         }
     }
 
-    public virtual void SetCircleSprite(Sprite circle)
+    protected virtual void SetCircleSprite(Sprite circle)
     {
         if (CircleSkin)
         {
@@ -104,7 +162,7 @@ public abstract class Stage : MonoBehaviour
         }
     }
 
-    public virtual void SetBackGroundSprite(Sprite backGround)
+    protected virtual void SetBackGroundSprite(Sprite backGround)
     {
         if (BackGroundSkin)
         {
@@ -120,11 +178,13 @@ public abstract class Stage : MonoBehaviour
 
             if (dodge)
             {
-                dodge.transform.localPosition = center.transform.localPosition + center.transform.up * dodgeRadius;
-                dodge.transform.localEulerAngles = center.transform.localEulerAngles;
+                dodge.transform.localPosition = Center.transform.localPosition + Center.transform.up * dodgeRadius;
+                dodge.transform.localEulerAngles = Center.transform.localEulerAngles;
+                DodgePointList.Add(dodge);
+
                 dodge.SetActive(false);
 
-                center.transform.Rotate(0f, 0f, -5f);
+                Center.transform.Rotate(0f, 0f, _spawnAngle);
             }
         }
     }
@@ -199,18 +259,20 @@ public abstract class Stage : MonoBehaviour
 
             if (inObstacle)
             {
-                inObstacle.transform.localPosition = center.transform.localPosition + center.transform.up * InRadius;
-                inObstacle.transform.localEulerAngles = center.transform.localEulerAngles + new Vector3(0f, 0f, 180f);
+                inObstacle.transform.localPosition = Center.transform.localPosition + Center.transform.up * inRadius;
+                inObstacle.transform.localEulerAngles = Center.transform.localEulerAngles + new Vector3(0f, 0f, 180f);
+                InObstacleList.Add(inObstacle);
+
                 inObstacle.SetActive(false);
 
-                center.transform.Rotate(0f, 0f, -5f);
+                Center.transform.Rotate(0f, 0f, _spawnAngle);
             }
         }
     }
 
     void CreateOutObstacle(int obstacleType)
     {
-        center.transform.localEulerAngles = Vector3.zero;
+        Center.transform.localEulerAngles = Vector3.zero;
 
         for (int i = 0; i < 72; i++)
         {
@@ -218,24 +280,201 @@ public abstract class Stage : MonoBehaviour
 
             if (outObstacle)
             {
-                outObstacle.transform.localPosition = center.transform.localPosition + center.transform.up * OutRadius;
-                outObstacle.transform.localEulerAngles = center.transform.localEulerAngles;
+                outObstacle.transform.localPosition = Center.transform.localPosition + Center.transform.up * outRadius;
+                outObstacle.transform.localEulerAngles = Center.transform.localEulerAngles;
+                OutObstacleList.Add(outObstacle);
+
                 outObstacle.SetActive(false);
 
-                center.transform.Rotate(0f, 0f, -5f);
+                Center.transform.Rotate(0f, 0f, _spawnAngle);
             }
         }
     }
+
+    void CreateSavePoint(int savePointType)
+    {
+        GameObject savePoint = GameObject.Instantiate(SavePoint[savePointType], Container);
+
+        if (savePoint)
+        {
+            savePoint.transform.localPosition = CenterPivot.transform.localPosition + CenterPivot.transform.up * dodgeRadius;
+        }
+    }
+
+    private float tick = 0;        
+    private int tickCount = 4;
+    private float beatTime = 0;
+    void CalculateTick()
+    {
+        _bpm = bmwReader.MusicInfoItem.BPM;
+
+        float bps = _bpm / 60;
+        tick = 1 / bps;             
+
+        beatTime = tick * tickCount;
+
+        if (bmwReader.ChartingItem[currentItem].Speed == -1)
+        {
+            speed = 360f;
+        }
+        else
+        {
+            speed = bmwReader.ChartingItem[currentItem].Speed;
+        }
+    }
+
+
+    private int _currentBeat = 0;                   // 현재 진행중인 Beat 수
+    private float _bpa = 0;                         // Beat Per Angle 한 비트당 회전하는 양
+    private bool _processPlaying = false;           // 게임 진행중 체크
+    private List<ChartingItem> beatItems = new List<ChartingItem>();    // 한 비트당 사용되는 아이템들
+
+    private void ReadProcess()
+    {
+
+    }
+
+    void PlayProcess()
+    {
+        if (bmwReader != null)
+        {
+            var beatItem = bmwReader.ChartingItem[currentItem];//beatItems[_currentBeat];
+            if (beatItem == null)
+            {
+                Debug.LogError("PlayPorocess beat Item is null");
+                return;
+            }
+            
+            //_bpa = beatItem.Speed;           
+        }
+
+        ShowChartingItems();
+    }
+
+    void PlayBeat()
+    {
+        //tick
+    }
+
+    void ShowChartingItems()
+    {
+        ShowDodgePoint();
+        ShowInObstacles();
+        ShowOutObstacles();
+        ShowSavePoint();
+    }
+
+    void ShowDodgePoint()
+    {
+        var beatItem = bmwReader.ChartingItem[currentItem];
+
+        if (beatItem != null)
+        {
+            // Hide
+            for (int i = 0; i < DodgePointList.Count; i++)
+            {
+                DodgePointList[i].SetActive(false);
+            }
+
+            // Show Objects
+            if (beatItem.DodgePointElements[0].Index > -1)
+            {
+                for (int i = 0; i < beatItem.DodgePointElements.Count; i++)
+                {
+                    DodgePointList[beatItem.DodgePointElements[i].Index].gameObject.SetActive(true);
+
+                }
+            }
+        }
+    }
+
+    void ShowInObstacles()
+    {
+        var beatItem = bmwReader.ChartingItem[currentItem];
+
+        if (beatItem != null)
+        {
+            // Hide
+            for (int i = 0; i < InObstacleList.Count; i++)
+            {
+                InObstacleList[i].SetActive(false);
+            }
+
+            // Show Objects
+            if (beatItem.InObstacleElements[0].Index > -1)
+            {
+                for (int i = 0; i < beatItem.InObstacleElements.Count; i++)
+                {
+                    InObstacleList[beatItem.InObstacleElements[i].Index].gameObject.SetActive(true);
+                }
+            }           
+        }
+    }
+
+    void ShowOutObstacles()
+    {
+        var beatItem = bmwReader.ChartingItem[currentItem];
+
+        if (beatItem != null)
+        {
+            // Hide
+            for (int i = 0; i < OutObstacleList.Count; i++)
+            {
+                OutObstacleList[i].SetActive(false);
+            }
+
+            // Show
+            if (beatItem.OutObstacleElements[0].Index > -1)
+            {
+                for (int i = 0; i < beatItem.OutObstacleElements.Count; i++)
+                {
+                    OutObstacleList[beatItem.OutObstacleElements[i].Index].gameObject.SetActive(true);
+                }
+            }
+        }
+    }
+
+    void ShowSavePoint()
+    {
+        var beatItem = bmwReader.ChartingItem[currentItem];
+
+        CenterPivot.transform.Rotate(0f, 0f, beatItem.SavePoint * _spawnAngle);
+
+        if (beatItem.SavePoint != -1)
+        {
+            CreateSavePoint(0);
+        }
+    }
+
+    public int currentItem = 0;
+    public int dodgelistars = 0;
+    private float timer = 0f;
     // Update is called once per frame
     void Update()
     {
-        center.transform.Rotate(0f, 0f, -Time.deltaTime * speed);
+        timer += Time.deltaTime;
+        Center.transform.Rotate(0f, 0f, (Time.deltaTime / beatTime) * -speed);
+
+        if (currentItem < bmwReader.ChartingItem.Count)
+        {
+            if (timer > beatTime)
+            {
+                PlayProcess();
+
+                currentItem++;
+                Debug.Log("currentItem :" + currentItem);
+                timer -= timer;
+            }
+        }
+
         OperateBallMovement();
+        //TweenTest();
+        //ViewItemsTest(currentItem);
     }
 
     void OperateBallMovement()
     {
-        Ball.transform.localPosition = center.transform.localPosition + center.transform.up * BallRadius;
+        Ball.transform.localPosition = Center.transform.localPosition + Center.transform.up * ballRadius;
         ChangeDirection();
     }
 
@@ -248,12 +487,131 @@ public abstract class Stage : MonoBehaviour
 
             if (isUpState)
             {
-                BallRadius = OutRadius;
+                ballRadius = outRadius;
             }
             else
             {
-                BallRadius = InRadius;
+                ballRadius = inRadius;
             }
         }
+    }
+
+    void ViewItemsTest(int currentItem)
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            var beatItem = bmwReader.ChartingItem[currentItem];
+
+            if (beatItem != null)
+            {
+                for (int i = 0; i < DodgePointList.Count; i++)
+                {
+                    DodgePointList[i].SetActive(false);
+                }
+
+                for (int i = 0; i < beatItem.DodgePointElements.Count; i++)
+                {
+                    DodgePointList[beatItem.DodgePointElements[i].Index].gameObject.SetActive(true);
+                }
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            var beatItem = bmwReader.ChartingItem[currentItem];
+
+            if (beatItem != null)
+            {
+                for (int i = 0; i < InObstacleList.Count; i++)
+                {
+                    InObstacleList[i].SetActive(false);
+                }
+
+                for (int i = 0; i < beatItem.InObstacleElements.Count; i++)
+                {
+                    InObstacleList[beatItem.InObstacleElements[i].Index].gameObject.SetActive(true);
+                }
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            var beatItem = bmwReader.ChartingItem[currentItem];
+
+            if (beatItem != null)
+            {
+                for (int i = 0; i < OutObstacleList.Count; i++)
+                {
+                    OutObstacleList[i].SetActive(false);
+                }
+
+                for (int i = 0; i < beatItem.OutObstacleElements.Count; i++)
+                {
+                    OutObstacleList[beatItem.OutObstacleElements[i].Index].gameObject.SetActive(true);
+                }
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            ShowSavePoint();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            ShowChartingItems();
+        }
+    }
+
+    void TweenTest()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            DoMovePlayGround(new Vector3(0f, -300f, 0f), 2f, 0f, Ease.Unset);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            DoScalePlayGround(Vector3.one * 0.5f, 2f, 0f, Ease.Unset) ;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            DoRotatePlayGround(new Vector3(0f, 0f, 90f), 2f, 0f, Ease.Unset);
+        }
+
+    }
+
+    Tween moveTween;
+    protected virtual void DoMovePlayGround(Vector3 targetVector, float Duration, float delay, Ease easeType)
+    {
+        moveTween.Pause();
+        PlayGround.localPosition = PlayGround.localPosition;
+
+        moveTween = PlayGround.DOLocalMove(targetVector, Duration);
+        moveTween.SetDelay(delay);
+        moveTween.SetEase(easeType);
+    }
+
+    Tween doScaleTween;
+    protected virtual void DoScalePlayGround(Vector3 targetScale, float Duration, float delay, Ease easeType)
+    {
+        doScaleTween.Pause();
+        PlayGround.localScale = PlayGround.localScale;
+
+        doScaleTween = PlayGround.DOScale(targetScale, Duration);
+        doScaleTween.SetDelay(delay);
+        doScaleTween.SetEase(easeType);
+    }
+
+    Tween doRotateTween;
+    protected virtual void DoRotatePlayGround(Vector3 targetRotate, float Duration, float delay, Ease easeType)
+    {
+        doRotateTween.Pause();
+        PlayGround.localEulerAngles = PlayGround.localEulerAngles;
+
+        doRotateTween = PlayGround.DOLocalRotate(targetRotate, Duration);
+        doRotateTween.SetDelay(delay);
+        doRotateTween.SetEase(easeType);
     }
 }

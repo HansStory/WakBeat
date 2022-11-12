@@ -166,6 +166,35 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         }
     }
 
+    private float _audioClipLength = 0f;
+    public float AudioClipLength
+    {
+        get { return _audioClipLength; }
+        set
+        {
+            _audioClipLength = value;
+        }
+    }
+
+    private float _musicPlayTime = 0f;
+    public float MusicPlayTime
+    {
+        get { return _musicPlayTime; }
+        set
+        {
+            _musicPlayTime = value;
+        }
+    }
+
+    public void GetAudioClipInfo()
+    {
+        // 음원의 총 길이 (초)
+        AudioClipLength = MusicAudioSource.clip.length;
+
+        //현재 진행중인 음악의 시간
+        MusicPlayTime = MusicAudioSource.time;
+    }
+
     public void TurnOnGameBackGround()
     {
         BackgroundMusicIndex = 0;

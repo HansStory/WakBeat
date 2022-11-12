@@ -9,6 +9,8 @@ TagManager:
   - odd1
   - even
   - even1
+  - Obstacle
+  - SavePoint
   layers:
   - Default
   - TransparentFX

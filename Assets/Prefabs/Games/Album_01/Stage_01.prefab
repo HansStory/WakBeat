@@ -3191,15 +3191,19 @@ MonoBehaviour:
   BallSkin: {fileID: 3254397787788899670}
   CircleSkin: {fileID: 1330995304337691929}
   BackGroundSkin: {fileID: 844462776320484617}
-  center: {fileID: 5754615294015621975}
+  PlayGround: {fileID: 400973011015700546}
+  Center: {fileID: 5754615294015621975}
   Ball: {fileID: 6630316830435271027}
   DodgePoint: {fileID: 6554657761582386137, guid: e2c156a28ae04be47bc98f1f08665e75, type: 3}
   DodgePointBase: {fileID: 3945791015257814071}
+  DodgePointList: []
   Obstacles:
   - {fileID: 5128582855503444759, guid: 2988b58b41eeae344bf70c0a7dfbcca6, type: 3}
   - {fileID: 5128582855503444759, guid: 1fdb2de42ba50d14ca642f7a9d51b871, type: 3}
   ObstacleInBase: {fileID: 2274656485635380428}
+  InObstacleList: []
   ObstacleOutBase: {fileID: 4929545395292343454}
+  OutObstacleList: []
 --- !u!1 &4986941622648616375
 GameObject:
   m_ObjectHideFlags: 0
