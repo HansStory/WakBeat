@@ -1,5 +1,5 @@
 
-public class ThirdAStage1 : Stage
+public class SecondAStage2 : Stage
 {
 
     protected override void Init()
