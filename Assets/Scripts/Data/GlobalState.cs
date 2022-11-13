@@ -181,4 +181,19 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
         }
     }
 
+    private int _savePoint = 0;
+    public int SavePoint
+    {
+        get => _savePoint;
+        set => _savePoint = value;
+    }
+
+    private float _saveMusicPlayingTime = 0;
+
+    public float SaveMusicPlayingTime
+    {
+        get => _saveMusicPlayingTime;
+        set => _saveMusicPlayingTime = value;
+    }
+    
 }

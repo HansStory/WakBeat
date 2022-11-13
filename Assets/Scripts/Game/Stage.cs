@@ -59,6 +59,9 @@ public abstract class Stage : MonoBehaviour
 
     private static float _spawnAngle = -5f;
 
+    protected static int savePointNum = 0;
+    private float saveMusicPlayingTime = 0;
+
     public virtual string Directory
     {
         get
@@ -120,7 +123,7 @@ public abstract class Stage : MonoBehaviour
         }
     }
 
-    void InitBallPosition()
+    protected void InitBallPosition()
     {
         variableRadius = outRadius;
         ballRadius = variableRadius;     // Init Ball Position 
@@ -447,9 +450,16 @@ public abstract class Stage : MonoBehaviour
         }
     }
 
-    public int currentItem = 0;
+    public static int currentItem = 0;
     public int dodgelistars = 0;
     private float timer = 0f;
+
+    public float Timer
+    {
+        get => timer = Timer;
+        set => timer = value;
+    }
+
     // Update is called once per frame
     protected virtual void Update()
     {
@@ -468,7 +478,7 @@ public abstract class Stage : MonoBehaviour
             }
         }
 
-        OperateBallMovement();
+        // OperateBallMovement();
         //TweenTest();
         //ViewItemsTest(currentItem);
     }
@@ -615,4 +625,5 @@ public abstract class Stage : MonoBehaviour
         doRotateTween.SetDelay(delay);
         doRotateTween.SetEase(easeType);
     }
+
 }
