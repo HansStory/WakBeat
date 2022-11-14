@@ -62,6 +62,12 @@ public abstract class Stage : MonoBehaviour
     protected static int savePointNum = 0;
     private float saveMusicPlayingTime = 0;
 
+    // Key 입력 부
+    private string _keyDivision = null == GlobalState.Instance.UserData.data.KeyDivision ? "Integration" : GlobalState.Instance.UserData.data.KeyDivision;
+    private string[] _InnerKey;
+    private string[] _outerKey;
+
+
     public virtual string Directory
     {
         get
@@ -489,20 +495,66 @@ public abstract class Stage : MonoBehaviour
         ChangeDirection();
     }
 
+    // 키 입력 처리
     private bool isUpState = true;
     void ChangeDirection()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.anyKey && null != Input.inputString && "" != Input.inputString)
         {
-            isUpState = !isUpState;
-
-            if (isUpState)
+            if (_keyDivision.Equals("Separation"))
             {
-                ballRadius = outRadius;
+                // 키 분리 구분 > 분리
+                if (null != GlobalState.Instance.UserData.data.InnerOperationKey && GlobalState.Instance.UserData.data.InnerOperationKey.Length > 0
+                    && null != GlobalState.Instance.UserData.data.OuterOperationKey && GlobalState.Instance.UserData.data.OuterOperationKey.Length > 0)
+                {
+                    for (int i = 0; i < GlobalState.Instance.UserData.data.InnerOperationKey.Length; i++)
+                    {
+                        if (!"".Equals(GlobalState.Instance.UserData.data.InnerOperationKey[i])
+                                && Input.inputString.Equals(GlobalState.Instance.UserData.data.InnerOperationKey[i]))
+                        {
+                            ballRadius = inRadius;
+                        }
+                        if (!"".Equals(GlobalState.Instance.UserData.data.OuterOperationKey[i])
+                                && Input.inputString.Equals(GlobalState.Instance.UserData.data.OuterOperationKey[i]))
+                        {
+                            ballRadius = outRadius;
+                        }
+                    }
+                }
+                else
+                {
+                    // 키 분리 구분 > 분리 > 커스텀 한 키가 없을 땐 스페이스로 통일
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        isUpState = !isUpState;
+
+                        if (isUpState)
+                        {
+                            ballRadius = outRadius;
+                        }
+                        else
+                        {
+                            ballRadius = inRadius;
+                        }
+                    }
+                }
             }
             else
             {
-                ballRadius = inRadius;
+                // 키 분리 구분 > 통합
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    isUpState = !isUpState;
+
+                    if (isUpState)
+                    {
+                        ballRadius = outRadius;
+                    }
+                    else
+                    {
+                        ballRadius = inRadius;
+                    }
+                }
             }
         }
     }
