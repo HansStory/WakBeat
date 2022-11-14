@@ -1,41 +1,42 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIElementPopUp : MonoBehaviour
 {
     public GameObject Background;
-    public GameObject AlbumInfoPopUp;
-    public Button PopUpClose;
+    public GameObject MySelfPopUp;
+    [SerializeField] private GameObject AlbumInfoPrefab;
+    [SerializeField] private Transform AlbumInfoPanel;
 
     // 팝업 세팅
-    public void SetPopUp(string Division, int Index)
+    public void SetPopUp()
     {
-        // 앨범 정보 출력 팝업
-        if (Division.Equals("Album"))
-        {
-            Background.SetActive(true);
-            AlbumInfoPopUp.SetActive(true);
-            PopUpClose.onClick.AddListener(() => SetClose("Album"));
+        var _PopUp = (GameObject)Instantiate(AlbumInfoPrefab, AlbumInfoPanel);
+        var PopUpInfo = _PopUp.GetComponent<UIObjectPopUp>();
+        int AlbumIndex = (int)GlobalState.Instance.AlbumIndex;
 
-            for (int i = 0; i < GlobalData.Instance.Album.AlbumCircles.Length; i++)
-            {
-                if (Index.Equals(i))
-                {
-                    AlbumInfoPopUp.transform.Find("PopUpWindow").GetComponent<Image>().sprite = GlobalData.Instance.Album.AlbumInfomationImage[Index];
-                }
-            }
+        if (PopUpInfo)
+        {
+            PopUpInfo.ContentImage = GlobalData.Instance.Album.AlbumInfomationImage[AlbumIndex];
+            // Close 버튼 이벤트
+            _PopUp.transform.Find("ButtonClose").GetComponent<Button>().onClick.AddListener(() => SetButtonEvent("Album", _PopUp));
+
+            _PopUp.SetActive(true);
+            Background.SetActive(true);
         }
     }
 
-    public void SetClose(string Division)
+    public void SetButtonEvent(string Division, GameObject Obj)
     {
         Background.SetActive(false);
 
         if(Division.Equals("Album"))
         {
-            AlbumInfoPopUp.SetActive(false);
+            Destroy(Obj);
         }
     }
 }

@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1602900503145542931
 RectTransform:
   m_ObjectHideFlags: 0
@@ -86,13 +86,14 @@ GameObject:
   m_Component:
   - component: {fileID: 4437959148392759656}
   - component: {fileID: 3377050241085245355}
+  - component: {fileID: 4353680709141719366}
   m_Layer: 5
   m_Name: PopUpAlbumInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4437959148392759656
 RectTransform:
   m_ObjectHideFlags: 0
@@ -123,6 +124,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8855130136538181678}
   m_CullTransparentMesh: 1
+--- !u!114 &4353680709141719366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8855130136538181678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a73e10dfdf5771c47beea01878fe88dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _PopUpContentImage: {fileID: 0}
+  PopUpContentImage: {fileID: 268526133912433169}
 --- !u!1 &9116821677916609441
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,7 +156,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5309701210204637793
 RectTransform:
   m_ObjectHideFlags: 0

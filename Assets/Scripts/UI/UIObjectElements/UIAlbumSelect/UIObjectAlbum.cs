@@ -159,6 +159,6 @@ public class UIObjectAlbum : MonoBehaviour
     // ¾Ù¹ü Á¤º¸ ÆË¾÷ Ãâ·Â
     public void OnClickInfoButton()
     {
-        UIElementAlbumSelect.ShowAlbumInfo(_albumIndex);
+        UIElementAlbumSelect.ShowAlbumInfo();
     }
 }

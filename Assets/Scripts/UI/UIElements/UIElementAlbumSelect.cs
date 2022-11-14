@@ -14,7 +14,7 @@ public class UIElementAlbumSelect : MonoBehaviour
     [SerializeField] private Image imageBackGround;
 
     // ¾Ù¹ü Á¤º¸ ÆË¾÷ Ãâ·Â
-    public UIElementPopUp UIElementPopUp;
+    [SerializeField] private UIElementPopUp UIElementPopUp;
 
     private Vector2 centerPos = new Vector2(12f, -16f);
     private Vector2 downPos = new Vector2(-333f, -430f);
@@ -108,11 +108,10 @@ public class UIElementAlbumSelect : MonoBehaviour
         albumCircle.rectTransform.DOScale(Vector3.one, duration).SetEase(animCurve.Curve).SetDelay(delay);
     }
 
-    public void ShowAlbumInfo(int _albumIndex)
+    public void ShowAlbumInfo()
     {
-        UIElementPopUp.SetPopUp("Album", _albumIndex);
+        UIElementPopUp.SetPopUp();
     }
-
 
     void Update()
     {
