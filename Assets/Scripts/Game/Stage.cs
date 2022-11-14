@@ -65,10 +65,7 @@ public abstract class Stage : MonoBehaviour
     private float saveMusicPlayingTime = 0;
 
     // Key 입력 부
-    //private string _keyDivision = null == GlobalState.Instance.UserData.data.KeyDivision ? "Integration" : GlobalState.Instance.UserData.data.KeyDivision;
-    private string[] _InnerKey;
-    private string[] _outerKey;
-
+    private string _keyDivision = "";
 
     public virtual string Directory
     {
@@ -123,6 +120,9 @@ public abstract class Stage : MonoBehaviour
         // Sound 제어 부
         audioSource = SoundManager.Instance.MusicAudio;
         SoundManager.Instance.TurnOnStageMusic();
+
+        // Key 입력 부
+        _keyDivision = null == GlobalState.Instance.UserData.data.KeyDivision ? "Integration" : GlobalState.Instance.UserData.data.KeyDivision;
     }
 
     void GetMusicInfo()
@@ -488,12 +488,12 @@ public abstract class Stage : MonoBehaviour
                 
                 PlayProcess();
 
-                Debug.Log("currentItem :" + currentItem);
+                //Debug.Log("currentItem :" + currentItem);
                 timer -= timer;
             }
         }
 
-        // OperateBallMovement();
+        OperateBallMovement();
         //TweenTest();
         //ViewItemsTest(currentItem);
     }
@@ -510,73 +510,59 @@ public abstract class Stage : MonoBehaviour
     {
         if (Input.anyKey && null != Input.inputString && "" != Input.inputString)
         {
-            //if (_keyDivision.Equals("Separation"))
-            //{
-            //    // 키 분리 구분 > 분리
-            //    if (null != GlobalState.Instance.UserData.data.InnerOperationKey && GlobalState.Instance.UserData.data.InnerOperationKey.Length > 0
-            //        && null != GlobalState.Instance.UserData.data.OuterOperationKey && GlobalState.Instance.UserData.data.OuterOperationKey.Length > 0)
-            //    {
-            //        for (int i = 0; i < GlobalState.Instance.UserData.data.InnerOperationKey.Length; i++)
-            //        {
-            //            if (!"".Equals(GlobalState.Instance.UserData.data.InnerOperationKey[i])
-            //                    && Input.inputString.Equals(GlobalState.Instance.UserData.data.InnerOperationKey[i]))
-            //            {
-            //                ballRadius = inRadius;
-            //            }
-            //            if (!"".Equals(GlobalState.Instance.UserData.data.OuterOperationKey[i])
-            //                    && Input.inputString.Equals(GlobalState.Instance.UserData.data.OuterOperationKey[i]))
-            //            {
-            //                ballRadius = outRadius;
-            //            }
-            //        }
-            //    }
-            //    else
-            //    {
-            //        // 키 분리 구분 > 분리 > 커스텀 한 키가 없을 땐 스페이스로 통일
-            //        if (Input.GetKeyDown(KeyCode.Space))
-            //        {
-            //            isUpState = !isUpState;
-
-            //            if (isUpState)
-            //            {
-            //                ballRadius = outRadius;
-            //            }
-            //            else
-            //            {
-            //                ballRadius = inRadius;
-            //            }
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    // 키 분리 구분 > 통합
-            //    if (Input.GetKeyDown(KeyCode.Space))
-            //    {
-            //        isUpState = !isUpState;
-
-            //        if (isUpState)
-            //        {
-            //            ballRadius = outRadius;
-            //        }
-            //        else
-            //        {
-            //            ballRadius = inRadius;
-            //        }
-            //    }
-            //}
-
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (_keyDivision.Equals("Separation"))
             {
-                isUpState = !isUpState;
-
-                if (isUpState)
+                // 키 분리 구분 > 분리
+                if (null != GlobalState.Instance.UserData.data.InnerOperationKey && GlobalState.Instance.UserData.data.InnerOperationKey.Length > 0
+                    && null != GlobalState.Instance.UserData.data.OuterOperationKey && GlobalState.Instance.UserData.data.OuterOperationKey.Length > 0)
                 {
-                    ballRadius = outRadius;
+                    for (int i = 0; i < GlobalState.Instance.UserData.data.InnerOperationKey.Length; i++)
+                    {
+                        if (!"".Equals(GlobalState.Instance.UserData.data.InnerOperationKey[i])
+                                && Input.inputString.Equals(GlobalState.Instance.UserData.data.InnerOperationKey[i]))
+                        {
+                            ballRadius = inRadius;
+                        }
+                        if (!"".Equals(GlobalState.Instance.UserData.data.OuterOperationKey[i])
+                                && Input.inputString.Equals(GlobalState.Instance.UserData.data.OuterOperationKey[i]))
+                        {
+                            ballRadius = outRadius;
+                        }
+                    }
                 }
                 else
                 {
-                    ballRadius = inRadius;
+                    // 키 분리 구분 > 분리 > 커스텀 한 키가 없을 땐 스페이스로 통일
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        isUpState = !isUpState;
+
+                        if (isUpState)
+                        {
+                            ballRadius = outRadius;
+                        }
+                        else
+                        {
+                            ballRadius = inRadius;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // 키 분리 구분 > 통합
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    isUpState = !isUpState;
+
+                    if (isUpState)
+                    {
+                        ballRadius = outRadius;
+                    }
+                    else
+                    {
+                        ballRadius = inRadius;
+                    }
                 }
             }
         }
