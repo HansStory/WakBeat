@@ -24,20 +24,22 @@ public abstract class Stage : MonoBehaviour
     [Header("[ Dodge Point ]")]
     public GameObject DodgePoint;
     public Transform DodgePointBase;
-    public static List<GameObject> DodgePointList = new List<GameObject>();
+    public List<GameObject> DodgePointList = new List<GameObject>();
 
 
     [Header("[ Obstacles ]")]
     public GameObject[] Obstacles;
 
     public Transform ObstacleInBase;
-    public static List<GameObject> InObstacleList = new List<GameObject>();
+    public List<GameObject> InObstacleList = new List<GameObject>();
 
     public Transform ObstacleOutBase;
-    public static List<GameObject> OutObstacleList = new List<GameObject>();
+    public List<GameObject> OutObstacleList = new List<GameObject>();
 
     [Header("[ Save Point ]")]
     public GameObject[] SavePoint;
+
+    public TMP_Text CurrentLineText;
 
     //---------------------------------------------------
     private float dodgeRadius = 334f;
@@ -51,11 +53,11 @@ public abstract class Stage : MonoBehaviour
     private BMWReader bmwReader = null;
     private AudioSource audioSource = null;
 
-    private string _title = "";                          // 곡 제목
-    private string _artist = "";                         // 작곡가
-    private float _bpm = 0;                           // Beat Per Minute
-    private int _totalBeatCount = 0;                // 총 Beat 수
-    private float _musicPlayTime = 0f;              // 곡의 총 시간
+    private string _title = "";                  // 곡 제목
+    private string _artist = "";                 // 작곡가
+    private float _bpm = 0;                      // Beat Per Minute
+    private int _totalBeatCount = 0;             // 총 Beat 수
+    private float _musicPlayTime = 0f;           // 곡의 총 시간
 
     private static float _spawnAngle = -5f;
 
@@ -63,7 +65,7 @@ public abstract class Stage : MonoBehaviour
     private float saveMusicPlayingTime = 0;
 
     // Key 입력 부
-    private string _keyDivision = null == GlobalState.Instance.UserData.data.KeyDivision ? "Integration" : GlobalState.Instance.UserData.data.KeyDivision;
+    //private string _keyDivision = null == GlobalState.Instance.UserData.data.KeyDivision ? "Integration" : GlobalState.Instance.UserData.data.KeyDivision;
     private string[] _InnerKey;
     private string[] _outerKey;
 
@@ -112,7 +114,11 @@ public abstract class Stage : MonoBehaviour
 
         // Calculate Beat
         _totalBeatCount = bmwReader.ChartingItem.Count;
+        currentItem = 0;
+
         CalculateTick();
+
+        PlayProcess();
 
         // Sound 제어 부
         audioSource = SoundManager.Instance.MusicAudio;
@@ -310,9 +316,9 @@ public abstract class Stage : MonoBehaviour
         }
     }
 
-    private float tick = 0;        
-    private int tickCount = 4;
-    private float beatTime = 0;
+    protected float tick = 0;
+    protected int tickCount = 4;
+    protected float beatTime = 0;
     void CalculateTick()
     {
         _bpm = bmwReader.MusicInfoItem.BPM;
@@ -356,6 +362,8 @@ public abstract class Stage : MonoBehaviour
             
             //_bpa = beatItem.Speed;           
         }
+
+        CurrentLineText.text = $"Current Line : {currentItem}";
 
         ShowChartingItems();
     }
@@ -458,7 +466,7 @@ public abstract class Stage : MonoBehaviour
 
     public static int currentItem = 0;
     public int dodgelistars = 0;
-    private float timer = 0f;
+    protected float timer = 0f;
 
     public float Timer
     {
@@ -476,9 +484,10 @@ public abstract class Stage : MonoBehaviour
         {
             if (timer > beatTime)
             {
-                PlayProcess();
-                
                 currentItem++;
+                
+                PlayProcess();
+
                 Debug.Log("currentItem :" + currentItem);
                 timer -= timer;
             }
@@ -501,59 +510,73 @@ public abstract class Stage : MonoBehaviour
     {
         if (Input.anyKey && null != Input.inputString && "" != Input.inputString)
         {
-            if (_keyDivision.Equals("Separation"))
+            //if (_keyDivision.Equals("Separation"))
+            //{
+            //    // 키 분리 구분 > 분리
+            //    if (null != GlobalState.Instance.UserData.data.InnerOperationKey && GlobalState.Instance.UserData.data.InnerOperationKey.Length > 0
+            //        && null != GlobalState.Instance.UserData.data.OuterOperationKey && GlobalState.Instance.UserData.data.OuterOperationKey.Length > 0)
+            //    {
+            //        for (int i = 0; i < GlobalState.Instance.UserData.data.InnerOperationKey.Length; i++)
+            //        {
+            //            if (!"".Equals(GlobalState.Instance.UserData.data.InnerOperationKey[i])
+            //                    && Input.inputString.Equals(GlobalState.Instance.UserData.data.InnerOperationKey[i]))
+            //            {
+            //                ballRadius = inRadius;
+            //            }
+            //            if (!"".Equals(GlobalState.Instance.UserData.data.OuterOperationKey[i])
+            //                    && Input.inputString.Equals(GlobalState.Instance.UserData.data.OuterOperationKey[i]))
+            //            {
+            //                ballRadius = outRadius;
+            //            }
+            //        }
+            //    }
+            //    else
+            //    {
+            //        // 키 분리 구분 > 분리 > 커스텀 한 키가 없을 땐 스페이스로 통일
+            //        if (Input.GetKeyDown(KeyCode.Space))
+            //        {
+            //            isUpState = !isUpState;
+
+            //            if (isUpState)
+            //            {
+            //                ballRadius = outRadius;
+            //            }
+            //            else
+            //            {
+            //                ballRadius = inRadius;
+            //            }
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    // 키 분리 구분 > 통합
+            //    if (Input.GetKeyDown(KeyCode.Space))
+            //    {
+            //        isUpState = !isUpState;
+
+            //        if (isUpState)
+            //        {
+            //            ballRadius = outRadius;
+            //        }
+            //        else
+            //        {
+            //            ballRadius = inRadius;
+            //        }
+            //    }
+            //}
+
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                // 키 분리 구분 > 분리
-                if (null != GlobalState.Instance.UserData.data.InnerOperationKey && GlobalState.Instance.UserData.data.InnerOperationKey.Length > 0
-                    && null != GlobalState.Instance.UserData.data.OuterOperationKey && GlobalState.Instance.UserData.data.OuterOperationKey.Length > 0)
+                isUpState = !isUpState;
+
+                if (isUpState)
                 {
-                    for (int i = 0; i < GlobalState.Instance.UserData.data.InnerOperationKey.Length; i++)
-                    {
-                        if (!"".Equals(GlobalState.Instance.UserData.data.InnerOperationKey[i])
-                                && Input.inputString.Equals(GlobalState.Instance.UserData.data.InnerOperationKey[i]))
-                        {
-                            ballRadius = inRadius;
-                        }
-                        if (!"".Equals(GlobalState.Instance.UserData.data.OuterOperationKey[i])
-                                && Input.inputString.Equals(GlobalState.Instance.UserData.data.OuterOperationKey[i]))
-                        {
-                            ballRadius = outRadius;
-                        }
-                    }
+                    ballRadius = outRadius;
                 }
                 else
                 {
-                    // 키 분리 구분 > 분리 > 커스텀 한 키가 없을 땐 스페이스로 통일
-                    if (Input.GetKeyDown(KeyCode.Space))
-                    {
-                        isUpState = !isUpState;
-
-                        if (isUpState)
-                        {
-                            ballRadius = outRadius;
-                        }
-                        else
-                        {
-                            ballRadius = inRadius;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                // 키 분리 구분 > 통합
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    isUpState = !isUpState;
-
-                    if (isUpState)
-                    {
-                        ballRadius = outRadius;
-                    }
-                    else
-                    {
-                        ballRadius = inRadius;
-                    }
+                    ballRadius = inRadius;
                 }
             }
         }
