@@ -86,7 +86,8 @@ public class UIObjectButton : MonoBehaviour
         {
             //  홈 버튼 클릭 시 화면 제어
             // 메인 화면으로 이동
-            UIManager.Instance.GoPanelMain();
+            //UIManager.Instance.GoPanelMain();
+            UIManager.Instance.GoPanelAlbumSelect();
             // BGM 멈춤
             SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingOut);
             SoundManager.Instance.ForceAudioStop();
