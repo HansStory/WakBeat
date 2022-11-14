@@ -24,17 +24,17 @@ public abstract class Stage : MonoBehaviour
     [Header("[ Dodge Point ]")]
     public GameObject DodgePoint;
     public Transform DodgePointBase;
-    public List<GameObject> DodgePointList = new List<GameObject>();
+    public static List<GameObject> DodgePointList = new List<GameObject>();
 
 
     [Header("[ Obstacles ]")]
     public GameObject[] Obstacles;
 
     public Transform ObstacleInBase;
-    public List<GameObject> InObstacleList = new List<GameObject>();
+    public static List<GameObject> InObstacleList = new List<GameObject>();
 
     public Transform ObstacleOutBase;
-    public List<GameObject> OutObstacleList = new List<GameObject>();
+    public static List<GameObject> OutObstacleList = new List<GameObject>();
 
     [Header("[ Save Point ]")]
     public GameObject[] SavePoint;
@@ -337,7 +337,7 @@ public abstract class Stage : MonoBehaviour
 
     }
 
-    void PlayProcess()
+    protected void PlayProcess()
     {
         if (bmwReader != null)
         {
@@ -471,7 +471,7 @@ public abstract class Stage : MonoBehaviour
             if (timer > beatTime)
             {
                 PlayProcess();
-
+                
                 currentItem++;
                 Debug.Log("currentItem :" + currentItem);
                 timer -= timer;

@@ -27,7 +27,14 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        OperateBallMovement();
+        if (!GlobalState.Instance.IsPlayerDied)
+        {
+            OperateBallMovement();
+        }
+        else
+        {
+            Debug.Log("죽었음");
+        }
     }
     
     void OperateBallMovement()
@@ -81,9 +88,12 @@ public class Player : MonoBehaviour
 
     void PlayerDie()
     {
+        GlobalState.Instance.IsPlayerDied = true;
         Debug.Log("Player Die!!");
         _stageBase.PlayerDieAndSavePointPlay();
-        this.transform.localPosition = new Vector3(0, 0, -1);
+        _objCenter.transform.eulerAngles = new Vector3(0,0,0);
+        transform.eulerAngles = new Vector3(0, 0, 0);
+        GlobalState.Instance.IsPlayerDied = false;
     }
     
 }

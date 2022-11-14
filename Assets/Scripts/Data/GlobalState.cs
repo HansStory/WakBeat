@@ -195,5 +195,12 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
         get => _saveMusicPlayingTime;
         set => _saveMusicPlayingTime = value;
     }
-    
+
+    private bool _isPlayerDied = false;
+
+    public bool IsPlayerDied
+    {
+        get => _isPlayerDied;
+        set => _isPlayerDied = value;
+    }
 }
