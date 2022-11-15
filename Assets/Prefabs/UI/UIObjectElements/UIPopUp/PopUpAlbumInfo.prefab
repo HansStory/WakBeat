@@ -136,8 +136,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a73e10dfdf5771c47beea01878fe88dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _PopUpContentImage: {fileID: 0}
-  PopUpContentImage: {fileID: 268526133912433169}
+  _PopUpAlbumInfoImage: {fileID: 0}
+  PopUpAlbumInfoImage: {fileID: 268526133912433169}
 --- !u!1 &9116821677916609441
 GameObject:
   m_ObjectHideFlags: 0
