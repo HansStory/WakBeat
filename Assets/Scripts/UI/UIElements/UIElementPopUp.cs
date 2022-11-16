@@ -16,7 +16,7 @@ public class UIElementPopUp : MonoBehaviour
     public void SetPopUp()
     {
         var _PopUp = (GameObject)Instantiate(AlbumInfoPrefab, AlbumInfoPanel);
-        var PopUpInfo = _PopUp.GetComponent<UIObjectPopUp>();
+        var PopUpInfo = _PopUp.GetComponent<UIObjectAlbumInfo>();
         int AlbumIndex = (int)GlobalState.Instance.AlbumIndex;
 
         if (PopUpInfo)
