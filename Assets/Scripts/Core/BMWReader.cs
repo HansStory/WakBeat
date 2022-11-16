@@ -5,16 +5,18 @@ using UnityEngine;
 
 public class MusicInfoItem
 {
-    public string Title;
-    public string Artist;
-    public int BPM;
-    public int Time;
+    public string Title;    // 곡명
+    public string Artist;   // 작곡가
+    public int BPM;         // BPM
+    public int Bar;         // Bar (한마디 == 한칸)
+    public int Time;        // 곡의 시간
 
-    public MusicInfoItem(string title, string artist, int bpm, int time)
+    public MusicInfoItem(string title, string artist, int bpm, int bar, int time)
     {
         Title = title;
         Artist = artist;
         BPM = bpm;
+        Bar = bar;
         Time = time;
     }
 
@@ -22,11 +24,11 @@ public class MusicInfoItem
 
 public class AnimationItem
 {
-    public string Index;
+    public int Index;
     public string StageName;
     public string AnimationName;
 
-    public AnimationItem(string index, string stageName, string animationName)
+    public AnimationItem(int index, string stageName, string animationName)
     {
         Index = index;
         StageName = stageName;
@@ -68,6 +70,8 @@ public class InObstacle
 public class ChartingItem
 {
     public int Beat;                     // 채보프로그램의 한줄(4/4박이면 4마디가 한줄)을 기준 
+    public int AnimationIndex;           // 애니메이션의 인덱스
+    public float Interval;               // 시간적인 간격 조정(Delay)
     public string[] DodgePoints;         // 정박 스폰위치
     public string[] OutObstacles;        // 바깥쪽 가시 스폰위치
     public string[] InObstacles;         // 안쪽 가시 스폰 위치
@@ -87,10 +91,16 @@ public class ChartingItem
     public List<OutObstacle> OutObstacleElements = new List<OutObstacle>();     // 바깥쪽 가시 스폰위치
     public List<InObstacle> InObstacleElements = new List<InObstacle>();        // 안쪽 가시 스폰 위치
 
-    public ChartingItem(int beat, string dodgePoint, string outObstacle, string inObstacle, int savePoint, float speed, float speedTime, float ballAngle, int isKnockBack, float knockBackAngle)
+    public ChartingItem(int beat, int animationIndex, float interval, string dodgePoint, string outObstacle, string inObstacle, int savePoint, float speed, float speedTime, float ballAngle, int isKnockBack, float knockBackAngle)
     {
         // Beat
         Beat = beat;
+
+        //AnimationIndex
+        AnimationIndex = animationIndex;
+
+        //Interval
+        Interval = interval;
 
         // Dodge Point Elements
         DodgePoint = dodgePoint; // For Debuging
@@ -145,13 +155,14 @@ public class ChartingList : List<ChartingItem>
 public class BMWReader : CsvReader
 {
     private MusicInfoItem _musicInfoItem;
-    //private List<AnimationItem> _animationItem = new List<AnimationItem>();  // KD_Han : 필요시 추가하겠습니다.
+    private List<AnimationItem> _animationItem = new List<AnimationItem>();  // KD_Han : 필요시 추가하겠습니다.
     private List<ChartingItem> _chartingItem = new List<ChartingItem>();
 
     public MusicInfoItem MusicInfoItem { get { return _musicInfoItem; } }
+    public List<AnimationItem> AnimationItem { get { return _animationItem; } }
     public List<ChartingItem> ChartingItem { get { return _chartingItem; } }
 
-    enum CSVBLOCK { Unkown, MusicInfo, Charting }
+    enum CSVBLOCK { Unkown, MusicInfo, Animation, Charting }
     CSVBLOCK parseBlock = CSVBLOCK.Unkown;
 
     protected override void Init()
@@ -173,6 +184,10 @@ public class BMWReader : CsvReader
                 {
                     parseBlock = CSVBLOCK.MusicInfo;
                 }
+                else if (line.Contains("#ANIMATION"))
+                {
+                    parseBlock = CSVBLOCK.Animation;
+                }
                 else if (line.Contains("#CHARTING"))
                 {
                     parseBlock = CSVBLOCK.Charting;
@@ -188,10 +203,10 @@ public class BMWReader : CsvReader
                 {
                     case CSVBLOCK.MusicInfo:
                         count = 0;
-
                         _musicInfoItem = new MusicInfoItem(
                             args[count++].Trim(),
                             args[count++].Trim(),
+                            Convert.ToInt32(args[count++].Trim()),
                             Convert.ToInt32(args[count++].Trim()),
                             Convert.ToInt32(args[count++].Trim())                            
                             );
@@ -204,12 +219,35 @@ public class BMWReader : CsvReader
 
                         Debug.Log($"{_musicInfoItem.Title},{_musicInfoItem.Artist},{_musicInfoItem.BPM},{_musicInfoItem.Time}");
                         break;
+                    case CSVBLOCK.Animation:
+                        count = 0;
+                        try
+                        {
+                            var itemAnimation = new AnimationItem(
+                                Convert.ToInt32(args[count++].Trim()),        // 채보프로그램의 한줄(4/4박이면 4마디가 한줄)을 기준
+                                args[count++].Trim(),                         // 정박 스폰위치
+                                args[count++].Trim()                          // 바깥쪽 가시 스폰위치
+                                );
+
+                            _animationItem.Add(itemAnimation);
+
+
+                            Debug.Log($"Anim Items : {itemAnimation.Index},{itemAnimation.StageName},{itemAnimation.AnimationName}");
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.unityLogger.LogException(e);
+                            Debug.LogError($"Animation BMWReader :" + line + ",line number" + lineNumber);
+                        }
+                        break;
                     case CSVBLOCK.Charting:
                         count = 0;
                         try
                         {
                             var itemCharting = new ChartingItem(
                                 Convert.ToInt32(args[count++].Trim()),        // 채보프로그램의 한줄(4/4박이면 4마디가 한줄)을 기준
+                                Convert.ToInt32(args[count++].Trim()),        // 사용할 애니메이션의 인덱스
+                                float.Parse(args[count++].Trim()),            // 정박에서 시작하기위한 Interval
                                 args[count++].Trim(),                         // 정박 스폰위치
                                 args[count++].Trim(),                         // 바깥쪽 가시 스폰위치
                                 args[count++].Trim(),                         // 안쪽 가시 스폰 위치
@@ -225,7 +263,7 @@ public class BMWReader : CsvReader
 
                             //_chartingItemList.Add(itemCharting);
 
-                            Debug.Log($"line : {itemCharting.Beat},{itemCharting.DodgePoint},{itemCharting.OutObstacle},{itemCharting.InObstacle},{itemCharting.SavePoint},{itemCharting.Speed},{itemCharting.SpeedTime},{itemCharting.BallAngle},{itemCharting.IsKnockback},{itemCharting.KnockBackAngle}" );
+                            Debug.Log($"line : {itemCharting.Beat},{itemCharting.AnimationIndex},{itemCharting.Interval},{itemCharting.DodgePoint},{itemCharting.OutObstacle},{itemCharting.InObstacle},{itemCharting.SavePoint},{itemCharting.Speed},{itemCharting.SpeedTime},{itemCharting.BallAngle},{itemCharting.IsKnockback},{itemCharting.KnockBackAngle}" );
                             
                             for (int i = 0; i < itemCharting.DodgePointElements.Count; i++)
                             {
@@ -235,7 +273,7 @@ public class BMWReader : CsvReader
                         catch (Exception e)
                         {
                             Debug.unityLogger.LogException(e);
-                            Debug.LogError($"Charting BMSReader :" + line + ",line number" + lineNumber);
+                            Debug.LogError($"Charting BMWReader :" + line + ",line number" + lineNumber);
                         }
                         break;
                     default:

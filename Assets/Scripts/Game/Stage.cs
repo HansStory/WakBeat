@@ -43,8 +43,9 @@ public abstract class Stage : MonoBehaviour
 
     [Header("[ Count Down ]")] 
     public TMP_Text countDownText;
-    
-    
+
+    [Header("[ Animation ]")]
+    public Animation StageAnim;
 
     //---------------------------------------------------
     private float dodgeRadius = 334f;
@@ -60,7 +61,9 @@ public abstract class Stage : MonoBehaviour
 
     private string _title = "";                  // °î Á¦¸ñ
     private string _artist = "";                 // ÀÛ°î°¡
-    private float _bpm = 0;                      // Beat Per Minute
+    private float _bpm = 0;                      // Bar Per Minute
+    private int _bar = 0;                        // Bar
+    protected float _tick = 0;                   // 1Bar¿¡ ¼Ò¿äµÇ´Â ½Ã°£
     private int _totalBeatCount = 0;             // ÃÑ Beat ¼ö
     private float _musicPlayTime = 0f;           // °îÀÇ ÃÑ ½Ã°£
 
@@ -137,6 +140,7 @@ public abstract class Stage : MonoBehaviour
             _title = bmwReader.MusicInfoItem.Title;
             _artist = bmwReader.MusicInfoItem.Artist;
             _bpm = bmwReader.MusicInfoItem.BPM;
+            _bar = bmwReader.MusicInfoItem.Bar;
         }
     }
 
@@ -321,17 +325,15 @@ public abstract class Stage : MonoBehaviour
         }
     }
 
-    protected float tick = 0;
-    protected int tickCount = 4;
-    protected float beatTime = 0;
+    protected float _beatTime = 0;
     void CalculateTick()
     {
         _bpm = bmwReader.MusicInfoItem.BPM;
+        _bar = bmwReader.MusicInfoItem.Bar;
+        float _bps = _bpm / 60;
+        _tick = 1 / _bps;             
 
-        float bps = _bpm / 60;
-        tick = 1 / bps;             
-
-        beatTime = tick * tickCount;
+        _beatTime = _tick * _bar;
 
         if (bmwReader.ChartingItem[currentItem].Speed == -1)
         {
@@ -356,26 +358,44 @@ public abstract class Stage : MonoBehaviour
 
     protected void PlayProcess()
     {
-        if (bmwReader != null)
+        var beatItem = bmwReader.ChartingItem[currentItem]; //beatItems[_currentBeat];
+        if (beatItem == null)
         {
-            var beatItem = bmwReader.ChartingItem[currentItem];//beatItems[_currentBeat];
-            if (beatItem == null)
-            {
-                Debug.LogError("PlayPorocess beat Item is null");
-                return;
-            }
-            
-            //_bpa = beatItem.Speed;           
+            Debug.LogError("PlayPorocess beat Item is null");
+            return;
         }
 
-        CurrentLineText.text = $"Current Line : {currentItem}";
+        //_bpa = beatItem.Speed;
+
+        PlayAnimation(_animationName);
+
+        _processPlaying = true;
 
         ShowChartingItems();
+        CurrentLineText.text = $"Current Line : {currentItem}";       
     }
 
     void PlayBeat()
     {
         //tick
+    }
+
+    private string _animationName = string.Empty;
+    void PlayAnimation(string animationName)
+    {
+        var beatItem = bmwReader.ChartingItem[currentItem];
+
+        if (beatItem.AnimationIndex >= 0 && bmwReader.AnimationItem.Count > beatItem.AnimationIndex)
+        {
+            var animItem = bmwReader.AnimationItem[beatItem.AnimationIndex];
+
+            _animationName = animItem.AnimationName;
+
+            StageAnim.Rewind(_animationName);
+            StageAnim[_animationName].normalizedTime = 0f;
+            StageAnim[_animationName].speed = 1f;
+            StageAnim.Play(_animationName);
+        }
     }
 
     void ShowChartingItems()
@@ -473,7 +493,6 @@ public abstract class Stage : MonoBehaviour
     public int dodgelistars = 0;
     protected float timer = 0f;
 
-
     // Update is called once per frame
     protected virtual void Update()
     {
@@ -482,12 +501,13 @@ public abstract class Stage : MonoBehaviour
             PlayProcess();
             return;
         }
+
         timer += Time.deltaTime;
-        Center.transform.Rotate(0f, 0f, (Time.deltaTime / beatTime) * -speed);
+        Center.transform.Rotate(0f, 0f, (Time.deltaTime / _beatTime) * -speed);
 
         if (currentItem < bmwReader.ChartingItem.Count)
         {
-            if (timer > beatTime)
+            if (timer > _beatTime)
             {
                 currentItem++;
                 
@@ -501,6 +521,7 @@ public abstract class Stage : MonoBehaviour
         // OperateBallMovement();
         //TweenTest();
         //ViewItemsTest(currentItem);
+        //AnimaTest();
     }
 
     void OperateBallMovement()
@@ -656,7 +677,22 @@ public abstract class Stage : MonoBehaviour
         {
             DoRotatePlayGround(new Vector3(0f, 0f, 90f), 2f, 0f, Ease.Unset);
         }
+    }
 
+    void AnimaTest()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            StageAnim.Play("Common_Bounce");
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            StageAnim.Play("Common_Heave");
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            StageAnim.Play("Common_Surge");
+        }
     }
 
     Tween moveTween;
