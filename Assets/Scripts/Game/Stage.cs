@@ -63,6 +63,7 @@ public abstract class Stage : MonoBehaviour
     private string _artist = "";                 // ÀÛ°î°¡
     private float _bpm = 0;                      // Bar Per Minute
     private int _bar = 0;                        // Bar
+    protected float _interval = 0f;              // Interval
     protected float _tick = 0;                   // 1Bar¿¡ ¼Ò¿äµÇ´Â ½Ã°£
     private int _totalBeatCount = 0;             // ÃÑ Beat ¼ö
     private float _musicPlayTime = 0f;           // °îÀÇ ÃÑ ½Ã°£
@@ -330,6 +331,8 @@ public abstract class Stage : MonoBehaviour
     {
         _bpm = bmwReader.MusicInfoItem.BPM;
         _bar = bmwReader.MusicInfoItem.Bar;
+        _interval = bmwReader.ChartingItem[currentItem].Interval;
+
         float _bps = _bpm / 60;
         _tick = 1 / _bps;             
 

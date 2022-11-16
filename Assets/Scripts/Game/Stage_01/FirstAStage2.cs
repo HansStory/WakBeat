@@ -6,7 +6,7 @@ public class FirstAStage2 : Stage
     {
         base.Init();
 
-        timer -= _tick;
+        timer -= _interval;
     }
 
     protected override void Update()
