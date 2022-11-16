@@ -4,11 +4,15 @@ using UnityEngine;
 public class StageBase : Stage
 {
     private GameObject _obj;
+
+    private CountDownStage _countDownStage;
+    
     protected override void Init()
     {
         base.Init();
+        _countDownStage = GameObject.Find("Text_CountDown").GetComponent<CountDownStage>();
     }
-    
+
     public void SavePointEnter()
     {
         GlobalState.Instance.SavePoint = currentItem;
@@ -18,28 +22,18 @@ public class StageBase : Stage
 
     public void PlayerDieAndSavePointPlay()
     {
+        Debug.Log("Player Die!!");
+        GlobalState.Instance.IsPlayerDied = true;
         SoundManager.Instance.MusicAudio.Pause();
         SoundManager.Instance.MusicAudio.time = GlobalState.Instance.SaveMusicPlayingTime;
-        Timer = 0;
-        currentItem = GlobalState.Instance.SavePoint;
-        
-        // Hide
-        for (int i = 0; i < DodgePointList.Count; i++)
+        if (GlobalState.Instance.SavePoint != 0)
         {
-            DodgePointList[i].SetActive(false);
+            currentItem = GlobalState.Instance.SavePoint -1;    
         }
-        
-        for (int i = 0; i < InObstacleList.Count; i++)
+        else
         {
-            InObstacleList[i].SetActive(false);
+            currentItem = GlobalState.Instance.SavePoint;
         }
-        
-        for (int i = 0; i < OutObstacleList.Count; i++)
-        {
-            OutObstacleList[i].SetActive(false);
-        }
-        
-        SoundManager.Instance.MusicAudio.Play();
     }
     
 }

@@ -41,6 +41,11 @@ public abstract class Stage : MonoBehaviour
 
     public TMP_Text CurrentLineText;
 
+    [Header("[ Count Down ]")] 
+    public TMP_Text countDownText;
+    
+    
+
     //---------------------------------------------------
     private float dodgeRadius = 334f;
     private float outRadius = 355f;
@@ -468,15 +473,15 @@ public abstract class Stage : MonoBehaviour
     public int dodgelistars = 0;
     protected float timer = 0f;
 
-    public float Timer
-    {
-        get => timer = Timer;
-        set => timer = value;
-    }
 
     // Update is called once per frame
     protected virtual void Update()
     {
+        if (GlobalState.Instance.IsPlayerDied)
+        {
+            PlayProcess();
+            return;
+        }
         timer += Time.deltaTime;
         Center.transform.Rotate(0f, 0f, (Time.deltaTime / beatTime) * -speed);
 
@@ -493,7 +498,7 @@ public abstract class Stage : MonoBehaviour
             }
         }
 
-        OperateBallMovement();
+        // OperateBallMovement();
         //TweenTest();
         //ViewItemsTest(currentItem);
     }
@@ -685,6 +690,11 @@ public abstract class Stage : MonoBehaviour
         doRotateTween = PlayGround.DOLocalRotate(targetRotate, Duration);
         doRotateTween.SetDelay(delay);
         doRotateTween.SetEase(easeType);
+    }
+
+    protected void PlayerInit()
+    {
+        Ball.transform.localPosition = Vector3.zero;
     }
 
 }

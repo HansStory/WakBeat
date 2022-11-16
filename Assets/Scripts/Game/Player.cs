@@ -12,11 +12,14 @@ public class Player : MonoBehaviour
     private float ballRadius = 0;
     private float outRadius = 355f;
     private float inRadius = 312f;
+
+    private CountDownStage _countDownStage;
     // Start is called before the first frame update
     private void Awake()
     {
         _stageBase = new StageBase();
         _objCenter = GameObject.Find("Center");
+        _countDownStage = new CountDownStage();
     }
 
     void Start()
@@ -29,12 +32,13 @@ public class Player : MonoBehaviour
     {
         if (!GlobalState.Instance.IsPlayerDied)
         {
-            OperateBallMovement();
+            OperateBallMovement();    
         }
         else
         {
-            Debug.Log("죽었음");
+            this.transform.localPosition = Vector3.zero;
         }
+        
     }
     
     void OperateBallMovement()
@@ -60,16 +64,7 @@ public class Player : MonoBehaviour
             }
         }
     }
-
-    // private void OnTriggerEnter(Collider other)
-    // {
-    //     if (other.tag == "SavePoint")
-    //     {
-    //         Debug.Log("Hit");
-    //         Destroy(other.gameObject);
-    //     }
-    // }
-
+    
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("SavePoint"))
@@ -88,12 +83,7 @@ public class Player : MonoBehaviour
 
     void PlayerDie()
     {
-        GlobalState.Instance.IsPlayerDied = true;
-        Debug.Log("Player Die!!");
         _stageBase.PlayerDieAndSavePointPlay();
-        _objCenter.transform.eulerAngles = new Vector3(0,0,0);
-        transform.eulerAngles = new Vector3(0, 0, 0);
-        GlobalState.Instance.IsPlayerDied = false;
     }
     
 }
