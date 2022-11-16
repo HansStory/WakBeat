@@ -110,7 +110,7 @@ public class UIElementAlbumSelect : MonoBehaviour
 
     public void ShowAlbumInfo()
     {
-        UIElementPopUp.SetPopUp();
+        UIElementPopUp.SetPopUpAlbumInfo();
     }
 
     void Update()

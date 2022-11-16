@@ -20,6 +20,9 @@ public class UIElementMusicSelect : MonoBehaviour
 
     [SerializeField] private ScrollRect scrollRect;
 
+    // À½¾Ç Á¤º¸ ÆË¾÷
+    [SerializeField] private UIElementPopUp UIElementPopUp;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -284,6 +287,9 @@ public class UIElementMusicSelect : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Return))
             {
                 UIManager.Instance.GoPanelGamePlay();
+
+                // À½¾Ç Á¤º¸ ÆË¾÷ È£Ãâ
+                UIElementPopUp.SetPopUpMusicInfo();
             }
         }
     }

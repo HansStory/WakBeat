@@ -549,6 +549,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4588499267154039872, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
+      propertyPath: UIElementPopUp
+      value: 
+      objectReference: {fileID: 964253213}
     - target: {fileID: 4791045139622235391, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -597,6 +601,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 9185301295036426862, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
+      propertyPath: UIElementPopUp
+      value: 
+      objectReference: {fileID: 964253213}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b3ca892110b58ae4ab396fe85f578cc1, type: 3}
 --- !u!1 &1682617234 stripped
