@@ -12,6 +12,7 @@ public class UIElementSetting : MonoBehaviourSingleton<UIElementSetting>
     public GameObject PanelSetting;
     public GameObject PanelShop;
     public GameObject PanelTrophy;
+    public GameObject PanelPause;
 
     // 버튼 표기 설정
     public void PanelViewController(int index)
@@ -97,6 +98,19 @@ public class UIElementSetting : MonoBehaviourSingleton<UIElementSetting>
             {
                 Background.SetActive(false);
                 PanelTrophy.SetActive(false);
+            }
+        }
+        else if (Division.Equals("Pause"))
+        {
+            if (OpenYN.Equals("Open"))
+            {
+                Background.SetActive(true);
+                PanelPause.SetActive(true);
+            }
+            else
+            {
+                Background.SetActive(false);
+                PanelPause.SetActive(false);
             }
         }
     }

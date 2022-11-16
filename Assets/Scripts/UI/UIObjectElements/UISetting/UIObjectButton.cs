@@ -118,6 +118,7 @@ public class UIObjectButton : MonoBehaviour
         else if (Division.Equals("goPause"))
         {
             // 일시정지 버튼 클릭 시 화면 제어
+            UIElementSetting.Instance.ButtonClickControll("Pause", "Open");
 
             // 버튼 이벤트 Lock
             GlobalState.Instance.UserData.data.BackgroundProcActive = false;
