@@ -104,7 +104,7 @@ public class UIElementSetting : MonoBehaviourSingleton<UIElementSetting>
         {
             if (OpenYN.Equals("Open"))
             {
-                Background.SetActive(true);
+                Background.SetActive(false);
                 PanelPause.SetActive(true);
             }
             else

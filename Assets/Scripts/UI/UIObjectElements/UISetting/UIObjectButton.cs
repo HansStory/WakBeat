@@ -111,6 +111,7 @@ public class UIObjectButton : MonoBehaviour
         else if (Division.Equals("goTrophy"))
         {
             // 트로피 버튼 클릭 시 화면 제어
+            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingOut);
             UIElementSetting.Instance.ButtonClickControll("Trophy", "Open");
             // 버튼 이벤트 Lock
             GlobalState.Instance.UserData.data.BackgroundProcActive = false;
@@ -118,8 +119,8 @@ public class UIObjectButton : MonoBehaviour
         else if (Division.Equals("goPause"))
         {
             // 일시정지 버튼 클릭 시 화면 제어
+            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingOut);
             UIElementSetting.Instance.ButtonClickControll("Pause", "Open");
-
             // 버튼 이벤트 Lock
             GlobalState.Instance.UserData.data.BackgroundProcActive = false;
         }
