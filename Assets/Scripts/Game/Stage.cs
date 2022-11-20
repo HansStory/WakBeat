@@ -501,6 +501,7 @@ public abstract class Stage : MonoBehaviour
     {
         if (GlobalState.Instance.IsPlayerDied)
         {
+            InitBallPosition();
             PlayProcess();
             return;
         }
