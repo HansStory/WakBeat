@@ -10,6 +10,9 @@ public class UIObjectPause : MonoBehaviour
     public Button ButtonRestart;
     public Button ButtonHome;
 
+    // 스테이지 호출
+    private Stage Stage;
+
     // 팝업창 호출 시 UI 제어
     private float _duration = 0.15f;
 

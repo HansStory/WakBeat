@@ -133,7 +133,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -200, y: -35}
-  m_SizeDelta: {x: 96, y: 101}
+  m_SizeDelta: {x: 109, y: 118}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5634986136044292833
 CanvasRenderer:
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 94bb7dab91a9590499fc8d3e2acccc42, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f1091cb2b58023945ac2191d048e5dd5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -254,7 +254,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -35}
-  m_SizeDelta: {x: 96, y: 101}
+  m_SizeDelta: {x: 109, y: 118}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3052880476259553803
 CanvasRenderer:
@@ -284,7 +284,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 94bb7dab91a9590499fc8d3e2acccc42, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4e3a5013fda44314dbbb3a932145ebc0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -375,7 +375,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 200, y: -35}
-  m_SizeDelta: {x: 96, y: 101}
+  m_SizeDelta: {x: 108, y: 118}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3917438272397706511
 CanvasRenderer:
@@ -405,7 +405,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 94bb7dab91a9590499fc8d3e2acccc42, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f2fe62bf16f2b3744bf97629a08eeb73, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -495,7 +495,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 750, y: 350}
+  m_SizeDelta: {x: 722, y: 364}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8330600836385465625
 CanvasRenderer:
@@ -525,7 +525,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a66d67e3ef4eca64ea5093f0732b445d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e5d39172a8466014b8ca81f60bbb29a5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
