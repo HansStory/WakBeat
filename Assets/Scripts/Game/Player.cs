@@ -6,8 +6,9 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private StageBase _stageBase;
-
     private GameObject _objCenter;
+
+    private Rigidbody2D _myRigid;
     
     private float ballRadius = 0;
     private float outRadius = 355f;
@@ -25,6 +26,13 @@ public class Player : MonoBehaviour
     void Start()
     {
         ballRadius = outRadius;
+
+        if (this.GetComponent<Rigidbody2D>() != null)
+        {
+            _myRigid = this.GetComponent<Rigidbody2D>();
+
+            _myRigid.simulated = Config.Instance.GameMode;
+        }
     }
 
     // Update is called once per frame

@@ -33,6 +33,67 @@ public class Config : MonoBehaviourSingleton<Config>
     public string ReMix_BangOff { get; internal set; }
     public string ReMix_TwistedLove { get; internal set; }
     public string ReMix_Waklio { get; internal set; }
+
+    //------------------------- SYSTEM ------------------------------
+    public string DEVKEY { get; internal set; }
+    public string GAMEMODE { get; internal set; }
+    public string AUTOMODE { get; internal set; }
+
+
+    private bool _isDEVKey = false;
+    public bool DEVKey
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(DEVKEY))
+            {
+                _isDEVKey = false;
+            }
+            else
+            {
+                _isDEVKey = DEVKEY.Equals("1");
+            }
+
+            return _isDEVKey;
+        }
+    }
+
+    private bool _isGameMode = false;
+    public bool GameMode
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(GAMEMODE))
+            {
+                _isGameMode = false;
+            }
+            else
+            {
+                _isGameMode = GAMEMODE.Equals("1");
+            }
+
+            return _isGameMode;
+        }
+    }
+
+    private bool _isAutoMode = false;
+    public bool AutoMode
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(AUTOMODE))
+            {
+                _isAutoMode = false;
+            }
+            else
+            {
+                _isAutoMode = AUTOMODE.Equals("1");
+            }
+
+            return _isAutoMode;
+        }
+    }
+
     private void Awake()
     {
         //URL
@@ -64,6 +125,11 @@ public class Config : MonoBehaviourSingleton<Config>
         ReMix_TwistedLove = string.Empty;
         ReMix_Waklio = string.Empty;
 
+        // SYSTEM
+        DEVKEY = string.Empty;
+        GAMEMODE = string.Empty;
+        AUTOMODE = string.Empty;
+
         LoadConfig();
     }
 
@@ -71,6 +137,8 @@ public class Config : MonoBehaviourSingleton<Config>
     {
         IniFile iniFile = new IniFile();
         iniFile.Load("config.ini");
+
+        //-------------------- URL --------------------------------
 
         WakZoo = iniFile["URL"]["WakZoo"].ToString().Trim();
 
@@ -99,6 +167,12 @@ public class Config : MonoBehaviourSingleton<Config>
         ReMix_BangOff = iniFile["URL"]["ReMix_BangOff"].ToString().Trim();
         ReMix_TwistedLove = iniFile["URL"]["ReMix_TwistedLove"].ToString().Trim();
         ReMix_Waklio = iniFile["URL"]["ReMix_Waklio"].ToString().Trim();
-    }
 
+
+        //-------------------- SYSTEM --------------------------------
+
+        DEVKEY = iniFile["SYSTEM"]["DEVKEY"].ToString().Trim();
+        GAMEMODE = iniFile["SYSTEM"]["GAMEMODE"].ToString().Trim();
+        AUTOMODE = iniFile["SYSTEM"]["AUTOMODE"].ToString().Trim();
+    }
 }
