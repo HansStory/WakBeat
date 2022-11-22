@@ -62,16 +62,21 @@ public abstract class Stage : MonoBehaviour
     private string _title = "";                  // 곡 제목
     private string _artist = "";                 // 작곡가
     private float _bpm = 0;                      // Bar Per Minute
-    private int _bar = 0;                        // Bar
+    private float _bar = 0;                        // Bar
     protected float _interval = 0f;              // Interval
-    protected float _tick = 0;                   // 1Bar에 소요되는 시간
-    private int _totalBeatCount = 0;             // 총 Beat 수
+    protected float _tick = 0;                   // 1 Bar(칸)에 소요되는 시간
+    protected float _beatTime = 0;               // 1 Line에 소요되는 시간
+    public static int _currentLine = -1;         // 현재 진행중인 Line의 아이템들
+    protected float _timer = 0f;                 // 음악 진행 시간
+    protected float _playTime = 0f;              // Stage 시작후 총 흐른 시간
+    protected static int savePointNum = 0;       // Save Point Beat Item Line
+    protected int _totalBeatCount = 0;           // 총 Beat 수
+
     private float _musicPlayTime = 0f;           // 곡의 총 시간
 
+    private static int _spawnCount = 72;
     private static float _spawnAngle = -5f;
 
-    protected static int savePointNum = 0;
-    private float saveMusicPlayingTime = 0;
 
     // Key 입력 부
     private string _keyDivision = "";
@@ -115,14 +120,15 @@ public abstract class Stage : MonoBehaviour
         CreateObstacles();
 
         // Get Values
-        InitBallPosition();
         GetMusicInfo();
+        InitBallPosition();
+        InitBallSpeed();
+        InitCalculateTick();
 
         // Calculate Beat
         _totalBeatCount = bmwReader.ChartingItem.Count;
-        currentItem = 0;
-
-        CalculateTick();
+        _currentLine = 0;
+        
 
         PlayProcess();
 
@@ -134,7 +140,7 @@ public abstract class Stage : MonoBehaviour
         _keyDivision = null == GlobalState.Instance.UserData.data.KeyDivision ? "Integration" : GlobalState.Instance.UserData.data.KeyDivision;
     }
 
-    void GetMusicInfo()
+    protected void GetMusicInfo()
     {
         if (bmwReader)
         {
@@ -195,9 +201,9 @@ public abstract class Stage : MonoBehaviour
         }
     }
 
-    void CreateDodgePoint()
+    protected virtual void CreateDodgePoint()
     {
-        for (int i = 0; i < 72; i++)
+        for (int i = 0; i < _spawnCount; i++)
         {
             GameObject dodge = GameObject.Instantiate(DodgePoint, DodgePointBase);
 
@@ -214,7 +220,7 @@ public abstract class Stage : MonoBehaviour
         }
     }
 
-    void CreateObstacles()
+    protected virtual void CreateObstacles()
     {
         switch (GlobalState.Instance.AlbumIndex)
         {
@@ -276,9 +282,9 @@ public abstract class Stage : MonoBehaviour
         }
     }
 
-    void CreateInObstacle(int obstacleType)
+    protected virtual void CreateInObstacle(int obstacleType)
     {
-        for (int i = 0; i < 72; i++)
+        for (int i = 0; i < _spawnCount; i++)
         {
             GameObject inObstacle = GameObject.Instantiate(Obstacles[obstacleType], ObstacleInBase);
 
@@ -295,11 +301,11 @@ public abstract class Stage : MonoBehaviour
         }
     }
 
-    void CreateOutObstacle(int obstacleType)
+    protected virtual void CreateOutObstacle(int obstacleType)
     {
         Center.transform.localEulerAngles = Vector3.zero;
 
-        for (int i = 0; i < 72; i++)
+        for (int i = 0; i < _spawnCount; i++)
         {
             GameObject outObstacle = GameObject.Instantiate(Obstacles[obstacleType], ObstacleOutBase);
 
@@ -316,7 +322,7 @@ public abstract class Stage : MonoBehaviour
         }
     }
 
-    void CreateSavePoint(int savePointType)
+    protected virtual void CreateSavePoint(int savePointType)
     {
         GameObject savePoint = GameObject.Instantiate(SavePoint[savePointType], Container);
 
@@ -326,67 +332,80 @@ public abstract class Stage : MonoBehaviour
         }
     }
 
-    protected float _beatTime = 0;
-    void CalculateTick()
+    private void InitBallSpeed()
     {
-        _bpm = bmwReader.MusicInfoItem.BPM;
-        _bar = bmwReader.MusicInfoItem.Bar;
-        _interval = bmwReader.ChartingItem[currentItem].Interval;
-
-        float _bps = _bpm / 60;
-        _tick = 1 / _bps;             
-
-        _beatTime = _tick * _bar;
-
-        if (bmwReader.ChartingItem[currentItem].Speed == -1)
+        if (bmwReader.ChartingItem[0].Speed == -1)
         {
             speed = 360f;
         }
         else
         {
-            speed = bmwReader.ChartingItem[currentItem].Speed;
+            speed = bmwReader.ChartingItem[0].Speed;
         }
     }
 
 
+    protected virtual void InitCalculateTick()
+    {
+        _bpm = bmwReader.MusicInfoItem.BPM;
+        _bar = bmwReader.MusicInfoItem.Bar;
+
+        CalculateTick();
+    }
+
+    protected virtual void CalculateTick()
+    {
+        float _bps = _bpm / 60;
+        _tick = 1 / _bps;
+
+        _beatTime = _tick * _bar;
+
+        Debug.Log($"Bar : {_bar}, Beat Time : {_beatTime}");
+    }
+
     private int _currentBeat = 0;                   // 현재 진행중인 Beat 수
-    private float _bpa = 0;                         // Beat Per Angle 한 비트당 회전하는 양
     private bool _processPlaying = false;           // 게임 진행중 체크
-    private List<ChartingItem> beatItems = new List<ChartingItem>();    // 한 비트당 사용되는 아이템들
 
     private void ReadProcess()
     {
 
     }
 
-    protected void PlayProcess()
+    protected virtual void PlayProcess()
     {
-        var beatItem = bmwReader.ChartingItem[currentItem]; //beatItems[_currentBeat];
+        var beatItem = bmwReader.ChartingItem[_currentLine]; //beatItems[_currentBeat];
         if (beatItem == null)
         {
             Debug.LogError("PlayPorocess beat Item is null");
             return;
         }
-
-        //_bpa = beatItem.Speed;
+        //_processPlaying = true;
 
         PlayAnimation(_animationName);
 
-        _processPlaying = true;
+        ChangeBar();
+
+        AddInterval();
+
+        ChangeBallAngle();
+
+        ChangeBallSpeed();
 
         ShowChartingItems();
-        CurrentLineText.text = $"Current Line : {currentItem}";       
+
+
+        CurrentLineText.text = $"Current Line : {_currentLine}";    
     }
 
-    void PlayBeat()
+    protected virtual void PlayBeat()
     {
         //tick
     }
 
     private string _animationName = string.Empty;
-    void PlayAnimation(string animationName)
+    protected virtual void PlayAnimation(string animationName)
     {
-        var beatItem = bmwReader.ChartingItem[currentItem];
+        var beatItem = bmwReader.ChartingItem[_currentLine];
 
         if (beatItem.AnimationIndex >= 0 && bmwReader.AnimationItem.Count > beatItem.AnimationIndex)
         {
@@ -401,7 +420,62 @@ public abstract class Stage : MonoBehaviour
         }
     }
 
-    void ShowChartingItems()
+    protected virtual void ChangeBar()
+    {
+        var beatItem = bmwReader.ChartingItem[_currentLine];
+
+        if (beatItem.Bar >= 0)
+        {
+            _bar = beatItem.Bar;
+
+            CalculateTick();
+        }
+    }
+
+    protected virtual void AddInterval()
+    {
+        var beatItem = bmwReader.ChartingItem[_currentLine];
+
+        if (beatItem.Interval >= 0)
+        {
+            _timer -= beatItem.Interval;
+        }
+    }
+
+    protected virtual void ChangeBallAngle()
+    {
+        var beatItem = bmwReader.ChartingItem[_currentLine];
+
+        if (beatItem.BallAngle >= 0)
+        {
+            Vector3 targetRotate = new Vector3(0f, 0f, -beatItem.BallAngle);
+
+            if (beatItem.BallAngleTime < 0)
+            {
+                beatItem.BallAngleTime = 0;
+            }
+
+            Center.transform.localRotation = Center.transform.localRotation;
+            Center.transform.DORotate(targetRotate, beatItem.BallAngleTime);
+        }
+    }
+
+    protected virtual void ChangeBallSpeed()
+    {
+        var beatItem = bmwReader.ChartingItem[_currentLine];
+
+        if (beatItem.Speed >= 0)
+        {
+            if (beatItem.SpeedTime < 0)
+            {
+                beatItem.SpeedTime = 0;
+            }
+
+            DOTween.To(() => speed, x => speed = x, beatItem.Speed, beatItem.SpeedTime);
+        }
+    }
+
+    protected virtual void ShowChartingItems()
     {
         ShowDodgePoint();
         ShowInObstacles();
@@ -409,79 +483,110 @@ public abstract class Stage : MonoBehaviour
         ShowSavePoint();
     }
 
-    void ShowDodgePoint()
+    protected virtual void ShowItems()
     {
-        var beatItem = bmwReader.ChartingItem[currentItem];
+        var beatItem = bmwReader.ChartingItem[_currentLine];
+    }
+
+    protected virtual void ShowDodgePoint()
+    {
+        var beatItem = bmwReader.ChartingItem[_currentLine];
 
         if (beatItem != null)
         {
             // Hide
-            for (int i = 0; i < DodgePointList.Count; i++)
+            foreach (var dodgeList in DodgePointList)
             {
-                DodgePointList[i].SetActive(false);
+                dodgeList.SetActive(false);
             }
 
             // Show Objects
             if (beatItem.DodgePointElements[0].Index > -1)
             {
-                for (int i = 0; i < beatItem.DodgePointElements.Count; i++)
+                foreach (var dodge in beatItem.DodgePointElements)
                 {
-                    DodgePointList[beatItem.DodgePointElements[i].Index].gameObject.SetActive(true);
+                    DodgePointList[dodge.Index].gameObject.SetActive(true);
+                }
+            }
 
+            // Show Dummy
+            if (beatItem.DummyDodgePointElements[0].Index > -1)
+            {
+                foreach (var dummy in beatItem.DummyDodgePointElements)
+                {
+                    DodgePointList[dummy.Index].gameObject.SetActive(true);
                 }
             }
         }
     }
 
-    void ShowInObstacles()
+    protected virtual void ShowInObstacles()
     {
-        var beatItem = bmwReader.ChartingItem[currentItem];
+        var beatItem = bmwReader.ChartingItem[_currentLine];
 
         if (beatItem != null)
         {
             // Hide
-            for (int i = 0; i < InObstacleList.Count; i++)
+            foreach (var inList in InObstacleList)
             {
-                InObstacleList[i].SetActive(false);
+                inList.SetActive(false);
             }
 
             // Show Objects
             if (beatItem.InObstacleElements[0].Index > -1)
             {
-                for (int i = 0; i < beatItem.InObstacleElements.Count; i++)
+                foreach (var inObstacle in beatItem.InObstacleElements)
                 {
-                    InObstacleList[beatItem.InObstacleElements[i].Index].gameObject.SetActive(true);
+                    InObstacleList[inObstacle.Index].gameObject.SetActive(true);
                 }
-            }           
+            }
+
+            // Show Dummy
+            if (beatItem.DummyInObstacleElements[0].Index > -1)
+            {
+                foreach (var dummy in beatItem.DummyInObstacleElements)
+                {
+                    InObstacleList[dummy.Index].gameObject.SetActive(true);
+                }
+            }         
         }
     }
 
-    void ShowOutObstacles()
+    protected virtual void ShowOutObstacles()
     {
-        var beatItem = bmwReader.ChartingItem[currentItem];
+        var beatItem = bmwReader.ChartingItem[_currentLine];
 
         if (beatItem != null)
         {
             // Hide
-            for (int i = 0; i < OutObstacleList.Count; i++)
+            foreach (var outList in OutObstacleList)
             {
-                OutObstacleList[i].SetActive(false);
+                outList.SetActive(false);
             }
 
-            // Show
+            // Show Objects
             if (beatItem.OutObstacleElements[0].Index > -1)
             {
-                for (int i = 0; i < beatItem.OutObstacleElements.Count; i++)
+                foreach (var outObstacle in beatItem.OutObstacleElements)
                 {
-                    OutObstacleList[beatItem.OutObstacleElements[i].Index].gameObject.SetActive(true);
+                    OutObstacleList[outObstacle.Index].gameObject.SetActive(true);
+                }
+            }
+
+            // Show Dummy
+            if (beatItem.DummyOutObstacleElements[0].Index > -1)
+            {
+                foreach (var dummy in beatItem.DummyOutObstacleElements)
+                {
+                    OutObstacleList[dummy.Index].gameObject.SetActive(true);
                 }
             }
         }
     }
 
-    void ShowSavePoint()
+    protected virtual void ShowSavePoint()
     {
-        var beatItem = bmwReader.ChartingItem[currentItem];
+        var beatItem = bmwReader.ChartingItem[_currentLine];
 
         if (beatItem.SavePoint != -1)
         {
@@ -491,10 +596,6 @@ public abstract class Stage : MonoBehaviour
             CreateSavePoint(0);
         }
     }
-
-    public static int currentItem = 0;
-    public int dodgelistars = 0;
-    protected float timer = 0f;
 
     // Update is called once per frame
     protected virtual void Update()
@@ -506,19 +607,19 @@ public abstract class Stage : MonoBehaviour
             return;
         }
 
-        timer += Time.deltaTime;
+        _timer += Time.deltaTime;
         Center.transform.Rotate(0f, 0f, (Time.deltaTime / _beatTime) * -speed);
 
-        if (currentItem < bmwReader.ChartingItem.Count)
+        if (_currentLine < bmwReader.ChartingItem.Count)
         {
-            if (timer > _beatTime)
+            if (_timer > _beatTime)
             {
-                currentItem++;
+                _currentLine++;
                 
                 PlayProcess();
 
                 //Debug.Log("currentItem :" + currentItem);
-                timer -= timer;
+                _timer -= _timer;
             }
         }
 
@@ -528,7 +629,7 @@ public abstract class Stage : MonoBehaviour
         //AnimaTest();
     }
 
-    void OperateBallMovement()
+    protected virtual void OperateBallMovement()
     {
         Ball.transform.localPosition = Center.transform.localPosition + Center.transform.up * ballRadius;
         ChangeDirection();
@@ -536,7 +637,7 @@ public abstract class Stage : MonoBehaviour
 
     // 키 입력 처리
     private bool isUpState = true;
-    void ChangeDirection()
+    protected virtual void ChangeDirection()
     {
         if (Input.anyKey && null != Input.inputString && "" != Input.inputString)
         {
@@ -598,6 +699,7 @@ public abstract class Stage : MonoBehaviour
         }
     }
 
+    #region Test Scripts
     void ViewItemsTest(int currentItem)
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -698,7 +800,9 @@ public abstract class Stage : MonoBehaviour
             StageAnim.Play("Common_Surge");
         }
     }
+    #endregion
 
+    #region Basic Tween
     Tween moveTween;
     protected virtual void DoMovePlayGround(Vector3 targetVector, float Duration, float delay, Ease easeType)
     {
@@ -736,5 +840,6 @@ public abstract class Stage : MonoBehaviour
     {
         Ball.transform.localPosition = Vector3.zero;
     }
+    #endregion
 
 }

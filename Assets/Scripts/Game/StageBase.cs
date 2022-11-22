@@ -15,7 +15,7 @@ public class StageBase : Stage
 
     public void SavePointEnter()
     {
-        GlobalState.Instance.SavePoint = currentItem;
+        GlobalState.Instance.SavePoint = _currentLine;
         GlobalState.Instance.SaveMusicPlayingTime = SoundManager.Instance.MusicAudio.time;
         
     }
@@ -28,11 +28,11 @@ public class StageBase : Stage
         SoundManager.Instance.MusicAudio.time = GlobalState.Instance.SaveMusicPlayingTime;
         if (GlobalState.Instance.SavePoint != 0)
         {
-            currentItem = GlobalState.Instance.SavePoint -1;    
+            _currentLine = GlobalState.Instance.SavePoint -1;    
         }
         else
         {
-            currentItem = GlobalState.Instance.SavePoint;
+            _currentLine = GlobalState.Instance.SavePoint;
         }
     }
     

@@ -67,31 +67,68 @@ public class InObstacle
     }
 }
 
+public class DummyDodgePoint
+{
+    public int Index = -1;
+
+    public DummyDodgePoint(int index)
+    {
+        Index = index;
+    }
+}
+
+public class DummyOutObstacle
+{
+    public int Index = -1;
+
+    public DummyOutObstacle(int index)
+    {
+        Index = index;
+    }
+}
+
+public class DummyInObstacle
+{
+    public int Index = -1;
+
+    public DummyInObstacle(int index)
+    {
+        Index = index;
+    }
+}
+
 public class ChartingItem
 {
     public int Beat;                     // 채보프로그램의 한줄(4/4박이면 4마디가 한줄)을 기준 
     public int AnimationIndex;           // 애니메이션의 인덱스
+    public float Bar;                    // 한줄에 들어가는 칸
     public float Interval;               // 시간적인 간격 조정(Delay)
-    public string[] DodgePoints;         // 정박 스폰위치
-    public string[] OutObstacles;        // 바깥쪽 가시 스폰위치
-    public string[] InObstacles;         // 안쪽 가시 스폰 위치
-    public int SavePoint;                // 세이브 포인트
+    public float BallAngle;              // 강제로 볼의 각도를 변경
+    public float BallAngleTime;          // 볼각도 도달 시간
     public float Speed;                  // Beat당 공이 몇도 이동하는지
     public float SpeedTime;              // 바뀐 Speed로 도달하는 시간
-    public float BallAngle;              // 강제로 볼의 각도를 변경
-    public int IsKnockback;              // 넛백 기믹 활성화
-    public float KnockBackAngle;         // 넛백 기믹 활성화시 넛백 각도
+    public string[] DodgePoints;         // 정박 스폰위치
+    public string[] DummyDodgePoints;    // 정박 꾸밈용 스폰위치
+    public string[] OutObstacles;        // 바깥쪽 가시 스폰위치
+    public string[] DummyOutObstacles;   // 바깥쪽 꾸밈용 가시 스폰위치
+    public string[] InObstacles;         // 안쪽 가시 스폰 위치
+    public string[] DummyInObstacles;    // 안쪽 꾸밈용 가시 스폰 위치
+    public int SavePoint;                // 세이브 포인트
 
     // For Debuging
     public string DodgePoint;
     public string OutObstacle;
     public string InObstacle;
 
-    public List<DodgePoint> DodgePointElements = new List<DodgePoint>();        // 정박 스폰위치
-    public List<OutObstacle> OutObstacleElements = new List<OutObstacle>();     // 바깥쪽 가시 스폰위치
-    public List<InObstacle> InObstacleElements = new List<InObstacle>();        // 안쪽 가시 스폰 위치
+    public List<DodgePoint> DodgePointElements = new List<DodgePoint>();                    // 정박 스폰위치
+    public List<OutObstacle> OutObstacleElements = new List<OutObstacle>();                 // 바깥쪽 가시 스폰위치
+    public List<InObstacle> InObstacleElements = new List<InObstacle>();                    // 안쪽 가시 스폰 위치
 
-    public ChartingItem(int beat, int animationIndex, float interval, string dodgePoint, string outObstacle, string inObstacle, int savePoint, float speed, float speedTime, float ballAngle, int isKnockBack, float knockBackAngle)
+    public List<DummyDodgePoint> DummyDodgePointElements = new List<DummyDodgePoint>();     // 더미 정박 스폰위치
+    public List<DummyOutObstacle> DummyOutObstacleElements = new List<DummyOutObstacle>();  // 바깥쪽 가시 스폰위치
+    public List<DummyInObstacle> DummyInObstacleElements = new List<DummyInObstacle>();     // 안쪽 가시 스폰 위치
+
+    public ChartingItem(int beat, int animationIndex, float bar, float interval, float ballAngle, float ballTime, float speed, float speedTime, string dodgePoint, string dummyDodge, string outObstacle, string dummyOut, string inObstacle, string dummyIn, int savePoint)
     {
         // Beat
         Beat = beat;
@@ -99,10 +136,21 @@ public class ChartingItem
         //AnimationIndex
         AnimationIndex = animationIndex;
 
+        // 칸의 수
+        Bar = bar;
+
         //Interval
         Interval = interval;
 
-        // Dodge Point Elements
+        // Ball Angle
+        BallAngle = ballAngle;
+        BallAngleTime = ballTime;
+
+        // Speed
+        Speed = speed;
+        SpeedTime = speedTime;
+
+        //Dodge Point Elements
         DodgePoint = dodgePoint; // For Debuging
 
         string[] dodgePoints = dodgePoint.Split('|');
@@ -112,6 +160,16 @@ public class ChartingItem
         {
             int idx = Convert.ToInt32(dodgePoints[i]);
             DodgePointElements.Add(new DodgePoint(idx));
+        }
+
+        // Dummy Dodge Point Elements
+        string[] dummyDodges = dummyDodge.Split('|');
+        DummyDodgePoints = dummyDodges;
+
+        for (int i = 0; i < dummyDodges.Length; i++)
+        {
+            int idx = Convert.ToInt32(dummyDodges[i]);
+            DummyDodgePointElements.Add(new DummyDodgePoint(idx));
         }
 
         // Out Obstacle Elements
@@ -126,6 +184,16 @@ public class ChartingItem
             OutObstacleElements.Add(new OutObstacle(idx));
         }
 
+        // Dummy Out Obstacle Elements
+        string[] dummyOuts = dummyOut.Split('|');
+        DummyOutObstacles = dummyOuts;
+
+        for (int i = 0; i < dummyOuts.Length; i++)
+        {
+            int idx = Convert.ToInt32(dummyOuts[i]);
+            DummyOutObstacleElements.Add(new DummyOutObstacle(idx));
+        }
+
         // In Obstacle Elements
         InObstacle = inObstacle; // For Debuging
 
@@ -138,12 +206,17 @@ public class ChartingItem
             InObstacleElements.Add(new InObstacle(idx));
         }
 
+        // Dummy In Obstacle Elements
+        string[] dummyIns = dummyIn.Split('|');
+        DummyOutObstacles = dummyIns;
+
+        for (int i = 0; i < dummyIns.Length; i++)
+        {
+            int idx = Convert.ToInt32(dummyIns[i]);
+            DummyInObstacleElements.Add(new DummyInObstacle(idx));
+        }
+
         SavePoint = savePoint;
-        Speed = speed;
-        SpeedTime = speedTime;
-        BallAngle = ballAngle;
-        IsKnockback = isKnockBack;
-        KnockBackAngle = knockBackAngle;
     }
 }
 
@@ -247,23 +320,26 @@ public class BMWReader : CsvReader
                             var itemCharting = new ChartingItem(
                                 Convert.ToInt32(args[count++].Trim()),        // 채보프로그램의 한줄(4/4박이면 4마디가 한줄)을 기준
                                 Convert.ToInt32(args[count++].Trim()),        // 사용할 애니메이션의 인덱스
+                                float.Parse(args[count++].Trim()),            // 칸의 수
                                 float.Parse(args[count++].Trim()),            // 정박에서 시작하기위한 Interval
-                                args[count++].Trim(),                         // 정박 스폰위치
-                                args[count++].Trim(),                         // 바깥쪽 가시 스폰위치
-                                args[count++].Trim(),                         // 안쪽 가시 스폰 위치
-                                Convert.ToInt32(args[count++].Trim()),        // 세이브 포인트
+                                float.Parse(args[count++].Trim()),            // 강제로 볼의 각도를 변경
+                                float.Parse(args[count++].Trim()),            // 변경된 각도까지 도달 하는 시간
                                 float.Parse(args[count++].Trim()),            // Beat당 공이 몇도 이동하는지
                                 float.Parse(args[count++].Trim()),            // 바뀐 Speed로 도달하는 시간
-                                float.Parse(args[count++].Trim()),            // 강제로 볼의 각도를 변경
-                                Convert.ToInt32(args[count++].Trim()),        // 넛백 기믹 활성화
-                                float.Parse(args[count++].Trim())             // 넛백 기믹 활성화시 넛백 각도
+                                args[count++].Trim(),                         // 정박 스폰위치
+                                args[count++].Trim(),                         // 정박 더미 스폰위치
+                                args[count++].Trim(),                         // 바깥쪽 가시 스폰위치
+                                args[count++].Trim(),                         // 바깥쪽 더미 가시 스폰위치
+                                args[count++].Trim(),                         // 안쪽 가시 스폰 위치
+                                args[count++].Trim(),                         // 안쪽 가시 더미 스폰 위치
+                                Convert.ToInt32(args[count++].Trim())         // 세이브 포인트
                                 );
 
                             _chartingItem.Add(itemCharting);
 
                             //_chartingItemList.Add(itemCharting);
 
-                            Debug.Log($"line : {itemCharting.Beat},{itemCharting.AnimationIndex},{itemCharting.Interval},{itemCharting.DodgePoint},{itemCharting.OutObstacle},{itemCharting.InObstacle},{itemCharting.SavePoint},{itemCharting.Speed},{itemCharting.SpeedTime},{itemCharting.BallAngle},{itemCharting.IsKnockback},{itemCharting.KnockBackAngle}" );
+                            Debug.Log($"line : {itemCharting.Beat},{itemCharting.AnimationIndex},{itemCharting.Bar},{itemCharting.Interval},{itemCharting.BallAngle},{itemCharting.BallAngleTime},{itemCharting.Speed},{itemCharting.SpeedTime},{itemCharting.DodgePoint},{itemCharting.OutObstacle},{itemCharting.InObstacle},{itemCharting.SavePoint}" );
                             
                             for (int i = 0; i < itemCharting.DodgePointElements.Count; i++)
                             {
