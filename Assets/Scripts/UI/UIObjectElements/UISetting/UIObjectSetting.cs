@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 
 public class UIObjectSetting : MonoBehaviour
@@ -31,6 +32,7 @@ public class UIObjectSetting : MonoBehaviour
     public int SeparationSize = 4;
     public string[] _InBoxValues = new string[4];
     public string[] _OutBoxValues = new string[4];
+    private Boolean isStart = false;
 
     // 각 버튼 별 이벤트 정의
     public void SetButtonEvent()
@@ -82,7 +84,7 @@ public class UIObjectSetting : MonoBehaviour
             UIElementSetting.Instance.ButtonClickControll("Setting", "Close");
 
             // 버튼 사운드 출력
-            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
+            setSoundPrint();
         }
         else if (Division.Equals("Exit"))
         {
@@ -95,7 +97,7 @@ public class UIObjectSetting : MonoBehaviour
             SoundManager.Instance.ForceAudioStop();
 
             // 버튼 사운드 출력
-            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
+            setSoundPrint();
         }
         else if (Division.Equals("IntegrationOn"))
         {
@@ -108,7 +110,7 @@ public class UIObjectSetting : MonoBehaviour
             SeparationGroup.SetActive(true);
 
             // 버튼 사운드 출력
-            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
+            setSoundPrint();
         }
         else if (Division.Equals("IntegrationOff"))
         {
@@ -121,7 +123,7 @@ public class UIObjectSetting : MonoBehaviour
             SeparationGroup.SetActive(false);
 
             // 버튼 사운드 출력
-            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
+            
         }
         else if (Division.Equals("SeparationOn"))
         {
@@ -129,7 +131,7 @@ public class UIObjectSetting : MonoBehaviour
             SeparationGroup.SetActive(true);
 
             // 버튼 사운드 출력
-            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
+            setSoundPrint();
         }
         else if (Division.Equals("SeparationOff"))
         {
@@ -142,7 +144,7 @@ public class UIObjectSetting : MonoBehaviour
             SeparationGroup.SetActive(true);
 
             // 버튼 사운드 출력
-            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
+            setSoundPrint();
         }
         else if (Division.Equals("SeparationClose"))
         {
@@ -158,7 +160,7 @@ public class UIObjectSetting : MonoBehaviour
             SeparationGroup.SetActive(false);
 
             // 버튼 사운드 출력
-            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
+            setSoundPrint();
         }
     }
 
@@ -175,6 +177,15 @@ public class UIObjectSetting : MonoBehaviour
         SFXGauge = SFXSlider.value;
         SoundManager.Instance.CtrlSFXVolume(SFXGauge);
         SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.VolumeControl);
+    }
+
+    // 버튼 사운드 출력
+    public void setSoundPrint()
+    {
+        if (!isStart)
+        {
+            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
+        }
     }
 
     // 포커스 나갈 시 Input Field 비활성화
@@ -309,7 +320,13 @@ public class UIObjectSetting : MonoBehaviour
             }
         }
 
+        // 스타트 구분 > true > 첫 호출 시 버튼 사운드 미출력
+        isStart = true;
+
         SetButtonClickEvent(KeyDivision);
+
+        // 스타트 구분 > false > 사운드 출력
+        isStart = false;
     }
 
     // 글로벌 변수 저장
