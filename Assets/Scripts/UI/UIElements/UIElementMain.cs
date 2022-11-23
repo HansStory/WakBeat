@@ -13,12 +13,17 @@ public class UIElementMain : MonoBehaviour
     [SerializeField] private PlayableDirector MainLogoAnim;
 
     private bool isStart = false;
+    private bool isKeyStop = false;
+
+    private float sTime = 3f;
+    private float rTime;
 
     // Start is called before the first frame update
     void Start()
     {
         //SoundManager.Instance.TurnOnGameBackGround();
         isStart = true;
+        isKeyStop = true;
     }
 
     private void OnEnable()
@@ -34,12 +39,21 @@ public class UIElementMain : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        rTime += Time.deltaTime;
+
+        if(rTime >= sTime)
+        {
+            isKeyStop = false;
+        }
+
         InputExcute();
         BackGroundMove();
     }
 
     public void OnClickStartButton()
     {
+        rTime = new float();
+        isKeyStop = true;
         UIManager.Instance.GoPanelAlbumSelect();
     }
 
@@ -49,7 +63,10 @@ public class UIElementMain : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                OnClickStartButton();
+                if(!isKeyStop)
+                {
+                    OnClickStartButton();
+                }
             }
         
             if (Input.GetKeyDown(KeyCode.Escape))
