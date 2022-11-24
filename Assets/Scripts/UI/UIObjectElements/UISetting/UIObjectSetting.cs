@@ -3,8 +3,6 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using Unity.VisualScripting;
-
 
 public class UIObjectSetting : MonoBehaviour
 {

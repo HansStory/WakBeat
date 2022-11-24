@@ -38,6 +38,7 @@ public class UIObjectShop : MonoBehaviour
     public string[] _SkillUsingYn = new string[DataManager.SetSkillCount];
     public int[] _SkillUnLockCondition = new int[DataManager.SetSkillCount];
 
+    private Boolean isStart = false;
 
     public void SetPrefab()
     {
@@ -138,6 +139,9 @@ public class UIObjectShop : MonoBehaviour
 
             // 창 닫기 버튼 이벤트
             UIElementSetting.Instance.ButtonClickControll("Shop", "Close");
+
+            // 버튼 사운드 출력
+            setSoundPrint();
         }
         else if (Division.Equals("SkinOn") || Division.Equals("SkinOff"))
         {
@@ -153,7 +157,7 @@ public class UIObjectShop : MonoBehaviour
             TabObject.transform.Find("TabVideo").Find("TabOff").gameObject.SetActive(true);
 
             // 버튼 사운드 출력
-            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
+            setSoundPrint();
         }
         else if (Division.Equals("SkillOn") || Division.Equals("SkillOff"))
         {
@@ -169,7 +173,7 @@ public class UIObjectShop : MonoBehaviour
             TabObject.transform.Find("TabVideo").Find("TabOff").gameObject.SetActive(true);
 
             // 버튼 사운드 출력
-            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
+            setSoundPrint();
         }
         else if (Division.Equals("VideoOn") || Division.Equals("VideoOff"))
         {
@@ -185,6 +189,15 @@ public class UIObjectShop : MonoBehaviour
             TabObject.transform.Find("TabVideo").Find("TabOff").gameObject.SetActive(true);
 
             // 버튼 사운드 출력
+            setSoundPrint();
+        }
+    }
+
+    // 버튼 사운드 출력
+    public void setSoundPrint()
+    {
+        if (!isStart)
+        {
             SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
         }
     }
@@ -334,8 +347,14 @@ public class UIObjectShop : MonoBehaviour
             SetSkinButtonDefault();
         }
 
+        // 스타트 구분 > true > 첫 호출 시 버튼 사운드 미출력
+        isStart = true;
+
         // 최초 상점 텝 활성화
         SetButtonClickEvent("SkinOn");
+
+        // 스타트 구분 > false > 사운드 출력
+        isStart = false;
     }
 
     // 글로벌 변수 저장
