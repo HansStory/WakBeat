@@ -14,8 +14,29 @@ public class StageCharting : Stage
 
     public TMP_Text TextPause;
 
+    public GameObject DebugTab;
+    public TMP_Text TextDebug;
+
     private bool isplay = false;
     private bool _isGameMode = false;
+    private bool _isShow = true;
+
+    //------------ For Debuging -----------
+    public TMP_Text[] DebugElements;
+
+    private const int Title = 0;
+    private const int Artist = 1;
+    private const int BPM = 2;
+    private const int Bar = 3;
+    private const int TickTime = 4;
+    private const int LineTime = 5;
+    private const int BallSpeed = 6;
+    private const int BallAngle = 7;
+    private const int SongTotalTime = 8;
+    private const int CurrentSongTime = 9;
+    private const int CurrentLine = 10;
+    private const int TotalLine = 11;
+ 
 
     protected override void Init()
     {
@@ -33,6 +54,51 @@ public class StageCharting : Stage
     protected override void Update()
     {
         base.Update();
+
+    }
+
+    protected override void PlayGame()
+    {
+        base.PlayGame();
+
+        DebugElements[BallAngle].text = $"Ball Angle : {Mathf.Abs(Center.transform.localEulerAngles.z - 360f)}";
+        DebugElements[SongTotalTime].text = $"현재 곡의 진행 시간 : {audioSource.time.ToString("F2")}";
+    }
+
+    protected override void PlayProcess()
+    {
+        base.PlayProcess();
+
+        DebugElements[CurrentLine].text = $"Current Line : {_currentLine}";
+    }
+
+    protected override void ChangeBar()
+    {
+        var beatItem = bmwReader.ChartingItem[_currentLine];
+
+        if (beatItem.Bar >= 0)
+        {
+            _bar = beatItem.Bar;
+
+            CalculateTick();
+
+            DebugElements[Bar].text = $"Bar : {beatItem.Bar}";
+            DebugElements[TickTime].text = $"1Bar에 걸리는 시간 : {_tick.ToString("F3")}초";
+            DebugElements[LineTime].text = $"1줄에 걸리는 시간 : {_beatTime.ToString("F3")}초";
+        }
+    }
+
+
+    protected override void ChangeBallSpeed()
+    {
+        base.ChangeBallSpeed();
+
+        var beatItem = bmwReader.ChartingItem[_currentLine];
+
+        if (beatItem.Speed >= 0)
+        {
+            DebugElements[BallSpeed].text = $"Ball Speed : {beatItem.Speed}";
+        }
     }
 
 
@@ -54,8 +120,10 @@ public class StageCharting : Stage
         // Calculate Beat
         _totalBeatCount = bmwReader.ChartingItem.Count;
 
-        audioSource.Stop();
-        CurrentLineText.text = $"Current Line : {_currentLine}";
+        audioSource.Stop();        
+        
+        ResetDebugValue();
+
         TextPause.text = "Pause";
     }
 
@@ -101,6 +169,26 @@ public class StageCharting : Stage
             GameObject savePoint = GameObject.Find("SavePoint(Clone)");
             Destroy(savePoint);
         }
+    }
+
+    private void ResetDebugValue()
+    {
+        var musicInfo = bmwReader.MusicInfoItem;
+
+        CurrentLineText.text = $"Current Line : {_currentLine}";
+
+        DebugElements[Title].text = $"곡명 : {musicInfo.Title}";
+        DebugElements[Artist].text = $"작곡가 : {musicInfo.Artist}";
+        DebugElements[BPM].text = $"BPM : {musicInfo.BPM}";
+        DebugElements[Bar].text = $"Bar : {musicInfo.Bar}";
+        DebugElements[TickTime].text = $"1Bar에 걸리는 시간 : {_tick.ToString("F3")}초";
+        DebugElements[LineTime].text = $"1줄에 걸리는 시간 : {_beatTime.ToString("F3")}초";
+        DebugElements[BallSpeed].text = $"Ball Speed : {(int)speed}";
+        DebugElements[BallAngle].text = $"Ball Angle : {Center.transform.localEulerAngles.z}";
+        DebugElements[SongTotalTime].text = $"현재 곡의 진행 시간 : {audioSource.time.ToString("F2")}";
+        DebugElements[CurrentSongTime].text = $"현재 곡의 총 시간 : {audioSource.clip.length}";
+        DebugElements[CurrentLine].text = $"Current Line : {_currentLine}";
+        DebugElements[TotalLine].text = $"Total Line : {bmwReader.ChartingItem.Count - 1}";
     }
 
     protected override void StartGame()
@@ -184,5 +272,20 @@ public class StageCharting : Stage
     {
         ResetStage();
     }
+    
+    public void OnClickTab()
+    {
+        _isShow = !_isShow;
 
+        DebugTab.SetActive(_isShow);
+
+        if (_isShow)
+        {
+            TextDebug.text = "Show\nDebug Tab";
+        }
+        else
+        {
+            TextDebug.text = "Hide\nDebug Tab";
+        }
+    }
 }

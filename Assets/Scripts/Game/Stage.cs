@@ -54,7 +54,7 @@ public abstract class Stage : MonoBehaviour
     private float ballRadius = 0;
 
     private float variableRadius;
-    private float speed = 360;
+    protected float speed = 360;
 
     protected BMWReader bmwReader = null;
     protected AudioSource audioSource = null;
@@ -629,7 +629,7 @@ public abstract class Stage : MonoBehaviour
         _timer += Time.deltaTime;
 
         Center.transform.Rotate(0f, 0f, (Time.deltaTime / _beatTime) * -speed);
-        // OperateBallMovement();
+        //OperateBallMovement();
 
         if (_currentLine < bmwReader.ChartingItem.Count - 1)
         {
