@@ -55,7 +55,13 @@ public class StageCharting : Stage
     {
         base.Update();
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            AppManager.Instance.Quit();
+        }
     }
+
+
 
     protected override void PlayGame()
     {
