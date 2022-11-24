@@ -139,7 +139,11 @@ public class UIObjectSetting : MonoBehaviour
             ButtonKeySetting.transform.Find("ButtonSeparationOn").gameObject.SetActive(true);
             ButtonKeySetting.transform.Find("ButtonSeparationOff").gameObject.SetActive(false);
 
-            SeparationGroup.SetActive(true);
+            // 키 설정 > 분리 > 최초 팝업 호출 시엔 입력 팝업 미호출
+            if (!isStart)
+            {
+                SeparationGroup.SetActive(true);
+            }
 
             // 버튼 사운드 출력
             setSoundPrint();
