@@ -56,13 +56,13 @@ public abstract class Stage : MonoBehaviour
     private float variableRadius;
     private float speed = 360;
 
-    private BMWReader bmwReader = null;
-    private AudioSource audioSource = null;
+    protected BMWReader bmwReader = null;
+    protected AudioSource audioSource = null;
 
-    private string _title = "";                  // 곡 제목
-    private string _artist = "";                 // 작곡가
-    private float _bpm = 0;                      // Bar Per Minute
-    private float _bar = 0;                        // Bar
+    protected string _title = "";                // 곡 제목
+    protected string _artist = "";               // 작곡가
+    protected float _bpm = 0;                    // Bar Per Minute
+    protected float _bar = 0;                    // Bar
     protected float _interval = 0f;              // Interval
     protected float _tick = 0;                   // 1 Bar(칸)에 소요되는 시간
     protected float _beatTime = 0;               // 1 Line에 소요되는 시간
@@ -77,6 +77,8 @@ public abstract class Stage : MonoBehaviour
     private static int _spawnCount = 72;
     private static float _spawnAngle = -5f;
 
+    protected int _currentBeat = 0;              // 현재 진행중인 Beat 수
+    protected bool _isPlay = false;              // 게임 진행중 체크
 
     // Key 입력 부
     private string _keyDivision = "";
@@ -127,20 +129,30 @@ public abstract class Stage : MonoBehaviour
 
         // Calculate Beat
         _totalBeatCount = bmwReader.ChartingItem.Count;
-        _currentLine = 0;
-        
-
-        PlayProcess();
 
         // Sound 제어 부
         audioSource = SoundManager.Instance.MusicAudio;
-        SoundManager.Instance.TurnOnStageMusic();
 
         // Key 입력 부
         _keyDivision = null == GlobalState.Instance.UserData.data.KeyDivision ? "Integration" : GlobalState.Instance.UserData.data.KeyDivision;
+
     }
 
-    protected void GetMusicInfo()
+    protected virtual void Start()
+    {
+        Invoke($"{nameof(StartGame)}", 1f);
+    }
+
+    protected virtual void StartGame()
+    {
+        _currentLine = 0;       
+        SoundManager.Instance.TurnOnStageMusic();
+
+        _isPlay = true;
+        PlayProcess();
+    }
+
+    protected virtual void GetMusicInfo()
     {
         if (bmwReader)
         {
@@ -151,7 +163,7 @@ public abstract class Stage : MonoBehaviour
         }
     }
 
-    protected void InitBallPosition()
+    protected virtual void InitBallPosition()
     {
         variableRadius = outRadius;
         ballRadius = variableRadius;     // Init Ball Position 
@@ -163,7 +175,7 @@ public abstract class Stage : MonoBehaviour
         Ball.transform.localPosition = Center.transform.localPosition + Center.transform.up * ballRadius;
     }
 
-    public void GetBallSkin()
+    protected virtual void GetBallSkin()
     {
         for (int i = 0; i < GlobalState.Instance.UserData.data.SkinUsingYn.Length; i++)
         {
@@ -332,7 +344,7 @@ public abstract class Stage : MonoBehaviour
         }
     }
 
-    private void InitBallSpeed()
+    protected virtual void InitBallSpeed()
     {
         if (bmwReader.ChartingItem[0].Speed == -1)
         {
@@ -362,9 +374,6 @@ public abstract class Stage : MonoBehaviour
 
         Debug.Log($"Bar : {_bar}, Beat Time : {_beatTime}");
     }
-
-    private int _currentBeat = 0;                   // 현재 진행중인 Beat 수
-    private bool _processPlaying = false;           // 게임 진행중 체크
 
     private void ReadProcess()
     {
@@ -607,26 +616,50 @@ public abstract class Stage : MonoBehaviour
             return;
         }
 
-        _timer += Time.deltaTime;
-        Center.transform.Rotate(0f, 0f, (Time.deltaTime / _beatTime) * -speed);
+        if (_isPlay)
+        {
+            PlayGame();
+        }
 
-        if (_currentLine < bmwReader.ChartingItem.Count)
+    }
+
+    protected virtual void PlayGame()
+    {
+        _playTime += Time.deltaTime;
+        _timer += Time.deltaTime;
+
+        Center.transform.Rotate(0f, 0f, (Time.deltaTime / _beatTime) * -speed);
+        // OperateBallMovement();
+
+        if (_currentLine < bmwReader.ChartingItem.Count - 1)
         {
             if (_timer > _beatTime)
-            {
+            {                
                 _currentLine++;
-                
                 PlayProcess();
 
-                //Debug.Log("currentItem :" + currentItem);
                 _timer -= _timer;
             }
         }
+        else
+        {
+            FinishGame();
+        }        
+    }
 
-        // OperateBallMovement();
-        //TweenTest();
-        //ViewItemsTest(currentItem);
-        //AnimaTest();
+    protected virtual void FinishGame()
+    {
+        _isPlay = false;
+
+        if (GlobalState.Instance.UserData.data.BackgroundProcActive)
+        {
+            SoundManager.Instance.ForceAudioStop();
+
+            GameFactory.Instance.DistroyStage();
+            UIManager.Instance.GoPanelResult();
+
+            SoundManager.Instance.TurnOnGameBackGround();
+        }
     }
 
     protected virtual void OperateBallMovement()
