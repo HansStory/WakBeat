@@ -665,12 +665,12 @@ public abstract class Stage : MonoBehaviour
     protected virtual void OperateBallMovement()
     {
         Ball.transform.localPosition = Center.transform.localPosition + Center.transform.up * ballRadius;
-        ChangeDirection();
+        InputChangeDirection();
     }
 
     // 키 입력 처리
-    private bool isUpState = true;
-    protected virtual void ChangeDirection()
+    protected bool _isInState = false;
+    protected virtual void InputChangeDirection()
     {
         if (Input.anyKey && null != Input.inputString && "" != Input.inputString)
         {
@@ -680,36 +680,12 @@ public abstract class Stage : MonoBehaviour
                 if (null != GlobalState.Instance.UserData.data.InnerOperationKey && GlobalState.Instance.UserData.data.InnerOperationKey.Length > 0
                     && null != GlobalState.Instance.UserData.data.OuterOperationKey && GlobalState.Instance.UserData.data.OuterOperationKey.Length > 0)
                 {
-                    for (int i = 0; i < GlobalState.Instance.UserData.data.InnerOperationKey.Length; i++)
-                    {
-                        if (!"".Equals(GlobalState.Instance.UserData.data.InnerOperationKey[i])
-                                && Input.inputString.Equals(GlobalState.Instance.UserData.data.InnerOperationKey[i]))
-                        {
-                            ballRadius = inRadius;
-                        }
-                        if (!"".Equals(GlobalState.Instance.UserData.data.OuterOperationKey[i])
-                                && Input.inputString.Equals(GlobalState.Instance.UserData.data.OuterOperationKey[i]))
-                        {
-                            ballRadius = outRadius;
-                        }
-                    }
+                    SeperateChangeDirection();
                 }
                 else
                 {
                     // 키 분리 구분 > 분리 > 커스텀 한 키가 없을 땐 스페이스로 통일
-                    if (Input.GetKeyDown(KeyCode.Space))
-                    {
-                        isUpState = !isUpState;
-
-                        if (isUpState)
-                        {
-                            ballRadius = outRadius;
-                        }
-                        else
-                        {
-                            ballRadius = inRadius;
-                        }
-                    }
+                    IntegrationChangeDirection();
                 }
             }
             else
@@ -717,18 +693,42 @@ public abstract class Stage : MonoBehaviour
                 // 키 분리 구분 > 통합
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    isUpState = !isUpState;
-
-                    if (isUpState)
-                    {
-                        ballRadius = outRadius;
-                    }
-                    else
-                    {
-                        ballRadius = inRadius;
-                    }
+                    IntegrationChangeDirection();
                 }
             }
+        }
+    }
+
+    protected virtual void SeperateChangeDirection()
+    {
+        for (int i = 0; i < GlobalState.Instance.UserData.data.InnerOperationKey.Length; i++)
+        {
+            if (!"".Equals(GlobalState.Instance.UserData.data.InnerOperationKey[i])
+                    && Input.inputString.Equals(GlobalState.Instance.UserData.data.InnerOperationKey[i]))
+            {
+                _isInState = true;
+                ballRadius = inRadius;
+            }
+            if (!"".Equals(GlobalState.Instance.UserData.data.OuterOperationKey[i])
+                    && Input.inputString.Equals(GlobalState.Instance.UserData.data.OuterOperationKey[i]))
+            {
+                _isInState = false;
+                ballRadius = outRadius;
+            }
+        }
+    }
+
+    protected virtual void IntegrationChangeDirection()
+    {
+        _isInState = !_isInState;
+
+        if (_isInState)
+        {
+            ballRadius = inRadius;
+        }
+        else
+        {
+            ballRadius = outRadius;
         }
     }
 

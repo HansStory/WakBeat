@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class StageCharting : Stage
 {
@@ -20,6 +22,9 @@ public class StageCharting : Stage
     public GameObject SpawnPoint;
     public Transform SpawnPointBase;
     public TMP_Text TextSpawnPoint;
+
+    public Image InCircleFade;
+    public Image OutCircleFade;
 
     private bool isplay = false;
     private bool _isGameMode = false;
@@ -95,6 +100,7 @@ public class StageCharting : Stage
     {
         base.PlayGame();
 
+        OperateBallMovement();
         DebugElements[BallAngle].text = $"Ball Angle : {Mathf.Abs(Center.transform.localEulerAngles.z - 360f).ToString("F2")}";
         DebugElements[SongTotalTime].text = $"현재 곡의 진행 시간 : {audioSource.time.ToString("F2")}";
     }
@@ -104,6 +110,27 @@ public class StageCharting : Stage
         base.PlayProcess();
 
         DebugElements[CurrentLine].text = $"Current Line : {_currentLine}";
+    }
+
+    protected override void IntegrationChangeDirection()
+    {
+        base.IntegrationChangeDirection();
+
+        if (_isInState)
+        {
+            FadeInOutCircle(InCircleFade, 0.2f);
+        }
+        else
+        {
+            FadeInOutCircle(OutCircleFade, 0.2f);
+        }
+    }
+
+    Tween FadeTween;
+    private void FadeInOutCircle(Image circle, float duration)
+    {
+        circle.color = Color.black;
+        FadeTween = circle.DOColor(Color.clear, duration);
     }
 
     protected override void ChangeBar()
@@ -262,13 +289,13 @@ public class StageCharting : Stage
     public void OnClickGameMode()
     {
         _isGameMode = !_isGameMode;
-        
+
         //To do : Game Mode Restart 제어 처리 해야함
-        //if (Ball.GetComponent<Rigidbody2D>() != null)
-        //{
-        //    Rigidbody2D rigid = Ball.GetComponent<Rigidbody2D>();
-        //    rigid.simulated = _isGameMode;
-        //}
+        if (Ball.GetComponent<Rigidbody2D>() != null)
+        {
+            Rigidbody2D rigid = Ball.GetComponent<Rigidbody2D>();
+            rigid.simulated = _isGameMode;
+        }
 
         TextGameMode.text = $"Game Mode \n {_isGameMode}";
     }
