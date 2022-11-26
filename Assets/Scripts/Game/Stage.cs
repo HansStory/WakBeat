@@ -48,10 +48,10 @@ public abstract class Stage : MonoBehaviour
     public Animation StageAnim;
 
     //---------------------------------------------------
-    private float dodgeRadius = 334f;
-    private float outRadius = 355f;
-    private float inRadius = 312f;
-    private float ballRadius = 0;
+    protected float dodgeRadius = 334f;
+    protected float outRadius = 355f;
+    protected float inRadius = 312f;
+    protected float ballRadius = 0;
 
     private float variableRadius;
     protected float speed = 360;
@@ -74,8 +74,8 @@ public abstract class Stage : MonoBehaviour
 
     private float _musicPlayTime = 0f;           // 곡의 총 시간
 
-    private static int _spawnCount = 72;
-    private static float _spawnAngle = -5f;
+    protected static int _spawnCount = 72;
+    protected static float _spawnAngle = -5f;
 
     protected int _currentBeat = 0;              // 현재 진행중인 Beat 수
     protected bool _isPlay = false;              // 게임 진행중 체크

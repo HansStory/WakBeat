@@ -17,9 +17,13 @@ public class StageCharting : Stage
     public GameObject DebugTab;
     public TMP_Text TextDebug;
 
+    public GameObject SpawnPoint;
+    public Transform SpawnPointBase;
+    public TMP_Text TextSpawnPoint;
+
     private bool isplay = false;
     private bool _isGameMode = false;
-    private bool _isShow = true;
+    private bool _isShowDebugtab = true;
 
     //------------ For Debuging -----------
     public TMP_Text[] DebugElements;
@@ -42,8 +46,32 @@ public class StageCharting : Stage
     {
         base.Init();
 
+        CreateSpawnPoint();
+
         _isGameMode = Config.Instance.GameMode;
         TextGameMode.text = $"Game Mode \n {_isGameMode}";
+    }
+
+    private void CreateSpawnPoint()
+    {
+        Center.transform.localEulerAngles = Vector3.zero;
+
+        for (int i = 0; i < _spawnCount; i++)
+        {
+            GameObject point = GameObject.Instantiate(SpawnPoint, SpawnPointBase);
+            var pointInfo = point.GetComponent<SpawnPoint>();
+
+            if (pointInfo)
+            {
+                point.transform.localPosition = Center.transform.localPosition + Center.transform.up * dodgeRadius;
+                point.transform.localEulerAngles = Center.transform.localEulerAngles;
+                pointInfo.Index = i.ToString();
+
+                Center.transform.Rotate(0f, 0f, _spawnAngle);
+            }
+        }
+
+        SpawnPointBase.gameObject.SetActive(_isShowSpawnPoint);
     }
 
     protected override void Start()
@@ -67,7 +95,7 @@ public class StageCharting : Stage
     {
         base.PlayGame();
 
-        DebugElements[BallAngle].text = $"Ball Angle : {Mathf.Abs(Center.transform.localEulerAngles.z - 360f)}";
+        DebugElements[BallAngle].text = $"Ball Angle : {Mathf.Abs(Center.transform.localEulerAngles.z - 360f).ToString("F2")}";
         DebugElements[SongTotalTime].text = $"현재 곡의 진행 시간 : {audioSource.time.ToString("F2")}";
     }
 
@@ -126,8 +154,8 @@ public class StageCharting : Stage
         // Calculate Beat
         _totalBeatCount = bmwReader.ChartingItem.Count;
 
-        audioSource.Stop();        
-        
+        ResetAudio();
+
         ResetDebugValue();
 
         TextPause.text = "Pause";
@@ -175,6 +203,12 @@ public class StageCharting : Stage
             GameObject savePoint = GameObject.Find("SavePoint(Clone)");
             Destroy(savePoint);
         }
+    }
+
+    private void ResetAudio()
+    {
+        audioSource.Stop();
+        SoundManager.Instance.SetStageMusic();
     }
 
     private void ResetDebugValue()
@@ -279,19 +313,37 @@ public class StageCharting : Stage
         ResetStage();
     }
     
-    public void OnClickTab()
+    public void OnClickDebugTab()
     {
-        _isShow = !_isShow;
+        _isShowDebugtab = !_isShowDebugtab;
 
-        DebugTab.SetActive(_isShow);
+        DebugTab.SetActive(_isShowDebugtab);
 
-        if (_isShow)
+        if (_isShowDebugtab)
         {
             TextDebug.text = "Show\nDebug Tab";
         }
         else
         {
             TextDebug.text = "Hide\nDebug Tab";
+        }
+    }
+
+
+    private bool _isShowSpawnPoint = false;
+    public void OnClickSpawnPointTab()
+    {
+        _isShowSpawnPoint = !_isShowSpawnPoint;
+
+        SpawnPointBase.gameObject.SetActive(_isShowSpawnPoint);
+
+        if (_isShowSpawnPoint)
+        {
+            TextSpawnPoint.text = "Show\nSpawn Points";
+        }
+        else
+        {
+            TextSpawnPoint.text = "Hide\nSpawn Points";
         }
     }
 }

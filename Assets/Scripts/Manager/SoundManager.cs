@@ -141,27 +141,27 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
 
     public void TurnOnStageMusic()
     {
+        SetStageMusic();
+
+        MusicAudioSource.Play();
+        MusicAudioSource.loop = false;
+    }
+
+    public void SetStageMusic()
+    {
         switch (GlobalState.Instance.AlbumIndex)
         {
             case (int)GlobalData.ALBUM.ISEDOL:
                 MusicAudioSource.clip = album1StageClips[GlobalState.Instance.StageIndex];
-                MusicAudioSource.Play();
-                MusicAudioSource.loop = false;
                 break;
             case (int)GlobalData.ALBUM.CONTEST:
                 MusicAudioSource.clip = album2StageClips[GlobalState.Instance.StageIndex];
-                MusicAudioSource.Play();
-                MusicAudioSource.loop = false;
                 break;
             case (int)GlobalData.ALBUM.GOMIX:
                 MusicAudioSource.clip = album3StageClips[GlobalState.Instance.StageIndex];
-                MusicAudioSource.Play();
-                MusicAudioSource.loop = false;
                 break;
             case (int)GlobalData.ALBUM.WAKALOID:
                 MusicAudioSource.clip = album4StageClips[GlobalState.Instance.StageIndex];
-                MusicAudioSource.Play();
-                MusicAudioSource.loop = false;
                 break;
         }
     }
