@@ -145,6 +145,20 @@ public class StageCharting : Stage
         }
     }
 
+    protected override void SeperateChangeDirection()
+    {
+        base.SeperateChangeDirection();
+
+        if (_isInState)
+        {
+            FadeInOutCircle(InCircleFade, 0.2f);
+        }
+        else
+        {
+            FadeInOutCircle(OutCircleFade, 0.2f);
+        }
+    }
+
     protected override void IntegrationChangeDirection()
     {
         base.IntegrationChangeDirection();
