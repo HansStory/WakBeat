@@ -188,6 +188,13 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
         set => _savePoint = value;
     }
 
+    private float _savePointAngle = 0;
+    public float SavePointAngle
+    {
+        get => _savePointAngle;
+        set => _savePointAngle = value;
+    }
+
     private float _saveMusicPlayingTime = 0;
 
     public float SaveMusicPlayingTime
@@ -202,5 +209,15 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
     {
         get => _isPlayerDied;
         set => _isPlayerDied = value;
+    }
+
+    private int _playerDeadCount = 0;
+    public int PlayerDeadCount
+    {
+        get { return _playerDeadCount; }
+        set
+        {
+            _playerDeadCount = value;
+        }
     }
 }

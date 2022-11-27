@@ -53,7 +53,7 @@ public abstract class Stage : MonoBehaviour
     protected float inRadius = 312f;
     protected float ballRadius = 0;
 
-    private float variableRadius;
+    protected float variableRadius;
     protected float speed = 360;
 
     protected BMWReader bmwReader = null;
@@ -382,7 +382,7 @@ public abstract class Stage : MonoBehaviour
 
         _beatTime = _tick * _bar;
 
-        Debug.Log($"Bar : {_bar}, Beat Time : {_beatTime}");
+        Debug.Log($"Tick : {_tick}, Bar : {_bar}, Beat Time : {_beatTime}");
     }
 
     private void ReadProcess()
@@ -613,18 +613,20 @@ public abstract class Stage : MonoBehaviour
 
             CenterPivot.transform.Rotate(0f, 0f, beatItem.SavePoint * _spawnAngle);
             CreateSavePoint(0);
+
+            //GlobalState.Instance.SavePointAngle = beatItem.SavePoint * _spawnAngle;
         }
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (GlobalState.Instance.IsPlayerDied)
-        {
-            InitBallPosition();
-            PlayProcess();
-            return;
-        }
+        //if (GlobalState.Instance.IsPlayerDied)
+        //{
+        //    InitBallPosition();
+        //    PlayProcess();
+        //    return;
+        //}
 
         if (_isPlay)
         {

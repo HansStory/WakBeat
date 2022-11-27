@@ -24,8 +24,12 @@ public class StageCharting : Stage
     public Transform SpawnPointBase;
     public TMP_Text TextSpawnPoint;
 
+    public GameObject HalfAngle;
+    public TMP_Text TextHalfAngle;
+
     public Image InCircleFade;
     public Image OutCircleFade;
+
 
     private CircleCollider2D playerCollider;
 
@@ -58,6 +62,8 @@ public class StageCharting : Stage
 
         _isGameMode = Config.Instance.GameMode;
         _isAutoMode = Config.Instance.AutoMode;
+
+        GlobalState.Instance.SavePointAngle = bmwReader.ChartingItem[0].BallAngle;
 
         if (GetComponent<Rigidbody2D>() != null)
         {
@@ -171,8 +177,8 @@ public class StageCharting : Stage
             CalculateTick();
 
             DebugElements[Bar].text = $"Bar : {beatItem.Bar}";
-            DebugElements[TickTime].text = $"1Bar에 걸리는 시간 : {_tick.ToString("F3")}초";
-            DebugElements[LineTime].text = $"1줄에 걸리는 시간 : {_beatTime.ToString("F3")}초";
+            DebugElements[TickTime].text = $"1Bar에 걸리는 시간 : {_tick}초";
+            DebugElements[LineTime].text = $"1줄에 걸리는 시간 : {_beatTime}초";
         }
     }
 
@@ -197,7 +203,7 @@ public class StageCharting : Stage
 
         // Read .bmw file
         bmwReader = new BMWReader();
-        bmwReader.ReadFile(Directory + "/" + BMWFile);
+        bmwReader.ReadFile(Directory + "/" + BMWFile);       
 
         // Get Values
         GetMusicInfo();
@@ -211,6 +217,13 @@ public class StageCharting : Stage
         ResetAudio();
 
         ResetDebugValue();
+
+        GlobalState.Instance.IsPlayerDied = false;
+        GlobalState.Instance.PlayerDeadCount = 0;
+        GlobalState.Instance.SavePoint = 0;
+        GlobalState.Instance.SavePointAngle = bmwReader.ChartingItem[0].BallAngle;
+        
+        _savePointTime = 0f;
 
         TextPause.text = "Pause";
     }
@@ -232,7 +245,7 @@ public class StageCharting : Stage
         _currentBeat = 0;
         _isPlay = false;
         _isPause = false;
-        Time.timeScale = 1;
+        Time.timeScale = 1;        
     }
 
     private void HideChartingItems()
@@ -261,7 +274,11 @@ public class StageCharting : Stage
 
     private void ResetAudio()
     {
-        audioSource.Stop();
+        if (audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
+        audioSource.time = 0f;
         SoundManager.Instance.SetStageMusic();
     }
 
@@ -275,8 +292,8 @@ public class StageCharting : Stage
         DebugElements[Artist].text = $"작곡가 : {musicInfo.Artist}";
         DebugElements[BPM].text = $"BPM : {musicInfo.BPM}";
         DebugElements[Bar].text = $"Bar : {musicInfo.Bar}";
-        DebugElements[TickTime].text = $"1Bar에 걸리는 시간 : {_tick.ToString("F3")}초";
-        DebugElements[LineTime].text = $"1줄에 걸리는 시간 : {_beatTime.ToString("F3")}초";
+        DebugElements[TickTime].text = $"1Bar Time : {_tick}초";
+        DebugElements[LineTime].text = $"1Line Time : {_beatTime}초";
         DebugElements[BallSpeed].text = $"Ball Speed : {(int)speed}";
         DebugElements[BallAngle].text = $"Ball Angle : {Center.transform.localEulerAngles.z}";
         DebugElements[SongTotalTime].text = $"현재 곡의 진행 시간 : {audioSource.time.ToString("F2")}";
@@ -417,59 +434,139 @@ public class StageCharting : Stage
         }
     }
 
-    LineRenderer LineRenderer = new LineRenderer();
-    public void AutoMode()
+    private bool _isShowHalfAngle = false;
+    public void OnClickHalfAngle()
     {
-        //Ball.transform.
-    }
+        _isShowHalfAngle = !_isShowHalfAngle; 
+        
+        HalfAngle.SetActive(_isShowHalfAngle);
 
-
-    public void SavePointEnter()
-    {
-        GlobalState.Instance.SavePoint = _currentLine;
-        GlobalState.Instance.SaveMusicPlayingTime = SoundManager.Instance.MusicAudio.time;
-
-    }
-
-    public void PlayerDieAndSavePointPlay()
-    {
-        Debug.Log("Player Die!!");
-        GlobalState.Instance.IsPlayerDied = true;
-        SoundManager.Instance.MusicAudio.Pause();
-        SoundManager.Instance.MusicAudio.time = GlobalState.Instance.SaveMusicPlayingTime;
-        if (GlobalState.Instance.SavePoint != 0)
+        if (_isShowHalfAngle)
         {
-            _currentLine = GlobalState.Instance.SavePoint - 1;
+            TextHalfAngle.text = "Show\nQuater Angle";
         }
         else
         {
-            _currentLine = GlobalState.Instance.SavePoint;
+            TextHalfAngle.text = "Hide\nQuater Angle";
         }
     }
+
+    private float _savePointTime = 0f;
+    public void SavePointEnter()
+    {
+        _savePointTime = _timer;
+
+        GlobalState.Instance.SavePoint = _currentLine;
+        GlobalState.Instance.SaveMusicPlayingTime = audioSource.time;
+        GlobalState.Instance.SavePointAngle = Center.transform.localEulerAngles.z;
+    }
+
+    private void ResetSavePointState()
+    {
+        _currentLine = GlobalState.Instance.SavePoint;
+
+        var beatItem = bmwReader.ChartingItem[_currentLine];
+        _timer = _savePointTime;
+
+        audioSource.time = GlobalState.Instance.SaveMusicPlayingTime;
+
+        if (GlobalState.Instance.SavePoint > 0)
+        {
+            GlobalState.Instance.SavePointAngle = beatItem.BallAngle;
+
+            if (beatItem.Interval >= 0)
+            {
+                _timer -= beatItem.Interval;
+            }
+
+            Center.transform.localEulerAngles = new Vector3(0f, 0f, -GlobalState.Instance.SavePointAngle);
+            Ball.transform.localPosition = Center.transform.localPosition + Center.transform.up * ballRadius;
+        }
+        else
+        {
+            InitBallPosition();
+            _isInState = false;
+        }
+
+        PlayProcess();
+    }
+
+    //private float _reStartTime = -3f;
+    public void PlayerDieAndSavePointPlay()
+    {
+        Debug.Log("Player Die!!");
+
+        //GlobalState.Instance.IsPlayerDied = true;
+        GlobalState.Instance.PlayerDeadCount++;
+
+        ResetSavePointState();
+
+    }
+
+    //private void TweenPlayerDead()
+    //{
+    //    var sequence = DOTween.Sequence();
+
+    //    sequence
+    //        .OnStart(() => UpdateText("3"))
+    //        .Append(FadeOutText())
+    //        .AppendCallback(() => UpdateText("2"))
+    //        .Append(FadeOutText())
+    //        .AppendCallback(() => UpdateText("1"))
+    //        .Append(FadeOutText())
+    //        .AppendCallback(() => UpdateText("GO!"))
+    //        .Append(FadeOutText())
+    //        .OnComplete(PlayCountDownEnd);
+    //}
+
+    //private void PlayCountDownEnd()
+    //{
+    //    SoundManager.Instance.MusicAudio.Play();
+    //    GlobalState.Instance.IsPlayerDied = false;
+    //    //cnt = 0;
+    //}
+
+    //private void InitializeAlpha()
+    //{
+    //    countDownText.alpha = 1.0f;
+    //}
+
+    //private void UpdateText(string text)
+    //{
+    //    InitializeAlpha();
+
+    //    countDownText.text = text;
+    //}
+
+    //private Tween FadeOutText()
+    //{
+    //    return countDownText.DOFade(0, 1.0f);
+    //}
 
     void PlayerDie()
     {
         PlayerDieAndSavePointPlay();
     }
 
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("SavePoint"))
         {
-            Debug.Log("부모객체 : 세이브 포인트!!");
+            //Debug.Log("부모객체 : 세이브 포인트!!");
             Destroy(other.gameObject);
-            //SavePointEnter();
+            SavePointEnter();
         }
 
         if (other.gameObject.CompareTag("Obstacle"))
         {
-            Debug.Log("부모객체 : Heat Obstacle");
-            //PlayerDie();
+            //Debug.Log("부모객체 : Heat Obstacle");
+            PlayerDie();
         }
 
         if (other.gameObject.CompareTag("DodgePoint"))
         {
-            Debug.Log("부모객체 : Heat Dodge Point");
+            //Debug.Log("부모객체 : Heat Dodge Point");
             IntegrationChangeDirection();
         }
     }
