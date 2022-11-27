@@ -15,8 +15,19 @@ public class Player2 : MonoBehaviour
 
             _myRigid.simulated = Config.Instance.GameMode;
         }
+
+        var parent = this.transform.parent;
+        Debug.Log(parent.name);
     }
 
+    void inputTest()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            var parent = this.transform.parent.parent;
+            Debug.Log(parent.name);
+        }
+    }
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("SavePoint"))
@@ -37,6 +48,6 @@ public class Player2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        inputTest();
     }
 }

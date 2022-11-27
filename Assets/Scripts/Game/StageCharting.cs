@@ -13,6 +13,7 @@ public class StageCharting : Stage
     public TMP_Dropdown DropDownAlbum;
     public TMP_Dropdown DropDownStage;
     public TMP_Text TextGameMode;
+    public TMP_Text TextAutoMode;
 
     public TMP_Text TextPause;
 
@@ -25,6 +26,8 @@ public class StageCharting : Stage
 
     public Image InCircleFade;
     public Image OutCircleFade;
+
+    private CircleCollider2D playerCollider;
 
     private bool isplay = false;
     private bool _isGameMode = false;
@@ -54,7 +57,22 @@ public class StageCharting : Stage
         CreateSpawnPoint();
 
         _isGameMode = Config.Instance.GameMode;
+        _isAutoMode = Config.Instance.AutoMode;
+
+        if (GetComponent<Rigidbody2D>() != null)
+        {
+            Rigidbody2D rigid = GetComponent<Rigidbody2D>();
+            rigid.simulated = _isGameMode;
+        }
+
+        if (this.GetComponent<CircleCollider2D>() != null)
+        {
+            playerCollider = this.GetComponent<CircleCollider2D>();
+            playerCollider.offset = new Vector2(Ball.transform.localPosition.x, Ball.transform.localPosition.y);
+        }
+
         TextGameMode.text = $"Game Mode \n {_isGameMode}";
+        TextAutoMode.text = $"Auto Mode \n {_isAutoMode}";
     }
 
     private void CreateSpawnPoint()
@@ -94,13 +112,14 @@ public class StageCharting : Stage
         }
     }
 
-
-
     protected override void PlayGame()
     {
         base.PlayGame();
 
         OperateBallMovement();
+        playerCollider.offset = new Vector2((Ball.transform.localPosition.x * PlayGround.localScale.x) + PlayGround.localPosition.x, (Ball.transform.localPosition.y *  PlayGround.localScale.y) + PlayGround.localPosition.y);
+        playerCollider.radius = 15f * Mathf.Abs(PlayGround.localScale.x);
+
         DebugElements[BallAngle].text = $"Ball Angle : {Mathf.Abs(Center.transform.localEulerAngles.z - 360f).ToString("F2")}";
         DebugElements[SongTotalTime].text = $"현재 곡의 진행 시간 : {audioSource.time.ToString("F2")}";
     }
@@ -110,6 +129,14 @@ public class StageCharting : Stage
         base.PlayProcess();
 
         DebugElements[CurrentLine].text = $"Current Line : {_currentLine}";
+    }
+
+    protected override void InputChangeDirection()
+    {
+        if (!_isAutoMode)
+        {
+            base.InputChangeDirection();
+        }
     }
 
     protected override void IntegrationChangeDirection()
@@ -291,13 +318,29 @@ public class StageCharting : Stage
         _isGameMode = !_isGameMode;
 
         //To do : Game Mode Restart 제어 처리 해야함
-        if (Ball.GetComponent<Rigidbody2D>() != null)
+        if (GetComponent<Rigidbody2D>() != null)
         {
-            Rigidbody2D rigid = Ball.GetComponent<Rigidbody2D>();
+            Rigidbody2D rigid = GetComponent<Rigidbody2D>();
             rigid.simulated = _isGameMode;
         }
 
         TextGameMode.text = $"Game Mode \n {_isGameMode}";
+    }
+
+    private bool _isAutoMode = false;
+    public void OnClickAutoMode()
+    {
+        _isAutoMode = !_isAutoMode;
+
+        foreach (var dodge in DodgePointList)
+        {
+            if (dodge.GetComponent<BoxCollider2D>() != null)
+            {
+                dodge.GetComponent<BoxCollider2D>().enabled = _isAutoMode;
+            }
+        }
+
+        TextAutoMode.text = $"Auto Mode \n {_isAutoMode}";
     }
 
     public void OnClickLoad()
@@ -371,6 +414,63 @@ public class StageCharting : Stage
         else
         {
             TextSpawnPoint.text = "Hide\nSpawn Points";
+        }
+    }
+
+    LineRenderer LineRenderer = new LineRenderer();
+    public void AutoMode()
+    {
+        //Ball.transform.
+    }
+
+
+    public void SavePointEnter()
+    {
+        GlobalState.Instance.SavePoint = _currentLine;
+        GlobalState.Instance.SaveMusicPlayingTime = SoundManager.Instance.MusicAudio.time;
+
+    }
+
+    public void PlayerDieAndSavePointPlay()
+    {
+        Debug.Log("Player Die!!");
+        GlobalState.Instance.IsPlayerDied = true;
+        SoundManager.Instance.MusicAudio.Pause();
+        SoundManager.Instance.MusicAudio.time = GlobalState.Instance.SaveMusicPlayingTime;
+        if (GlobalState.Instance.SavePoint != 0)
+        {
+            _currentLine = GlobalState.Instance.SavePoint - 1;
+        }
+        else
+        {
+            _currentLine = GlobalState.Instance.SavePoint;
+        }
+    }
+
+    void PlayerDie()
+    {
+        PlayerDieAndSavePointPlay();
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("SavePoint"))
+        {
+            Debug.Log("부모객체 : 세이브 포인트!!");
+            Destroy(other.gameObject);
+            //SavePointEnter();
+        }
+
+        if (other.gameObject.CompareTag("Obstacle"))
+        {
+            Debug.Log("부모객체 : Heat Obstacle");
+            //PlayerDie();
+        }
+
+        if (other.gameObject.CompareTag("DodgePoint"))
+        {
+            Debug.Log("부모객체 : Heat Dodge Point");
+            IntegrationChangeDirection();
         }
     }
 }

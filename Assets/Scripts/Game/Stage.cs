@@ -169,7 +169,17 @@ public abstract class Stage : MonoBehaviour
         ballRadius = variableRadius;     // Init Ball Position 
 
         // Init Start Ball Rotation
-        float ballAngle = bmwReader.ChartingItem[_currentBeat].BallAngle;
+        float ballAngle = 0;
+
+        if (bmwReader.ChartingItem[_currentBeat].BallAngle >= 0)
+        {
+            ballAngle = bmwReader.ChartingItem[_currentBeat].BallAngle;
+        }
+        else
+        {
+            ballAngle = 0;
+        }
+
         Center.transform.localEulerAngles = new Vector3(0f, 0f, -ballAngle);
 
         Ball.transform.localPosition = Center.transform.localPosition + Center.transform.up * ballRadius;
@@ -664,7 +674,9 @@ public abstract class Stage : MonoBehaviour
 
     protected virtual void OperateBallMovement()
     {
+        Ball.transform.localEulerAngles = new Vector3(0f, 0f, Center.transform.localEulerAngles.z);
         Ball.transform.localPosition = Center.transform.localPosition + Center.transform.up * ballRadius;
+
         InputChangeDirection();
     }
 
