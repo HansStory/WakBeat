@@ -110,39 +110,42 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     public int selectedAlbumMusicLength = 0;
     public void TurnOnSelectedMusic()
     {
+        SetHighLightMusic();
+
+        MusicAudioSource.time = 0;
+        MusicAudioSource.Play();
+        MusicAudioSource.loop = true;
+    }
+
+    public void SetHighLightMusic()
+    {
         switch (GlobalState.Instance.AlbumIndex)
         {
             case (int)GlobalData.ALBUM.ISEDOL:
-                selectedAlbumMusicLength = album1HighLightClips.Length - 1;
                 MusicAudioSource.clip = album1HighLightClips[GlobalState.Instance.StageIndex];
-                MusicAudioSource.Play();
-                MusicAudioSource.loop = true;
+                selectedAlbumMusicLength = album1HighLightClips.Length - 1;
                 break;
             case (int)GlobalData.ALBUM.CONTEST:
-                selectedAlbumMusicLength = album2HighLightClips.Length - 1;
                 MusicAudioSource.clip = album2HighLightClips[GlobalState.Instance.StageIndex];
-                MusicAudioSource.Play();
-                MusicAudioSource.loop = true;
+                selectedAlbumMusicLength = album2HighLightClips.Length - 1;
                 break;
             case (int)GlobalData.ALBUM.GOMIX:
-                selectedAlbumMusicLength = album3HighLightClips.Length - 1;
                 MusicAudioSource.clip = album3HighLightClips[GlobalState.Instance.StageIndex];
-                MusicAudioSource.Play();
-                MusicAudioSource.loop = true;
+                selectedAlbumMusicLength = album3HighLightClips.Length - 1;
                 break;
             case (int)GlobalData.ALBUM.WAKALOID:
-                selectedAlbumMusicLength = album4HighLightClips.Length - 1;
                 MusicAudioSource.clip = album4HighLightClips[GlobalState.Instance.StageIndex];
-                MusicAudioSource.Play();
-                MusicAudioSource.loop = true;
+                selectedAlbumMusicLength = album4HighLightClips.Length - 1;
                 break;
         }
     }
+
 
     public void TurnOnStageMusic()
     {
         SetStageMusic();
 
+        MusicAudioSource.time = 0;
         MusicAudioSource.Play();
         MusicAudioSource.loop = false;
     }

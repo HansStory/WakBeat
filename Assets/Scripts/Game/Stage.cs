@@ -279,65 +279,6 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     {
         CreateInObstacle(0, inRadius);
         CreateOutObstacle(0, outRadius);
-
-        //switch (GlobalState.Instance.AlbumIndex)
-        //{
-        //    case (int)GlobalData.ALBUM.ISEDOL:
-        //        switch (GlobalState.Instance.StageIndex)
-        //        {
-        //            case (int)GlobalData.STAGE.STAGE1:
-        //            case (int)GlobalData.STAGE.STAGE2:
-        //            case (int)GlobalData.STAGE.STAGE3:
-        //            case (int)GlobalData.STAGE.STAGE4:
-        //            case (int)GlobalData.STAGE.STAGE5:
-        //                CreateInObstacle(0);
-        //                CreateOutObstacle(0);
-        //                break;
-        //        }
-        //        break;
-        //    case (int)GlobalData.ALBUM.CONTEST:
-        //        switch (GlobalState.Instance.StageIndex)
-        //        {
-        //            case (int)GlobalData.STAGE.STAGE1:
-        //                CreateInObstacle(1);
-        //                CreateOutObstacle(1);
-        //                break;
-        //            case (int)GlobalData.STAGE.STAGE2:
-        //            case (int)GlobalData.STAGE.STAGE3:
-        //            case (int)GlobalData.STAGE.STAGE4:
-        //            case (int)GlobalData.STAGE.STAGE5:
-        //                CreateInObstacle(0);
-        //                CreateOutObstacle(0);
-        //                break;
-        //        }
-        //        break;
-        //    case (int)GlobalData.ALBUM.GOMIX:
-        //        switch (GlobalState.Instance.StageIndex)
-        //        {
-        //            case (int)GlobalData.STAGE.STAGE1:
-        //            case (int)GlobalData.STAGE.STAGE2:
-        //            case (int)GlobalData.STAGE.STAGE3:
-        //            case (int)GlobalData.STAGE.STAGE4:
-        //            case (int)GlobalData.STAGE.STAGE5:
-        //                CreateInObstacle(0);
-        //                CreateOutObstacle(0);
-        //                break;
-        //        }
-        //        break;
-        //    case (int)GlobalData.ALBUM.WAKALOID:
-        //        switch (GlobalState.Instance.StageIndex)
-        //        {
-        //            case (int)GlobalData.STAGE.STAGE1:
-        //            case (int)GlobalData.STAGE.STAGE2:
-        //            case (int)GlobalData.STAGE.STAGE3:
-        //            case (int)GlobalData.STAGE.STAGE4:
-        //            case (int)GlobalData.STAGE.STAGE5:
-        //                CreateInObstacle(0);
-        //                CreateOutObstacle(0);
-        //                break;
-        //        }
-        //        break;
-        //}
     }
 
     protected virtual void CreateInObstacle(int obstacleType, float radius)
@@ -380,6 +321,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         }
     }
 
+    Tween SavePointTween;
     protected virtual void CreateSavePoint(int savePointType)
     {
         GameObject savePoint = GameObject.Instantiate(SavePoint[savePointType], Container);
@@ -388,7 +330,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         {
             savePoint.transform.localPosition = CenterPivot.transform.localPosition + CenterPivot.transform.up * dodgeRadius;
             savePoint.transform.localScale = Vector3.zero;
-            savePoint.transform.DOScale(Vector3.one, 0.2f).SetAutoKill();
+            SavePointTween = savePoint.transform.DOScale(Vector3.one, 0.2f).SetAutoKill();
         }
     }
 
@@ -697,12 +639,38 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         {
             SaveGameResult();
 
-            SoundManager.Instance.ForceAudioStop();
-            
+            //Reset GlobalState Value
+            GlobalState.Instance.IsPlayerDied = false;
+            GlobalState.Instance.PlayerDeadCount = 0;
+            GlobalState.Instance.SaveMusicPlayingTime = 0.0f;
+            GlobalState.Instance.SavePoint = 0;   
+
+            // TO DO : Go Panel Result
+            SoundManager.Instance.ForceAudioStop();           
             UIManager.Instance.GoPanelResult();
-
             SoundManager.Instance.TurnOnGameBackGround();
+            GameFactory.Instance.DistroyStage();
+        }
+    }
 
+    public virtual void GoBackSelectStage()
+    {
+        _isPlay = false;
+
+        if (GlobalState.Instance.UserData.data.BackgroundProcActive)
+        {
+            SaveGameResult();
+
+            //Reset GlobalState Value
+            GlobalState.Instance.IsPlayerDied = false;
+            GlobalState.Instance.PlayerDeadCount = 0;
+            GlobalState.Instance.SaveMusicPlayingTime = 0.0f;
+            GlobalState.Instance.SavePoint = 0;
+
+            // TO DO : Go Panel Result
+            SoundManager.Instance.ForceAudioStop();
+            UIManager.Instance.GoPanelMusicSelect();
+            SoundManager.Instance.TurnOnGameBackGround();
             GameFactory.Instance.DistroyStage();
         }
     }
@@ -821,6 +789,11 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     protected float _savePointTime = 0f;
     protected virtual void SavePointEnter()
     {
+        if (SavePointTween.IsPlaying())
+        {
+            SavePointTween.Kill();
+        }
+
         _savePointTime = _timer;
 
         GlobalState.Instance.SavePoint = _currentLine;

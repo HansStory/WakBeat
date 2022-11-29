@@ -56,8 +56,11 @@ public class UIElementGamePlay : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                GameFactory.Instance.DistroyStage();
-                UIManager.Instance.GoPanelMusicSelect();
+                Stage.Instance.GoBackSelectStage();
+                //SoundManager.Instance.ForceAudioStop();
+
+                //GameFactory.Instance.DistroyStage();
+                //UIManager.Instance.GoPanelMusicSelect();
             }
         }
     }
