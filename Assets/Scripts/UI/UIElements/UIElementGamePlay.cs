@@ -39,12 +39,13 @@ public class UIElementGamePlay : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                SoundManager.Instance.ForceAudioStop();
+                Stage.Instance.FinishGame();
+                //SoundManager.Instance.ForceAudioStop();
 
-                GameFactory.Instance.DistroyStage();
-                UIManager.Instance.GoPanelResult();
+                //GameFactory.Instance.DistroyStage();
+                //UIManager.Instance.GoPanelResult();
 
-                SoundManager.Instance.TurnOnGameBackGround();
+                //SoundManager.Instance.TurnOnGameBackGround();
             }
         }
     }

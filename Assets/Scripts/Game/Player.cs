@@ -73,25 +73,25 @@ public class Player : MonoBehaviour
         }
     }
     
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.gameObject.CompareTag("SavePoint"))
-        {
-            Debug.Log("세이브 포인트!!");
-            Destroy(col.gameObject);
-            _stageBase.SavePointEnter();
-        }
+    //void OnTriggerEnter2D(Collider2D col)
+    //{
+    //    if (col.gameObject.CompareTag("SavePoint"))
+    //    {
+    //        Debug.Log("세이브 포인트!!");
+    //        Destroy(col.gameObject);
+    //        _stageBase.SavePointEnter();
+    //    }
 
-        if (col.gameObject.CompareTag("Obstacle"))
-        {
-            PlayerDie();
-        }
+    //    if (col.gameObject.CompareTag("Obstacle"))
+    //    {
+    //        PlayerDie();
+    //    }
         
-    }
+    //}
 
-    void PlayerDie()
-    {
-        _stageBase.PlayerDieAndSavePointPlay();
-    }
+    //void PlayerDie()
+    //{
+    //    _stageBase.PlayerDieAndSavePointPlay();
+    //}
     
 }

@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   album1StageList:
   - {fileID: 4143023116079684940, guid: d32ef6646a6a20b478bd5bd740b57d57, type: 3}
-  - {fileID: 4143023116079684940, guid: 020de51e612350e4780899c2efbbe797, type: 3}
+  - {fileID: 4143023116079684940, guid: e7b1eae249701504bae342fc9731ecc0, type: 3}
   album2StageList:
   - {fileID: 4143023116079684940, guid: f9ef4ad4bc3d09146884d6cef18bd2b8, type: 3}
   - {fileID: 4143023116079684940, guid: 43729af68e411964a8b09828a324bec3, type: 3}

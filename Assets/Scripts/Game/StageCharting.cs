@@ -27,14 +27,7 @@ public class StageCharting : Stage
     public GameObject HalfAngle;
     public TMP_Text TextHalfAngle;
 
-    public Image InCircleFade;
-    public Image OutCircleFade;
-
-
-    private CircleCollider2D playerCollider;
-
     private bool isplay = false;
-    private bool _isGameMode = false;
     private bool _isShowDebugtab = true;
 
     //------------ For Debuging -----------
@@ -58,27 +51,15 @@ public class StageCharting : Stage
     {
         base.Init();
 
-        CreateSpawnPoint();
-
-        _isGameMode = Config.Instance.GameMode;
-        _isAutoMode = Config.Instance.AutoMode;
-
-        GlobalState.Instance.SavePointAngle = bmwReader.ChartingItem[0].BallAngle;
-
-        if (GetComponent<Rigidbody2D>() != null)
-        {
-            Rigidbody2D rigid = GetComponent<Rigidbody2D>();
-            rigid.simulated = _isGameMode;
-        }
-
-        if (this.GetComponent<CircleCollider2D>() != null)
-        {
-            playerCollider = this.GetComponent<CircleCollider2D>();
-            playerCollider.offset = new Vector2(Ball.transform.localPosition.x, Ball.transform.localPosition.y);
-        }
+        CreateSpawnPoint();        
 
         TextGameMode.text = $"Game Mode \n {_isGameMode}";
         TextAutoMode.text = $"Auto Mode \n {_isAutoMode}";
+    }
+
+    protected override void Start()
+    {
+        
     }
 
     private void CreateSpawnPoint()
@@ -103,11 +84,6 @@ public class StageCharting : Stage
         SpawnPointBase.gameObject.SetActive(_isShowSpawnPoint);
     }
 
-    protected override void Start()
-    {
-        
-    }
-
     protected override void Update()
     {
         base.Update();
@@ -122,10 +98,6 @@ public class StageCharting : Stage
     {
         base.PlayGame();
 
-        OperateBallMovement();
-        playerCollider.offset = new Vector2((Ball.transform.localPosition.x * PlayGround.localScale.x) + PlayGround.localPosition.x, (Ball.transform.localPosition.y *  PlayGround.localScale.y) + PlayGround.localPosition.y);
-        playerCollider.radius = 15f * Mathf.Abs(PlayGround.localScale.x);
-
         DebugElements[BallAngle].text = $"Ball Angle : {Mathf.Abs(Center.transform.localEulerAngles.z - 360f).ToString("F2")}";
         DebugElements[SongTotalTime].text = $"현재 곡의 진행 시간 : {audioSource.time.ToString("F2")}";
     }
@@ -137,48 +109,40 @@ public class StageCharting : Stage
         DebugElements[CurrentLine].text = $"Current Line : {_currentLine}";
     }
 
-    protected override void InputChangeDirection()
-    {
-        if (!_isAutoMode)
-        {
-            base.InputChangeDirection();
-        }
-    }
+    //protected override void SeperateChangeDirection()
+    //{
+    //    base.SeperateChangeDirection();
 
-    protected override void SeperateChangeDirection()
-    {
-        base.SeperateChangeDirection();
+    //    if (_isInState)
+    //    {
+    //        TweenChangeDirection(InCircleFade, 0.2f);
+    //    }
+    //    else
+    //    {
+    //        TweenChangeDirection(OutCircleFade, 0.2f);
+    //    }
+    //}
 
-        if (_isInState)
-        {
-            FadeInOutCircle(InCircleFade, 0.2f);
-        }
-        else
-        {
-            FadeInOutCircle(OutCircleFade, 0.2f);
-        }
-    }
+    //protected override void IntegrationChangeDirection()
+    //{
+    //    base.IntegrationChangeDirection();
 
-    protected override void IntegrationChangeDirection()
-    {
-        base.IntegrationChangeDirection();
+    //    if (_isInState)
+    //    {
+    //        TweenChangeDirection(InCircleFade, 0.2f);
+    //    }
+    //    else
+    //    {
+    //        TweenChangeDirection(OutCircleFade, 0.2f);
+    //    }
+    //}
 
-        if (_isInState)
-        {
-            FadeInOutCircle(InCircleFade, 0.2f);
-        }
-        else
-        {
-            FadeInOutCircle(OutCircleFade, 0.2f);
-        }
-    }
-
-    Tween FadeTween;
-    private void FadeInOutCircle(Image circle, float duration)
-    {
-        circle.color = Color.black;
-        FadeTween = circle.DOColor(Color.clear, duration);
-    }
+    //Tween FadeTween;
+    //private void FadeInOutCircle(Image circle, float duration)
+    //{
+    //    circle.color = Color.black;
+    //    FadeTween = circle.DOColor(Color.clear, duration);
+    //}
 
     protected override void ChangeBar()
     {
@@ -196,7 +160,6 @@ public class StageCharting : Stage
         }
     }
 
-
     protected override void ChangeBallSpeed()
     {
         base.ChangeBallSpeed();
@@ -208,7 +171,6 @@ public class StageCharting : Stage
             DebugElements[BallSpeed].text = $"Ball Speed : {beatItem.Speed}";
         }
     }
-
 
     private void ResetStage()
     {
@@ -322,7 +284,7 @@ public class StageCharting : Stage
         base.StartGame();
     }
 
-    protected override void FinishGame()
+    public override void FinishGame()
     {
         _isPlay = false;
         ResetStage();
@@ -348,7 +310,6 @@ public class StageCharting : Stage
     {
         _isGameMode = !_isGameMode;
 
-        //To do : Game Mode Restart 제어 처리 해야함
         if (GetComponent<Rigidbody2D>() != null)
         {
             Rigidbody2D rigid = GetComponent<Rigidbody2D>();
@@ -358,7 +319,6 @@ public class StageCharting : Stage
         TextGameMode.text = $"Game Mode \n {_isGameMode}";
     }
 
-    private bool _isAutoMode = false;
     public void OnClickAutoMode()
     {
         _isAutoMode = !_isAutoMode;
@@ -408,7 +368,6 @@ public class StageCharting : Stage
         }
     }
 
-
     public void OnClickStop()
     {
         ResetStage();
@@ -429,7 +388,6 @@ public class StageCharting : Stage
             TextDebug.text = "Hide\nDebug Tab";
         }
     }
-
 
     private bool _isShowSpawnPoint = false;
     public void OnClickSpawnPointTab()
@@ -465,57 +423,54 @@ public class StageCharting : Stage
         }
     }
 
-    private float _savePointTime = 0f;
-    public void SavePointEnter()
-    {
-        _savePointTime = _timer;
+    //private float _savePointTime = 0f;
+    //public void SavePointEnter()
+    //{
+    //    _savePointTime = _timer;
 
-        GlobalState.Instance.SavePoint = _currentLine;
-        GlobalState.Instance.SaveMusicPlayingTime = audioSource.time;
-        GlobalState.Instance.SavePointAngle = Center.transform.localEulerAngles.z;
-    }
+    //    GlobalState.Instance.SavePoint = _currentLine;
+    //    GlobalState.Instance.SaveMusicPlayingTime = audioSource.time;
+    //    GlobalState.Instance.SavePointAngle = Center.transform.localEulerAngles.z;
+    //}
 
-    private void ResetSavePointState()
-    {
-        _currentLine = GlobalState.Instance.SavePoint;
+    //private void ResetSavePointState()
+    //{
+    //    _currentLine = GlobalState.Instance.SavePoint;
 
-        var beatItem = bmwReader.ChartingItem[_currentLine];
-        _timer = _savePointTime;
+    //    var beatItem = bmwReader.ChartingItem[_currentLine];
+    //    _timer = _savePointTime;
 
-        audioSource.time = GlobalState.Instance.SaveMusicPlayingTime;
+    //    audioSource.time = GlobalState.Instance.SaveMusicPlayingTime;
 
-        if (GlobalState.Instance.SavePoint > 0)
-        {
-            GlobalState.Instance.SavePointAngle = beatItem.BallAngle;
+    //    if (GlobalState.Instance.SavePoint > 0)
+    //    {
+    //        GlobalState.Instance.SavePointAngle = beatItem.BallAngle;
 
-            if (beatItem.Interval >= 0)
-            {
-                _timer -= beatItem.Interval;
-            }
+    //        if (beatItem.Interval >= 0)
+    //        {
+    //            _timer -= beatItem.Interval;
+    //        }
 
-            Center.transform.localEulerAngles = new Vector3(0f, 0f, -GlobalState.Instance.SavePointAngle);
-            Ball.transform.localPosition = Center.transform.localPosition + Center.transform.up * ballRadius;
-        }
-        else
-        {
-            InitBallPosition();
-            _isInState = false;
-        }
+    //        Center.transform.localEulerAngles = new Vector3(0f, 0f, -GlobalState.Instance.SavePointAngle);
+    //        Ball.transform.localPosition = Center.transform.localPosition + Center.transform.up * ballRadius;
+    //    }
+    //    else
+    //    {
+    //        InitBallPosition();
+    //        _isInState = false;
+    //    }
 
-        PlayProcess();
-    }
+    //    PlayProcess();
+    //}
 
-    //private float _reStartTime = -3f;
-    public void PlayerDieAndSavePointPlay()
-    {
-        Debug.Log("Player Die!!");
+    //public void PlayerDieAndSavePointPlay()
+    //{
+    //    Debug.Log("Player Die!!");
 
-        //GlobalState.Instance.IsPlayerDied = true;
-        GlobalState.Instance.PlayerDeadCount++;
+    //    GlobalState.Instance.PlayerDeadCount++;
 
-        ResetSavePointState();
-
-    }
+    //    ResetSavePointState();
+    //}
 
     //private void TweenPlayerDead()
     //{
@@ -557,31 +512,31 @@ public class StageCharting : Stage
     //    return countDownText.DOFade(0, 1.0f);
     //}
 
-    void PlayerDie()
-    {
-        PlayerDieAndSavePointPlay();
-    }
+    //void PlayerDie()
+    //{
+    //    PlayerDieAndSavePointPlay();
+    //}
 
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("SavePoint"))
-        {
-            //Debug.Log("부모객체 : 세이브 포인트!!");
-            Destroy(other.gameObject);
-            SavePointEnter();
-        }
+    //void OnTriggerEnter2D(Collider2D other)
+    //{
+    //    if (other.gameObject.CompareTag("SavePoint"))
+    //    {
+    //        //Debug.Log("부모객체 : 세이브 포인트!!");
+    //        Destroy(other.gameObject);
+    //        SavePointEnter();
+    //    }
 
-        if (other.gameObject.CompareTag("Obstacle"))
-        {
-            //Debug.Log("부모객체 : Heat Obstacle");
-            PlayerDie();
-        }
+    //    if (other.gameObject.CompareTag("Obstacle"))
+    //    {
+    //        //Debug.Log("부모객체 : Heat Obstacle");
+    //        PlayerDie();
+    //    }
 
-        if (other.gameObject.CompareTag("DodgePoint"))
-        {
-            //Debug.Log("부모객체 : Heat Dodge Point");
-            IntegrationChangeDirection();
-        }
-    }
+    //    if (other.gameObject.CompareTag("DodgePoint"))
+    //    {
+    //        //Debug.Log("부모객체 : Heat Dodge Point");
+    //        IntegrationChangeDirection();
+    //    }
+    //}
 }

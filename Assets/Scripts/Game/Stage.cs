@@ -6,12 +6,15 @@ using TMPro;
 //using System.IO;
 using DG.Tweening;
 
-public abstract class Stage : MonoBehaviour
+public abstract class Stage : MonoBehaviourSingleton<Stage>
 {
     [Header("Stage Base")]
     public Image BallSkin;
     public Image CircleSkin;
     public Image BackGroundSkin;
+
+    public Image InCircleFade;
+    public Image OutCircleFade;
 
     public RectTransform PlayGround;
     public GameObject Center;
@@ -25,7 +28,6 @@ public abstract class Stage : MonoBehaviour
     public GameObject DodgePoint;
     public Transform DodgePointBase;
     public List<GameObject> DodgePointList = new List<GameObject>();
-
 
     [Header("[ Obstacles ]")]
     public GameObject[] Obstacles;
@@ -48,6 +50,9 @@ public abstract class Stage : MonoBehaviour
     public Animation StageAnim;
 
     //---------------------------------------------------
+    protected bool _isGameMode = false;
+    protected bool _isAutoMode = false;
+
     protected float dodgeRadius = 334f;
     protected float outRadius = 355f;
     protected float inRadius = 312f;
@@ -56,6 +61,8 @@ public abstract class Stage : MonoBehaviour
     protected float variableRadius;
     protected float speed = 360;
 
+    protected Rigidbody2D playerRigid = null;
+    protected CircleCollider2D playerCollider = null;
     protected BMWReader bmwReader = null;
     protected AudioSource audioSource = null;
 
@@ -136,6 +143,25 @@ public abstract class Stage : MonoBehaviour
         // Key 입력 부
         _keyDivision = null == GlobalState.Instance.UserData.data.KeyDivision ? "Integration" : GlobalState.Instance.UserData.data.KeyDivision;
 
+        //--------------------------------------------------------------------------
+        // Read Config
+        _isGameMode = Config.Instance.GameMode;
+        _isAutoMode = Config.Instance.AutoMode;
+
+        // Set Physics
+        if (GetComponent<Rigidbody2D>() != null)
+        {
+            playerRigid = GetComponent<Rigidbody2D>();
+            playerRigid.simulated = _isGameMode;
+        }
+
+        if (GetComponent<CircleCollider2D>() != null)
+        {
+            playerCollider = GetComponent<CircleCollider2D>();
+            playerCollider.offset = new Vector2(Ball.transform.localPosition.x, Ball.transform.localPosition.y);
+        }
+
+        GlobalState.Instance.SavePointAngle = bmwReader.ChartingItem[0].BallAngle;
     }
 
     protected virtual void Start()
@@ -146,9 +172,9 @@ public abstract class Stage : MonoBehaviour
     protected virtual void StartGame()
     {
         _currentLine = 0;       
-        SoundManager.Instance.TurnOnStageMusic();
-
         _isPlay = true;
+
+        SoundManager.Instance.TurnOnStageMusic();
         PlayProcess();
     }
 
@@ -233,6 +259,12 @@ public abstract class Stage : MonoBehaviour
             {
                 dodge.transform.localPosition = Center.transform.localPosition + Center.transform.up * dodgeRadius;
                 dodge.transform.localEulerAngles = Center.transform.localEulerAngles;
+
+                if (dodge.GetComponent<BoxCollider2D>())
+                {
+                    dodge.GetComponent<BoxCollider2D>().enabled = _isAutoMode;
+                }
+
                 DodgePointList.Add(dodge);
 
                 dodge.SetActive(false);
@@ -242,69 +274,73 @@ public abstract class Stage : MonoBehaviour
         }
     }
 
+    // TO DO : 각자 Stage에서 구현할것 부모 객체는 추상화만 (각자 스크립트에서 코드2줄만 추가하면됨)
     protected virtual void CreateObstacles()
     {
-        switch (GlobalState.Instance.AlbumIndex)
-        {
-            case (int)GlobalData.ALBUM.ISEDOL:
-                switch (GlobalState.Instance.StageIndex)
-                {
-                    case (int)GlobalData.STAGE.STAGE1:
-                    case (int)GlobalData.STAGE.STAGE2:
-                    case (int)GlobalData.STAGE.STAGE3:
-                    case (int)GlobalData.STAGE.STAGE4:
-                    case (int)GlobalData.STAGE.STAGE5:
-                        CreateInObstacle(0);
-                        CreateOutObstacle(0);
-                        break;
-                }
-                break;
-            case (int)GlobalData.ALBUM.CONTEST:
-                switch (GlobalState.Instance.StageIndex)
-                {
-                    case (int)GlobalData.STAGE.STAGE1:
-                        CreateInObstacle(1);
-                        CreateOutObstacle(1);
-                        break;
-                    case (int)GlobalData.STAGE.STAGE2:
-                    case (int)GlobalData.STAGE.STAGE3:
-                    case (int)GlobalData.STAGE.STAGE4:
-                    case (int)GlobalData.STAGE.STAGE5:
-                        CreateInObstacle(0);
-                        CreateOutObstacle(0);
-                        break;
-                }
-                break;
-            case (int)GlobalData.ALBUM.GOMIX:
-                switch (GlobalState.Instance.StageIndex)
-                {
-                    case (int)GlobalData.STAGE.STAGE1:
-                    case (int)GlobalData.STAGE.STAGE2:
-                    case (int)GlobalData.STAGE.STAGE3:
-                    case (int)GlobalData.STAGE.STAGE4:
-                    case (int)GlobalData.STAGE.STAGE5:
-                        CreateInObstacle(0);
-                        CreateOutObstacle(0);
-                        break;
-                }
-                break;
-            case (int)GlobalData.ALBUM.WAKALOID:
-                switch (GlobalState.Instance.StageIndex)
-                {
-                    case (int)GlobalData.STAGE.STAGE1:
-                    case (int)GlobalData.STAGE.STAGE2:
-                    case (int)GlobalData.STAGE.STAGE3:
-                    case (int)GlobalData.STAGE.STAGE4:
-                    case (int)GlobalData.STAGE.STAGE5:
-                        CreateInObstacle(0);
-                        CreateOutObstacle(0);
-                        break;
-                }
-                break;
-        }
+        CreateInObstacle(0, inRadius);
+        CreateOutObstacle(0, outRadius);
+
+        //switch (GlobalState.Instance.AlbumIndex)
+        //{
+        //    case (int)GlobalData.ALBUM.ISEDOL:
+        //        switch (GlobalState.Instance.StageIndex)
+        //        {
+        //            case (int)GlobalData.STAGE.STAGE1:
+        //            case (int)GlobalData.STAGE.STAGE2:
+        //            case (int)GlobalData.STAGE.STAGE3:
+        //            case (int)GlobalData.STAGE.STAGE4:
+        //            case (int)GlobalData.STAGE.STAGE5:
+        //                CreateInObstacle(0);
+        //                CreateOutObstacle(0);
+        //                break;
+        //        }
+        //        break;
+        //    case (int)GlobalData.ALBUM.CONTEST:
+        //        switch (GlobalState.Instance.StageIndex)
+        //        {
+        //            case (int)GlobalData.STAGE.STAGE1:
+        //                CreateInObstacle(1);
+        //                CreateOutObstacle(1);
+        //                break;
+        //            case (int)GlobalData.STAGE.STAGE2:
+        //            case (int)GlobalData.STAGE.STAGE3:
+        //            case (int)GlobalData.STAGE.STAGE4:
+        //            case (int)GlobalData.STAGE.STAGE5:
+        //                CreateInObstacle(0);
+        //                CreateOutObstacle(0);
+        //                break;
+        //        }
+        //        break;
+        //    case (int)GlobalData.ALBUM.GOMIX:
+        //        switch (GlobalState.Instance.StageIndex)
+        //        {
+        //            case (int)GlobalData.STAGE.STAGE1:
+        //            case (int)GlobalData.STAGE.STAGE2:
+        //            case (int)GlobalData.STAGE.STAGE3:
+        //            case (int)GlobalData.STAGE.STAGE4:
+        //            case (int)GlobalData.STAGE.STAGE5:
+        //                CreateInObstacle(0);
+        //                CreateOutObstacle(0);
+        //                break;
+        //        }
+        //        break;
+        //    case (int)GlobalData.ALBUM.WAKALOID:
+        //        switch (GlobalState.Instance.StageIndex)
+        //        {
+        //            case (int)GlobalData.STAGE.STAGE1:
+        //            case (int)GlobalData.STAGE.STAGE2:
+        //            case (int)GlobalData.STAGE.STAGE3:
+        //            case (int)GlobalData.STAGE.STAGE4:
+        //            case (int)GlobalData.STAGE.STAGE5:
+        //                CreateInObstacle(0);
+        //                CreateOutObstacle(0);
+        //                break;
+        //        }
+        //        break;
+        //}
     }
 
-    protected virtual void CreateInObstacle(int obstacleType)
+    protected virtual void CreateInObstacle(int obstacleType, float radius)
     {
         for (int i = 0; i < _spawnCount; i++)
         {
@@ -312,7 +348,7 @@ public abstract class Stage : MonoBehaviour
 
             if (inObstacle)
             {
-                inObstacle.transform.localPosition = Center.transform.localPosition + Center.transform.up * inRadius;
+                inObstacle.transform.localPosition = Center.transform.localPosition + Center.transform.up * radius;
                 inObstacle.transform.localEulerAngles = Center.transform.localEulerAngles + new Vector3(0f, 0f, 180f);
                 InObstacleList.Add(inObstacle);
 
@@ -323,7 +359,7 @@ public abstract class Stage : MonoBehaviour
         }
     }
 
-    protected virtual void CreateOutObstacle(int obstacleType)
+    protected virtual void CreateOutObstacle(int obstacleType, float radius)
     {
         Center.transform.localEulerAngles = Vector3.zero;
 
@@ -333,7 +369,7 @@ public abstract class Stage : MonoBehaviour
 
             if (outObstacle)
             {
-                outObstacle.transform.localPosition = Center.transform.localPosition + Center.transform.up * outRadius;
+                outObstacle.transform.localPosition = Center.transform.localPosition + Center.transform.up * radius;
                 outObstacle.transform.localEulerAngles = Center.transform.localEulerAngles;
                 OutObstacleList.Add(outObstacle);
 
@@ -351,6 +387,8 @@ public abstract class Stage : MonoBehaviour
         if (savePoint)
         {
             savePoint.transform.localPosition = CenterPivot.transform.localPosition + CenterPivot.transform.up * dodgeRadius;
+            savePoint.transform.localScale = Vector3.zero;
+            savePoint.transform.DOScale(Vector3.one, 0.2f).SetAutoKill();
         }
     }
 
@@ -412,13 +450,12 @@ public abstract class Stage : MonoBehaviour
 
         ShowChartingItems();
 
-
         CurrentLineText.text = $"Current Line : {_currentLine}";    
     }
 
     protected virtual void PlayBeat()
     {
-        //tick
+        
     }
 
     private string _animationName = string.Empty;
@@ -621,18 +658,10 @@ public abstract class Stage : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        //if (GlobalState.Instance.IsPlayerDied)
-        //{
-        //    InitBallPosition();
-        //    PlayProcess();
-        //    return;
-        //}
-
         if (_isPlay)
         {
             PlayGame();
         }
-
     }
 
     protected virtual void PlayGame()
@@ -641,7 +670,8 @@ public abstract class Stage : MonoBehaviour
         _timer += Time.deltaTime;
 
         Center.transform.Rotate(0f, 0f, (Time.deltaTime / _beatTime) * -speed);
-        //OperateBallMovement();
+        OperateBallMovement();
+
 
         if (_currentLine < bmwReader.ChartingItem.Count - 1)
         {
@@ -656,33 +686,52 @@ public abstract class Stage : MonoBehaviour
         else
         {
             FinishGame();
-        }        
+        }
     }
 
-    protected virtual void FinishGame()
+    public virtual void FinishGame()
     {
         _isPlay = false;
 
         if (GlobalState.Instance.UserData.data.BackgroundProcActive)
         {
-            SoundManager.Instance.ForceAudioStop();
+            SaveGameResult();
 
-            GameFactory.Instance.DistroyStage();
+            SoundManager.Instance.ForceAudioStop();
+            
             UIManager.Instance.GoPanelResult();
 
             SoundManager.Instance.TurnOnGameBackGround();
+
+            GameFactory.Instance.DistroyStage();
         }
+    }
+
+    // TO DO : 게임 플레이 결과 Global Data나 Global Stage에 저장 -> 그 데이터로 결과창 구현 로직 처리
+    protected virtual void SaveGameResult()
+    {
+
     }
 
     protected virtual void OperateBallMovement()
     {
+        // 공의 움직임 구현
         Ball.transform.localEulerAngles = new Vector3(0f, 0f, Center.transform.localEulerAngles.z);
         Ball.transform.localPosition = Center.transform.localPosition + Center.transform.up * ballRadius;
 
-        InputChangeDirection();
+        // 공의 움직임에 따라 Stage의 BoxCollider2D도 같은 위치에 있도록 구현
+        playerCollider.offset = new Vector2((Ball.transform.localPosition.x * PlayGround.localScale.x) + PlayGround.localPosition.x, (Ball.transform.localPosition.y * PlayGround.localScale.y) + PlayGround.localPosition.y);
+        playerCollider.radius = 15f * Mathf.Abs(PlayGround.localScale.x);
+
+        // Input Change Direction
+        if (!_isAutoMode)
+        {
+            InputChangeDirection();
+        }
     }
 
     // 키 입력 처리
+    #region Change Direction
     protected bool _isInState = false;
     protected virtual void InputChangeDirection()
     {
@@ -695,11 +744,13 @@ public abstract class Stage : MonoBehaviour
                     && null != GlobalState.Instance.UserData.data.OuterOperationKey && GlobalState.Instance.UserData.data.OuterOperationKey.Length > 0)
                 {
                     SeperateChangeDirection();
+                    ChangeDirectionEffect();
                 }
                 else
                 {
                     // 키 분리 구분 > 분리 > 커스텀 한 키가 없을 땐 스페이스로 통일
                     IntegrationChangeDirection();
+                    ChangeDirectionEffect();
                 }
             }
             else
@@ -708,6 +759,7 @@ public abstract class Stage : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     IntegrationChangeDirection();
+                    ChangeDirectionEffect();
                 }
             }
         }
@@ -746,6 +798,112 @@ public abstract class Stage : MonoBehaviour
         }
     }
 
+    protected float _changeDirectionDuration = 0.2f;
+    protected virtual void ChangeDirectionEffect()
+    {
+        if (_isInState)
+        {
+            TweenChangeDirection(InCircleFade, _changeDirectionDuration);
+        }
+        else
+        {
+            TweenChangeDirection(OutCircleFade, _changeDirectionDuration);
+        }
+    }
+
+    protected virtual void TweenChangeDirection(Image circle, float duration)
+    {
+        circle.color = Color.black;
+        circle.DOColor(Color.clear, duration);
+    }
+    #endregion
+
+    protected float _savePointTime = 0f;
+    protected virtual void SavePointEnter()
+    {
+        _savePointTime = _timer;
+
+        GlobalState.Instance.SavePoint = _currentLine;
+        GlobalState.Instance.SaveMusicPlayingTime = audioSource.time;
+        GlobalState.Instance.SavePointAngle = Center.transform.localEulerAngles.z;
+    }
+
+    protected virtual void ResetSavePointState()
+    {
+        _currentLine = GlobalState.Instance.SavePoint;
+
+        var beatItem = bmwReader.ChartingItem[_currentLine];
+        _timer = _savePointTime;
+
+        audioSource.time = GlobalState.Instance.SaveMusicPlayingTime;
+
+        if (GlobalState.Instance.SavePoint > 0)
+        {
+            GlobalState.Instance.SavePointAngle = beatItem.BallAngle;
+
+            if (beatItem.Interval >= 0)
+            {
+                _timer -= beatItem.Interval;
+            }
+
+            Center.transform.localEulerAngles = new Vector3(0f, 0f, -GlobalState.Instance.SavePointAngle);
+            Ball.transform.localPosition = Center.transform.localPosition + Center.transform.up * ballRadius;
+        }
+        else
+        {
+            InitBallPosition();
+            _isInState = false;
+        }
+
+        PlayProcess();
+    }
+
+    protected virtual void PlayerDieAndSavePointPlay()
+    {
+        Debug.Log("Player Die!!");
+
+        GlobalState.Instance.PlayerDeadCount++;
+
+        ResetSavePointState();
+    }
+
+    protected virtual void PlayerDie()
+    {
+        PlayerDieAndSavePointPlay();
+    }
+
+
+    protected virtual void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("SavePoint"))
+        {
+            SavePointEnter();
+            EnterSavePointEffect();
+
+            Destroy(other.gameObject);
+            //Debug.Log("Heat Save Point");
+        }
+
+        if (other.gameObject.CompareTag("Obstacle"))
+        {
+            PlayerDie();
+            //Debug.Log("Heat Obstacle");
+        }
+
+        if (other.gameObject.CompareTag("DodgePoint"))
+        {
+            IntegrationChangeDirection();
+            //Debug.Log("Heat Dodge Point");
+        }
+    }
+
+    //TO DO : Add Effect
+    protected virtual void EnterSavePointEffect()
+    {
+
+    }
+
+    // 테스트 스크립트 (완성본때 삭제 예정)
     #region Test Scripts
     void ViewItemsTest(int currentItem)
     {
@@ -848,7 +1006,7 @@ public abstract class Stage : MonoBehaviour
         }
     }
     #endregion
-
+    // Do Tween Basic (완성본때 삭제 예정)
     #region Basic Tween
     Tween moveTween;
     protected virtual void DoMovePlayGround(Vector3 targetVector, float Duration, float delay, Ease easeType)
@@ -883,10 +1041,10 @@ public abstract class Stage : MonoBehaviour
         doRotateTween.SetEase(easeType);
     }
 
-    protected void PlayerInit()
-    {
-        Ball.transform.localPosition = Vector3.zero;
-    }
+    //protected void PlayerInit()
+    //{
+    //    Ball.transform.localPosition = Vector3.zero;
+    //}
     #endregion
 
 }
