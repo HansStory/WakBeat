@@ -337,14 +337,11 @@ public class BMWReader : CsvReader
 
                             _chartingItem.Add(itemCharting);
 
-                            //_chartingItemList.Add(itemCharting);
-
-                            Debug.Log($"line : {itemCharting.Beat},{itemCharting.AnimationIndex},{itemCharting.Bar},{itemCharting.Interval},{itemCharting.BallAngle},{itemCharting.BallAngleTime},{itemCharting.Speed},{itemCharting.SpeedTime},{itemCharting.DodgePoint},{itemCharting.OutObstacle},{itemCharting.InObstacle},{itemCharting.SavePoint}" );
-                            
-                            for (int i = 0; i < itemCharting.DodgePointElements.Count; i++)
-                            {
-                                Debug.Log($"{itemCharting.DodgePointElements[i].Index}");
-                            }
+                            //Debug.Log($"line : {itemCharting.Beat},{itemCharting.AnimationIndex},{itemCharting.Bar},{itemCharting.Interval},{itemCharting.BallAngle},{itemCharting.BallAngleTime},{itemCharting.Speed},{itemCharting.SpeedTime},{itemCharting.DodgePoint},{itemCharting.OutObstacle},{itemCharting.InObstacle},{itemCharting.SavePoint}" );                            
+                            //for (int i = 0; i < itemCharting.DodgePointElements.Count; i++)
+                            //{
+                            //    Debug.Log($"{itemCharting.DodgePointElements[i].Index}");
+                            //}
                         }
                         catch (Exception e)
                         {
