@@ -7,11 +7,11 @@ public class MusicInfoItem
 {
     public string Title;    // 곡명
     public string Artist;   // 작곡가
-    public int BPM;         // BPM
+    public float BPM;         // BPM
     public int Bar;         // Bar (한마디 == 한칸)
     public int Time;        // 곡의 시간
 
-    public MusicInfoItem(string title, string artist, int bpm, int bar, int time)
+    public MusicInfoItem(string title, string artist, float bpm, int bar, int time)
     {
         Title = title;
         Artist = artist;
@@ -102,7 +102,7 @@ public class ChartingItem
     public int Beat;                     // 채보프로그램의 한줄(4/4박이면 4마디가 한줄)을 기준 
     public int AnimationIndex;           // 애니메이션의 인덱스
     public float Bar;                    // 한줄에 들어가는 칸
-    public float Interval;               // 시간적인 간격 조정(Delay)
+    public string Interval;              // 시간적인 간격 조정(Delay)
     public float BallAngle;              // 강제로 볼의 각도를 변경
     public float BallAngleTime;          // 볼각도 도달 시간
     public float Speed;                  // Beat당 공이 몇도 이동하는지
@@ -128,7 +128,7 @@ public class ChartingItem
     public List<DummyOutObstacle> DummyOutObstacleElements = new List<DummyOutObstacle>();  // 바깥쪽 가시 스폰위치
     public List<DummyInObstacle> DummyInObstacleElements = new List<DummyInObstacle>();     // 안쪽 가시 스폰 위치
 
-    public ChartingItem(int beat, int animationIndex, float bar, float interval, float ballAngle, float ballTime, float speed, float speedTime, string dodgePoint, string dummyDodge, string outObstacle, string dummyOut, string inObstacle, string dummyIn, int savePoint)
+    public ChartingItem(int beat, int animationIndex, float bar, string interval, float ballAngle, float ballTime, float speed, float speedTime, string dodgePoint, string dummyDodge, string outObstacle, string dummyOut, string inObstacle, string dummyIn, int savePoint)
     {
         // Beat
         Beat = beat;
@@ -228,7 +228,7 @@ public class ChartingList : List<ChartingItem>
 public class BMWReader : CsvReader
 {
     private MusicInfoItem _musicInfoItem;
-    private List<AnimationItem> _animationItem = new List<AnimationItem>();  // KD_Han : 필요시 추가하겠습니다.
+    private List<AnimationItem> _animationItem = new List<AnimationItem>();
     private List<ChartingItem> _chartingItem = new List<ChartingItem>();
 
     public MusicInfoItem MusicInfoItem { get { return _musicInfoItem; } }
@@ -279,7 +279,7 @@ public class BMWReader : CsvReader
                         _musicInfoItem = new MusicInfoItem(
                             args[count++].Trim(),
                             args[count++].Trim(),
-                            Convert.ToInt32(args[count++].Trim()),
+                            float.Parse(args[count++].Trim()),
                             Convert.ToInt32(args[count++].Trim()),
                             Convert.ToInt32(args[count++].Trim())                            
                             );
@@ -321,7 +321,7 @@ public class BMWReader : CsvReader
                                 Convert.ToInt32(args[count++].Trim()),        // 채보프로그램의 한줄(4/4박이면 4마디가 한줄)을 기준
                                 Convert.ToInt32(args[count++].Trim()),        // 사용할 애니메이션의 인덱스
                                 float.Parse(args[count++].Trim()),            // 칸의 수
-                                float.Parse(args[count++].Trim()),            // 정박에서 시작하기위한 Interval
+                                args[count++].Trim(),                         // 정박에서 시작하기위한 Interval // Change float to String
                                 float.Parse(args[count++].Trim()),            // 강제로 볼의 각도를 변경
                                 float.Parse(args[count++].Trim()),            // 변경된 각도까지 도달 하는 시간
                                 float.Parse(args[count++].Trim()),            // Beat당 공이 몇도 이동하는지

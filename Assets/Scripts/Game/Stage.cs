@@ -384,7 +384,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
         ChangeBar();
 
-        AddInterval();
+        AddInterval(beatItem);
 
         ChangeBallAngle();
 
@@ -430,13 +430,14 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         }
     }
 
-    protected virtual void AddInterval()
+    protected virtual void AddInterval(ChartingItem item)
     {
-        var beatItem = bmwReader.ChartingItem[_currentLine];
+        item = bmwReader.ChartingItem[_currentLine];
 
-        if (beatItem.Interval >= 0)
+        if (item.Interval.ToUpper() != "NONE")
         {
-            _timer -= beatItem.Interval;
+            float _bmwInterval = float.Parse(item.Interval);
+            _timer += _bmwInterval;
         }
     }
 
@@ -711,14 +712,12 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
                 if (null != GlobalState.Instance.UserData.data.InnerOperationKey && GlobalState.Instance.UserData.data.InnerOperationKey.Length > 0
                     && null != GlobalState.Instance.UserData.data.OuterOperationKey && GlobalState.Instance.UserData.data.OuterOperationKey.Length > 0)
                 {
-                    SeperateChangeDirection();
-                    ChangeDirectionEffect();
+                    SeperateChangeDirection();                   
                 }
                 else
                 {
                     // 키 분리 구분 > 분리 > 커스텀 한 키가 없을 땐 스페이스로 통일
                     IntegrationChangeDirection();
-                    ChangeDirectionEffect();
                 }
             }
             else
@@ -726,8 +725,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
                 // 키 분리 구분 > 통합
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    IntegrationChangeDirection();
-                    ChangeDirectionEffect();
+                    IntegrationChangeDirection();                    
                 }
             }
         }
@@ -742,12 +740,14 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             {
                 _isInState = true;
                 ballRadius = inRadius;
+                ChangeDirectionEffect();
             }
             if (!"".Equals(GlobalState.Instance.UserData.data.OuterOperationKey[i])
                     && Input.inputString.Equals(GlobalState.Instance.UserData.data.OuterOperationKey[i]))
             {
                 _isInState = false;
                 ballRadius = outRadius;
+                ChangeDirectionEffect();
             }
         }
     }
@@ -759,10 +759,12 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         if (_isInState)
         {
             ballRadius = inRadius;
+            ChangeDirectionEffect();
         }
         else
         {
             ballRadius = outRadius;
+            ChangeDirectionEffect();
         }
     }
 
@@ -814,10 +816,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         {
             GlobalState.Instance.SavePointAngle = beatItem.BallAngle;
 
-            if (beatItem.Interval >= 0)
-            {
-                _timer -= beatItem.Interval;
-            }
+            AddInterval(beatItem);
 
             Center.transform.localEulerAngles = new Vector3(0f, 0f, -GlobalState.Instance.SavePointAngle);
             Ball.transform.localPosition = Center.transform.localPosition + Center.transform.up * ballRadius;
