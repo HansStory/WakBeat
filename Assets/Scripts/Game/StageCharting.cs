@@ -7,6 +7,8 @@ using DG.Tweening;
 
 public class StageCharting : Stage
 {
+    public TMP_Text currentLine;
+
     [Space(10)]
     [Header ("----- [Charting Componenet] -----")]
 
@@ -51,8 +53,9 @@ public class StageCharting : Stage
     {
         base.Init();
 
-        CreateSpawnPoint();        
+        CreateSpawnPoint();
 
+        currentLine.text = $"Current Line : {_currentLine}";
         TextGameMode.text = $"Game Mode \n {_isGameMode}";
         TextAutoMode.text = $"Auto Mode \n {_isAutoMode}";
     }
@@ -106,6 +109,7 @@ public class StageCharting : Stage
     {
         base.PlayProcess();
 
+        currentLine.text = $"Current Line : {_currentLine}";
         DebugElements[CurrentLine].text = $"Current Line : {_currentLine}";
     }
 
@@ -167,6 +171,7 @@ public class StageCharting : Stage
         _savePointTime = 0f;
 
         TextPause.text = "Pause";
+        ClearRate.text = $"Clear Rate\n0%";
     }
 
 
@@ -226,8 +231,6 @@ public class StageCharting : Stage
     private void ResetDebugValue()
     {
         var musicInfo = bmwReader.MusicInfoItem;
-
-        CurrentLineText.text = $"Current Line : {_currentLine}";
 
         DebugElements[Title].text = $"∞Ó∏Ì : {musicInfo.Title}";
         DebugElements[Artist].text = $"¿€∞Ó∞° : {musicInfo.Artist}";

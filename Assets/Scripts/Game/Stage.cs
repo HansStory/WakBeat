@@ -41,10 +41,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     [Header("[ Save Point ]")]
     public GameObject[] SavePoint;
 
-    public TMP_Text CurrentLineText;
-
-    [Header("[ Count Down ]")] 
-    public TMP_Text countDownText;
+    public Text ClearRate;
 
     [Header("[ Animation ]")]
     public Animation StageAnim;
@@ -142,6 +139,8 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
         // Key ÀÔ·Â ºÎ
         _keyDivision = null == GlobalState.Instance.UserData.data.KeyDivision ? "Integration" : GlobalState.Instance.UserData.data.KeyDivision;
+
+        ClearRate.text = $"Clear Rate\n0%";
 
         //--------------------------------------------------------------------------
         // Read Config
@@ -392,12 +391,25 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
         ShowChartingItems();
 
-        CurrentLineText.text = $"Current Line : {_currentLine}";    
+        TweenClearRate();
     }
 
     protected virtual void PlayBeat()
     {
         
+    }
+
+    protected virtual void TweenClearRate()
+    {
+        if (_currentLine > 0)
+        {
+            float _rate = (((float)_currentLine + 1) / (float)_totalBeatCount) * 100f;
+            ClearRate.DOText($"Clear Rate\n{_rate.ToString("F2")}%", _tick);
+        }
+        else
+        {
+            ClearRate.DOText($"Clear Rate\n0%", _beatTime);
+        }
     }
 
     private string _animationName = string.Empty;
@@ -614,7 +626,6 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
         Center.transform.Rotate(0f, 0f, (Time.deltaTime / _beatTime) * -speed);
         OperateBallMovement();
-
 
         if (_currentLine < bmwReader.ChartingItem.Count - 1)
         {
