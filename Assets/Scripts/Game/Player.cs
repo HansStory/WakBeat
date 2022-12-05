@@ -5,93 +5,25 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private StageBase _stageBase;
-    private GameObject _objCenter;
-
-    private Rigidbody2D _myRigid;
-    
-    private float ballRadius = 0;
-    private float outRadius = 355f;
-    private float inRadius = 312f;
-
-    private CountDownStage _countDownStage;
-    // Start is called before the first frame update
-    private void Awake()
+    void OnTriggerEnter2D(Collider2D other)
     {
-        _stageBase = new StageBase();
-        _objCenter = GameObject.Find("Center");
-        _countDownStage = new CountDownStage();
-    }
 
-    void Start()
-    {
-        ballRadius = outRadius;
-
-        if (this.GetComponent<Rigidbody2D>() != null)
+        if (other.gameObject.CompareTag("SavePoint"))
         {
-            _myRigid = this.GetComponent<Rigidbody2D>();
+            Stage.Instance.SavePointEnter();
 
-            _myRigid.simulated = Config.Instance.GameMode;
+            Destroy(other.gameObject);
         }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (!GlobalState.Instance.IsPlayerDied)
+        if (other.gameObject.CompareTag("Obstacle"))
         {
-            OperateBallMovement();    
+            Stage.Instance.PlayerDie();
         }
-        else
+
+        if (other.gameObject.CompareTag("DodgePoint"))
         {
-            this.transform.localPosition = Vector3.zero;
+            Stage.Instance.IntegrationChangeDirection();
         }
-        
+
     }
-    
-    void OperateBallMovement()
-    {
-        this.transform.localPosition = _objCenter.transform.localPosition + _objCenter.transform.up * ballRadius;
-        ChangeDirection();
-    }
-
-    private bool isUpState = true;
-    void ChangeDirection()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            isUpState = !isUpState;
-
-            if (isUpState)
-            {
-                ballRadius = outRadius;
-            }
-            else
-            {
-                ballRadius = inRadius;
-            }
-        }
-    }
-    
-    //void OnTriggerEnter2D(Collider2D col)
-    //{
-    //    if (col.gameObject.CompareTag("SavePoint"))
-    //    {
-    //        Debug.Log("세이브 포인트!!");
-    //        Destroy(col.gameObject);
-    //        _stageBase.SavePointEnter();
-    //    }
-
-    //    if (col.gameObject.CompareTag("Obstacle"))
-    //    {
-    //        PlayerDie();
-    //    }
-        
-    //}
-
-    //void PlayerDie()
-    //{
-    //    _stageBase.PlayerDieAndSavePointPlay();
-    //}
-    
 }

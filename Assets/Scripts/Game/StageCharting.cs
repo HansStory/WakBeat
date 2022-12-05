@@ -1,16 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-using DG.Tweening;
 
 public class StageCharting : Stage
 {
-    public TMP_Text currentLine;
-
     [Space(10)]
     [Header ("----- [Charting Componenet] -----")]
+    public TMP_Text TextCurrentLine;
 
     public TMP_Dropdown DropDownAlbum;
     public TMP_Dropdown DropDownStage;
@@ -29,7 +24,6 @@ public class StageCharting : Stage
     public GameObject HalfAngle;
     public TMP_Text TextHalfAngle;
 
-    private bool isplay = false;
     private bool _isShowDebugtab = true;
 
     //------------ For Debuging -----------
@@ -55,7 +49,7 @@ public class StageCharting : Stage
 
         CreateSpawnPoint();
 
-        currentLine.text = $"Current Line : {_currentLine}";
+        TextCurrentLine.text = $"Current Line : {_currentLine}";
         TextGameMode.text = $"Game Mode \n {_isGameMode}";
         TextAutoMode.text = $"Auto Mode \n {_isAutoMode}";
     }
@@ -110,7 +104,7 @@ public class StageCharting : Stage
     {
         base.PlayProcess();
 
-        currentLine.text = $"Current Line : {_currentLine}";
+        TextCurrentLine.text = $"Current Line : {_currentLine}";
         DebugElements[CurrentLine].text = $"Current Line : {_currentLine}";
     }
 
@@ -189,7 +183,6 @@ public class StageCharting : Stage
         savePointNum = 0;
         _totalBeatCount = 0;
 
-        _currentBeat = 0;
         _isPlay = false;
         _isPause = false;
         Time.timeScale = 1;        
@@ -197,17 +190,17 @@ public class StageCharting : Stage
 
     private void HideChartingItems()
     {
-        foreach (var dodgeList in DodgePointList)
+        foreach (var dodgeList in DodgePointLists)
         {
             dodgeList.SetActive(false);
         }
 
-        foreach (var inList in InObstacleList)
+        foreach (var inList in InObstacleLists)
         {
             inList.SetActive(false);
         }
 
-        foreach (var outList in OutObstacleList)
+        foreach (var outList in OutObstacleLists)
         {
             outList.SetActive(false);
         }
@@ -239,7 +232,7 @@ public class StageCharting : Stage
         DebugElements[Bar].text = $"Bar : {musicInfo.Bar}";
         DebugElements[TickTime].text = $"1Bar Time : {_tick}초";
         DebugElements[LineTime].text = $"1Line Time : {_beatTime}초";
-        DebugElements[BallSpeed].text = $"Ball Speed : {(int)speed}";
+        DebugElements[BallSpeed].text = $"Ball Speed : {(int)_ballSpeed}";
         DebugElements[BallAngle].text = $"Ball Angle : {Center.transform.localEulerAngles.z}";
         DebugElements[SongTotalTime].text = $"현재 곡의 진행 시간 : {audioSource.time.ToString("F2")}";
         DebugElements[CurrentSongTime].text = $"현재 곡의 총 시간 : {audioSource.clip.length}";
@@ -279,9 +272,9 @@ public class StageCharting : Stage
     {
         _isGameMode = !_isGameMode;
 
-        if (GetComponent<Rigidbody2D>() != null)
+        if (Player.GetComponent<Rigidbody2D>() != null)
         {
-            Rigidbody2D rigid = GetComponent<Rigidbody2D>();
+            Rigidbody2D rigid = Player.GetComponent<Rigidbody2D>();
             rigid.simulated = _isGameMode;
         }
 
@@ -292,7 +285,7 @@ public class StageCharting : Stage
     {
         _isAutoMode = !_isAutoMode;
 
-        foreach (var dodge in DodgePointList)
+        foreach (var dodge in DodgePointLists)
         {
             if (dodge.GetComponent<BoxCollider2D>() != null)
             {
@@ -425,7 +418,7 @@ public class StageCharting : Stage
         }
     }
 
-    [SerializeField, Range(1, 100)] private int size = 25;
+    [SerializeField, Range(1, 100)] private int size = 50;
     [SerializeField] private Color color = Color.green;
     private void OnGUI()
     {
@@ -433,7 +426,7 @@ public class StageCharting : Stage
         {
             GUIStyle style = new GUIStyle();
 
-            Rect rect = new Rect(30, 30, Screen.width, Screen.height);
+            Rect rect = new Rect(100, 150, Screen.width, Screen.height);
             style.alignment = TextAnchor.UpperLeft;
             style.fontSize = size;
             style.normal.textColor = color;

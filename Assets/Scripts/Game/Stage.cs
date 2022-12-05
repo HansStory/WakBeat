@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 //using System.IO;
 using DG.Tweening;
 
@@ -13,79 +11,78 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     public Image CircleSkin;
     public Image BackGroundSkin;
 
-    public Image InCircleFade;
-    public Image OutCircleFade;
-
     public RectTransform PlayGround;
     public GameObject Center;
-    public GameObject Ball;
-
-    [Header("[ Instance Object Container ]")]
-    public Transform Container;
-    public GameObject CenterPivot;
-
-    [Header("[ Dodge Point ]")]
-    public GameObject DodgePoint;
-    public Transform DodgePointBase;
-    public List<GameObject> DodgePointList = new List<GameObject>();
-
-    [Header("[ Obstacles ]")]
-    public GameObject[] Obstacles;
-
-    public Transform ObstacleInBase;
-    public List<GameObject> InObstacleList = new List<GameObject>();
-
-    public Transform ObstacleOutBase;
-    public List<GameObject> OutObstacleList = new List<GameObject>();
-
-    [Header("[ Save Point ]")]
-    public GameObject[] SavePoint;
-
-    public Text ClearRate;
+    public GameObject Player;
 
     [Header("[ Animation ]")]
     public Animation StageAnim;
 
-    //---------------------------------------------------
-    protected bool _isGameMode = false;
-    protected bool _isAutoMode = false;
+    [Header("[ Tween Elements ]")]
+    public Image InCircleFade;
+    public Image OutCircleFade;
+    public Text ClearRate;
 
+    [Header("[ Instance Object Container ]")]
+    public Transform Container;
+    public GameObject CenterPivot;      //게임 로직과 관계없이 중심 Pivot
+
+    [Header("[ Dodge Point ]")]
+    public GameObject DodgePoint;
+    public Transform DodgePointBase;
+    public List<GameObject> DodgePointLists = new List<GameObject>();
+
+    [Header("[ Obstacles ]")]
+    public GameObject[] Obstacles;
+    public Transform ObstacleInBase;
+    public List<GameObject> InObstacleLists = new List<GameObject>();
+
+    public Transform ObstacleOutBase;
+    public List<GameObject> OutObstacleLists = new List<GameObject>();
+
+    [Header("[ Save Point ]")]
+    public GameObject[] SavePoint;
+
+    //---------------------------------------------------
     protected float dodgeRadius = 334f;
     protected float outRadius = 355f;
     protected float inRadius = 312f;
     protected float ballRadius = 0;
-
     protected float variableRadius;
-    protected float speed = 360;
 
-    protected Rigidbody2D playerRigid = null;
-    protected CircleCollider2D playerCollider = null;
-    protected BMWReader bmwReader = null;
-    protected AudioSource audioSource = null;
+    protected BMWReader bmwReader = null;        // 채보 스크립트
+    protected AudioSource audioSource = null;    
 
-    protected string _title = "";                // 곡 제목
-    protected string _artist = "";               // 작곡가
+    protected string _title = string.Empty;      // 곡 제목
+    protected string _artist = string.Empty;     // 작곡가
+
     protected float _bpm = 0;                    // Bar Per Minute
     protected float _bar = 0;                    // Bar
     protected float _interval = 0f;              // Interval
+
     protected float _tick = 0;                   // 1 Bar(칸)에 소요되는 시간
     protected float _beatTime = 0;               // 1 Line에 소요되는 시간
+    protected float _ballSpeed = 360;            // 1 Line동안 움직이는 Ball의 스피드
+
     public static int _currentLine = -1;         // 현재 진행중인 Line의 아이템들
-    protected float _timer = 0f;                 // 음악 진행 시간
-    protected float _playTime = 0f;              // Stage 시작후 총 흐른 시간
-    protected static int savePointNum = 0;       // Save Point Beat Item Line
     protected int _totalBeatCount = 0;           // 총 Beat 수
 
-    private float _musicPlayTime = 0f;           // 곡의 총 시간
+    protected float _timer = 0f;                 // 음악 로직을 처리하기 위한 타이머
+    protected float _playTime = 0f;              // Stage 시작후 총 흐른 시간
+    protected float _musicCurrentTime = 0f;      // 곡의 현재 진행중인 시간
+    protected float _musicTotalTime = 0f;        // 곡의 총 시간
 
-    protected static int _spawnCount = 72;
+    protected static int savePointNum = 0;       // Save Point Beat Item Line
+
+    protected static int _spawnCount = 72;       // TO DO : Object Pooling
     protected static float _spawnAngle = -5f;
 
-    protected int _currentBeat = 0;              // 현재 진행중인 Beat 수
     protected bool _isPlay = false;              // 게임 진행중 체크
+    protected bool _isGameMode = false;          // 게임 모드 체크
+    protected bool _isAutoMode = false;          // 오토 모드 체크
 
     // Key 입력 부
-    private string _keyDivision = "";
+    private string _keyDivision = string.Empty;
 
     public virtual string Directory
     {
@@ -118,6 +115,15 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         bmwReader = new BMWReader();
         bmwReader.ReadFile(Directory + "/" + BMWFile);
 
+        // Read Config
+        _isGameMode = Config.Instance.GameMode;
+        if (Player.GetComponent<Rigidbody2D>())
+        {
+            Player.GetComponent<Rigidbody2D>().simulated = _isGameMode;
+        }
+
+        _isAutoMode = Config.Instance.AutoMode;
+
         //Get User Data (.json file)
         GetBallSkin();
 
@@ -143,28 +149,12 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         ClearRate.text = $"Clear Rate\n0%";
 
         //--------------------------------------------------------------------------
-        // Read Config
-        _isGameMode = Config.Instance.GameMode;
-        _isAutoMode = Config.Instance.AutoMode;
-
-        // Set Physics
-        if (GetComponent<Rigidbody2D>() != null)
-        {
-            playerRigid = GetComponent<Rigidbody2D>();
-            playerRigid.simulated = _isGameMode;
-        }
-
-        if (GetComponent<CircleCollider2D>() != null)
-        {
-            playerCollider = GetComponent<CircleCollider2D>();
-            playerCollider.offset = new Vector2(Ball.transform.localPosition.x, Ball.transform.localPosition.y);
-        }
-
         GlobalState.Instance.SavePointAngle = bmwReader.ChartingItem[0].BallAngle;
     }
 
     protected virtual void Start()
     {
+        //StartGame();
         Invoke($"{nameof(StartGame)}", 1f);
     }
 
@@ -196,9 +186,9 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         // Init Start Ball Rotation
         float ballAngle = 0;
 
-        if (bmwReader.ChartingItem[_currentBeat].BallAngle >= 0)
+        if (bmwReader.ChartingItem[0].BallAngle >= 0)
         {
-            ballAngle = bmwReader.ChartingItem[_currentBeat].BallAngle;
+            ballAngle = bmwReader.ChartingItem[0].BallAngle;
         }
         else
         {
@@ -207,7 +197,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
         Center.transform.localEulerAngles = new Vector3(0f, 0f, -ballAngle);
 
-        Ball.transform.localPosition = Center.transform.localPosition + Center.transform.up * ballRadius;
+        Player.transform.localPosition = Center.transform.localPosition + Center.transform.up * ballRadius;
     }
 
     protected virtual void GetBallSkin()
@@ -264,7 +254,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
                     dodge.GetComponent<BoxCollider2D>().enabled = _isAutoMode;
                 }
 
-                DodgePointList.Add(dodge);
+                DodgePointLists.Add(dodge);
 
                 dodge.SetActive(false);
 
@@ -290,7 +280,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             {
                 inObstacle.transform.localPosition = Center.transform.localPosition + Center.transform.up * radius;
                 inObstacle.transform.localEulerAngles = Center.transform.localEulerAngles + new Vector3(0f, 0f, 180f);
-                InObstacleList.Add(inObstacle);
+                InObstacleLists.Add(inObstacle);
 
                 inObstacle.SetActive(false);
 
@@ -311,7 +301,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             {
                 outObstacle.transform.localPosition = Center.transform.localPosition + Center.transform.up * radius;
                 outObstacle.transform.localEulerAngles = Center.transform.localEulerAngles;
-                OutObstacleList.Add(outObstacle);
+                OutObstacleLists.Add(outObstacle);
 
                 outObstacle.SetActive(false);
 
@@ -337,11 +327,11 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     {
         if (bmwReader.ChartingItem[0].Speed == -1)
         {
-            speed = 360f;
+            _ballSpeed = 360f;
         }
         else
         {
-            speed = bmwReader.ChartingItem[0].Speed;
+            _ballSpeed = bmwReader.ChartingItem[0].Speed;
         }
     }
 
@@ -371,13 +361,12 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     protected virtual void PlayProcess()
     {
-        var beatItem = bmwReader.ChartingItem[_currentLine]; //beatItems[_currentBeat];
+        var beatItem = bmwReader.ChartingItem[_currentLine];    //beatItems[_currentBeat];
         if (beatItem == null)
         {
             Debug.LogError("PlayPorocess beat Item is null");
             return;
         }
-        //_processPlaying = true;
 
         PlayAnimation(_animationName);
 
@@ -392,11 +381,6 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         ShowChartingItems();
 
         TweenClearRate();
-    }
-
-    protected virtual void PlayBeat()
-    {
-        
     }
 
     protected virtual void TweenClearRate()
@@ -482,7 +466,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
                 beatItem.SpeedTime = 0;
             }
 
-            DOTween.To(() => speed, x => speed = x, beatItem.Speed, beatItem.SpeedTime);
+            DOTween.To(() => _ballSpeed, x => _ballSpeed = x, beatItem.Speed, beatItem.SpeedTime);
         }
     }
 
@@ -506,7 +490,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         if (beatItem != null)
         {
             // Hide
-            foreach (var dodgeList in DodgePointList)
+            foreach (var dodgeList in DodgePointLists)
             {
                 dodgeList.SetActive(false);
             }
@@ -516,7 +500,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             {
                 foreach (var dodge in beatItem.DodgePointElements)
                 {
-                    DodgePointList[dodge.Index].gameObject.SetActive(true);
+                    DodgePointLists[dodge.Index].gameObject.SetActive(true);
                 }
             }
 
@@ -525,7 +509,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             {
                 foreach (var dummy in beatItem.DummyDodgePointElements)
                 {
-                    DodgePointList[dummy.Index].gameObject.SetActive(true);
+                    DodgePointLists[dummy.Index].gameObject.SetActive(true);
                 }
             }
         }
@@ -538,7 +522,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         if (beatItem != null)
         {
             // Hide
-            foreach (var inList in InObstacleList)
+            foreach (var inList in InObstacleLists)
             {
                 inList.SetActive(false);
             }
@@ -548,7 +532,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             {
                 foreach (var inObstacle in beatItem.InObstacleElements)
                 {
-                    InObstacleList[inObstacle.Index].gameObject.SetActive(true);
+                    InObstacleLists[inObstacle.Index].gameObject.SetActive(true);
                 }
             }
 
@@ -557,7 +541,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             {
                 foreach (var dummy in beatItem.DummyInObstacleElements)
                 {
-                    InObstacleList[dummy.Index].gameObject.SetActive(true);
+                    InObstacleLists[dummy.Index].gameObject.SetActive(true);
                 }
             }         
         }
@@ -570,7 +554,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         if (beatItem != null)
         {
             // Hide
-            foreach (var outList in OutObstacleList)
+            foreach (var outList in OutObstacleLists)
             {
                 outList.SetActive(false);
             }
@@ -580,7 +564,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             {
                 foreach (var outObstacle in beatItem.OutObstacleElements)
                 {
-                    OutObstacleList[outObstacle.Index].gameObject.SetActive(true);
+                    OutObstacleLists[outObstacle.Index].gameObject.SetActive(true);
                 }
             }
 
@@ -589,7 +573,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             {
                 foreach (var dummy in beatItem.DummyOutObstacleElements)
                 {
-                    OutObstacleList[dummy.Index].gameObject.SetActive(true);
+                    OutObstacleLists[dummy.Index].gameObject.SetActive(true);
                 }
             }
         }
@@ -624,7 +608,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         _playTime += Time.deltaTime;
         _timer += Time.deltaTime;
 
-        Center.transform.Rotate(0f, 0f, (Time.deltaTime / _beatTime) * -speed);
+        Center.transform.Rotate(0f, 0f, (Time.deltaTime / _beatTime) * -_ballSpeed);
         OperateBallMovement();
 
         if (_currentLine < bmwReader.ChartingItem.Count - 1)
@@ -696,12 +680,8 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     protected virtual void OperateBallMovement()
     {
         // 공의 움직임 구현
-        Ball.transform.localEulerAngles = new Vector3(0f, 0f, Center.transform.localEulerAngles.z);
-        Ball.transform.localPosition = Center.transform.localPosition + Center.transform.up * ballRadius;
-
-        // 공의 움직임에 따라 Stage의 BoxCollider2D도 같은 위치에 있도록 구현
-        playerCollider.offset = new Vector2((Ball.transform.localPosition.x * PlayGround.localScale.x) + PlayGround.localPosition.x, (Ball.transform.localPosition.y * PlayGround.localScale.y) + PlayGround.localPosition.y);
-        playerCollider.radius = 15f * Mathf.Abs(PlayGround.localScale.x);
+        Player.transform.localEulerAngles = new Vector3(0f, 0f, Center.transform.localEulerAngles.z);
+        Player.transform.localPosition = Center.transform.localPosition + Center.transform.up * ballRadius;
 
         // Input Change Direction
         if (!_isAutoMode)
@@ -713,7 +693,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     // 키 입력 처리
     #region Change Direction
     protected bool _isInState = false;
-    protected virtual void InputChangeDirection()
+    public virtual void InputChangeDirection()
     {
         if (Input.anyKey && null != Input.inputString && "" != Input.inputString)
         {
@@ -742,7 +722,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         }
     }
 
-    protected virtual void SeperateChangeDirection()
+    public virtual void SeperateChangeDirection()
     {
         for (int i = 0; i < GlobalState.Instance.UserData.data.InnerOperationKey.Length; i++)
         {
@@ -763,7 +743,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         }
     }
 
-    protected virtual void IntegrationChangeDirection()
+    public virtual void IntegrationChangeDirection()
     {
         _isInState = !_isInState;
 
@@ -800,7 +780,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     #endregion
 
     protected float _savePointTime = 0f;
-    protected virtual void SavePointEnter()
+    public virtual void SavePointEnter()
     {
         if (SavePointTween.IsPlaying())
         {
@@ -812,6 +792,8 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         GlobalState.Instance.SavePoint = _currentLine;
         GlobalState.Instance.SaveMusicPlayingTime = audioSource.time;
         GlobalState.Instance.SavePointAngle = Center.transform.localEulerAngles.z;
+
+        EnterSavePointEffect();
     }
 
     protected virtual void ResetSavePointState()
@@ -830,7 +812,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             AddInterval(beatItem);
 
             Center.transform.localEulerAngles = new Vector3(0f, 0f, -GlobalState.Instance.SavePointAngle);
-            Ball.transform.localPosition = Center.transform.localPosition + Center.transform.up * ballRadius;
+            Player.transform.localPosition = Center.transform.localPosition + Center.transform.up * ballRadius;
         }
         else
         {
@@ -850,34 +832,9 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         ResetSavePointState();
     }
 
-    protected virtual void PlayerDie()
+    public virtual void PlayerDie()
     {
         PlayerDieAndSavePointPlay();
-    }
-
-
-    protected virtual void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("SavePoint"))
-        {
-            SavePointEnter();
-            EnterSavePointEffect();
-
-            Destroy(other.gameObject);
-            //Debug.Log("Heat Save Point");
-        }
-
-        if (other.gameObject.CompareTag("Obstacle"))
-        {
-            PlayerDie();
-            //Debug.Log("Heat Obstacle");
-        }
-
-        if (other.gameObject.CompareTag("DodgePoint"))
-        {
-            IntegrationChangeDirection();
-            //Debug.Log("Heat Dodge Point");
-        }
     }
 
     //TO DO : Add Effect
@@ -886,109 +843,6 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     }
 
-    // 테스트 스크립트 (완성본때 삭제 예정)
-    #region Test Scripts
-    void ViewItemsTest(int currentItem)
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            var beatItem = bmwReader.ChartingItem[currentItem];
-
-            if (beatItem != null)
-            {
-                for (int i = 0; i < DodgePointList.Count; i++)
-                {
-                    DodgePointList[i].SetActive(false);
-                }
-
-                for (int i = 0; i < beatItem.DodgePointElements.Count; i++)
-                {
-                    DodgePointList[beatItem.DodgePointElements[i].Index].gameObject.SetActive(true);
-                }
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            var beatItem = bmwReader.ChartingItem[currentItem];
-
-            if (beatItem != null)
-            {
-                for (int i = 0; i < InObstacleList.Count; i++)
-                {
-                    InObstacleList[i].SetActive(false);
-                }
-
-                for (int i = 0; i < beatItem.InObstacleElements.Count; i++)
-                {
-                    InObstacleList[beatItem.InObstacleElements[i].Index].gameObject.SetActive(true);
-                }
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            var beatItem = bmwReader.ChartingItem[currentItem];
-
-            if (beatItem != null)
-            {
-                for (int i = 0; i < OutObstacleList.Count; i++)
-                {
-                    OutObstacleList[i].SetActive(false);
-                }
-
-                for (int i = 0; i < beatItem.OutObstacleElements.Count; i++)
-                {
-                    OutObstacleList[beatItem.OutObstacleElements[i].Index].gameObject.SetActive(true);
-                }
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            ShowSavePoint();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            ShowChartingItems();
-        }
-    }
-
-    void TweenTest()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            DoMovePlayGround(new Vector3(0f, -300f, 0f), 2f, 0f, Ease.Unset);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            DoScalePlayGround(Vector3.one * 0.5f, 2f, 0f, Ease.Unset) ;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            DoRotatePlayGround(new Vector3(0f, 0f, 90f), 2f, 0f, Ease.Unset);
-        }
-    }
-
-    void AnimaTest()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            StageAnim.Play("Common_Bounce");
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            StageAnim.Play("Common_Heave");
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            StageAnim.Play("Common_Surge");
-        }
-    }
-    #endregion
     // Do Tween Basic (완성본때 삭제 예정)
     #region Basic Tween
     Tween moveTween;
