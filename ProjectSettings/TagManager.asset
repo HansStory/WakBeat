@@ -4,12 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - auto
-  - odd
-  - odd1
-  - even
-  - even1
   - Obstacle
+  - DodgePoint
   - SavePoint
   layers:
   - Default
