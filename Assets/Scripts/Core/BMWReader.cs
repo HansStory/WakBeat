@@ -304,8 +304,7 @@ public class BMWReader : CsvReader
 
                             _animationItem.Add(itemAnimation);
 
-
-                            Debug.Log($"Anim Items : {itemAnimation.Index},{itemAnimation.StageName},{itemAnimation.AnimationName}");
+                            //Debug.Log($"Anim Items : {itemAnimation.Index},{itemAnimation.StageName},{itemAnimation.AnimationName}");
                         }
                         catch (Exception e)
                         {
