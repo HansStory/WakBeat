@@ -80,6 +80,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     protected static float _spawnAngle = -5f;
 
     protected bool _isPlay = false;              // 게임 진행중 체크
+    protected bool _isPause = false;             // 일시정지 체크
     protected bool _isGameMode = false;          // 게임 모드 체크
     protected bool _isAutoMode = false;          // 오토 모드 체크
 
@@ -854,6 +855,26 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     protected virtual void EnterSavePointEffect()
     {
 
+    }
+
+    // -------------- UI Setting Function ---------------
+    public virtual void OnClickPause()
+    {
+        if (_isPlay)
+        {
+            _isPause = !_isPause;
+
+            if (_isPause)
+            {
+                Time.timeScale = 0;
+                audioSource.Pause();
+            }
+            else
+            {
+                Time.timeScale = 1;
+                audioSource.Play();
+            }
+        }
     }
 
     // Do Tween Basic (완성본때 삭제 예정)

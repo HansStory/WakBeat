@@ -306,8 +306,7 @@ public class StageCharting : Stage
         StartGame();
     }
 
-    private bool _isPause = false;
-    public void OnClickPause()
+    public override void OnClickPause()
     {
         if (_isPlay)
         {
