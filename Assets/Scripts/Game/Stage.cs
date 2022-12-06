@@ -43,6 +43,8 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     [Header("[ Save Point ]")]
     public GameObject[] SavePoint;
 
+    public Text TextCurrentLine = null;        // 테스트 끝난후 배포시에 제거하겠습니다.
+
     //---------------------------------------------------
     protected float dodgeRadius = 334f;
     protected float outRadius = 355f;
@@ -147,6 +149,11 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         _keyDivision = null == GlobalState.Instance.UserData.data.settingData.keyDivision ? "Integration" : GlobalState.Instance.UserData.data.settingData.keyDivision;
 
         ClearRate.text = $"Clear Rate\n0%";
+
+        if (TextCurrentLine != null)
+        {
+            TextCurrentLine.text = $"Current Line : {_currentLine}";
+        }
 
         //--------------------------------------------------------------------------
         GlobalState.Instance.SavePointAngle = bmwReader.ChartingItem[0].BallAngle;
@@ -381,6 +388,12 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         ShowChartingItems();
 
         TweenClearRate();
+
+        // 테스트 끝난후 배포시에 삭제 예정
+        if (TextCurrentLine != null)
+        {
+            TextCurrentLine.text = $"Current Line : {_currentLine}";
+        }
     }
 
     protected virtual void TweenClearRate()
