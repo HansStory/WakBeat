@@ -206,7 +206,7 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
             // 파일 여부 확인
             _fileYn = false;
 
-            // 파일 없을 시
+            // 파일 없을 시 기본 값 세팅
             SoundManager.Instance.CtrlBGMVolume(0.5f);
             SoundManager.Instance.CtrlSFXVolume(0.5f);
 
@@ -234,8 +234,16 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
                 _skillUnLockYn[i] = "N";
                 _skillUsingYn[i] = "N";
             }
-        }
 
+            GlobalState.Instance.UserData.data.settingData.BGMValue = 0.5f;
+            GlobalState.Instance.UserData.data.settingData.SFXValue = 0.5f;
+            GlobalState.Instance.UserData.data.settingData.keyDivision = "Integration";
+
+            GlobalState.Instance.UserData.data.shopData.skinUnLockYn = _skinUnLockYn;
+            GlobalState.Instance.UserData.data.shopData.skinUsingYn = _skinUsingYn;
+            GlobalState.Instance.UserData.data.shopData.skillUnLockYn = _skillUnLockYn;
+            GlobalState.Instance.UserData.data.shopData.skillUsingYn = _skillUsingYn;
+        }
     }
 
     private void Awake()
