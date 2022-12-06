@@ -209,7 +209,33 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
             // 파일 없을 시
             SoundManager.Instance.CtrlBGMVolume(0.5f);
             SoundManager.Instance.CtrlSFXVolume(0.5f);
+
+            _skinUnLockYn = new string[_skinCount];
+            _skinUsingYn = new string[_skinCount];
+            _skillUnLockYn = new string[_skillCount];
+            _skillUsingYn = new string[_skillCount];
+
+            for (int i = 0; i < _skinCount; i++)
+            {
+                if (i == 0)
+                {
+                    _skinUnLockYn[i] = "Y";
+                    _skinUsingYn[i] = "Y";
+                }
+                else
+                {
+                    _skinUnLockYn[i] = "N";
+                    _skinUsingYn[i] = "N";
+                }
+            }
+
+            for (int i = 0; i < _skillCount; i++)
+            {
+                _skillUnLockYn[i] = "N";
+                _skillUsingYn[i] = "N";
+            }
         }
+
     }
 
     private void Awake()
