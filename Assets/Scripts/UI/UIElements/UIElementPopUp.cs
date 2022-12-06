@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -33,20 +34,29 @@ public class UIElementPopUp : MonoBehaviour
         }
     }
 
+    [SerializeField] private Sprite musicBanner;
     // ÆË¾÷ ¼¼ÆÃ > À½¾Ç Á¤º¸
     public void SetPopUpMusicInfo()
     {
         var _PopUp = (GameObject)Instantiate(MusicInfoPrefab, MusicInfoPanel);
         var PopUpInfo = _PopUp.GetComponent<UIObjectMusicInfo>();
+        int StageIndex = (int)GlobalState.Instance.StageIndex;
+        int AlbumIndex = (int)GlobalState.Instance.AlbumIndex;
         float _duration = 1.5f;
+
+        switch(AlbumIndex)
+        {
+            case 0: musicBanner = GlobalData.Instance.Album.Album1MusicBannerImage[StageIndex]; break;
+            case 1: musicBanner = GlobalData.Instance.Album.Album2MusicBannerImage[StageIndex]; break;
+            case 2: musicBanner = GlobalData.Instance.Album.Album3MusicBannerImage[StageIndex]; break;
+            case 3: musicBanner = GlobalData.Instance.Album.Album4MusicBannerImage[StageIndex]; break;
+        }
 
         if (PopUpInfo)
         {
-            // Music Cover
-            // Music Cover Title
-            // Music Cover Background
-            // Music Title
-            // Music Time
+            // Music Banner
+            PopUpInfo.transform.Find("PopUpWindow").GetComponent<Image>().sprite = musicBanner;
+            PopUpInfo.transform.Find("PopUpWindow").GetComponent<Image>().SetNativeSize();
 
             _PopUp.SetActive(true);
 

@@ -101,3 +101,22 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 158d961069a26ab4db8b655d34f727ab, type: 3}
   - {fileID: 21300000, guid: 74d168d1faf7a384b855d8d4415970f5, type: 3}
   - {fileID: 21300000, guid: 871c331c10a21614e882a4fbadfba951, type: 3}
+  Album1MusicBannerImage:
+  - {fileID: 21300000, guid: 8d9e0787d5759c943ac0a8ccf7adbac9, type: 3}
+  - {fileID: 21300000, guid: e0a5f418b1c23604ca0a49efa8fb759a, type: 3}
+  Album2MusicBannerImage:
+  - {fileID: 21300000, guid: e42d5fac9da253648b38cf6c17da2a7b, type: 3}
+  - {fileID: 21300000, guid: d398d6232bceef24f8024489e04aeeb8, type: 3}
+  - {fileID: 21300000, guid: be5c1a9e2b689d4488489951f55e8d57, type: 3}
+  - {fileID: 21300000, guid: ab896a086f744184d97590e8c099c7d1, type: 3}
+  Album3MusicBannerImage:
+  - {fileID: 21300000, guid: 2af7e8dea22676d499295ab2f0e6afe5, type: 3}
+  - {fileID: 21300000, guid: 14d478aa55dc03c46a52ba92272d2945, type: 3}
+  - {fileID: 21300000, guid: 57f101925fda12f49b22b76f7a068188, type: 3}
+  - {fileID: 21300000, guid: 967e3aba3b7af4446b43afe834d042b4, type: 3}
+  - {fileID: 21300000, guid: af6faa0e3c4c61443a3c5d03eb7b1cea, type: 3}
+  Album4MusicBannerImage:
+  - {fileID: 21300000, guid: e843640e1c66fce48b773fdb615c5de8, type: 3}
+  - {fileID: 21300000, guid: 879657e013f1cf64890d383a83ced412, type: 3}
+  - {fileID: 21300000, guid: afa1cdce8b4015547a2db63c1e76e9a4, type: 3}
+  - {fileID: 21300000, guid: 14ce6cdc05059e146afd14dbd92133ae, type: 3}

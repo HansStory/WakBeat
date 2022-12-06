@@ -53,4 +53,11 @@ public class AlbumInfo : ScriptableObject
     [Space(10)]
     [Header("[ Album Infomation Image ]")]
     public Sprite[] AlbumInfomationImage;
+
+    [Space(10)]
+    [Header("[ Music Banner Image ]")]
+    public Sprite[] Album1MusicBannerImage;
+    public Sprite[] Album2MusicBannerImage;
+    public Sprite[] Album3MusicBannerImage;
+    public Sprite[] Album4MusicBannerImage;
 }
