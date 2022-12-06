@@ -4,8 +4,8 @@ using TMPro;
 public class StageCharting : Stage
 {
     [Space(10)]
-    [Header ("----- [Charting Componenet] -----")]
-    public TMP_Text TextCurrentLine;
+    [Header("----- [Charting Componenet] -----")]
+    //public TMP_Text TextCurrentLine;
 
     public TMP_Dropdown DropDownAlbum;
     public TMP_Dropdown DropDownStage;
@@ -49,7 +49,10 @@ public class StageCharting : Stage
 
         CreateSpawnPoint();
 
-        TextCurrentLine.text = $"Current Line : {_currentLine}";
+        //if (TextCurrentLine != null)
+        //{
+        //    TextCurrentLine.text = $"Current Line : {_currentLine}";
+        //}
         TextGameMode.text = $"Game Mode \n {_isGameMode}";
         TextAutoMode.text = $"Auto Mode \n {_isAutoMode}";
     }
@@ -104,7 +107,10 @@ public class StageCharting : Stage
     {
         base.PlayProcess();
 
-        TextCurrentLine.text = $"Current Line : {_currentLine}";
+        //if (TextCurrentLine != null)
+        //{
+        //    TextCurrentLine.text = $"Current Line : {_currentLine}";
+        //}
         DebugElements[CurrentLine].text = $"Current Line : {_currentLine}";
     }
 
