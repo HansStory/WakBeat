@@ -144,7 +144,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         audioSource = SoundManager.Instance.MusicAudio;
 
         // Key 입력 부
-        _keyDivision = null == GlobalState.Instance.UserData.data.KeyDivision ? "Integration" : GlobalState.Instance.UserData.data.KeyDivision;
+        _keyDivision = null == GlobalState.Instance.UserData.data.settingData.keyDivision ? "Integration" : GlobalState.Instance.UserData.data.settingData.keyDivision;
 
         ClearRate.text = $"Clear Rate\n0%";
 
@@ -202,9 +202,9 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     protected virtual void GetBallSkin()
     {
-        for (int i = 0; i < GlobalState.Instance.UserData.data.SkinUsingYn.Length; i++)
+        for (int i = 0; i < GlobalState.Instance.UserData.data.shopData.skinUsingYn.Length; i++)
         {
-            if (GlobalState.Instance.UserData.data.SkinUsingYn[i].Contains("Y"))
+            if (GlobalState.Instance.UserData.data.shopData.skinUsingYn[i].Contains("Y"))
             {
                 if (BallSkin)
                 {
@@ -631,7 +631,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     {
         _isPlay = false;
 
-        if (GlobalState.Instance.UserData.data.BackgroundProcActive)
+        if (DataManager.dataBackgroundProcActive)
         {
             SaveGameResult();
 
@@ -653,7 +653,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     {
         _isPlay = false;
 
-        if (GlobalState.Instance.UserData.data.BackgroundProcActive)
+        if (DataManager.dataBackgroundProcActive)
         {
             SaveGameResult();
 
@@ -700,8 +700,8 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             if (_keyDivision.Equals("Separation"))
             {
                 // 키 분리 구분 > 분리
-                if (null != GlobalState.Instance.UserData.data.InnerOperationKey && GlobalState.Instance.UserData.data.InnerOperationKey.Length > 0
-                    && null != GlobalState.Instance.UserData.data.OuterOperationKey && GlobalState.Instance.UserData.data.OuterOperationKey.Length > 0)
+                if (null != GlobalState.Instance.UserData.data.settingData.innerOperationKey && GlobalState.Instance.UserData.data.settingData.innerOperationKey.Length > 0
+                    && null != GlobalState.Instance.UserData.data.settingData.outerOperationKey && GlobalState.Instance.UserData.data.settingData.outerOperationKey.Length > 0)
                 {
                     SeperateChangeDirection();                   
                 }
@@ -724,17 +724,17 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     public virtual void SeperateChangeDirection()
     {
-        for (int i = 0; i < GlobalState.Instance.UserData.data.InnerOperationKey.Length; i++)
+        for (int i = 0; i < GlobalState.Instance.UserData.data.settingData.innerOperationKey.Length; i++)
         {
-            if (!"".Equals(GlobalState.Instance.UserData.data.InnerOperationKey[i])
-                    && Input.inputString.Equals(GlobalState.Instance.UserData.data.InnerOperationKey[i]))
+            if (!"".Equals(GlobalState.Instance.UserData.data.settingData.innerOperationKey[i])
+                    && Input.inputString.Equals(GlobalState.Instance.UserData.data.settingData.innerOperationKey[i]))
             {
                 _isInState = true;
                 ballRadius = inRadius;
                 ChangeDirectionEffect();
             }
-            if (!"".Equals(GlobalState.Instance.UserData.data.OuterOperationKey[i])
-                    && Input.inputString.Equals(GlobalState.Instance.UserData.data.OuterOperationKey[i]))
+            if (!"".Equals(GlobalState.Instance.UserData.data.settingData.outerOperationKey[i])
+                    && Input.inputString.Equals(GlobalState.Instance.UserData.data.settingData.outerOperationKey[i]))
             {
                 _isInState = false;
                 ballRadius = outRadius;

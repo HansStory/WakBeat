@@ -121,7 +121,7 @@ public class UIElementAlbumSelect : MonoBehaviour
 
     public void InputExecute()
     {
-        if (GlobalState.Instance.UserData.data.BackgroundProcActive)
+        if (DataManager.dataBackgroundProcActive)
         {
             if (Input.GetKey(KeyCode.DownArrow))
             {
@@ -372,7 +372,7 @@ public class UIElementAlbumSelect : MonoBehaviour
     void OnClickEsc()
     {
         {
-            if (GlobalState.Instance.UserData.data.BackgroundProcActive)
+            if (DataManager.dataBackgroundProcActive)
             {
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {

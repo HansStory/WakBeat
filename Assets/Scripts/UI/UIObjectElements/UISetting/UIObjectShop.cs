@@ -13,8 +13,8 @@ public class UIObjectShop : MonoBehaviour
     */
     public Button ButtonClose;
     public GameObject TabObject;
-    private int SkinCount = DataManager.SetSkinCount;
-    private int SkillCount = DataManager.SetSkillCount;
+    private int SkinCount = DataManager.dataSkinCount;
+    private int SkillCount = DataManager.dataSkillCount;
     // 팝업창 호출 시 UI 제어
     private float _duration = 0.15f;
     // 버튼 사운드
@@ -31,12 +31,10 @@ public class UIObjectShop : MonoBehaviour
     // 비디오 아이템 오브젝트
     public GameObject VideoGroup;
     // 글로벌 데이터 용 전역변수
-    public string[] _SkinUnLockYn = new string[DataManager.SetSkinCount];
-    public string[] _SkinUsingYn = new string[DataManager.SetSkinCount];
-    public int[] _SkinUnLockCondition = new int[DataManager.SetSkinCount];
-    public string[] _SkillUnLockYn = new string[DataManager.SetSkillCount];
-    public string[] _SkillUsingYn = new string[DataManager.SetSkillCount];
-    public int[] _SkillUnLockCondition = new int[DataManager.SetSkillCount];
+    public string[] _SkinUnLockYn = new string[DataManager.dataSkinCount];
+    public string[] _SkinUsingYn = new string[DataManager.dataSkinCount];
+    public string[] _SkillUnLockYn = new string[DataManager.dataSkillCount];
+    public string[] _SkillUsingYn = new string[DataManager.dataSkillCount];
 
     private Boolean isStart = false;
 
@@ -135,7 +133,7 @@ public class UIObjectShop : MonoBehaviour
             SetButtonClickEvent("SkinOn");
 
             // 버튼 이벤트 Unlock
-            GlobalState.Instance.UserData.data.BackgroundProcActive = true;
+            DataManager.dataBackgroundProcActive = true;
 
             // 창 닫기 버튼 이벤트
             UIElementSetting.Instance.ButtonClickControll("Shop", "Close");
@@ -270,7 +268,7 @@ public class UIObjectShop : MonoBehaviour
     // 글로벌 변수 화면 세팅
     public void GetGlobalValue(Boolean flag)
     {
-        Boolean _ShopCompulsionActive = GlobalState.Instance.UserData.data.ShopCompulsionActive;
+        Boolean _ShopCompulsionActive = DataManager.dataShopCompulsionActive;
 
         // 강제 해금 On Off 처리 > True : 강제 해금 사용 / False : 강제 해금 미사용
         if (_ShopCompulsionActive)
@@ -291,15 +289,13 @@ public class UIObjectShop : MonoBehaviour
         if (flag)
         {
             // 스테이지 클리어 수
-            int _ClearStageCount = GlobalState.Instance.UserData.data.ClearStageCount;
+            int _ClearStageCount = GlobalState.Instance.UserData.data.gameData.clearStageCount;
             // 스킨 글로벌 변수
-            _SkinUnLockYn = GlobalState.Instance.UserData.data.SkinUnLockYn;
-            _SkinUsingYn = GlobalState.Instance.UserData.data.SkinUsingYn;
-            _SkinUnLockCondition = GlobalState.Instance.UserData.data.SkinUnLockCondition;
+            _SkinUnLockYn = GlobalState.Instance.UserData.data.shopData.skinUnLockYn;
+            _SkinUsingYn = GlobalState.Instance.UserData.data.shopData.skinUsingYn;
             // 스킬 글로벌 변수
-            _SkillUnLockYn = GlobalState.Instance.UserData.data.SkillUnLockYn;
-            _SkillUsingYn = GlobalState.Instance.UserData.data.SkillUsingYn;
-            _SkillUnLockCondition = GlobalState.Instance.UserData.data.SkillUnLockCondition;
+            _SkillUnLockYn = GlobalState.Instance.UserData.data.shopData.skillUnLockYn;
+            _SkillUsingYn = GlobalState.Instance.UserData.data.shopData.skillUsingYn;
 
             // 이미 구매한 스킨의 경우 버튼 비활성화
             for(int Index = 0; Index < SkinCount; Index++)
@@ -313,7 +309,7 @@ public class UIObjectShop : MonoBehaviour
             // 클리어 스테이지 수에 따라 혹은 잠금 해제한 스킬 잠금 영역 비활성화
             for (int Index = 0; Index < SkillCount; Index++)
             {
-                if(_ClearStageCount > _SkillUnLockCondition[Index] || _SkillUnLockYn[Index].Equals("Y"))
+                if(_ClearStageCount > DataManager.dataSkillUnLockCondition[Index] || _SkillUnLockYn[Index].Equals("Y"))
                 {
                     SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + Index).Find("Lock").gameObject.SetActive(false);
                 }
@@ -360,13 +356,13 @@ public class UIObjectShop : MonoBehaviour
     // 글로벌 변수 저장
     public void SetGlobalValue()
     {
-        if (_SkinUnLockYn.Length <= 0) { _SkinUnLockYn = new string[DataManager.SetSkinCount]; }
-        if (_SkinUsingYn.Length <= 0) { _SkinUsingYn = new string[DataManager.SetSkinCount]; }
-        if (_SkillUnLockYn.Length <= 0) { _SkillUnLockYn = new string[DataManager.SetSkillCount]; }
-        if (_SkillUsingYn.Length <= 0) { _SkillUsingYn = new string[DataManager.SetSkillCount]; }
+        if (_SkinUnLockYn.Length <= 0) { _SkinUnLockYn = new string[DataManager.dataSkinCount]; }
+        if (_SkinUsingYn.Length <= 0) { _SkinUsingYn = new string[DataManager.dataSkinCount]; }
+        if (_SkillUnLockYn.Length <= 0) { _SkillUnLockYn = new string[DataManager.dataSkillCount]; }
+        if (_SkillUsingYn.Length <= 0) { _SkillUsingYn = new string[DataManager.dataSkillCount]; }
 
         // 글로벌 저장 용 스킨 정보 생성
-        for (int Index = 0; Index < DataManager.SetSkinCount; Index++)
+        for (int Index = 0; Index < DataManager.dataSkinCount; Index++)
         {
             // 스킨은 아직 해금 정보 안들어가있음
             if(SkinGroup.transform.Find("SkinItems").Find("Viewport").Find("Content").Find("Skin_Prefab_" + Index).Find("ItemButtons").Find("ButtonBuy").gameObject.activeSelf)
@@ -391,7 +387,7 @@ public class UIObjectShop : MonoBehaviour
         }
 
         // 글로벌 저장 용 스킬 정보 생성
-        for (int Index = 0; Index < DataManager.SetSkillCount; Index++)
+        for (int Index = 0; Index < DataManager.dataSkillCount; Index++)
         {
             // 스킬 잠금 해제 여부
             if(SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + Index).Find("Lock").gameObject.activeSelf)
@@ -416,10 +412,10 @@ public class UIObjectShop : MonoBehaviour
         }
 
         // 설정 데이터 변경
-        DataManager.SetSkinUnLockYn = _SkinUnLockYn;
-        DataManager.SetSkinUsingYn = _SkinUsingYn;
-        DataManager.SetSkillUnLockYn = _SkillUnLockYn;
-        DataManager.SetSkillUsingYn = _SkillUsingYn;
+        DataManager.dataSkinUnLockYn = _SkinUnLockYn;
+        DataManager.dataSkinUsingYn = _SkinUsingYn;
+        DataManager.dataSkillUnLockYn = _SkillUnLockYn;
+        DataManager.dataSkillUsingYn = _SkillUsingYn;
 
         // 설정 데이터 변경 후 파일 저장
         DataManager.SaveUserData();
@@ -443,7 +439,7 @@ public class UIObjectShop : MonoBehaviour
         SetButtonEvent();
 
         // 글로벌 변수 화면 적용
-        GetGlobalValue(GlobalState.Instance.UserData.data.FileYn);
+        GetGlobalValue(DataManager.dataFileYn);
     }
 
     void Update()

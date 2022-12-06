@@ -59,7 +59,7 @@ public class UIElementMain : MonoBehaviour
 
     void InputExcute()
     {
-        if (GlobalState.Instance.UserData.data.BackgroundProcActive)
+        if (DataManager.dataBackgroundProcActive)
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {

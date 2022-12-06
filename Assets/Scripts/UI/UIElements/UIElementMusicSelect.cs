@@ -207,7 +207,7 @@ public class UIElementMusicSelect : MonoBehaviour
     public void InputExecute()
     {
 
-        if (GlobalState.Instance.UserData.data.BackgroundProcActive)
+        if (DataManager.dataBackgroundProcActive)
         {
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
@@ -282,7 +282,7 @@ public class UIElementMusicSelect : MonoBehaviour
 
     void SelectMusic()
     {
-        if (GlobalState.Instance.UserData.data.BackgroundProcActive)
+        if (DataManager.dataBackgroundProcActive)
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
@@ -296,7 +296,7 @@ public class UIElementMusicSelect : MonoBehaviour
 
     void OnClickEsc()
     {
-        if (GlobalState.Instance.UserData.data.BackgroundProcActive)
+        if (DataManager.dataBackgroundProcActive)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {

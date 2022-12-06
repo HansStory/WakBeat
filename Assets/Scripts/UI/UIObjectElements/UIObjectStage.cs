@@ -65,7 +65,7 @@ public class UIObjectStage : MonoBehaviour
 
     public void InputExecute()
     {
-        if (GlobalState.Instance.UserData.data.BackgroundProcActive)
+        if (DataManager.dataBackgroundProcActive)
         {
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {

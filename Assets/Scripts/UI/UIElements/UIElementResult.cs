@@ -19,7 +19,7 @@ public class UIElementResult : MonoBehaviour
 
     void OnClickCheckButton()
     {
-         if (GlobalState.Instance.UserData.data.BackgroundProcActive)
+         if (DataManager.dataBackgroundProcActive)
          {
             if (Input.GetKeyDown(KeyCode.Return))
             {

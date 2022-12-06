@@ -41,7 +41,7 @@ public class UIObjectPause : MonoBehaviour
         }
 
         // 버튼 이벤트 Unlock
-        GlobalState.Instance.UserData.data.BackgroundProcActive = true;
+        DataManager.dataBackgroundProcActive = true;
 
         // 창 닫기 버튼 이벤트
         UIElementSetting.Instance.ButtonClickControll("Pause", "Close");

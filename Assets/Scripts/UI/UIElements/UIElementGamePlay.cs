@@ -35,7 +35,7 @@ public class UIElementGamePlay : MonoBehaviour
 
     void FinishGame()
     {
-        if (GlobalState.Instance.UserData.data.BackgroundProcActive)
+        if (DataManager.dataBackgroundProcActive)
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
@@ -52,7 +52,7 @@ public class UIElementGamePlay : MonoBehaviour
 
     void OnClickEsc()
     {
-        if (GlobalState.Instance.UserData.data.BackgroundProcActive)
+        if (DataManager.dataBackgroundProcActive)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {

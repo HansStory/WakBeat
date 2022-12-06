@@ -98,7 +98,7 @@ public class UIObjectButton : MonoBehaviour
             SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingOut);
             UIElementSetting.Instance.ButtonClickControll("Setting", "Open");
             // 버튼 이벤트 Lock
-            GlobalState.Instance.UserData.data.BackgroundProcActive = false;
+            DataManager.dataBackgroundProcActive = false;
         }
         else if (Division.Equals("goShop"))
         {
@@ -106,7 +106,7 @@ public class UIObjectButton : MonoBehaviour
             SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingOut);
             UIElementSetting.Instance.ButtonClickControll("Shop", "Open");
             // 버튼 이벤트 Lock
-            GlobalState.Instance.UserData.data.BackgroundProcActive = false;
+            DataManager.dataBackgroundProcActive = false;
         }
         else if (Division.Equals("goTrophy"))
         {
@@ -114,7 +114,7 @@ public class UIObjectButton : MonoBehaviour
             SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingOut);
             UIElementSetting.Instance.ButtonClickControll("Trophy", "Open");
             // 버튼 이벤트 Lock
-            GlobalState.Instance.UserData.data.BackgroundProcActive = false;
+            DataManager.dataBackgroundProcActive = false;
         }
         else if (Division.Equals("goPause"))
         {
@@ -122,7 +122,7 @@ public class UIObjectButton : MonoBehaviour
             SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingOut);
             UIElementSetting.Instance.ButtonClickControll("Pause", "Open");
             // 버튼 이벤트 Lock
-            GlobalState.Instance.UserData.data.BackgroundProcActive = false;
+            DataManager.dataBackgroundProcActive = false;
         }
     }
 

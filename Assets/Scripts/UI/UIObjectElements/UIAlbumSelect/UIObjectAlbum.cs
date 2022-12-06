@@ -72,7 +72,7 @@ public class UIObjectAlbum : MonoBehaviour
 
     public void InputExecute()
     {
-        if (GlobalState.Instance.UserData.data.BackgroundProcActive)
+        if (DataManager.dataBackgroundProcActive)
         {
             if (Input.GetKey(KeyCode.DownArrow))
             {
