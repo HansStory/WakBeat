@@ -38,6 +38,8 @@ ReMix_TwistedLove=https://www.youtube.com/watch?v=Ec_5mO8RgKE
 ReMix_Waklio=https://www.youtube.com/watch?v=9C_Xm1nyPgc
 
 [SYSTEM]
-DEVKEY=1
+;Realse Mode = 0 / Develope Mode = 1
+DEVKEY=0
+;True = 1 / False = 0;
 GAMEMODE=1
 AUTOMODE=1
