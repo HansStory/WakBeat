@@ -82,21 +82,27 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
 
     public static string GetUserData()
     {
+        var globalUserData = GlobalState.Instance.UserData.data;
+
         JsonUserData userData = new JsonUserData();
+
+        var settingData = userData.data.settingData;
+        var shopData = userData.data.shopData;
+        var gameData = userData.data.gameData;
 
         // 게임 정보 관련 데이터
         userData.data.version = GlobalData.Instance.Information.Version;
         userData.data.totalPlayTime = (userData.data.totalPlayTime + GlobalState.Instance.PlayTime).ToString();
-        userData.data.firstPlayTime = _fileYn ? GlobalState.Instance.UserData.data.firstPlayTime : DateTime.Now.ToString(("yyyy-MM-dd HH:mm:ss:tt"));
+        userData.data.firstPlayTime = _fileYn ? globalUserData.firstPlayTime : DateTime.Now.ToString(("yyyy-MM-dd HH:mm:ss:tt"));
         userData.data.lastPlayTime = DateTime.Now.ToString(("yyyy-MM-dd HH:mm:ss:tt"));
 
         // 최초 혹은 파일이 없을 때 글로벌 데이터 처리
         if (!_fileYn)
         {
             // 설정 관련 데이터
-            userData.data.settingData.BGMValue = _BGMValue ?? 0.5f;
-            userData.data.settingData.SFXValue = _SFXValue ?? 0.5f;
-            userData.data.settingData.keyDivision = _keyDivision ?? "Integration";
+            settingData.BGMValue = _BGMValue ?? 0.5f;
+            settingData.SFXValue = _SFXValue ?? 0.5f;
+            settingData.keyDivision = _keyDivision ?? "Integration";
 
             // 상점 관련 데이터
             if (null == _skinUnLockYn || _skinUnLockYn.Length <= 0 || (Array.IndexOf(_skinUnLockYn, "N") < 0 && Array.IndexOf(_skinUnLockYn, "Y") < 0)
@@ -131,47 +137,47 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
                     _skillUsingYn[i] = "N";
                 }
             }
-            userData.data.shopData.skinUnLockYn = _skinUnLockYn;
-            userData.data.shopData.skinUsingYn = _skinUsingYn;
-            userData.data.shopData.skillUnLockYn = _skillUnLockYn;
-            userData.data.shopData.skillUsingYn = _skillUsingYn;
+            shopData.skinUnLockYn = _skinUnLockYn;
+            shopData.skinUsingYn = _skinUsingYn;
+            shopData.skillUnLockYn = _skillUnLockYn;
+            shopData.skillUsingYn = _skillUsingYn;
         }
         else
         {
             // 설정 관련 데이터
-            userData.data.settingData.BGMValue = _BGMValue ?? GlobalState.Instance.UserData.data.settingData.BGMValue;
-            userData.data.settingData.SFXValue = _SFXValue ?? GlobalState.Instance.UserData.data.settingData.SFXValue;
-            userData.data.settingData.keyDivision = _keyDivision ?? GlobalState.Instance.UserData.data.settingData.keyDivision;
+            settingData.BGMValue = _BGMValue ?? globalUserData.settingData.BGMValue;
+            settingData.SFXValue = _SFXValue ?? globalUserData.settingData.SFXValue;
+            settingData.keyDivision = _keyDivision ?? globalUserData.settingData.keyDivision;
 
             // 상점 관련 데이터
-            userData.data.shopData.skinUnLockYn = _skinUnLockYn ?? GlobalState.Instance.UserData.data.shopData.skinUnLockYn;
-            userData.data.shopData.skinUsingYn = _skinUsingYn ?? GlobalState.Instance.UserData.data.shopData.skinUsingYn;
-            userData.data.shopData.skillUnLockYn = _skillUnLockYn ?? GlobalState.Instance.UserData.data.shopData.skillUnLockYn;
-            userData.data.shopData.skillUsingYn = _skillUsingYn ?? GlobalState.Instance.UserData.data.shopData.skillUsingYn;
+            shopData.skinUnLockYn = _skinUnLockYn ?? globalUserData.shopData.skinUnLockYn;
+            shopData.skinUsingYn = _skinUsingYn ?? globalUserData.shopData.skinUsingYn;
+            shopData.skillUnLockYn = _skillUnLockYn ?? globalUserData.shopData.skillUnLockYn;
+            shopData.skillUsingYn = _skillUsingYn ?? globalUserData.shopData.skillUsingYn;
         }
 
         // 설정 관련 데이터
-        userData.data.settingData.innerOperationKey = _innerOperationKey ?? GlobalState.Instance.UserData.data.settingData.innerOperationKey;
-        userData.data.settingData.outerOperationKey = _outerOperationKey ?? GlobalState.Instance.UserData.data.settingData.outerOperationKey;
+        settingData.innerOperationKey = _innerOperationKey ?? globalUserData.settingData.innerOperationKey;
+        settingData.outerOperationKey = _outerOperationKey ?? globalUserData.settingData.outerOperationKey;
 
         // 인게임 관련 데이터
-        userData.data.gameData.clearStageCount = _clearStageCount ?? GlobalState.Instance.UserData.data.gameData.clearStageCount;
-        userData.data.gameData.album1ClearYn = _album1ClearYn ?? GlobalState.Instance.UserData.data.gameData.album1ClearYn;
-        userData.data.gameData.album2ClearYn = _album2ClearYn ?? GlobalState.Instance.UserData.data.gameData.album2ClearYn;
-        userData.data.gameData.album3ClearYn = _album3ClearYn ?? GlobalState.Instance.UserData.data.gameData.album3ClearYn;
-        userData.data.gameData.album4ClearYn = _album4ClearYn ?? GlobalState.Instance.UserData.data.gameData.album4ClearYn;
-        userData.data.gameData.album1ProgressRate = _album1ProgressRate ?? GlobalState.Instance.UserData.data.gameData.album1ProgressRate;
-        userData.data.gameData.album2ProgressRate = _album2ProgressRate ?? GlobalState.Instance.UserData.data.gameData.album2ProgressRate;
-        userData.data.gameData.album3ProgressRate = _album3ProgressRate ?? GlobalState.Instance.UserData.data.gameData.album3ProgressRate;
-        userData.data.gameData.album4ProgressRate = _album4ProgressRate ?? GlobalState.Instance.UserData.data.gameData.album4ProgressRate;
-        userData.data.gameData.album1DeathCount = _album1DeathCount ?? GlobalState.Instance.UserData.data.gameData.album1DeathCount;
-        userData.data.gameData.album2DeathCount = _album2DeathCount ?? GlobalState.Instance.UserData.data.gameData.album2DeathCount;
-        userData.data.gameData.album3DeathCount = _album3DeathCount ?? GlobalState.Instance.UserData.data.gameData.album3DeathCount;
-        userData.data.gameData.album4DeathCount = _album4DeathCount ?? GlobalState.Instance.UserData.data.gameData.album4DeathCount;
-        userData.data.gameData.ablum1UsingItem = _ablum1UsingItem ?? GlobalState.Instance.UserData.data.gameData.ablum1UsingItem;
-        userData.data.gameData.ablum2UsingItem = _ablum2UsingItem ?? GlobalState.Instance.UserData.data.gameData.ablum2UsingItem;
-        userData.data.gameData.ablum3UsingItem = _ablum3UsingItem ?? GlobalState.Instance.UserData.data.gameData.ablum3UsingItem;
-        userData.data.gameData.ablum4UsingItem = _ablum4UsingItem ?? GlobalState.Instance.UserData.data.gameData.ablum4UsingItem;
+        gameData.clearStageCount = _clearStageCount ?? globalUserData.gameData.clearStageCount;
+        gameData.album1ClearYn = _album1ClearYn ?? globalUserData.gameData.album1ClearYn;
+        gameData.album2ClearYn = _album2ClearYn ?? globalUserData.gameData.album2ClearYn;
+        gameData.album3ClearYn = _album3ClearYn ?? globalUserData.gameData.album3ClearYn;
+        gameData.album4ClearYn = _album4ClearYn ?? globalUserData.gameData.album4ClearYn;
+        gameData.album1ProgressRate = _album1ProgressRate ?? globalUserData.gameData.album1ProgressRate;
+        gameData.album2ProgressRate = _album2ProgressRate ?? globalUserData.gameData.album2ProgressRate;
+        gameData.album3ProgressRate = _album3ProgressRate ?? globalUserData.gameData.album3ProgressRate;
+        gameData.album4ProgressRate = _album4ProgressRate ?? globalUserData.gameData.album4ProgressRate;
+        gameData.album1DeathCount = _album1DeathCount ?? globalUserData.gameData.album1DeathCount;
+        gameData.album2DeathCount = _album2DeathCount ?? globalUserData.gameData.album2DeathCount;
+        gameData.album3DeathCount = _album3DeathCount ?? globalUserData.gameData.album3DeathCount;
+        gameData.album4DeathCount = _album4DeathCount ?? globalUserData.gameData.album4DeathCount;
+        gameData.ablum1UsingItem = _ablum1UsingItem ?? globalUserData.gameData.ablum1UsingItem;
+        gameData.ablum2UsingItem = _ablum2UsingItem ?? globalUserData.gameData.ablum2UsingItem;
+        gameData.ablum3UsingItem = _ablum3UsingItem ?? globalUserData.gameData.ablum3UsingItem;
+        gameData.ablum4UsingItem = _ablum4UsingItem ?? globalUserData.gameData.ablum4UsingItem;
 
         return userData.ToJson();
     }
@@ -187,19 +193,21 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
 
     public void LoadUserData()
     {
+        var userData = GlobalState.Instance.UserData.data;
+
         if (File.Exists(_path + _fileName))
         {
             // 파일에서 데이터 불러옴
-            var userData = File.ReadAllText(_path + _fileName);
-            GlobalState.Instance.UserData = JsonUtility.FromJson<JsonUserData>(userData);
+            var jsonUserData = File.ReadAllText(_path + _fileName);
+            GlobalState.Instance.UserData = JsonUtility.FromJson<JsonUserData>(jsonUserData);
 
             // 글로벌 값 호출 즉시 파일에 저장 된 배경음/환경음 볼륨으로 제어
-            SoundManager.Instance.CtrlBGMVolume(GlobalState.Instance.UserData.data.settingData.BGMValue);
-            SoundManager.Instance.CtrlSFXVolume(GlobalState.Instance.UserData.data.settingData.SFXValue);
+            SoundManager.Instance.CtrlBGMVolume(userData.settingData.BGMValue);
+            SoundManager.Instance.CtrlSFXVolume(userData.settingData.SFXValue);
 
             // 파일 여부 확인
             _fileYn = true;
-            Debug.Log($"Load User Data : {userData}");
+            Debug.Log($"Load User Data : {jsonUserData}");
         } 
         else
         {
@@ -235,14 +243,14 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
                 _skillUsingYn[i] = "N";
             }
 
-            GlobalState.Instance.UserData.data.settingData.BGMValue = 0.5f;
-            GlobalState.Instance.UserData.data.settingData.SFXValue = 0.5f;
-            GlobalState.Instance.UserData.data.settingData.keyDivision = "Integration";
+            userData.settingData.BGMValue = 0.5f;
+            userData.settingData.SFXValue = 0.5f;
+            userData.settingData.keyDivision = "Integration";
 
-            GlobalState.Instance.UserData.data.shopData.skinUnLockYn = _skinUnLockYn;
-            GlobalState.Instance.UserData.data.shopData.skinUsingYn = _skinUsingYn;
-            GlobalState.Instance.UserData.data.shopData.skillUnLockYn = _skillUnLockYn;
-            GlobalState.Instance.UserData.data.shopData.skillUsingYn = _skillUsingYn;
+            userData.shopData.skinUnLockYn = _skinUnLockYn;
+            userData.shopData.skinUsingYn = _skinUsingYn;
+            userData.shopData.skillUnLockYn = _skillUnLockYn;
+            userData.shopData.skillUsingYn = _skillUsingYn;
         }
     }
 
@@ -514,8 +522,7 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
     // Start is called before the first frame update
     void Start()
     {
-        //Debug.Log($"JsonData = {DataManager.Instance.GetUserData()}");
-        //SaveUserData();
+
     }
 
     // Update is called once per frame

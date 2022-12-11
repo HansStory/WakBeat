@@ -3,50 +3,18 @@ using UnityEngine;
 
 public class GlobalState : MonoBehaviourSingleton<GlobalState>
 {
-    private int _bgmIndex = 0;
-    public int BGMIndex
-    {
-        get { return _bgmIndex; }
-        set
-        {
-            _bgmIndex = value;
-        }
-    }
-
-    private int _playTime = 0;
-    public int PlayTime
-    {
-        get { return _playTime; }
-        set
-        {
-            _playTime = value;
-        }
-    }
-
     private int _currentPanelIndex = 0;
-    /// <summary>
-    /// Current Opened Panel Index
-    /// </summary>
     public int CurrentPanelIndex
     {
         get { return _currentPanelIndex; }
-        set
-        {
-            _currentPanelIndex = value;
-        }
+        set { _currentPanelIndex = value; }
     }
 
     private int _albumIndex = (int)GlobalData.ALBUM.ISEDOL;
-    /// <summary>
-    /// Current Album Index
-    /// </summary>
-    public int AlbumIndex 
+    public int AlbumIndex
     {
         get { return _albumIndex; }
-        set
-        {
-            _albumIndex = value;
-        }
+        set { _albumIndex = value; }
     }
 
     public void SetmyAlbumIndex(int index)
@@ -55,16 +23,10 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
     }
 
     private int _stageIndex = (int)GlobalData.STAGE.STAGE1;
-    /// <summary>
-    /// Current Stage Index
-    /// </summary>
     public int StageIndex
     {
         get { return _stageIndex; }
-        set
-        {
-            _stageIndex = value;
-        }
+        set { _stageIndex = value; }
     }
 
     public void SetmyStageIndex(int index)
@@ -72,10 +34,23 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
         _stageIndex = index;
     }
 
+    //---------------------------Global Sound State ---------------------------------
+    private int _bgmIndex = 0;
+    public int BGMIndex
+    {
+        get { return _bgmIndex; }
+        set { _bgmIndex = value; }
+    }
+
+    private int _stageMusic = 0;
+    public int StageMusic
+    {
+        get { return _stageMusic; }
+        set { _stageMusic = value; }
+    }
+
+    // È¿°úÀ½ º¼·ý
     private float _sfxVolume = 0.5f;
-    /// <summary>
-    /// Current SFX Volume Value
-    /// </summary>
     public float SFXVolume
     {
         get { return _sfxVolume; }
@@ -86,9 +61,7 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
         }
     }
 
-    /// <summary>
-    /// Current Music Volume Value
-    /// </summary>
+    // À½¾Ç º¼·ý
     private float _musicVolume = 0.5f;
     public float MusicVolume
     {
@@ -100,35 +73,57 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
         }
     }
 
+    private int _playTime = 0;
+    public int PlayTime
+    {
+        get { return _playTime; }
+        set { _playTime = value; }
+    }
+
+    // Json User Data
     public JsonUserData UserData { get; set; } = new JsonUserData();
 
     private void Start()
     {
-        //Debug.Log(DateTime.Now.ToString(("yyyy-MM-dd HH:mm:ss:tt")));
-
+        InitConfigSettings();
     }
-    private string _resourceFolder = string.Empty;
-    public string ResourceFolder
+
+    // Config Settings
+    public void InitConfigSettings()
     {
+        DevMode = Config.Instance.DevMode;
+        GameMode = Config.Instance.GameMode;
+        AutoMode = Config.Instance.AutoMode;      
+    }
+
+
+    #region Global State Stage 
+    //------------------------ Global State Stage ----------------------------------
+    // Folder path
+    private string _bmwFolderPath = string.Empty;
+    public string BMWFolderPath
+    {        
         get
         {
+            var path = Application.streamingAssetsPath + "/BMW/";
+
             switch (AlbumIndex)
             {
                 case (int)GlobalData.ALBUM.ISEDOL:
-                    _resourceFolder = Application.streamingAssetsPath + "/BMW/Album_01";
+                    _bmwFolderPath = path + "Album_01";
                     break;
                 case (int)GlobalData.ALBUM.CONTEST:
-                    _resourceFolder = Application.streamingAssetsPath + "/BMW/Album_02";
+                    _bmwFolderPath = path + "Album_02";
                     break;
                 case (int)GlobalData.ALBUM.GOMIX:
-                    _resourceFolder = Application.streamingAssetsPath + "/BMW/Album_03";
+                    _bmwFolderPath = path + "Album_03";
                     break;
                 case (int)GlobalData.ALBUM.WAKALOID:
-                    _resourceFolder = Application.streamingAssetsPath + "/BMW/Album_04";
+                    _bmwFolderPath = path + "Album_04";
                     break;
             }
 
-            return _resourceFolder;
+            return _bmwFolderPath;
         }
     }
 
@@ -161,24 +156,32 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
         }
     }
 
+    private bool _isDevMode = false;
+    public bool DevMode
+    {
+        get { return _isDevMode; }
+        set { _isDevMode = value; }
+    }
+
+    private bool _isGameMode = false;
+    public bool GameMode
+    {
+        get { return _isGameMode; }
+        set { _isGameMode = value; }
+    }
+
     private bool _isAutoMode = false;
     public bool AutoMode
     {
         get { return _isAutoMode; }
-        set
-        {
-            _isAutoMode = value;
-        }
+        set { _isAutoMode = value; }
     }
 
     private bool _isShowDodge = false;
     public bool ShowDodge
     {
         get { return _isShowDodge; }
-        set
-        {
-            _isShowDodge = value;
-        }
+        set { _isShowDodge = value; }
     }
 
     private int _savePoint = 0;
@@ -215,9 +218,7 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
     public int PlayerDeadCount
     {
         get { return _playerDeadCount; }
-        set
-        {
-            _playerDeadCount = value;
-        }
+        set { _playerDeadCount = value; }
     }
+    #endregion
 }

@@ -40,21 +40,21 @@ public class Config : MonoBehaviourSingleton<Config>
     public string AUTOMODE { get; internal set; }
 
 
-    private bool _isDEVKey = false;
-    public bool DEVKey
+    private bool _isDevMode = false;
+    public bool DevMode
     {
         get
         {
             if (string.IsNullOrEmpty(DEVKEY))
             {
-                _isDEVKey = false;
+                _isDevMode = false;
             }
             else
             {
-                _isDEVKey = DEVKEY.Equals("1");
+                _isDevMode = DEVKEY.Equals("1");
             }
 
-            return _isDEVKey;
+            return _isDevMode;
         }
     }
 

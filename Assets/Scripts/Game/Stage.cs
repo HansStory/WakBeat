@@ -84,6 +84,9 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     protected bool _isGameMode = false;          // 게임 모드 체크
     protected bool _isAutoMode = false;          // 오토 모드 체크
 
+    private GlobalState _state = new GlobalState();
+    private UserData _userData = new UserData();
+
     // Key 입력 부
     private string _keyDivision = string.Empty;
 
@@ -91,7 +94,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     {
         get
         {
-            string dir = GlobalState.Instance.ResourceFolder;
+            string dir = GlobalState.Instance.BMWFolderPath;
 
             return dir;
         }
@@ -118,14 +121,8 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         bmwReader = new BMWReader();
         bmwReader.ReadFile(Directory + "/" + BMWFile);
 
-        // Read Config
-        _isGameMode = Config.Instance.GameMode;
-        if (Player.GetComponent<Rigidbody2D>())
-        {
-            Player.GetComponent<Rigidbody2D>().simulated = _isGameMode;
-        }
-
-        _isAutoMode = Config.Instance.AutoMode;
+        //InitConfigSettings();
+        InitGlobalSettings();
 
         //Get User Data (.json file)
         GetBallSkin();
@@ -147,7 +144,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         audioSource = SoundManager.Instance.MusicAudio;
 
         // Key 입력 부
-        _keyDivision = null == GlobalState.Instance.UserData.data.settingData.keyDivision ? "Integration" : GlobalState.Instance.UserData.data.settingData.keyDivision;
+        _keyDivision = null == _userData.settingData.keyDivision ? "Integration" : _userData.settingData.keyDivision;
 
         ClearRate.text = $"Clear Rate\n0%";
 
@@ -155,9 +152,45 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         {
             TextCurrentLine.text = $"Current Line : {_currentLine}";
         }
+    }
 
-        //--------------------------------------------------------------------------
-        GlobalState.Instance.SavePointAngle = bmwReader.ChartingItem[0].BallAngle;
+    //protected virtual void InitConfigSettings()
+    //{
+    //    // Read Config
+    //    _isGameMode = Config.Instance.GameMode;         //물리충돌 설정
+    //    _isAutoMode = Config.Instance.AutoMode;         //AutoMode 설정
+
+    //    var col = Player.GetComponent<Rigidbody2D>();
+    //    if (col)
+    //    {
+    //        col.simulated = _isGameMode;
+    //    }
+    //}
+
+    protected virtual void InitGlobalSettings()
+    {
+        _state = GlobalState.Instance;
+        _userData = GlobalState.Instance.UserData.data;
+
+        _isGameMode = _state.GameMode;
+        _isAutoMode = _state.AutoMode;
+
+        var col = Player.GetComponent<Rigidbody2D>();
+        if (col)
+        {
+            col.simulated = _isGameMode;
+        }
+
+        ResetGlobalState();
+    }
+
+    public virtual void ResetGlobalState()
+    {
+        _state.SavePointAngle = bmwReader.ChartingItem[0].BallAngle;
+        _state.IsPlayerDied = false;
+        _state.PlayerDeadCount = 0;
+        _state.SaveMusicPlayingTime = 0.0f;
+        _state.SavePoint = 0;
     }
 
     protected virtual void Start()
@@ -210,9 +243,9 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     protected virtual void GetBallSkin()
     {
-        for (int i = 0; i < GlobalState.Instance.UserData.data.shopData.skinUsingYn.Length; i++)
+        for (int i = 0; i < _userData.shopData.skinUsingYn.Length; i++)
         {
-            if (GlobalState.Instance.UserData.data.shopData.skinUsingYn[i].Contains("Y"))
+            if (_userData.shopData.skinUsingYn[i].Contains("Y"))
             {
                 if (BallSkin)
                 {
@@ -250,16 +283,17 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     {
         for (int i = 0; i < _spawnCount; i++)
         {
-            GameObject dodge = GameObject.Instantiate(DodgePoint, DodgePointBase);
+            GameObject dodge = Instantiate(DodgePoint, DodgePointBase);
 
             if (dodge)
             {
                 dodge.transform.localPosition = Center.transform.localPosition + Center.transform.up * dodgeRadius;
                 dodge.transform.localEulerAngles = Center.transform.localEulerAngles;
 
-                if (dodge.GetComponent<BoxCollider2D>())
+                var col = dodge.GetComponent<BoxCollider2D>();
+                if (col)
                 {
-                    dodge.GetComponent<BoxCollider2D>().enabled = _isAutoMode;
+                    col.enabled = _isAutoMode;
                 }
 
                 DodgePointLists.Add(dodge);
@@ -268,6 +302,11 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
                 Center.transform.Rotate(0f, 0f, _spawnAngle);
             }
+        }
+
+        if (_isAutoMode)
+        {
+            DodgePointBase.gameObject.SetActive(_isAutoMode);
         }
     }
 
@@ -282,7 +321,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     {
         for (int i = 0; i < _spawnCount; i++)
         {
-            GameObject inObstacle = GameObject.Instantiate(Obstacles[obstacleType], ObstacleInBase);
+            GameObject inObstacle = Instantiate(Obstacles[obstacleType], ObstacleInBase);
 
             if (inObstacle)
             {
@@ -303,7 +342,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
         for (int i = 0; i < _spawnCount; i++)
         {
-            GameObject outObstacle = GameObject.Instantiate(Obstacles[obstacleType], ObstacleOutBase);
+            GameObject outObstacle = Instantiate(Obstacles[obstacleType], ObstacleOutBase);
 
             if (outObstacle)
             {
@@ -321,12 +360,13 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     Tween SavePointTween;
     protected virtual void CreateSavePoint(int savePointType)
     {
-        GameObject savePoint = GameObject.Instantiate(SavePoint[savePointType], Container);
+        GameObject savePoint = Instantiate(SavePoint[savePointType], Container);
 
         if (savePoint)
         {
             savePoint.transform.localPosition = CenterPivot.transform.localPosition + CenterPivot.transform.up * dodgeRadius;
             savePoint.transform.localScale = Vector3.zero;
+
             SavePointTween = savePoint.transform.DOScale(Vector3.one, 0.2f).SetAutoKill();
         }
     }
@@ -402,10 +442,11 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         if (_currentLine > 0)
         {
             float _rate = (((float)_currentLine + 1) / (float)_totalBeatCount) * 100f;
-            ClearRate.DOText($"Clear Rate\n{_rate.ToString("F2")}%", _tick);
+            ClearRate.DOText($"Clear Rate\n{((int)_rate)}%", _tick);
         }
         else
         {
+
             ClearRate.DOText($"Clear Rate\n0%", _beatTime);
         }
     }
@@ -486,19 +527,26 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     protected virtual void ShowChartingItems()
     {
-        ShowDodgePoint();
+        if (_isAutoMode)
+        {
+            ShowDodgePoint();
+        }
+
         ShowInObstacles();
         ShowOutObstacles();
+
         ShowSavePoint();
     }
 
-    protected virtual void ShowItems()
-    {
-        var beatItem = bmwReader.ChartingItem[_currentLine];
-    }
+    //protected virtual void ShowItems()
+    //{
+    //    var beatItem = bmwReader.ChartingItem[_currentLine];
+    //}
 
     protected virtual void ShowDodgePoint()
     {
+        if (_currentLine >= bmwReader.ChartingItem.Count) return;
+
         var beatItem = bmwReader.ChartingItem[_currentLine];
 
         if (beatItem != null)
@@ -531,6 +579,8 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     protected virtual void ShowInObstacles()
     {
+        if (_currentLine >= bmwReader.ChartingItem.Count) return;
+
         var beatItem = bmwReader.ChartingItem[_currentLine];
 
         if (beatItem != null)
@@ -650,15 +700,13 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             SaveGameResult();
 
             //Reset GlobalState Value
-            GlobalState.Instance.IsPlayerDied = false;
-            GlobalState.Instance.PlayerDeadCount = 0;
-            GlobalState.Instance.SaveMusicPlayingTime = 0.0f;
-            GlobalState.Instance.SavePoint = 0;   
+            ResetGlobalState();
 
             // TO DO : Go Panel Result
             SoundManager.Instance.ForceAudioStop();           
             UIManager.Instance.GoPanelResult();
             SoundManager.Instance.TurnOnGameBackGround();
+
             GameFactory.Instance.DistroyStage();
         }
     }
@@ -672,15 +720,13 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             SaveGameResult();
 
             //Reset GlobalState Value
-            GlobalState.Instance.IsPlayerDied = false;
-            GlobalState.Instance.PlayerDeadCount = 0;
-            GlobalState.Instance.SaveMusicPlayingTime = 0.0f;
-            GlobalState.Instance.SavePoint = 0;
+            ResetGlobalState();
 
-            // TO DO : Go Panel Result
+            // TO DO : Go Panel Music Select
             SoundManager.Instance.ForceAudioStop();
             UIManager.Instance.GoPanelMusicSelect();
             SoundManager.Instance.TurnOnGameBackGround();
+
             GameFactory.Instance.DistroyStage();
         }
     }
@@ -713,9 +759,11 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         {
             if (_keyDivision.Equals("Separation"))
             {
+                var innerKey = GlobalState.Instance.UserData.data.settingData.innerOperationKey;
+                var outKey = GlobalState.Instance.UserData.data.settingData.outerOperationKey;
+
                 // 키 분리 구분 > 분리
-                if (null != GlobalState.Instance.UserData.data.settingData.innerOperationKey && GlobalState.Instance.UserData.data.settingData.innerOperationKey.Length > 0
-                    && null != GlobalState.Instance.UserData.data.settingData.outerOperationKey && GlobalState.Instance.UserData.data.settingData.outerOperationKey.Length > 0)
+                if (innerKey != null && innerKey.Length > 0 && outKey != null && outKey.Length > 0)
                 {
                     SeperateChangeDirection();                   
                 }
@@ -738,21 +786,21 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     public virtual void SeperateChangeDirection()
     {
-        for (int i = 0; i < GlobalState.Instance.UserData.data.settingData.innerOperationKey.Length; i++)
+        var innerOperationKey = GlobalState.Instance.UserData.data.settingData.innerOperationKey;
+        var outOperationKey = GlobalState.Instance.UserData.data.settingData.outerOperationKey;
+
+        for (int i = 0; i < innerOperationKey.Length; i++)
         {
-            if (!"".Equals(GlobalState.Instance.UserData.data.settingData.innerOperationKey[i])
-                    && Input.inputString.Equals(GlobalState.Instance.UserData.data.settingData.innerOperationKey[i]))
+            if (!"".Equals(innerOperationKey[i]) && Input.inputString.Equals(innerOperationKey[i]))
             {
                 _isInState = true;
-                ballRadius = inRadius;
-                ChangeDirectionEffect();
+                ChangeDirection(_isInState);
             }
-            if (!"".Equals(GlobalState.Instance.UserData.data.settingData.outerOperationKey[i])
-                    && Input.inputString.Equals(GlobalState.Instance.UserData.data.settingData.outerOperationKey[i]))
+
+            if (!"".Equals(outOperationKey[i]) && Input.inputString.Equals(outOperationKey[i]))
             {
                 _isInState = false;
-                ballRadius = outRadius;
-                ChangeDirectionEffect();
+                ChangeDirection(_isInState);
             }
         }
     }
@@ -760,8 +808,12 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     public virtual void IntegrationChangeDirection()
     {
         _isInState = !_isInState;
+        ChangeDirection(_isInState);
+    }
 
-        if (_isInState)
+    public virtual void ChangeDirection(bool isIn)
+    {
+        if (isIn)
         {
             ballRadius = inRadius;
             ChangeDirectionEffect();
@@ -803,9 +855,9 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
         _savePointTime = _timer;
 
-        GlobalState.Instance.SavePoint = _currentLine;
-        GlobalState.Instance.SaveMusicPlayingTime = audioSource.time;
-        GlobalState.Instance.SavePointAngle = Center.transform.localEulerAngles.z;
+        _state.SavePoint = _currentLine;
+        _state.SaveMusicPlayingTime = audioSource.time;
+        _state.SavePointAngle = Center.transform.localEulerAngles.z;
 
         EnterSavePointEffect();
     }
