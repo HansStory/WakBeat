@@ -53,7 +53,9 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     protected float variableRadius;
 
     protected BMWReader bmwReader = null;        // 채보 스크립트
-    protected AudioSource audioSource = null;    
+    protected AudioSource audioSource = null;
+    private GlobalState _state = new GlobalState();
+    private UserData _userData = new UserData();
 
     protected string _title = string.Empty;      // 곡 제목
     protected string _artist = string.Empty;     // 작곡가
@@ -83,9 +85,6 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     protected bool _isPause = false;             // 일시정지 체크
     protected bool _isGameMode = false;          // 게임 모드 체크
     protected bool _isAutoMode = false;          // 오토 모드 체크
-
-    private GlobalState _state = new GlobalState();
-    private UserData _userData = new UserData();
 
     // Key 입력 부
     private string _keyDivision = string.Empty;
@@ -133,15 +132,15 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
         // Get Values
         GetMusicInfo();
+        // Set Values
+        SetMusicInfo();
+
         InitBallPosition();
         InitBallSpeed();
         InitCalculateTick();
 
         // Calculate Beat
         _totalBeatCount = bmwReader.ChartingItem.Count;
-
-        // Sound 제어 부
-        audioSource = SoundManager.Instance.MusicAudio;
 
         // Key 입력 부
         _keyDivision = null == _userData.settingData.keyDivision ? "Integration" : _userData.settingData.keyDivision;
@@ -185,7 +184,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     }
 
     public virtual void ResetGlobalState()
-    {
+    {        
         _state.SavePointAngle = bmwReader.ChartingItem[0].BallAngle;
         _state.IsPlayerDied = false;
         _state.PlayerDeadCount = 0;
@@ -217,6 +216,15 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             _bpm = bmwReader.MusicInfoItem.BPM;
             _bar = bmwReader.MusicInfoItem.Bar;
         }
+    }
+
+    protected virtual void SetMusicInfo()
+    {
+        // Sound 제어 부
+        audioSource = SoundManager.Instance.MusicAudio;
+
+        SoundManager.Instance.SetStageMusic();
+        _state.StageMusicLength = (int)audioSource.clip.length;
     }
 
     protected virtual void InitBallPosition()
@@ -697,17 +705,15 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
         if (DataManager.dataBackgroundProcActive)
         {
+            //Save Stage Result At GlobalState 
             SaveGameResult();
 
-            //Reset GlobalState Value
-            ResetGlobalState();
+            //ResetGlobalState();
 
             // TO DO : Go Panel Result
             SoundManager.Instance.ForceAudioStop();           
             UIManager.Instance.GoPanelResult();
             SoundManager.Instance.TurnOnGameBackGround();
-
-            GameFactory.Instance.DistroyStage();
         }
     }
 
@@ -726,15 +732,14 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             SoundManager.Instance.ForceAudioStop();
             UIManager.Instance.GoPanelMusicSelect();
             SoundManager.Instance.TurnOnGameBackGround();
-
-            GameFactory.Instance.DistroyStage();
         }
     }
 
     // TO DO : 게임 플레이 결과 Global Data나 Global Stage에 저장 -> 그 데이터로 결과창 구현 로직 처리
     protected virtual void SaveGameResult()
     {
-
+        // Save Total Play Time
+        _state.StagePlayTime = (int)_playTime;
     }
 
     protected virtual void OperateBallMovement()
@@ -893,7 +898,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     {
         Debug.Log("Player Die!!");
 
-        GlobalState.Instance.PlayerDeadCount++;
+        _state.PlayerDeadCount++;
 
         ResetSavePointState();
     }

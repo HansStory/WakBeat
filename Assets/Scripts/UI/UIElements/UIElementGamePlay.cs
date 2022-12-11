@@ -24,6 +24,7 @@ public class UIElementGamePlay : MonoBehaviour
 
     private void OnEnable()
     {
+        SoundManager.Instance.TurnOffGameBackground();
         SoundManager.Instance.ForceAudioStop();
         GameFactory.Instance.CreateStage();
     }

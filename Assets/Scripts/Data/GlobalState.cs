@@ -170,6 +170,7 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
         set { _isGameMode = value; }
     }
 
+    // TO DO : AutoMode 일시에 Dodge 포인트도 보이고 충돌처리도 해야함
     private bool _isAutoMode = false;
     public bool AutoMode
     {
@@ -177,6 +178,7 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
         set { _isAutoMode = value; }
     }
 
+    // Dodge Point만 보이고 충돌처리 X (아이템 사용시 해당 변수로 사용)
     private bool _isShowDodge = false;
     public bool ShowDodge
     {
@@ -184,6 +186,7 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
         set { _isShowDodge = value; }
     }
 
+    // Save Point
     private int _savePoint = 0;
     public int SavePoint
     {
@@ -206,6 +209,7 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
         set => _saveMusicPlayingTime = value;
     }
 
+    // Player 사망 체크
     private bool _isPlayerDied = false;
 
     public bool IsPlayerDied
@@ -214,11 +218,36 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
         set => _isPlayerDied = value;
     }
 
+    //---------------------- Game Result Variable -----------------
+    private int _stageMusicLength = 0;
+    public int StageMusicLength
+    {
+        get { return _stageMusicLength; }
+        set { _stageMusicLength = value; }
+    }
+
+    // Stage의 총 Play Time
+    private int _stagePlayTime = 0;
+    public int StagePlayTime
+    {
+        get { return _stagePlayTime; }
+        set { _stagePlayTime = value; }
+    }
+
+    // Player 사망 횟수
     private int _playerDeadCount = 0;
     public int PlayerDeadCount
     {
         get { return _playerDeadCount; }
         set { _playerDeadCount = value; }
+    }
+
+    // 사용한 아이템 종류
+    private string _usedItems = string.Empty;
+    public string UsedItems
+    {
+        get { return _usedItems; }
+        set { _usedItems = value; }
     }
     #endregion
 }

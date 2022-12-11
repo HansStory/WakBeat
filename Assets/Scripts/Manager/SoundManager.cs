@@ -143,8 +143,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
 
     public void TurnOnStageMusic()
     {
-        SetStageMusic();
-
+        //SetStageMusic();
         MusicAudioSource.time = 0;
         MusicAudioSource.Play();
         MusicAudioSource.loop = false;
