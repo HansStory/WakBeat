@@ -16,15 +16,19 @@ public class UIElementResult : MonoBehaviour
     private Vector2 remixLinkStartVector = new Vector2(-416f, -281.5f);
     private Vector2 remixLinkTargetVector = new Vector2(21.2f, -281.5f);
 
-    private string url;
-    // Start is called before the first frame update
+    private string _wakZooURL = string.Empty;
+    private string _originURL = string.Empty;
+    private string _reMixURL = string.Empty;
+
     void Start()
     {
-        
+        GetWakZooURL();
     }
 
     private void OnEnable()
     {
+        GetMusicURL();
+
         TweenResultBanner();
 
         TweenLink(OriginLink, originStartVector, originTargetVector, 0.5f);
@@ -57,7 +61,6 @@ public class UIElementResult : MonoBehaviour
         linkImage.transform.DOLocalMove(targetVector, 1f).SetDelay(delay).SetEase(Ease.OutCubic).SetAutoKill();
     }
 
-    // Update is called once per frame
     void Update()
     {
         OnClickCheckButton();
@@ -71,25 +74,108 @@ public class UIElementResult : MonoBehaviour
             {
                 UIManager.Instance.GoPanelMusicSelect();
             }
+         }
+    }
+
+    private void GetWakZooURL()
+    {
+        _wakZooURL = Config.Instance.WakZoo;
+    }
+
+    private void SetMusicURL(string originURL, string remixURL)
+    {
+        _originURL = originURL;
+        _reMixURL = remixURL;
+    }
+
+    private void GetMusicURL()
+    {
+        var config = Config.Instance;
+
+        switch (GlobalState.Instance.AlbumIndex)
+        {
+            case (int)GlobalData.ALBUM.ISEDOL:
+                switch (GlobalState.Instance.StageIndex)
+                {
+                    case (int)GlobalData.STAGE.STAGE1:
+                        SetMusicURL(config.Origin_Rewind, config.ReMix_Rewind);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE2:
+                        SetMusicURL(config.Origin_WinterSpring, config.ReMix_WinterSpring);
+                        break;
+                }
+                break;
+            case (int)GlobalData.ALBUM.CONTEST:
+                switch (GlobalState.Instance.StageIndex)
+                {
+                    case (int)GlobalData.STAGE.STAGE1:
+                        SetMusicURL(config.Origin_NobleLick, config.ReMix_NobleLick);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE2:
+                        SetMusicURL(config.Origin_Wakaloid, config.ReMix_Wakaloid);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE3:
+                        SetMusicURL(config.Origin_WakGoodAroma100, config.ReMix_WakGoodAroma100);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE4:
+                        SetMusicURL(config.Origin_AvantGarde, config.ReMix_AvantGarde);
+                        break;
+                }
+                break;
+            case (int)GlobalData.ALBUM.GOMIX:
+                switch (GlobalState.Instance.StageIndex)
+                {
+                    case (int)GlobalData.STAGE.STAGE1:
+                        SetMusicURL(config.Origin_YouHi, config.ReMix_YouHi);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE2:
+                        SetMusicURL(config.Origin_Gotterfly, config.ReMix_Gotterfly);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE3:
+                        SetMusicURL(config.Origin_KingADance, config.ReMix_KingADance);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE4:
+                        SetMusicURL(config.Origin_IPad, config.ReMix_IPad);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE5:
+                        SetMusicURL(config.Origin_ReviveLikeADog, config.ReMix_ReviveLikeADog);
+                        break;
+                }
+                break;
+            case (int)GlobalData.ALBUM.WAKALOID:
+                switch (GlobalState.Instance.StageIndex)
+                {
+                    case (int)GlobalData.STAGE.STAGE1:
+                        SetMusicURL(config.Origin_GalUseGirl, config.ReMix_GalUseGirl);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE2:
+                        SetMusicURL(config.Origin_BangOff, config.ReMix_BangOff);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE3:
+                        SetMusicURL(config.Origin_TwistedLove, config.ReMix_TwistedLove);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE4:
+                        SetMusicURL(config.Origin_Waklio, config.ReMix_Waklio);
+                        break;
+                }
+                break;
         }
     }
 
+
     public void OnClickOpenWakZooURL()
     {
-        url = Config.Instance.WakZoo;
-        Application.OpenURL(url);
+        Application.OpenURL(_wakZooURL);
     }
 
     public void OnClickOpenOriginURL()
     {
-        url = Config.Instance.Origin_Rewind;
-        Application.OpenURL(url);
+        Application.OpenURL(_originURL);
     }
 
     public void OnClickOpenRemixURL()
     {
-        url = Config.Instance.ReMix_Rewind;
-        Application.OpenURL(url);
+        Application.OpenURL(_reMixURL);
     }
 
     public void OnClickReplay()
