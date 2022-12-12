@@ -808,6 +808,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8714651688187979264}
     m_Modifications:
+    - target: {fileID: 227456025615630767, guid: f3f2b6c81ddc82b49abb12f7084777ea, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -880
+      objectReference: {fileID: 0}
     - target: {fileID: 3142938301555560236, guid: f3f2b6c81ddc82b49abb12f7084777ea, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
