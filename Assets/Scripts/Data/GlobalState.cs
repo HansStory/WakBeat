@@ -170,7 +170,8 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
         set { _isGameMode = value; }
     }
 
-    // TO DO : AutoMode 일시에 Dodge 포인트도 보이고 충돌처리도 해야함
+
+    // TO DO : AutoMode(자율주행 아이템) 일시에 Dodge 포인트도 보이고 충돌처리도 해야함
     private bool _isAutoMode = false;
     public bool AutoMode
     {
@@ -178,7 +179,7 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
         set { _isAutoMode = value; }
     }
 
-    // Dodge Point만 보이고 충돌처리 X (아이템 사용시 해당 변수로 사용)
+    // Dodge Point만 보이고 충돌처리 X (아이템 사용시(객관안) 해당 변수로 사용)
     private bool _isShowDodge = false;
     public bool ShowDodge
     {

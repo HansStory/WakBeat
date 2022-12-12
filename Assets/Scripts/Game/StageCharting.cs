@@ -25,6 +25,7 @@ public class StageCharting : Stage
     public TMP_Text TextHalfAngle;
 
     private bool _isShowDebugtab = true;
+    private static int savePointNum = 0;       // Save Point Beat Item Line
 
     //------------ For Debuging -----------
     public TMP_Text[] DebugElements;
@@ -164,10 +165,10 @@ public class StageCharting : Stage
 
         ResetDebugValue();
 
-        GlobalState.Instance.IsPlayerDied = false;
-        GlobalState.Instance.PlayerDeadCount = 0;
-        GlobalState.Instance.SavePoint = 0;
-        GlobalState.Instance.SavePointAngle = bmwReader.ChartingItem[0].BallAngle;
+        state.IsPlayerDied = false;
+        state.PlayerDeadCount = 0;
+        state.SavePoint = 0;
+        state.SavePointAngle = bmwReader.ChartingItem[0].BallAngle;
         
         _savePointTime = 0f;
 
@@ -278,9 +279,10 @@ public class StageCharting : Stage
     {
         _isGameMode = !_isGameMode;
 
-        if (Player.GetComponent<Rigidbody2D>() != null)
+        var playerRigid = Player.GetComponent<Rigidbody2D>();
+        if (playerRigid != null)
         {
-            Rigidbody2D rigid = Player.GetComponent<Rigidbody2D>();
+            Rigidbody2D rigid = playerRigid;
             rigid.simulated = _isGameMode;
         }
 
@@ -289,13 +291,19 @@ public class StageCharting : Stage
 
     public void OnClickAutoMode()
     {
-        _isAutoMode = !_isAutoMode;
+        _isAutoMode = !_isAutoMode;       
 
         foreach (var dodge in DodgePointLists)
         {
-            if (dodge.GetComponent<BoxCollider2D>() != null)
+            var col = dodge.GetComponent<BoxCollider2D>();
+            if (col != null)
             {
-                dodge.GetComponent<BoxCollider2D>().enabled = _isAutoMode;
+                col.enabled = _isAutoMode;
+            }
+
+            if (!_isAutoMode)
+            {
+                dodge.SetActive(false);
             }
         }
 

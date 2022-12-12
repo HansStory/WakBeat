@@ -106,6 +106,20 @@ public class UIObjectShopSkillItem : MonoBehaviour
         buttonOn.gameObject.SetActive(false);
         buttonOff.gameObject.SetActive(true);
 
+        switch (SkillIndex)
+        {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+                GlobalState.Instance.ShowDodge = false;
+                break;
+            case 4:
+                GlobalState.Instance.AutoMode = false;
+                Debug.Log(GlobalState.Instance.AutoMode);
+                break;
+        }
+
         // 버튼 사운드 출력
         SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
     }
@@ -115,6 +129,21 @@ public class UIObjectShopSkillItem : MonoBehaviour
     {
         buttonOn.gameObject.SetActive(true);
         buttonOff.gameObject.SetActive(false);
+
+        switch (SkillIndex)
+        {
+            case 0:
+            case 1:
+            case 2:
+                break;
+            case 3:
+                GlobalState.Instance.ShowDodge = true;
+                break;
+            case 4:
+                GlobalState.Instance.AutoMode = true;
+                Debug.Log(GlobalState.Instance.AutoMode); 
+                break;
+        }
 
         // 버튼 사운드 출력
         SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);

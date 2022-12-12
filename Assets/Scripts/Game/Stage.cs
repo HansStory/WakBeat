@@ -54,8 +54,8 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     protected BMWReader bmwReader = null;        // 채보 스크립트
     protected AudioSource audioSource = null;
-    private GlobalState _state = new GlobalState();
-    private UserData _userData = new UserData();
+    protected GlobalState state = new GlobalState();
+    protected UserData userData = new UserData();
 
     protected string _title = string.Empty;      // 곡 제목
     protected string _artist = string.Empty;     // 작곡가
@@ -75,8 +75,6 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     protected float _playTime = 0f;              // Stage 시작후 총 흐른 시간
     protected float _musicCurrentTime = 0f;      // 곡의 현재 진행중인 시간
     protected float _musicTotalTime = 0f;        // 곡의 총 시간
-
-    protected static int savePointNum = 0;       // Save Point Beat Item Line
 
     protected static int _spawnCount = 72;       // TO DO : Object Pooling
     protected static float _spawnAngle = -5f;
@@ -143,7 +141,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         _totalBeatCount = bmwReader.ChartingItem.Count;
 
         // Key 입력 부
-        _keyDivision = null == _userData.settingData.keyDivision ? "Integration" : _userData.settingData.keyDivision;
+        _keyDivision = null == userData.settingData.keyDivision ? "Integration" : userData.settingData.keyDivision;
 
         ClearRate.text = $"Clear Rate\n0%";
 
@@ -168,11 +166,11 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     protected virtual void InitGlobalSettings()
     {
-        _state = GlobalState.Instance;
-        _userData = GlobalState.Instance.UserData.data;
+        state = GlobalState.Instance;
+        userData = GlobalState.Instance.UserData.data;
 
-        _isGameMode = _state.GameMode;
-        _isAutoMode = _state.AutoMode;
+        _isGameMode = state.GameMode;
+        _isAutoMode = state.AutoMode;
 
         var col = Player.GetComponent<Rigidbody2D>();
         if (col)
@@ -185,11 +183,11 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     public virtual void ResetGlobalState()
     {        
-        _state.SavePointAngle = bmwReader.ChartingItem[0].BallAngle;
-        _state.IsPlayerDied = false;
-        _state.PlayerDeadCount = 0;
-        _state.SaveMusicPlayingTime = 0.0f;
-        _state.SavePoint = 0;
+        state.SavePointAngle = bmwReader.ChartingItem[0].BallAngle;
+        state.IsPlayerDied = false;
+        state.PlayerDeadCount = 0;
+        state.SaveMusicPlayingTime = 0.0f;
+        state.SavePoint = 0;
     }
 
     protected virtual void Start()
@@ -224,7 +222,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         audioSource = SoundManager.Instance.MusicAudio;
 
         SoundManager.Instance.SetStageMusic();
-        _state.StageMusicLength = (int)audioSource.clip.length;
+        state.StageMusicLength = (int)audioSource.clip.length;
     }
 
     protected virtual void InitBallPosition()
@@ -251,9 +249,9 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     protected virtual void GetBallSkin()
     {
-        for (int i = 0; i < _userData.shopData.skinUsingYn.Length; i++)
+        for (int i = 0; i < userData.shopData.skinUsingYn.Length; i++)
         {
-            if (_userData.shopData.skinUsingYn[i].Contains("Y"))
+            if (userData.shopData.skinUsingYn[i].Contains("Y"))
             {
                 if (BallSkin)
                 {
@@ -315,6 +313,10 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         if (_isAutoMode)
         {
             DodgePointBase.gameObject.SetActive(_isAutoMode);
+        }
+        else if(state.ShowDodge)
+        {
+            DodgePointBase.gameObject.SetActive(state.ShowDodge);
         }
     }
 
@@ -738,8 +740,39 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     // TO DO : 게임 플레이 결과 Global Data나 Global Stage에 저장 -> 그 데이터로 결과창 구현 로직 처리
     protected virtual void SaveGameResult()
     {
+        int _stageIndex = (int)GlobalState.Instance.StageIndex;
+        int _albumIndex = (int)GlobalState.Instance.AlbumIndex;
+
         // Save Total Play Time
-        _state.StagePlayTime = (int)_playTime;
+        state.StagePlayTime = (int)_playTime;
+
+        switch (_albumIndex)
+        {
+            case 0: DataManager.dataAlbum1ClearYn[_stageIndex] = "Y"; break;
+            case 1: DataManager.dataAlbum2ClearYn[_stageIndex] = "Y"; break;
+            case 2: DataManager.dataAlbum3ClearYn[_stageIndex] = "Y"; break;
+            case 3: DataManager.dataAlbum4ClearYn[_stageIndex] = "Y"; break;
+        }
+
+        int _clearCount = 0;
+        for (int i = 0; i < DataManager.dataAlbum1ClearYn.Length; i++)
+        {
+            _clearCount += DataManager.dataAlbum1ClearYn[i] == "Y" || DataManager.dataAlbum1ClearYn[i] == "P" ? 1 : 0; 
+        }
+        for (int j = 0; j < DataManager.dataAlbum2ClearYn.Length; j++)
+        {
+            _clearCount += DataManager.dataAlbum2ClearYn[j] == "Y" || DataManager.dataAlbum2ClearYn[j] == "P" ? 1 : 0;
+        }
+        for (int k = 0; k < DataManager.dataAlbum3ClearYn.Length; k++)
+        {
+            _clearCount += DataManager.dataAlbum3ClearYn[k] == "Y" || DataManager.dataAlbum3ClearYn[k] == "P" ? 1 : 0;
+        }
+        for (int m = 0; m < DataManager.dataAlbum4ClearYn.Length; m++)
+        {
+            _clearCount += DataManager.dataAlbum4ClearYn[m] == "Y" || DataManager.dataAlbum4ClearYn[m] == "P" ? 1 : 0;
+        }
+
+        DataManager.dataClearStageCount = _clearCount;
     }
 
     protected virtual void OperateBallMovement()
@@ -860,9 +893,9 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
         _savePointTime = _timer;
 
-        _state.SavePoint = _currentLine;
-        _state.SaveMusicPlayingTime = audioSource.time;
-        _state.SavePointAngle = Center.transform.localEulerAngles.z;
+        state.SavePoint = _currentLine;
+        state.SaveMusicPlayingTime = audioSource.time;
+        state.SavePointAngle = Center.transform.localEulerAngles.z;
 
         EnterSavePointEffect();
     }
@@ -898,7 +931,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     {
         Debug.Log("Player Die!!");
 
-        _state.PlayerDeadCount++;
+        state.PlayerDeadCount++;
 
         ResetSavePointState();
     }
