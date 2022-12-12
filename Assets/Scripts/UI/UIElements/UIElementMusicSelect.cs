@@ -26,18 +26,27 @@ public class UIElementMusicSelect : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        var soundManager = SoundManager.Instance;
+
         GlobalState.Instance.StageIndex = 0;
-        SoundManager.Instance.TurnOffGameBackground();
-        SoundManager.Instance.TurnOnSelectedMusic();
-        SoundManager.Instance.FadeInMusicVolume(1f);
+
+        soundManager.TurnOffGameBackground();
+        soundManager.TurnOnSelectedMusic();
+        soundManager.FadeInMusicVolume(1f);
     }
+
     private void OnEnable()
     {
+        var soundManager = SoundManager.Instance;
+
         GlobalState.Instance.StageIndex = 0;
-        SoundManager.Instance.TurnOnSelectedMusic();
-        SoundManager.Instance.FadeInMusicVolume(1f);
+
+        soundManager.TurnOnSelectedMusic();
+        soundManager.FadeInMusicVolume(1f);
+
         scrollRect.content.anchoredPosition = Vector2.zero;
-        MakeAlbumStage();
+
+        MakeAlbumStages();
         ChangeBackGround();
     }
 
@@ -54,34 +63,35 @@ public class UIElementMusicSelect : MonoBehaviour
     }
 
     #region Make Album Stages
-    void MakeAlbumStage()
+    void MakeAlbumStages()
     {
+        var albumData = GlobalData.Instance.Album;
+
         switch (GlobalState.Instance.AlbumIndex)
         {
             case (int)GlobalData.ALBUM.ISEDOL:
-                makeStages(GlobalData.Instance.Album.FirstAlbumMusicCircle, GlobalData.Instance.Album.FirstAlbumMusicLevel);
-                MakeProgressBar(GlobalData.Instance.Album.FirstAlbumMusicCircle);
-                MakeProgressCicle(GlobalData.Instance.Album.FirstAlbumMusicCircle);
+                MakeAlbumStage(albumData.FirstAlbumMusicCircle, albumData.FirstAlbumMusicLevel);
                 break;
             case (int)GlobalData.ALBUM.CONTEST:
-                makeStages(GlobalData.Instance.Album.SecondAlbumMusicCircle, GlobalData.Instance.Album.SecondAlbumMusicLevel);
-                MakeProgressBar(GlobalData.Instance.Album.SecondAlbumMusicCircle);
-                MakeProgressCicle(GlobalData.Instance.Album.SecondAlbumMusicCircle);
+                MakeAlbumStage(albumData.SecondAlbumMusicCircle, albumData.SecondAlbumMusicLevel);
                 break;
             case (int)GlobalData.ALBUM.GOMIX:
-                makeStages(GlobalData.Instance.Album.ThirdAlbumMusicCircle, GlobalData.Instance.Album.ThirdAlbumMusicLevel);
-                MakeProgressBar(GlobalData.Instance.Album.ThirdAlbumMusicCircle);
-                MakeProgressCicle(GlobalData.Instance.Album.ThirdAlbumMusicCircle);
+                MakeAlbumStage(albumData.ThirdAlbumMusicCircle, albumData.ThirdAlbumMusicLevel);
                 break;
             case (int)GlobalData.ALBUM.WAKALOID:
-                makeStages(GlobalData.Instance.Album.ForthAlbumMusicCircle, GlobalData.Instance.Album.ForthAlbumMusicLevel);
-                MakeProgressBar(GlobalData.Instance.Album.ForthAlbumMusicCircle);
-                MakeProgressCicle(GlobalData.Instance.Album.ForthAlbumMusicCircle);
+                MakeAlbumStage(albumData.ForthAlbumMusicCircle, albumData.ForthAlbumMusicLevel);
                 break;
         }
     }
 
-    void makeStages(Sprite[] _stageCircles, Sprite[] _stageLevel)
+    void MakeAlbumStage(Sprite[] albumCircle, Sprite[] albumLevel)
+    {
+        MakeStages(albumCircle, albumLevel);
+        MakeProgressBar(albumCircle);
+        MakeProgressCicle(albumCircle);
+    }
+
+    void MakeStages(Sprite[] _stageCircles, Sprite[] _stageLevel)
     {
         var stageCircles = _stageCircles;
         var stageLevel = _stageLevel;
@@ -202,7 +212,6 @@ public class UIElementMusicSelect : MonoBehaviour
     }
     #endregion
 
-    // Update is called once per frame
 
     public void InputExecute()
     {
@@ -234,18 +243,6 @@ public class UIElementMusicSelect : MonoBehaviour
                 }
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            scrollRect.DOHorizontalNormalizedPos(1f, 1f);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            scrollRect.DOHorizontalNormalizedPos(0f, 1f);
-        }
-
-
     }
 
     float _duration = 0.5f;
@@ -260,24 +257,27 @@ public class UIElementMusicSelect : MonoBehaviour
     }
     void ChangeBackGround()
     {
+        var albumData = GlobalData.Instance.Album;
+        var state = GlobalState.Instance;
+
         switch (GlobalState.Instance.AlbumIndex)
         {
             case (int)GlobalData.ALBUM.ISEDOL:
-                backGround.sprite = GlobalData.Instance.Album.FirstAlbumMusicBackground[GlobalState.Instance.StageIndex];
+                backGround.sprite = albumData.FirstAlbumMusicBackground[state.StageIndex];
                 break;
             case (int)GlobalData.ALBUM.CONTEST:
-                backGround.sprite = GlobalData.Instance.Album.SecondAlbumMusicBackground[GlobalState.Instance.StageIndex];
+                backGround.sprite = albumData.SecondAlbumMusicBackground[state.StageIndex];
                 break;
             case (int)GlobalData.ALBUM.GOMIX:
-                backGround.sprite = GlobalData.Instance.Album.ThirdAlbumMusicBackground[GlobalState.Instance.StageIndex];
+                backGround.sprite = albumData.ThirdAlbumMusicBackground[state.StageIndex];
                 break;
             case (int)GlobalData.ALBUM.WAKALOID:
-                backGround.sprite = GlobalData.Instance.Album.ForthAlbumMusicBackground[GlobalState.Instance.StageIndex];
+                backGround.sprite = albumData.ForthAlbumMusicBackground[state.StageIndex];
                 break;
         }
 
         // stage Text 변경 시켜주는곳
-        stageText.sprite = GlobalData.Instance.Album.StageIcons[GlobalState.Instance.StageIndex];
+        stageText.sprite = albumData.StageIcons[state.StageIndex];
     }
 
     void SelectMusic()
