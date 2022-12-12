@@ -273,13 +273,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3665366499706492314}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 8664862758423606097}
+        m_TargetAssemblyTypeName: UIElementResult, Assembly-CSharp
+        m_MethodName: OnClickReplay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -690,13 +690,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3665366499706492314}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 8664862758423606097}
+        m_TargetAssemblyTypeName: UIElementResult, Assembly-CSharp
+        m_MethodName: OnClickConfirm
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1880,6 +1880,7 @@ MonoBehaviour:
   ResultBanner: {fileID: 2470554773148338467}
   OriginLink: {fileID: 163169995757514502}
   ReMixLink: {fileID: 4407185095312996054}
+  UIElementPopUp: {fileID: 5955706999031344976, guid: 2a916a2a440c0ff46a1c4d81b1f6c20d, type: 3}
 --- !u!1 &3711726988090528068
 GameObject:
   m_ObjectHideFlags: 0

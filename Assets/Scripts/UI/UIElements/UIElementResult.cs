@@ -16,6 +16,8 @@ public class UIElementResult : MonoBehaviour
     private Vector2 remixLinkStartVector = new Vector2(-416f, -281.5f);
     private Vector2 remixLinkTargetVector = new Vector2(21.2f, -281.5f);
 
+    [SerializeField] private UIElementPopUp UIElementPopUp;
+
     private string _wakZooURL = string.Empty;
     private string _originURL = string.Empty;
     private string _reMixURL = string.Empty;
@@ -180,11 +182,15 @@ public class UIElementResult : MonoBehaviour
 
     public void OnClickReplay()
     {
-
+        if (DataManager.dataBackgroundProcActive)
+        {
+            UIManager.Instance.GoPanelGamePlay();
+            //UIElementPopUp.MakePopUpMusicInfo();
+        }
     }
 
     public void OnClickConfirm()
     {
-
+        UIManager.Instance.GoPanelMusicSelect();
     }
 }

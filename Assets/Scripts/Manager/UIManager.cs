@@ -162,7 +162,8 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
 
     public void GoPanelGamePlay()
     {
-        if (GlobalState.Instance.CurrentPanelIndex == (int)GlobalData.UIMODE.SELECT_MUSIC)
+        if (GlobalState.Instance.CurrentPanelIndex == (int)GlobalData.UIMODE.SELECT_MUSIC 
+            || GlobalState.Instance.CurrentPanelIndex == (int)GlobalData.UIMODE.RESULT)
         {
             WantShowPanel((int)GlobalData.UIMODE.GAME);
         }
