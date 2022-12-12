@@ -202,8 +202,8 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
             GlobalState.Instance.UserData = JsonUtility.FromJson<JsonUserData>(jsonUserData);
 
             // 글로벌 값 호출 즉시 파일에 저장 된 배경음/환경음 볼륨으로 제어
-            SoundManager.Instance.CtrlBGMVolume(userData.settingData.BGMValue);
-            SoundManager.Instance.CtrlSFXVolume(userData.settingData.SFXValue);
+            SoundManager.Instance.CtrlBGMVolume(GlobalState.Instance.UserData.data.settingData.BGMValue);
+            SoundManager.Instance.CtrlSFXVolume(GlobalState.Instance.UserData.data.settingData.SFXValue);
 
             // 파일 여부 확인
             _fileYn = true;
