@@ -65,20 +65,10 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
     static string[] _album3ClearYn;
     static string[] _album4ClearYn;
     // 앨범 별 스테이지 진행률
-    static int[] _album1ProgressRate;
-    static int[] _album2ProgressRate;
-    static int[] _album3ProgressRate;
-    static int[] _album4ProgressRate;
-    // 스테이지 별 클리어 시 데스 수 
-    static int[] _album1DeathCount;
-    static int[] _album2DeathCount;
-    static int[] _album3DeathCount;
-    static int[] _album4DeathCount;
-    // 스테이지 별 클리어 시 사용 아이템 배열
-    static string[] _ablum1UsingItem;
-    static string[] _ablum2UsingItem;
-    static string[] _ablum3UsingItem;
-    static string[] _ablum4UsingItem;
+    static int[] _album1StageProgressLine;
+    static int[] _album2StageProgressLine;
+    static int[] _album3StageProgressLine;
+    static int[] _album4StageProgressLine;
 
     public static string GetUserData()
     {
@@ -166,18 +156,10 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
         gameData.album2ClearYn = _album2ClearYn ?? globalUserData.gameData.album2ClearYn;
         gameData.album3ClearYn = _album3ClearYn ?? globalUserData.gameData.album3ClearYn;
         gameData.album4ClearYn = _album4ClearYn ?? globalUserData.gameData.album4ClearYn;
-        gameData.album1ProgressRate = _album1ProgressRate ?? globalUserData.gameData.album1ProgressRate;
-        gameData.album2ProgressRate = _album2ProgressRate ?? globalUserData.gameData.album2ProgressRate;
-        gameData.album3ProgressRate = _album3ProgressRate ?? globalUserData.gameData.album3ProgressRate;
-        gameData.album4ProgressRate = _album4ProgressRate ?? globalUserData.gameData.album4ProgressRate;
-        gameData.album1DeathCount = _album1DeathCount ?? globalUserData.gameData.album1DeathCount;
-        gameData.album2DeathCount = _album2DeathCount ?? globalUserData.gameData.album2DeathCount;
-        gameData.album3DeathCount = _album3DeathCount ?? globalUserData.gameData.album3DeathCount;
-        gameData.album4DeathCount = _album4DeathCount ?? globalUserData.gameData.album4DeathCount;
-        gameData.ablum1UsingItem = _ablum1UsingItem ?? globalUserData.gameData.ablum1UsingItem;
-        gameData.ablum2UsingItem = _ablum2UsingItem ?? globalUserData.gameData.ablum2UsingItem;
-        gameData.ablum3UsingItem = _ablum3UsingItem ?? globalUserData.gameData.ablum3UsingItem;
-        gameData.ablum4UsingItem = _ablum4UsingItem ?? globalUserData.gameData.ablum4UsingItem;
+        gameData.album1StageProgressLine = _album1StageProgressLine ?? globalUserData.gameData.album1StageProgressLine;
+        gameData.album1StageProgressLine = _album2StageProgressLine ?? globalUserData.gameData.album2StageProgressLine;
+        gameData.album1StageProgressLine = _album3StageProgressLine ?? globalUserData.gameData.album3StageProgressLine;
+        gameData.album1StageProgressLine = _album4StageProgressLine ?? globalUserData.gameData.album4StageProgressLine;
 
         return userData.ToJson();
     }
@@ -197,17 +179,43 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
 
         if (File.Exists(_path + _fileName))
         {
+            // 파일 여부 확인
+            _fileYn = true;
+
             // 파일에서 데이터 불러옴
             var jsonUserData = File.ReadAllText(_path + _fileName);
             GlobalState.Instance.UserData = JsonUtility.FromJson<JsonUserData>(jsonUserData);
 
-            // 글로벌 값 호출 즉시 파일에 저장 된 배경음/환경음 볼륨으로 제어
-            SoundManager.Instance.CtrlBGMVolume(GlobalState.Instance.UserData.data.settingData.BGMValue);
-            SoundManager.Instance.CtrlSFXVolume(GlobalState.Instance.UserData.data.settingData.SFXValue);
-
-            // 파일 여부 확인
-            _fileYn = true;
             Debug.Log($"Load User Data : {jsonUserData}");
+
+            // DataManager에 파일에서 가져온 데이터 넣기
+            // 설정 데이터 세팅
+            dataBGMValue = GlobalState.Instance.UserData.data.settingData.BGMValue;
+            dataSFXValue = GlobalState.Instance.UserData.data.settingData.SFXValue;
+            dataKeyDivision = GlobalState.Instance.UserData.data.settingData.keyDivision;
+            dataInnerOperationKey = GlobalState.Instance.UserData.data.settingData.innerOperationKey;
+            dataOuterOperationKey = GlobalState.Instance.UserData.data.settingData.outerOperationKey;
+
+            // 상점 데이터 세팅
+            dataSkinUnLockYn = GlobalState.Instance.UserData.data.shopData.skillUnLockYn;
+            dataSkinUsingYn = GlobalState.Instance.UserData.data.shopData.skinUsingYn;
+            dataSkillUnLockYn = GlobalState.Instance.UserData.data.shopData.skillUnLockYn;
+            dataSkillUsingYn = GlobalState.Instance.UserData.data.shopData.skillUsingYn;
+
+            // 인게임 관련 데이터
+            dataClearStageCount = GlobalState.Instance.UserData.data.gameData.clearStageCount;
+            dataAlbum1ClearYn = GlobalState.Instance.UserData.data.gameData.album1ClearYn;
+            dataAlbum2ClearYn = GlobalState.Instance.UserData.data.gameData.album2ClearYn;
+            dataAlbum3ClearYn = GlobalState.Instance.UserData.data.gameData.album3ClearYn;
+            dataAlbum4ClearYn = GlobalState.Instance.UserData.data.gameData.album4ClearYn;
+            dataAlbum1StageProgressLine = GlobalState.Instance.UserData.data.gameData.album1StageProgressLine;
+            dataAlbum2StageProgressLine = GlobalState.Instance.UserData.data.gameData.album2StageProgressLine;
+            dataAlbum3StageProgressLine = GlobalState.Instance.UserData.data.gameData.album3StageProgressLine;
+            dataAlbum4StageProgressLine = GlobalState.Instance.UserData.data.gameData.album4StageProgressLine;
+
+            // 글로벌 값 호출 즉시 파일에 저장 된 배경음/환경음 볼륨으로 제어
+            SoundManager.Instance.CtrlBGMVolume((float)dataBGMValue);
+            SoundManager.Instance.CtrlSFXVolume((float)dataSFXValue);
         } 
         else
         {
@@ -222,6 +230,16 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
             _skinUsingYn = new string[_skinCount];
             _skillUnLockYn = new string[_skillCount];
             _skillUsingYn = new string[_skillCount];
+
+            _clearStageCount = 0;
+            _album1ClearYn = new string[_album1StageCount];
+            _album2ClearYn = new string[_album2StageCount];
+            _album3ClearYn = new string[_album3StageCount];
+            _album4ClearYn = new string[_album4StageCount];
+            _album1StageProgressLine = new int[_album1StageCount];
+            _album2StageProgressLine = new int[_album2StageCount];
+            _album3StageProgressLine = new int[_album3StageCount];
+            _album4StageProgressLine = new int[_album4StageCount];
 
             for (int i = 0; i < _skinCount; i++)
             {
@@ -251,6 +269,37 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
             userData.shopData.skinUsingYn = _skinUsingYn;
             userData.shopData.skillUnLockYn = _skillUnLockYn;
             userData.shopData.skillUsingYn = _skillUsingYn;
+
+            for (int i = 0; i < _album1StageCount; i++)
+            {
+                _album1ClearYn[i] = "N";
+                _album1StageProgressLine[i] = 0;
+            }
+            for (int i = 0; i < _album2StageCount; i++)
+            {
+                _album2ClearYn[i] = "N";
+                _album2StageProgressLine[i] = 0;
+            }
+            for (int i = 0; i < _album3StageCount; i++)
+            {
+                _album3ClearYn[i] = "N";
+                _album3StageProgressLine[i] = 0;
+            }
+            for (int i = 0; i < _album4StageCount; i++)
+            {
+                _album4ClearYn[i] = "N";
+                _album4StageProgressLine[i] = 0;
+            }
+
+            userData.gameData.clearStageCount = 0;
+            userData.gameData.album1ClearYn = _album1ClearYn;
+            userData.gameData.album2ClearYn = _album2ClearYn;
+            userData.gameData.album3ClearYn = _album3ClearYn;
+            userData.gameData.album4ClearYn = _album4ClearYn;
+            userData.gameData.album1StageProgressLine = _album1StageProgressLine;
+            userData.gameData.album2StageProgressLine = _album2StageProgressLine;
+            userData.gameData.album3StageProgressLine = _album3StageProgressLine;
+            userData.gameData.album4StageProgressLine = _album4StageProgressLine;
         }
     }
 
@@ -436,87 +485,31 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
     }
 
     // 앨범 1의 스테이지 별 진행률
-    public static int[] dataAlbum1ProgressRate
+    public static int[] dataAlbum1StageProgressLine
     {
-        get { return _album1ProgressRate; }
-        set { _album1ProgressRate = value; }
+        get { return _album1StageProgressLine; }
+        set { _album1StageProgressLine = value; }
     }
 
     // 앨범 2의 스테이지 별 진행률
-    public static int[] dataAlbum2ProgressRate
+    public static int[] dataAlbum2StageProgressLine
     {
-        get { return _album2ProgressRate; }
-        set { _album2ProgressRate = value; }
+        get { return _album2StageProgressLine; }
+        set { _album2StageProgressLine = value; }
     }
 
     // 앨범 3의 스테이지 별 진행률
-    public static int[] dataAlbum3ProgressRate
+    public static int[] dataAlbum3StageProgressLine
     {
-        get { return _album3ProgressRate; }
-        set { _album3ProgressRate = value; }
+        get { return _album3StageProgressLine; }
+        set { _album3StageProgressLine = value; }
     }
 
     // 앨범 4의 스테이지 별 진행률
-    public static int[] dataAlbum4ProgressRate
+    public static int[] dataAlbum4StageProgressLine
     {
-        get { return _album4ProgressRate; }
-        set { _album4ProgressRate = value; }
-    }
-
-    // 스테이지 1의 클리어 시 데스 카운트
-    public static int[] dataAlbum1DeathCount
-    {
-        get { return _album1DeathCount; }
-        set { _album1DeathCount = value; }
-    }
-
-    // 스테이지 2의 클리어 시 데스 카운트
-    public static int[] dataAlbum2DeathCount
-    {
-        get { return _album2DeathCount; }
-        set { _album2DeathCount = value; }
-    }
-
-    // 스테이지 3의 클리어 시 데스 카운트
-    public static int[] dataAlbum3DeathCount
-    {
-        get { return _album3DeathCount; }
-        set { _album3DeathCount = value; }
-    }
-
-    // 스테이지 4의 클리어 시 데스 카운트
-    public static int[] dataAlbum4DeathCount
-    {
-        get { return _album4DeathCount; }
-        set { _album4DeathCount = value; }
-    }
-
-    // 스테이지 1의 클리어 시 사용 아이템 배열
-    public static string[] dataAblum1UsingItem
-    {
-        get { return _ablum1UsingItem; }
-        set { _ablum1UsingItem = value; }
-    }
-
-    // 스테이지 2의 클리어 시 사용 아이템 배열
-    public static string[] dataAblum2UsingItem
-    {
-        get { return _ablum2UsingItem; }
-        set { _ablum2UsingItem = value; }
-    }
-
-    // 스테이지 3의 클리어 시 사용 아이템 배열
-    public static string[] dataAblum3UsingItem
-    {
-        get { return _ablum3UsingItem; }
-        set { _ablum3UsingItem = value; }
-    }
-
-    // 스테이지 4의 클리어 시 사용 아이템 배열
-    public static string[] dataAblum4UsingItem
-    {
-        get { return _ablum4UsingItem; }
-        set { _ablum4UsingItem = value; }
+        get { return _album4StageProgressLine; }
+        set { _album4StageProgressLine = value; }
     }
 
     // Start is called before the first frame update

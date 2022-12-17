@@ -99,20 +99,10 @@ public class GameData : DataBase
     public string[] album3ClearYn = new string[DataManager.dataAlbum3StageCount];
     public string[] album4ClearYn = new string[DataManager.dataAlbum4StageCount];
     // 앨범 별 스테이지 진행률 배열
-    public int[] album1ProgressRate = new int[DataManager.dataAlbum1StageCount];
-    public int[] album2ProgressRate = new int[DataManager.dataAlbum2StageCount];
-    public int[] album3ProgressRate = new int[DataManager.dataAlbum3StageCount];
-    public int[] album4ProgressRate = new int[DataManager.dataAlbum4StageCount];
-    // 앨범 별 스테이지 클리어 시 데스 수 배열
-    public int[] album1DeathCount = new int[DataManager.dataAlbum1StageCount];
-    public int[] album2DeathCount = new int[DataManager.dataAlbum2StageCount];
-    public int[] album3DeathCount = new int[DataManager.dataAlbum3StageCount];
-    public int[] album4DeathCount = new int[DataManager.dataAlbum4StageCount];
-    // 앨범 별 스테이지 클리어 시 사용 아이템 목록 배열
-    public string[] ablum1UsingItem = new string[DataManager.dataAlbum1StageCount];
-    public string[] ablum2UsingItem = new string[DataManager.dataAlbum2StageCount];
-    public string[] ablum3UsingItem = new string[DataManager.dataAlbum3StageCount];
-    public string[] ablum4UsingItem = new string[DataManager.dataAlbum4StageCount];
+    public int[] album1StageProgressLine = new int[DataManager.dataAlbum1StageCount];
+    public int[] album2StageProgressLine = new int[DataManager.dataAlbum2StageCount];
+    public int[] album3StageProgressLine = new int[DataManager.dataAlbum3StageCount];
+    public int[] album4StageProgressLine = new int[DataManager.dataAlbum4StageCount];
 }
 
 [Serializable]
