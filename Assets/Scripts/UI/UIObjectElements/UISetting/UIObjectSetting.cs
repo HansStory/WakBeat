@@ -89,13 +89,15 @@ public class UIObjectSetting : MonoBehaviour
             // 입력 되 있는 모든 값 가져와서 글로벌에 저장
             SetGlobalValue();
 
-            // 게임종료 버튼 이벤트
-            UIElementSetting.Instance.ButtonClickControll("Setting", "Close");
-            UIManager.Instance.GoPanelMain();
-            SoundManager.Instance.ForceAudioStop();
-
             // 버튼 사운드 출력
             setSoundPrint();
+
+            // 게임종료 버튼 이벤트
+            UIElementSetting.Instance.ButtonClickControll("Setting", "Close");
+            //UIManager.Instance.GoPanelMain();
+            SoundManager.Instance.ForceAudioStop();
+
+            AppManager.Instance.Quit();
         }
         else if (Division.Equals("IntegrationOn"))
         {

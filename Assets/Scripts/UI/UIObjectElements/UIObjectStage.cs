@@ -6,6 +6,8 @@ using DG.Tweening;
 
 public class UIObjectStage : MonoBehaviour
 {
+    public UIElementMusicSelect UIElementMusicSelect { get; set; }
+
     [SerializeField] private Image stageThumnail;
     private Sprite _stageThumnail;
     public Sprite StageThumnail
@@ -67,30 +69,50 @@ public class UIObjectStage : MonoBehaviour
     {
         if (DataManager.dataBackgroundProcActive)
         {
-            if (Input.GetKeyDown(KeyCode.RightArrow))
+            if (!GlobalState.Instance.IsTweening)
             {
-                ShowMyIndex();
-            }
-
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                ShowMyIndex();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                //SelectAlbum();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                //ExitAlbumSelect();
+                InputRightArrow();
+                InputLeftArrow();
+                InputReturn();
+                InputEscape();
             }
         }
     }
 
+    void InputRightArrow()
+    {
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            ShowMyIndex();
+        }
+    }
+
+    void InputLeftArrow()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            ShowMyIndex();
+        }
+    }
+
+    void InputReturn()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+
+        }
+    }
+
+    void InputEscape()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+
+        }
+    }
+
     float _duration = 0.5f;
-    void ShowMyIndex()
+    public void ShowMyIndex()
     {
         if (GlobalState.Instance.StageIndex == StageIndex)
         {
@@ -102,5 +124,27 @@ public class UIObjectStage : MonoBehaviour
             stageLevel.gameObject.SetActive(GlobalState.Instance.StageIndex == StageIndex);
             panelStage.DOScale(Vector3.one * smallSize, _duration);
         }
+    }
+
+    public void OnClickStageCircle()
+    {
+        var direction = GlobalState.Instance.StageIndex - StageIndex;
+
+        switch(direction)
+        {
+            case -1:
+                UIElementMusicSelect.InputRightFunction();
+                break;
+            case 0:
+                UIManager.Instance.UIElementFadePanel.MusicToStage();
+                ShowMyIndex();
+                break;
+            case 1:
+                UIElementMusicSelect.InputLeftFunction();
+                ShowMyIndex();
+                break;
+        }
+
+        UIElementMusicSelect.ShowSelectedStage();
     }
 }
