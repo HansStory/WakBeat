@@ -27,4 +27,59 @@ public class SecondAStage1 : Stage
         CreateOutObstacle(1, _outRadius);
     }
 
+    protected override void ShowOutObstacles()
+    {
+        var beatItem = bmwReader.ChartingItem[_currentLine];
+
+        if (beatItem != null)
+        {
+
+            // Show Objects
+            if (beatItem.OutObstacleElements[0].Index > -1)
+            {
+                foreach (var outObstacle in beatItem.OutObstacleElements)
+                {
+                    OutObstacleLists[outObstacle.Index].gameObject.SetActive(true);
+                }
+            }
+
+            // Show Dummy
+            if (beatItem.DummyOutObstacleElements[0].Index > -1)
+            {
+                foreach (var dummy in beatItem.DummyOutObstacleElements)
+                {
+                    OutObstacleLists[dummy.Index].gameObject.SetActive(true);
+                }
+            }
+        }
+    }
+
+    protected override void ShowInObstacles()
+    {
+        if (_currentLine >= bmwReader.ChartingItem.Count) return;
+
+        var beatItem = bmwReader.ChartingItem[_currentLine];
+
+        if (beatItem != null)
+        {
+            // Show Objects
+            if (beatItem.InObstacleElements[0].Index > -1)
+            {
+                foreach (var inObstacle in beatItem.InObstacleElements)
+                {
+                    InObstacleLists[inObstacle.Index].gameObject.SetActive(true);
+                }
+            }
+
+            // Show Dummy
+            if (beatItem.DummyInObstacleElements[0].Index > -1)
+            {
+                foreach (var dummy in beatItem.DummyInObstacleElements)
+                {
+                    InObstacleLists[dummy.Index].gameObject.SetActive(true);
+                }
+            }
+        }
+    }
+
 }
