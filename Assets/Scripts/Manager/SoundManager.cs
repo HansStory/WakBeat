@@ -19,6 +19,8 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
 
     [SerializeField] private AudioClip[] backgroundClips;
 
+    [SerializeField] private AudioClip resultClip;
+
     [SerializeField] private Sprite[] bgmTextSprites;
 
     [SerializeField] private AudioClip[] album1HighLightClips;
@@ -107,7 +109,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         MusicAudioSource.volume = volume;
     }
 
-    public int selectedAlbumMusicLength = 0;
+    public int SelectedAlbumMusicLength = 0;
     public void TurnOnSelectedMusic()
     {
         SetHighLightMusic();
@@ -123,19 +125,19 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         {
             case (int)GlobalData.ALBUM.ISEDOL:
                 MusicAudioSource.clip = album1HighLightClips[GlobalState.Instance.StageIndex];
-                selectedAlbumMusicLength = album1HighLightClips.Length - 1;
+                SelectedAlbumMusicLength = album1HighLightClips.Length - 1;
                 break;
             case (int)GlobalData.ALBUM.CONTEST:
                 MusicAudioSource.clip = album2HighLightClips[GlobalState.Instance.StageIndex];
-                selectedAlbumMusicLength = album2HighLightClips.Length - 1;
+                SelectedAlbumMusicLength = album2HighLightClips.Length - 1;
                 break;
             case (int)GlobalData.ALBUM.GOMIX:
                 MusicAudioSource.clip = album3HighLightClips[GlobalState.Instance.StageIndex];
-                selectedAlbumMusicLength = album3HighLightClips.Length - 1;
+                SelectedAlbumMusicLength = album3HighLightClips.Length - 1;
                 break;
             case (int)GlobalData.ALBUM.WAKALOID:
                 MusicAudioSource.clip = album4HighLightClips[GlobalState.Instance.StageIndex];
-                selectedAlbumMusicLength = album4HighLightClips.Length - 1;
+                SelectedAlbumMusicLength = album4HighLightClips.Length - 1;
                 break;
         }
     }
@@ -197,6 +199,21 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         MusicPlayTime = MusicAudioSource.time;
     }
 
+    public void TurnOnResultAudio()
+    {
+        ForceAudioStop();
+
+        if (resultClip)
+        {
+            MusicAudioSource.clip = resultClip;
+
+            MusicAudioSource.time = 0;
+            MusicAudioSource.Play();
+
+            MusicAudioSource.loop = true;          
+        }
+    }
+
     public void TurnOnGameBackGround()
     {
         BackgroundMusicIndex = 0;
@@ -214,17 +231,18 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     public void FadeOutMusicVolume(float duration)
     {
         MusicAudioSource.volume = GlobalState.Instance.MusicVolume;
-        MusicAudioSource.DOFade(0f, duration);
+        MusicAudioSource.DOFade(0f, duration).SetAutoKill();
     }
 
     public void FadeInMusicVolume(float duration)
     {
         MusicAudioSource.volume = 0f;
-        MusicAudioSource.DOFade(GlobalState.Instance.MusicVolume, duration);
+        MusicAudioSource.DOFade(GlobalState.Instance.MusicVolume, duration).SetAutoKill();
     }
 
     public void ForceAudioStop()
     {
+        MusicAudioSource.time = 0;
         MusicAudioSource.Stop();
     }
 

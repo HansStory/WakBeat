@@ -1,9 +1,24 @@
 public class GlobalData : MonoBehaviourSingleton<GlobalData>
 {
+    public AlbumInfo AlbumInfoDEV;
+    public AlbumInfo AlbumInfoRelease;
+
     public ScriptInformation Information;
     public AlbumInfo Album;
     public ShopInfo Shop;
     public StageInfo StageInfo;
+
+    public void Start()
+    {
+        if (GlobalState.Instance.DevMode)
+        {
+            Album = AlbumInfoDEV;
+        }
+        else
+        {
+            Album = AlbumInfoRelease;
+        }
+    }
 
     public enum OBJTYPE
     {
@@ -28,6 +43,7 @@ public class GlobalData : MonoBehaviourSingleton<GlobalData>
         CONTEST,
         GOMIX,
         WAKALOID,
+        FESTIVAL,
     }
 
     public enum UIMODE
