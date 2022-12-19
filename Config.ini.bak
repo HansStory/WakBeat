@@ -26,7 +26,6 @@ Origin_BangOff=https://www.youtube.com/watch?v=1-K7Tm2eo1U
 Origin_TwistedLove=https://www.youtube.com/watch?v=Ec_5mO8RgKE
 Origin_Waklio=https://www.youtube.com/watch?v=9C_Xm1nyPgc
 
-
 ; Youtube Remix 음원 링크
 ;Musics
 ;<앨범1-이세돌>
@@ -60,7 +59,8 @@ BGM_03=https://www.youtube.com/watch?v=9IQ-02r_sx4
 
 [SYSTEM]
 ;Realse Mode = 0 / Develope Mode = 1
-DEVKEY=0
+DEVKEY=1
+
 ;False = 0 / True = 1
 GAMEMODE=1
-AUTOMODE=1
+AUTOMODE=0
