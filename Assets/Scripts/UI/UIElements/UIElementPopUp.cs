@@ -25,7 +25,7 @@ public class UIElementPopUp : MonoBehaviour
 
         if (PopUpInfo)
         {
-            PopUpInfo.ContentImage = GlobalData.Instance.Album.AlbumInfomationImage[AlbumIndex];
+            PopUpInfo.ContentImage.sprite = GlobalData.Instance.Album.AlbumInfomationImage[AlbumIndex];
             // Close 버튼 이벤트
             _PopUp.transform.Find("ButtonClose").GetComponent<Button>().onClick.AddListener(() => SetButtonEvent("Album", _PopUp));
 
@@ -62,8 +62,10 @@ public class UIElementPopUp : MonoBehaviour
 
             // 팝업 Moving 처리
             this.transform.position = new Vector3(0, -3);
-            this.transform.DOLocalMoveY(10, _duration).SetEase(Ease.Linear).OnComplete(() => {
-                this.transform.DOLocalMoveY(-400, _duration).SetEase(Ease.Linear).SetDelay(2).OnComplete(() => { SetButtonEvent("Music", _PopUp); });
+            this.transform.DOLocalMoveY(10, _duration).SetEase(Ease.Linear).SetAutoKill().OnComplete(() => 
+            {
+                this.transform.DOLocalMoveY(-400, _duration).SetEase(Ease.Linear).SetAutoKill().
+                SetDelay(2).OnComplete(() => { SetButtonEvent("Music", _PopUp); });
             });
         }
     }
@@ -74,6 +76,7 @@ public class UIElementPopUp : MonoBehaviour
         if(Division.Equals("Album"))
         {
             Background.SetActive(false);
+            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
             Destroy(Obj);
         } 
         else if(Division.Equals("Music"))

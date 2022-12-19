@@ -104,7 +104,9 @@ public class UIElementSetting : MonoBehaviourSingleton<UIElementSetting>
         {
             if (OpenYN.Equals("Open"))
             {
-                Background.SetActive(false);
+                DataManager.dataBackgroundProcActive = false;
+
+                Background.SetActive(true);
                 PanelPause.SetActive(true);
 
                 // 게임 일시 정지 프로세스 > 실행
@@ -112,6 +114,8 @@ public class UIElementSetting : MonoBehaviourSingleton<UIElementSetting>
             }
             else
             {
+                DataManager.dataBackgroundProcActive = true;
+
                 Background.SetActive(false);
                 PanelPause.SetActive(false);
             }

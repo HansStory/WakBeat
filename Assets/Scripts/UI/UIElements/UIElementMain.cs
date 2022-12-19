@@ -12,18 +12,10 @@ public class UIElementMain : MonoBehaviour
 
     [SerializeField] private PlayableDirector MainLogoAnim;
 
-    private bool isStart = false;
-    private bool isKeyStop = false;
 
-    private float sTime = 3f;
-    private float rTime;
-
-    // Start is called before the first frame update
     void Start()
     {
         //SoundManager.Instance.TurnOnGameBackGround();
-        isStart = true;
-        isKeyStop = true;
     }
 
     private void OnEnable()
@@ -39,21 +31,13 @@ public class UIElementMain : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rTime += Time.deltaTime;
-
-        if(rTime >= sTime)
-        {
-            isKeyStop = false;
-        }
-
         InputExcute();
         BackGroundMove();
     }
 
     public void OnClickStartButton()
     {
-        rTime = new float();
-        isKeyStop = true;
+        //isKeyStop = true;
         UIManager.Instance.GoPanelAlbumSelect();
     }
 
@@ -61,24 +45,30 @@ public class UIElementMain : MonoBehaviour
     {
         if (DataManager.dataBackgroundProcActive)
         {
-            if (Input.GetKeyDown(KeyCode.Return))
+            if (!GlobalState.Instance.IsTweening)
             {
-                if(!isKeyStop)
+                if (GlobalState.Instance.DevMode)
                 {
-                    OnClickStartButton();
+                    InputReturn();
+                    InputEscape();
                 }
             }
-        
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                AppManager.Instance.Quit();
-            }
+        }
+    }
 
-            // For Test
-            //if (Input.GetKeyDown(KeyCode.Alpha1))
-            //{
-            //    LogoPlay();
-            //}
+    void InputReturn()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            OnClickStartButton();
+        }
+    }
+
+    void InputEscape()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            AppManager.Instance.Quit();
         }
     }
 
