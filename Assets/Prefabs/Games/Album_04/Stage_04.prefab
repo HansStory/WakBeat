@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4112936762514861922}
   - component: {fileID: 3899145957695815704}
   - component: {fileID: 3097434870188687003}
-  - component: {fileID: 9093040505957720347}
   - component: {fileID: 2182874029535903160}
   m_Layer: 5
   m_Name: Stage_04
@@ -98,42 +97,6 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
---- !u!114 &9093040505957720347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4143023116079684940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 366295d0aac03404696321f37c70b9a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BallSkin: {fileID: 7765270866780204917}
-  CircleSkin: {fileID: 6094104841626586938}
-  BackGroundSkin: {fileID: 844462776320484617}
-  PlayGround: {fileID: 4862396563491310177}
-  Center: {fileID: 663921556387402100}
-  Player: {fileID: 1939264986128169808}
-  StageAnim: {fileID: 3097434870188687003}
-  InCircleFade: {fileID: 6173832822445076508}
-  OutCircleFade: {fileID: 100186202000373558}
-  ClearRate: {fileID: 9175226695559822298}
-  Container: {fileID: 5265619087200196811}
-  CenterPivot: {fileID: 338118008491406230}
-  DodgePoint: {fileID: 6554657761582386137, guid: e2c156a28ae04be47bc98f1f08665e75, type: 3}
-  DodgePointBase: {fileID: 8081847212461026836}
-  DodgePointLists: []
-  Obstacles:
-  - {fileID: 5128582855503444759, guid: 2988b58b41eeae344bf70c0a7dfbcca6, type: 3}
-  - {fileID: 5128582855503444759, guid: 1fdb2de42ba50d14ca642f7a9d51b871, type: 3}
-  ObstacleInBase: {fileID: 6447761825843056367}
-  InObstacleLists: []
-  ObstacleOutBase: {fileID: 181122923626944189}
-  OutObstacleLists: []
-  SavePoint:
-  - {fileID: 7921288866019692938, guid: 663c68a6b803de7418db183677221222, type: 3}
 --- !u!114 &2182874029535903160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,6 +133,7 @@ MonoBehaviour:
   OutObstacleLists: []
   SavePoint:
   - {fileID: 7921288866019692938, guid: 663c68a6b803de7418db183677221222, type: 3}
+  TextCurrentLine: {fileID: 8985386085652165365}
 --- !u!1 &4423836732642508599
 GameObject:
   m_ObjectHideFlags: 0
@@ -424,6 +388,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2004516375445169040, guid: 7e788888c85de4e408ee66202512b788, type: 3}
   m_PrefabInstance: {fileID: 3327840686070878736}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8985386085652165365 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5952734448537575653, guid: 7e788888c85de4e408ee66202512b788, type: 3}
+  m_PrefabInstance: {fileID: 3327840686070878736}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &9175226695559822298 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5871050598817655242, guid: 7e788888c85de4e408ee66202512b788, type: 3}
