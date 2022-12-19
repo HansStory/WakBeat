@@ -93,7 +93,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4437959148392759656
 RectTransform:
   m_ObjectHideFlags: 0
@@ -136,8 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a73e10dfdf5771c47beea01878fe88dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _PopUpAlbumInfoImage: {fileID: 0}
-  PopUpAlbumInfoImage: {fileID: 268526133912433169}
+  _contentImage: {fileID: 268526133912433169}
 --- !u!1 &9116821677916609441
 GameObject:
   m_ObjectHideFlags: 0
