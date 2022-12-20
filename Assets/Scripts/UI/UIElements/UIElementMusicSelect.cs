@@ -263,6 +263,7 @@ public class UIElementMusicSelect : MonoBehaviour
             SoundManager.Instance.TurnOnSelectedMusic();
             ChangeBackGround();
             MoveScrollRect();
+            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.AlbumMove);
 
             Debug.Log($"Selecte My Stage Index : {state.StageIndex}");
         }
@@ -285,6 +286,7 @@ public class UIElementMusicSelect : MonoBehaviour
             SoundManager.Instance.TurnOnSelectedMusic();
             ChangeBackGround();
             MoveScrollRect();
+            SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.AlbumMove);
 
             Debug.Log($"Selecte My Stage Index : {state.StageIndex}");
         }
