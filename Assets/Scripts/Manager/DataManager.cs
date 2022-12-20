@@ -90,76 +90,80 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
         if (!_fileYn)
         {
             // 설정 관련 데이터
-            settingData.BGMValue = _BGMValue ?? 0.5f;
-            settingData.SFXValue = _SFXValue ?? 0.5f;
-            settingData.keyDivision = _keyDivision ?? "Integration";
+            settingData.BGMValue = DataManager.dataBGMValue ?? 0.5f;
+            settingData.SFXValue = DataManager.dataSFXValue ?? 0.5f;
+            settingData.keyDivision = DataManager.dataKeyDivision ?? "Integration";
 
             // 상점 관련 데이터
-            if (null == _skinUnLockYn || _skinUnLockYn.Length <= 0 || (Array.IndexOf(_skinUnLockYn, "N") < 0 && Array.IndexOf(_skinUnLockYn, "Y") < 0)
-                || null == _skinUsingYn || _skinUsingYn.Length <= 0 || (Array.IndexOf(_skinUsingYn, "N") < 0 && Array.IndexOf(_skinUnLockYn, "Y") < 0))
+            if (null == DataManager.dataSkinUnLockYn || DataManager.dataSkinUnLockYn.Length <= 0 
+                || (Array.IndexOf(DataManager.dataSkinUnLockYn, "N") < 0 && Array.IndexOf(DataManager.dataSkinUnLockYn, "Y") < 0)
+                || null == DataManager.dataSkinUsingYn || DataManager.dataSkinUsingYn.Length <= 0 
+                || (Array.IndexOf(DataManager.dataSkinUsingYn, "N") < 0 && Array.IndexOf(DataManager.dataSkinUnLockYn, "Y") < 0))
             {
-                _skinUnLockYn = new string[_skinCount];
-                _skinUsingYn = new string[_skinCount];
+                DataManager.dataSkinUnLockYn = new string[DataManager.dataSkinCount];
+                DataManager.dataSkinUsingYn = new string[DataManager.dataSkinCount];
 
-                for (int i = 0; i < _skinCount; i++)
+                for (int i = 0; i < DataManager.dataSkinCount; i++)
                 {
                     if(i == 0)
                     {
-                        _skinUnLockYn[i] = "Y";
-                        _skinUsingYn[i] = "Y";
+                        DataManager.dataSkinUnLockYn[i] = "Y";
+                        DataManager.dataSkinUsingYn[i] = "Y";
                     }
                     else
                     {
-                        _skinUnLockYn[i] = "N";
-                        _skinUsingYn[i] = "N";
+                        DataManager.dataSkinUnLockYn[i] = "N";
+                        DataManager.dataSkinUsingYn[i] = "N";
                     }
                 }
             }
-            if(null == _skillUnLockYn || _skillUnLockYn.Length <= 0 || (Array.IndexOf(_skillUnLockYn, "N") < 0 && Array.IndexOf(_skillUnLockYn, "Y") < 0)
-                || null == _skillUsingYn || _skillUsingYn.Length <= 0 || (Array.IndexOf(_skillUsingYn, "N") < 0 && Array.IndexOf(_skillUsingYn, "Y") < 0))
+            if(null == DataManager.dataSkillUnLockYn || DataManager.dataSkillUnLockYn.Length <= 0 
+                || (Array.IndexOf(DataManager.dataSkillUnLockYn, "N") < 0 && Array.IndexOf(DataManager.dataSkillUnLockYn, "Y") < 0)
+                || null == DataManager.dataSkillUsingYn || DataManager.dataSkillUsingYn.Length <= 0 
+                || (Array.IndexOf(DataManager.dataSkillUsingYn, "N") < 0 && Array.IndexOf(DataManager.dataSkillUsingYn, "Y") < 0))
             {
-                _skillUnLockYn = new string[_skillCount];
-                _skillUsingYn = new string[_skillCount];
+                DataManager.dataSkillUnLockYn = new string[DataManager.dataSkillCount];
+                DataManager.dataSkillUsingYn = new string[DataManager.dataSkillCount];
 
-                for (int i = 0; i < _skillCount; i++)
+                for (int i = 0; i < dataSkillCount; i++)
                 {
-                    _skillUnLockYn[i] = "N";
-                    _skillUsingYn[i] = "N";
+                    DataManager.dataSkillUnLockYn[i] = "N";
+                    DataManager.dataSkillUsingYn[i] = "N";
                 }
             }
-            shopData.skinUnLockYn = _skinUnLockYn;
-            shopData.skinUsingYn = _skinUsingYn;
-            shopData.skillUnLockYn = _skillUnLockYn;
-            shopData.skillUsingYn = _skillUsingYn;
+            shopData.skinUnLockYn = DataManager.dataSkinUnLockYn;
+            shopData.skinUsingYn = DataManager.dataSkinUsingYn;
+            shopData.skillUnLockYn = DataManager.dataSkillUnLockYn;
+            shopData.skillUsingYn = DataManager.dataSkillUsingYn;
         }
         else
         {
             // 설정 관련 데이터
-            settingData.BGMValue = _BGMValue ?? globalUserData.settingData.BGMValue;
-            settingData.SFXValue = _SFXValue ?? globalUserData.settingData.SFXValue;
-            settingData.keyDivision = _keyDivision ?? globalUserData.settingData.keyDivision;
+            settingData.BGMValue = (float)DataManager.dataBGMValue;
+            settingData.SFXValue = (float)DataManager.dataSFXValue;
+            settingData.keyDivision = DataManager.dataKeyDivision;
 
             // 상점 관련 데이터
-            shopData.skinUnLockYn = _skinUnLockYn ?? globalUserData.shopData.skinUnLockYn;
-            shopData.skinUsingYn = _skinUsingYn ?? globalUserData.shopData.skinUsingYn;
-            shopData.skillUnLockYn = _skillUnLockYn ?? globalUserData.shopData.skillUnLockYn;
-            shopData.skillUsingYn = _skillUsingYn ?? globalUserData.shopData.skillUsingYn;
+            shopData.skinUnLockYn = DataManager.dataSkinUnLockYn;
+            shopData.skinUsingYn = DataManager.dataSkinUsingYn;
+            shopData.skillUnLockYn = DataManager.dataSkillUnLockYn;
+            shopData.skillUsingYn = DataManager.dataSkillUsingYn;
         }
 
         // 설정 관련 데이터
-        settingData.innerOperationKey = _innerOperationKey ?? globalUserData.settingData.innerOperationKey;
-        settingData.outerOperationKey = _outerOperationKey ?? globalUserData.settingData.outerOperationKey;
+        settingData.innerOperationKey = DataManager.dataInnerOperationKey;
+        settingData.outerOperationKey = DataManager.dataOuterOperationKey;
 
         // 인게임 관련 데이터
-        gameData.clearStageCount = _clearStageCount ?? globalUserData.gameData.clearStageCount;
-        gameData.album1ClearYn = _album1ClearYn ?? globalUserData.gameData.album1ClearYn;
-        gameData.album2ClearYn = _album2ClearYn ?? globalUserData.gameData.album2ClearYn;
-        gameData.album3ClearYn = _album3ClearYn ?? globalUserData.gameData.album3ClearYn;
-        gameData.album4ClearYn = _album4ClearYn ?? globalUserData.gameData.album4ClearYn;
-        gameData.album1StageProgressLine = _album1StageProgressLine ?? globalUserData.gameData.album1StageProgressLine;
-        gameData.album1StageProgressLine = _album2StageProgressLine ?? globalUserData.gameData.album2StageProgressLine;
-        gameData.album1StageProgressLine = _album3StageProgressLine ?? globalUserData.gameData.album3StageProgressLine;
-        gameData.album1StageProgressLine = _album4StageProgressLine ?? globalUserData.gameData.album4StageProgressLine;
+        gameData.clearStageCount = (int)DataManager.dataClearStageCount;
+        gameData.album1ClearYn = DataManager.dataAlbum1ClearYn;
+        gameData.album2ClearYn = DataManager.dataAlbum2ClearYn;
+        gameData.album3ClearYn = DataManager.dataAlbum3ClearYn;
+        gameData.album4ClearYn = DataManager.dataAlbum4ClearYn;
+        gameData.album1StageProgressLine = DataManager.dataAlbum1StageProgressLine;
+        gameData.album2StageProgressLine = DataManager.dataAlbum2StageProgressLine;
+        gameData.album3StageProgressLine = DataManager.dataAlbum3StageProgressLine;
+        gameData.album4StageProgressLine = DataManager.dataAlbum4StageProgressLine;
 
         return userData.ToJson();
     }
@@ -212,10 +216,6 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
             dataAlbum2StageProgressLine = GlobalState.Instance.UserData.data.gameData.album2StageProgressLine;
             dataAlbum3StageProgressLine = GlobalState.Instance.UserData.data.gameData.album3StageProgressLine;
             dataAlbum4StageProgressLine = GlobalState.Instance.UserData.data.gameData.album4StageProgressLine;
-
-            // 글로벌 값 호출 즉시 파일에 저장 된 배경음/환경음 볼륨으로 제어
-            SoundManager.Instance.CtrlBGMVolume((float)dataBGMValue);
-            SoundManager.Instance.CtrlSFXVolume((float)dataSFXValue);
         } 
         else
         {
@@ -223,84 +223,91 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
             _fileYn = false;
 
             // 파일 없을 시 기본 값 세팅
-            SoundManager.Instance.CtrlBGMVolume(0.5f);
-            SoundManager.Instance.CtrlSFXVolume(0.5f);
+            dataBGMValue = 0.5f;
+            dataSFXValue = 0.5f;
+            dataKeyDivision = "Integration";
+            dataInnerOperationKey = new string[4];
+            dataOuterOperationKey = new string[4];
 
-            _skinUnLockYn = new string[_skinCount];
-            _skinUsingYn = new string[_skinCount];
-            _skillUnLockYn = new string[_skillCount];
-            _skillUsingYn = new string[_skillCount];
+            dataSkinUnLockYn = new string[dataSkinCount];
+            dataSkinUsingYn = new string[dataSkinCount];
+            dataSkillUnLockYn = new string[dataSkillCount];
+            dataSkillUsingYn = new string[dataSkillCount];
 
-            _clearStageCount = 0;
-            _album1ClearYn = new string[_album1StageCount];
-            _album2ClearYn = new string[_album2StageCount];
-            _album3ClearYn = new string[_album3StageCount];
-            _album4ClearYn = new string[_album4StageCount];
-            _album1StageProgressLine = new int[_album1StageCount];
-            _album2StageProgressLine = new int[_album2StageCount];
-            _album3StageProgressLine = new int[_album3StageCount];
-            _album4StageProgressLine = new int[_album4StageCount];
+            dataClearStageCount = 0;
+            dataAlbum1ClearYn = new string[dataAlbum1StageCount];
+            dataAlbum2ClearYn = new string[dataAlbum2StageCount];
+            dataAlbum3ClearYn = new string[dataAlbum3StageCount];
+            dataAlbum4ClearYn = new string[dataAlbum4StageCount];
+            dataAlbum1StageProgressLine = new int[dataAlbum1StageCount];
+            dataAlbum2StageProgressLine = new int[dataAlbum2StageCount];
+            dataAlbum3StageProgressLine = new int[dataAlbum3StageCount];
+            dataAlbum4StageProgressLine = new int[dataAlbum4StageCount];
 
-            for (int i = 0; i < _skinCount; i++)
+            for (int i = 0; i < dataSkinCount; i++)
             {
                 if (i == 0)
                 {
-                    _skinUnLockYn[i] = "Y";
-                    _skinUsingYn[i] = "Y";
+                    dataSkinUnLockYn[i] = "Y";
+                    dataSkinUsingYn[i] = "Y";
                 }
                 else
                 {
-                    _skinUnLockYn[i] = "N";
-                    _skinUsingYn[i] = "N";
+                    dataSkinUnLockYn[i] = "N";
+                    dataSkinUsingYn[i] = "N";
                 }
             }
 
-            for (int i = 0; i < _skillCount; i++)
+            for (int i = 0; i < dataSkillCount; i++)
             {
-                _skillUnLockYn[i] = "N";
-                _skillUsingYn[i] = "N";
+                dataSkillUnLockYn[i] = "N";
+                dataSkillUsingYn[i] = "N";
             }
 
-            userData.settingData.BGMValue = 0.5f;
-            userData.settingData.SFXValue = 0.5f;
-            userData.settingData.keyDivision = "Integration";
+            userData.settingData.BGMValue = (float)dataBGMValue;
+            userData.settingData.SFXValue = (float)dataSFXValue;
+            userData.settingData.keyDivision = dataKeyDivision;
 
-            userData.shopData.skinUnLockYn = _skinUnLockYn;
-            userData.shopData.skinUsingYn = _skinUsingYn;
-            userData.shopData.skillUnLockYn = _skillUnLockYn;
-            userData.shopData.skillUsingYn = _skillUsingYn;
+            userData.shopData.skinUnLockYn = dataSkinUnLockYn;
+            userData.shopData.skinUsingYn = dataSkinUsingYn;
+            userData.shopData.skillUnLockYn = dataSkillUnLockYn;
+            userData.shopData.skillUsingYn = dataSkillUsingYn;
 
-            for (int i = 0; i < _album1StageCount; i++)
+            for (int i = 0; i < dataAlbum1StageCount; i++)
             {
-                _album1ClearYn[i] = "N";
-                _album1StageProgressLine[i] = 0;
+                dataAlbum1ClearYn[i] = "N";
+                dataAlbum1StageProgressLine[i] = 0;
             }
-            for (int i = 0; i < _album2StageCount; i++)
+            for (int i = 0; i < dataAlbum2StageCount; i++)
             {
-                _album2ClearYn[i] = "N";
-                _album2StageProgressLine[i] = 0;
+                dataAlbum2ClearYn[i] = "N";
+                dataAlbum2StageProgressLine[i] = 0;
             }
-            for (int i = 0; i < _album3StageCount; i++)
+            for (int i = 0; i < dataAlbum3StageCount; i++)
             {
-                _album3ClearYn[i] = "N";
-                _album3StageProgressLine[i] = 0;
+                dataAlbum3ClearYn[i] = "N";
+                dataAlbum3StageProgressLine[i] = 0;
             }
-            for (int i = 0; i < _album4StageCount; i++)
+            for (int i = 0; i < dataAlbum4StageCount; i++)
             {
-                _album4ClearYn[i] = "N";
-                _album4StageProgressLine[i] = 0;
+                dataAlbum4ClearYn[i] = "N";
+                dataAlbum4StageProgressLine[i] = 0;
             }
 
-            userData.gameData.clearStageCount = 0;
-            userData.gameData.album1ClearYn = _album1ClearYn;
-            userData.gameData.album2ClearYn = _album2ClearYn;
-            userData.gameData.album3ClearYn = _album3ClearYn;
-            userData.gameData.album4ClearYn = _album4ClearYn;
-            userData.gameData.album1StageProgressLine = _album1StageProgressLine;
-            userData.gameData.album2StageProgressLine = _album2StageProgressLine;
-            userData.gameData.album3StageProgressLine = _album3StageProgressLine;
-            userData.gameData.album4StageProgressLine = _album4StageProgressLine;
+            userData.gameData.clearStageCount = (int)dataClearStageCount;
+            userData.gameData.album1ClearYn = dataAlbum1ClearYn;
+            userData.gameData.album2ClearYn = dataAlbum2ClearYn;
+            userData.gameData.album3ClearYn = dataAlbum3ClearYn;
+            userData.gameData.album4ClearYn = dataAlbum4ClearYn;
+            userData.gameData.album1StageProgressLine = dataAlbum1StageProgressLine;
+            userData.gameData.album2StageProgressLine = dataAlbum2StageProgressLine;
+            userData.gameData.album3StageProgressLine = dataAlbum3StageProgressLine;
+            userData.gameData.album4StageProgressLine = dataAlbum4StageProgressLine;
         }
+
+        // 글로벌 값 호출 즉시 파일에 저장 된 배경음/환경음 볼륨으로 제어
+        SoundManager.Instance.CtrlBGMVolume((float)dataBGMValue);
+        SoundManager.Instance.CtrlSFXVolume((float)dataSFXValue);
     }
 
     private void Awake()

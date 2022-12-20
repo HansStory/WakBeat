@@ -142,7 +142,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         _totalBeatCount = bmwReader.ChartingItem.Count;
 
         // Key 입력 부
-        _keyDivision = null == userData.settingData.keyDivision ? "Integration" : userData.settingData.keyDivision;
+        _keyDivision = null == DataManager.dataKeyDivision ? "Integration" : DataManager.dataKeyDivision;
 
         ClearRate.text = $"Clear Rate\n0%";
 
@@ -802,8 +802,8 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         {
             if (_keyDivision.Equals("Separation"))
             {
-                var innerKey = GlobalState.Instance.UserData.data.settingData.innerOperationKey;
-                var outKey = GlobalState.Instance.UserData.data.settingData.outerOperationKey;
+                var innerKey = DataManager.dataInnerOperationKey;
+                var outKey = DataManager.dataOuterOperationKey;
 
                 // 키 분리 구분 > 분리
                 if (innerKey != null && innerKey.Length > 0 && outKey != null && outKey.Length > 0)
@@ -829,8 +829,8 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     public virtual void SeperateChangeDirection()
     {
-        var innerOperationKey = GlobalState.Instance.UserData.data.settingData.innerOperationKey;
-        var outOperationKey = GlobalState.Instance.UserData.data.settingData.outerOperationKey;
+        var innerOperationKey = DataManager.dataInnerOperationKey;
+        var outOperationKey = DataManager.dataOuterOperationKey;
 
         for (int i = 0; i < innerOperationKey.Length; i++)
         {

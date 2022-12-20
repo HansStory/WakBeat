@@ -277,28 +277,28 @@ public class UIObjectSetting : MonoBehaviour
         // 저장 파일 불러오기 성공 시
         if (flag)
         {
-            KeyDivision = GlobalState.Instance.UserData.data.settingData.keyDivision.Equals("Integration") ? "IntegrationOff" : "SeparationOff";
+            KeyDivision = DataManager.dataKeyDivision.Equals("Integration") ? "IntegrationOff" : "SeparationOff";
 
-            SFXSlider.value = GlobalState.Instance.UserData.data.settingData.SFXValue;
-            BGMSlider.value = GlobalState.Instance.UserData.data.settingData.BGMValue;
-            _InBoxValues = GlobalState.Instance.UserData.data.settingData.innerOperationKey;
-            _OutBoxValues = GlobalState.Instance.UserData.data.settingData.outerOperationKey;
+            SFXSlider.value = (float)DataManager.dataSFXValue;
+            BGMSlider.value = (float)DataManager.dataBGMValue;
+            _InBoxValues = DataManager.dataInnerOperationKey;
+            _OutBoxValues = DataManager.dataOuterOperationKey;
 
-            for (int i = 0; i < GlobalState.Instance.UserData.data.settingData.innerOperationKey.Length; i++)
+            for (int i = 0; i < _InBoxValues.Length; i++)
             {
-                if (null != GlobalState.Instance.UserData.data.settingData.innerOperationKey[i] && !"".Equals(GlobalState.Instance.UserData.data.settingData.innerOperationKey[i]))
+                if (null != _InBoxValues[i] && !"".Equals(_InBoxValues[i]))
                 {
-                    SeparationInBoxs.transform.Find("SeparationInBox" + (i + 1)).GetComponent<InputField>().text = GlobalState.Instance.UserData.data.settingData.innerOperationKey[i];
+                    SeparationInBoxs.transform.Find("SeparationInBox" + (i + 1)).GetComponent<InputField>().text = _InBoxValues[i];
                 }
                 SeparationInBoxs.transform.Find("SeparationInBox" + (i + 1)).GetComponent<InputField>().readOnly = true;
                 SeparationInBoxs.transform.Find("SeparationInBox" + (i + 1)).GetComponent<Image>().sprite = OffBoxImage;
             }
 
-            for (int i = 0; i < GlobalState.Instance.UserData.data.settingData.outerOperationKey.Length; i++)
+            for (int i = 0; i < _OutBoxValues.Length; i++)
             {
-                if (null != GlobalState.Instance.UserData.data.settingData.outerOperationKey[i] && !"".Equals(GlobalState.Instance.UserData.data.settingData.outerOperationKey[i]))
+                if (null != _OutBoxValues[i] && !"".Equals(_OutBoxValues[i]))
                 {
-                    SeparationOutBoxs.transform.Find("SeparationOutBox" + (i + 1)).GetComponent<InputField>().text = GlobalState.Instance.UserData.data.settingData.outerOperationKey[i];
+                    SeparationOutBoxs.transform.Find("SeparationOutBox" + (i + 1)).GetComponent<InputField>().text = _OutBoxValues[i];
                 }
                 SeparationOutBoxs.transform.Find("SeparationOutBox" + (i + 1)).GetComponent<InputField>().readOnly = true;
                 SeparationOutBoxs.transform.Find("SeparationOutBox" + (i + 1)).GetComponent<Image>().sprite = OffBoxImage;
@@ -386,9 +386,9 @@ public class UIObjectSetting : MonoBehaviour
     public void SetCompatibiltityBlankValue()
     {
         // 키 설정 > 분리 안/밖 중 하나만 있을 경우 값 제거
-        for (int InIndex = 0; InIndex < GlobalState.Instance.UserData.data.settingData.innerOperationKey.Length; InIndex++)
+        for (int InIndex = 0; InIndex < DataManager.dataInnerOperationKey.Length; InIndex++)
         {
-            for (int OutIndex = 0; OutIndex < GlobalState.Instance.UserData.data.settingData.outerOperationKey.Length; OutIndex++)
+            for (int OutIndex = 0; OutIndex < DataManager.dataOuterOperationKey.Length; OutIndex++)
             {
                 if(InIndex == OutIndex)
                 {
@@ -411,9 +411,9 @@ public class UIObjectSetting : MonoBehaviour
     public void SetCompatibiltityReDuplication()
     {
         // 키 설정 > 분리 같은 키 중복 입력 금지
-        for(int InIndex = 0; InIndex < GlobalState.Instance.UserData.data.settingData.innerOperationKey.Length; InIndex++)
+        for(int InIndex = 0; InIndex < DataManager.dataInnerOperationKey.Length; InIndex++)
         {
-            for (int OutIndex = 0; OutIndex < GlobalState.Instance.UserData.data.settingData.outerOperationKey.Length; OutIndex++)
+            for (int OutIndex = 0; OutIndex < DataManager.dataOuterOperationKey.Length; OutIndex++)
             {
                 if (_InBoxValues[InIndex] == _OutBoxValues[OutIndex])
                 {

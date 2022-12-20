@@ -289,13 +289,13 @@ public class UIObjectShop : MonoBehaviour
         if (flag)
         {
             // 스테이지 클리어 수
-            int _ClearStageCount = GlobalState.Instance.UserData.data.gameData.clearStageCount;
+            int _ClearStageCount = (int)DataManager.dataClearStageCount;
             // 스킨 글로벌 변수
-            _SkinUnLockYn = GlobalState.Instance.UserData.data.shopData.skinUnLockYn;
-            _SkinUsingYn = GlobalState.Instance.UserData.data.shopData.skinUsingYn;
+            _SkinUnLockYn = DataManager.dataSkinUnLockYn;
+            _SkinUsingYn = DataManager.dataSkinUsingYn;
             // 스킬 글로벌 변수
-            _SkillUnLockYn = GlobalState.Instance.UserData.data.shopData.skillUnLockYn;
-            _SkillUsingYn = GlobalState.Instance.UserData.data.shopData.skillUsingYn;
+            _SkillUnLockYn = DataManager.dataSkillUnLockYn;
+            _SkillUsingYn = DataManager.dataSkillUsingYn;
 
             // 이미 구매한 스킨의 경우 버튼 비활성화
             for(int Index = 0; Index < SkinCount; Index++)
