@@ -1,7 +1,13 @@
+using TMPro;
 using UnityEngine;
 
 public class SecondAStage1 : Stage
 {
+    [Header("[ Animation Asset ]")]
+    public TextMeshProUGUI _tmpText;
+
+    private float startToBeforeTempup = 4.62f;
+    
     protected override void Init()
     {
         base.Init();
@@ -14,6 +20,44 @@ public class SecondAStage1 : Stage
     protected override void Update()
     {
         base.Update();
+        if (_currentLine >= 5 && _timer > 2.1f)
+        {
+            BackGroundSkin.enabled = false;
+        }
+        else if (_currentLine < 5)
+        {
+            BackGroundSkin.enabled = true;
+        }
+        // if (Stage._currentLine == 2 && _timer > 1.5f)
+        // {
+        //     if (_timer <= 2.13)
+        //     {
+        //         _tmpText.text = "12:23";
+        //     }
+        //     else
+        //     {
+        //         _tmpText.text = "12:24";
+        //     }
+        // }
+        // else if (Stage._currentLine == 3)
+        // {
+        //     _tmpText.text = "12:25";
+        // }
+        // else if (_currentLine < 2)
+        // {
+        //     _tmpText.alpha = 255f;
+        //     _tmpText.text = "12:22";
+        // }
+        //
+        // if (Stage._currentLine >= 5)
+        // {
+        //     float _inRadius = inRadius - obstacleHeightHalf + ballHeightHalf;
+        //     float _outRadius = outRadius + obstacleHeightHalf - ballHeightHalf;
+        //
+        //     CreateInObstacle(1, _inRadius);
+        //     CreateOutObstacle(1, _outRadius);
+        // }
+        
     }
 
     private float ballHeightHalf = 15.5f;
@@ -22,10 +66,14 @@ public class SecondAStage1 : Stage
     {
         float _inRadius = inRadius - obstacleHeightHalf + ballHeightHalf;
         float _outRadius = outRadius + obstacleHeightHalf - ballHeightHalf;
+        
+        CreateInObstacle(0, inRadius);
+        CreateOutObstacle(0, outRadius);
 
         CreateInObstacle(1, _inRadius);
         CreateOutObstacle(1, _outRadius);
     }
+    
 
     protected override void ShowOutObstacles()
     {
@@ -78,6 +126,35 @@ public class SecondAStage1 : Stage
                 {
                     InObstacleLists[dummy.Index].gameObject.SetActive(true);
                 }
+            }
+        }
+    }
+
+    protected override void ResetSavePointState()
+    {
+        base.ResetSavePointState();
+        if (_currentLine >= bmwReader.ChartingItem.Count) return;
+
+        var beatItem = bmwReader.ChartingItem[_currentLine];
+
+        if (beatItem != null)
+        {
+            // Hide
+            foreach (var dodgeList in DodgePointLists)
+            {
+                dodgeList.SetActive(false);
+            }
+            
+            // Hide
+            foreach (var inList in InObstacleLists)
+            {
+                inList.SetActive(false);
+            }
+            
+            // Hide
+            foreach (var inList in OutObstacleLists)
+            {
+                inList.SetActive(false);
             }
         }
     }

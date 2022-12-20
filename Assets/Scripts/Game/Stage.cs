@@ -924,6 +924,10 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             _isInState = false;
         }
 
+        if (StageAnim.isPlaying)
+        {
+            StageAnim.Stop();
+        }
         PlayProcess();
     }
 

@@ -646,6 +646,10 @@ PrefabInstance:
       propertyPath: creatGameBase
       value: 
       objectReference: {fileID: 911545245}
+    - target: {fileID: 2595187524967977592, guid: 2df3dc96e4cce834889aff9b8309b345, type: 3}
+      propertyPath: album2StageList.Array.data[0]
+      value: 
+      objectReference: {fileID: 4143023116079684940, guid: f9ef4ad4bc3d09146884d6cef18bd2b8, type: 3}
     - target: {fileID: 7633874385493098809, guid: 2df3dc96e4cce834889aff9b8309b345, type: 3}
       propertyPath: m_RootOrder
       value: 4
