@@ -286,61 +286,51 @@ public class UIObjectShop : MonoBehaviour
             }
         } 
 
-        if (flag)
+        // 스테이지 클리어 수
+        int _ClearStageCount = (int)DataManager.dataClearStageCount;
+        // 스킨 글로벌 변수
+        _SkinUnLockYn = DataManager.dataSkinUnLockYn;
+        _SkinUsingYn = DataManager.dataSkinUsingYn;
+        // 스킬 글로벌 변수
+        _SkillUnLockYn = DataManager.dataSkillUnLockYn;
+        _SkillUsingYn = DataManager.dataSkillUsingYn;
+
+        // 이미 구매한 스킨의 경우 버튼 비활성화
+        for(int Index = 0; Index < SkinCount; Index++)
         {
-            // 스테이지 클리어 수
-            int _ClearStageCount = (int)DataManager.dataClearStageCount;
-            // 스킨 글로벌 변수
-            _SkinUnLockYn = DataManager.dataSkinUnLockYn;
-            _SkinUsingYn = DataManager.dataSkinUsingYn;
-            // 스킬 글로벌 변수
-            _SkillUnLockYn = DataManager.dataSkillUnLockYn;
-            _SkillUsingYn = DataManager.dataSkillUsingYn;
-
-            // 이미 구매한 스킨의 경우 버튼 비활성화
-            for(int Index = 0; Index < SkinCount; Index++)
+            if (_SkinUnLockYn[Index].Equals("Y"))
             {
-                if (_SkinUnLockYn[Index].Equals("Y"))
-                {
-                    SkinGroup.transform.Find("SkinItems").Find("Viewport").Find("Content").Find("Skin_Prefab_" + Index).Find("ItemButtons").Find("ButtonBuy").gameObject.SetActive(false);
-                }
-            }
-
-            // 클리어 스테이지 수에 따라 혹은 잠금 해제한 스킬 잠금 영역 비활성화
-            for (int Index = 0; Index < SkillCount; Index++)
-            {
-                if(_ClearStageCount > DataManager.dataSkillUnLockCondition[Index] || _SkillUnLockYn[Index].Equals("Y"))
-                {
-                    SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + Index).Find("Lock").gameObject.SetActive(false);
-                }
-            }
-
-            // 스킨 사용 반영
-            for (int Index = 0; Index < SkinCount; Index++)
-            {
-                if (null != _SkinUsingYn[Index] && _SkinUsingYn[Index].Equals("Y"))
-                {
-                    SkinGroup.transform.Find("SkinItems").Find("Viewport").Find("Content").Find("Skin_Prefab_" + Index).Find("ItemButtons").Find("ButtonOn").gameObject.SetActive(true);
-                    SkinGroup.transform.Find("SkinItems").Find("Viewport").Find("Content").Find("Skin_Prefab_" + Index).Find("ItemButtons").Find("ButtonOff").gameObject.SetActive(false);
-                }
-            }
-
-            // 스킬 사용 반영
-            for (int Index = 0; Index < SkillCount; Index++)
-            {
-                if (null != _SkillUsingYn && _SkillUsingYn[Index].Equals("Y"))
-                {
-                    SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + Index).Find("Open").Find("SkillButton").Find("ButtonOn").gameObject.SetActive(true);
-                    SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + Index).Find("Open").Find("SkillButton").Find("ButtonOff").gameObject.SetActive(false);
-                }
+                SkinGroup.transform.Find("SkinItems").Find("Viewport").Find("Content").Find("Skin_Prefab_" + Index).Find("ItemButtons").Find("ButtonBuy").gameObject.SetActive(false);
             }
         }
-        else
+
+        // 클리어 스테이지 수에 따라 혹은 잠금 해제한 스킬 잠금 영역 비활성화
+        for (int Index = 0; Index < SkillCount; Index++)
         {
-            // 세이브 데이터 없을 시 0번 스킨의 Buy 버튼 제거 > 기본적으로 없어야 함 > Default 스킨
-            SkinGroup.transform.Find("SkinItems").Find("Viewport").Find("Content").Find("Skin_Prefab_0").Find("ItemButtons").Find("ButtonBuy").gameObject.SetActive(false);
-            // Skin 사용 값 전부 N 일 시 최초 세팅
-            SetSkinButtonDefault();
+            if(_ClearStageCount > DataManager.dataSkillUnLockCondition[Index] || _SkillUnLockYn[Index].Equals("Y"))
+            {
+                SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + Index).Find("Lock").gameObject.SetActive(false);
+            }
+        }
+
+        // 스킨 사용 반영
+        for (int Index = 0; Index < SkinCount; Index++)
+        {
+            if (null != _SkinUsingYn[Index] && _SkinUsingYn[Index].Equals("Y"))
+            {
+                SkinGroup.transform.Find("SkinItems").Find("Viewport").Find("Content").Find("Skin_Prefab_" + Index).Find("ItemButtons").Find("ButtonOn").gameObject.SetActive(true);
+                SkinGroup.transform.Find("SkinItems").Find("Viewport").Find("Content").Find("Skin_Prefab_" + Index).Find("ItemButtons").Find("ButtonOff").gameObject.SetActive(false);
+            }
+        }
+
+        // 스킬 사용 반영
+        for (int Index = 0; Index < SkillCount; Index++)
+        {
+            if (null != _SkillUsingYn && _SkillUsingYn[Index].Equals("Y"))
+            {
+                SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + Index).Find("Open").Find("SkillButton").Find("ButtonOn").gameObject.SetActive(true);
+                SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + Index).Find("Open").Find("SkillButton").Find("ButtonOff").gameObject.SetActive(false);
+            }
         }
 
         // 스타트 구분 > true > 첫 호출 시 버튼 사운드 미출력

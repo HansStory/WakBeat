@@ -336,45 +336,46 @@ public class UIObjectSetting : MonoBehaviour
     // 글로벌 변수 저장
     public void SetGlobalValue()
     {
-        float SFXValue = SFXSlider.value;
-        float BGMValue = BGMSlider.value;
-        string KeyDivision = "";
+        float _SFXValue = SFXSlider.value;
+        float _BGMValue = BGMSlider.value;
+        string _KeyDivision = "";
 
         if(ButtonKeySetting.transform.Find("ButtonSeparationOn").gameObject.activeSelf)
         {
-            Boolean SeparationYn = false;
+            Boolean _SeparationYn = false;
             for(int i = 0; i < _InBoxValues.Length; i++)
             {
                 if(null != _InBoxValues[i] && !"".Equals(_InBoxValues[i]))
                 {
-                    SeparationYn = true;
+                    _SeparationYn = true;
                 }
             }
             for (int i = 0; i < _OutBoxValues.Length; i++)
             {
                 if (null != _OutBoxValues[i] && !"".Equals(_OutBoxValues[i]))
                 {
-                    SeparationYn = true;
+                    _SeparationYn = true;
                 }
             }
 
-            if (SeparationYn)
+            if (_SeparationYn)
             {
-                KeyDivision = "Separation";
-            } else
+                _KeyDivision = "Separation";
+            } 
+            else
             {
-                KeyDivision = "Integration";
+                _KeyDivision = "Integration";
             }
         }
         else
         {
-            KeyDivision = "Integration";
+            _KeyDivision = "Integration";
         }
 
         // 설정 데이터 변경
-        DataManager.dataKeyDivision = KeyDivision;
-        DataManager.dataBGMValue = BGMValue;
-        DataManager.dataSFXValue = SFXValue;
+        DataManager.dataKeyDivision = _KeyDivision;
+        DataManager.dataBGMValue = _BGMValue;
+        DataManager.dataSFXValue = _SFXValue;
         DataManager.dataInnerOperationKey = _InBoxValues;
         DataManager.dataOuterOperationKey = _OutBoxValues;
 
