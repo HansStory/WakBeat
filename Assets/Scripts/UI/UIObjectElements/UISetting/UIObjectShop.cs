@@ -265,8 +265,20 @@ public class UIObjectShop : MonoBehaviour
         SkinGroup.transform.Find("SkinItems").Find("Viewport").Find("Content").Find("Skin_Prefab_" + Index).Find("ItemButtons").Find("ButtonBuy").gameObject.SetActive(false);
     }
 
+    // 클리어 스테이지 수에 따라 혹은 잠금 해제한 스킬 잠금 영역 비활성화
+    public void SetUnLockSkill()
+    {
+        for (int Index = 0; Index < SkillCount; Index++)
+        {
+            if (DataManager.dataClearStageCount >= DataManager.dataSkillUnLockCondition[Index] || _SkillUnLockYn[Index].Equals("Y"))
+            {
+                SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + Index).Find("Lock").gameObject.SetActive(false);
+            }
+        }
+    }
+
     // 글로벌 변수 화면 세팅
-    public void GetGlobalValue(Boolean flag)
+    public void GetGlobalValue()
     {
         Boolean _ShopCompulsionActive = DataManager.dataShopCompulsionActive;
 
@@ -304,14 +316,8 @@ public class UIObjectShop : MonoBehaviour
             }
         }
 
-        // 클리어 스테이지 수에 따라 혹은 잠금 해제한 스킬 잠금 영역 비활성화
-        for (int Index = 0; Index < SkillCount; Index++)
-        {
-            if(_ClearStageCount > DataManager.dataSkillUnLockCondition[Index] || _SkillUnLockYn[Index].Equals("Y"))
-            {
-                SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + Index).Find("Lock").gameObject.SetActive(false);
-            }
-        }
+        // 스킬 해금 제어
+        SetUnLockSkill();
 
         // 스킨 사용 반영
         for (int Index = 0; Index < SkinCount; Index++)
@@ -429,11 +435,15 @@ public class UIObjectShop : MonoBehaviour
         SetButtonEvent();
 
         // 글로벌 변수 화면 적용
-        GetGlobalValue(DataManager.dataFileYn);
+        GetGlobalValue();
     }
 
     void Update()
     {
-        
+        // 스킨 해금 제어
+
+
+        // 스킬 해금 제어
+        SetUnLockSkill();
     }
 }
