@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using DG.Tweening;
 
 public class UIElementResult : MonoBehaviour
@@ -10,13 +12,13 @@ public class UIElementResult : MonoBehaviour
     public Image OriginLink;
     public Image ReMixLink;
 
+    private GlobalState state;
+
     private Vector2 originStartVector = new Vector2(-416f, -180f);
     private Vector2 originTargetVector = new Vector2(21.2f, -180f);
 
     private Vector2 remixLinkStartVector = new Vector2(-416f, -281.5f);
     private Vector2 remixLinkTargetVector = new Vector2(21.2f, -281.5f);
-
-    [SerializeField] private UIElementPopUp UIElementPopUp;
 
     private string _wakZooURL = string.Empty;
     private string _originURL = string.Empty;
@@ -25,16 +27,23 @@ public class UIElementResult : MonoBehaviour
     void Start()
     {
         GetWakZooURL();
+        state = GlobalState.Instance;
     }
 
     private void OnEnable()
     {
+        SoundManager.Instance.TurnOnResultAudio();
+
         GetMusicURL();
+        InitTexts();
 
         TweenResultBanner();
 
         TweenLink(OriginLink, originStartVector, originTargetVector, 0.5f);
         TweenLink(ReMixLink, remixLinkStartVector, remixLinkTargetVector, 0.8f);
+
+        //TweenTexts();
+        ShowText();
     }
 
     private void TweenResultBanner()
@@ -63,20 +72,164 @@ public class UIElementResult : MonoBehaviour
         linkImage.transform.DOLocalMove(targetVector, 1f).SetDelay(delay).SetEase(Ease.OutCubic).SetAutoKill();
     }
 
-    void Update()
+    //----------------------------------------------------------------
+    public Text[] LeftTexts;
+    public Text[] RightTexts;
+
+    private static int MusicLength = 0;
+    private static int TotalPlayTime = 1;
+    private static int DeathCount = 2;
+    private static int UsedItem = 3;
+
+    private void InitTexts()
     {
-        OnClickCheckButton();
+        //ColorClearTexts(LeftTexts);
+        //ColorClearTexts(RightTexts);
+
+        //ColorClearTMPTexts(TestLeftTexts);
+        //ColorClearTMPTexts(TestRightTexts);
+
+        //SetTextStageResult();
+    }
+    private void ColorClearTexts(Text[] texts)
+    {
+        for (int i = 0; i < texts.Length; i++)
+        {
+            texts[i].color = Color.clear;
+        }
     }
 
-    void OnClickCheckButton()
+    private void ColorClearTMPTexts(TMP_Text[] texts)
+    {
+        for (int i = 0; i < texts.Length; i++)
+        {
+            texts[i].color = Color.clear;
+        }
+    }
+
+    private void SetTextStageResult()
+    {
+        SetStageMusicLength();
+        SetPlayTime();
+        SetPlayerDeathCount();
+        SetUsedItem();
+    }
+
+    private void SetStageMusicLength()
+    {
+        if (state.StageMusicLength == 0) return;
+
+        int min = state.StageMusicLength / 60;
+        int sec = state.StageMusicLength % 60;
+        TestRightTexts[MusicLength].text = $"{min} : {sec}";
+    }
+
+    private void SetPlayTime()
+    {
+        if (state.StageMusicLength == 0) return;
+
+        int min = state.StagePlayTime / 60;
+        int sec = state.StagePlayTime % 60;
+        TestRightTexts[TotalPlayTime].text = $"{min} : {sec}";
+    }
+
+    private void SetPlayerDeathCount()
+    {
+        TestRightTexts[DeathCount].text = $"{state.PlayerDeadCount}ȸ";
+    }
+
+    private void SetUsedItem()
+    {
+        TestRightTexts[UsedItem].text = $"{state.UsedItems}";
+    }
+
+
+    private void TweenTexts()
+    {
+        float delay = 2f;
+
+        for (int i = 0; i < LeftTexts.Length; i++)
+        {
+            TweenText(i, 0.3f, delay);
+            delay += 0.3f;
+        }
+    }
+
+    private void TweenText(int index, float duration, float delay)
+    { 
+        LeftTexts[index].DOColor(Color.black, duration).SetAutoKill().SetEase(Ease.InOutCubic).SetDelay(delay);
+        RightTexts[index].DOColor(Color.black, duration).SetAutoKill().SetEase(Ease.InOutCubic).SetDelay(delay);
+    }
+
+    public TMP_Text[] TestLeftTexts;
+    public TMP_Text[] TestRightTexts;
+
+    private void ShowText()
+    {
+        Invoke($"{nameof(ShowText0)}", 2.0f);
+        Invoke($"{nameof(ShowText1)}", 2.3f);
+        Invoke($"{nameof(ShowText2)}", 2.6f);
+        Invoke($"{nameof(ShowText3)}", 2.9f);
+    }
+
+    private void ShowText0()
+    {
+        TestLeftTexts[0].gameObject.SetActive(true);
+        TestRightTexts[0].gameObject.SetActive(true);
+    }
+
+    private void ShowText1()
+    {
+        TestLeftTexts[1].gameObject.SetActive(true);
+        TestRightTexts[1].gameObject.SetActive(true);
+    }
+
+    private void ShowText2()
+    {
+        TestLeftTexts[2].gameObject.SetActive(true);
+        TestRightTexts[2].gameObject.SetActive(true);
+    }
+
+    private void ShowText3()
+    {
+        TestLeftTexts[3].gameObject.SetActive(true);
+        TestRightTexts[3].gameObject.SetActive(true);
+    }
+
+    void Update()
+    {
+        InputExcute();
+    }
+
+    void InputExcute()
     {
          if (DataManager.dataBackgroundProcActive)
          {
-            if (Input.GetKeyDown(KeyCode.Return))
+            if (!GlobalState.Instance.IsTweening)
             {
-                UIManager.Instance.GoPanelMusicSelect();
+                if (GlobalState.Instance.DevMode)
+                {
+                    InputReturn();
+                    InputEscape();
+                }
             }
          }
+    }
+
+    void InputReturn()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            UIElementFadePanel.Instance.ResultToMusicSelect();
+        }
+    }
+
+    void InputEscape()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            UIElementFadePanel.Instance.ResultToStage();
+        }
     }
 
     private void GetWakZooURL()
@@ -164,7 +317,6 @@ public class UIElementResult : MonoBehaviour
         }
     }
 
-
     public void OnClickOpenWakZooURL()
     {
         Application.OpenURL(_wakZooURL);
@@ -184,13 +336,13 @@ public class UIElementResult : MonoBehaviour
     {
         if (DataManager.dataBackgroundProcActive)
         {
-            UIManager.Instance.GoPanelGamePlay();
-            //UIElementPopUp.MakePopUpMusicInfo();
+            UIElementFadePanel.Instance.ResultToStage();
+            //UIManager.Instance.GoPanelGamePlay();
         }
     }
 
     public void OnClickConfirm()
     {
-        UIManager.Instance.GoPanelMusicSelect();
+        UIElementFadePanel.Instance.ResultToMusicSelect();
     }
 }

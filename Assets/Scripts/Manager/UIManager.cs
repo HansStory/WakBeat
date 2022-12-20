@@ -41,16 +41,21 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
     public GameObject[] MainPanels;
 
     [Header("UI Main Panels")]
-    [SerializeField] private UIElementIntro uiElementIntro;
-    [SerializeField] private UIElementMain uiElementMain;
-    [SerializeField] private UIElementAlbumSelect uiElementAlbumSelect;
-    [SerializeField] private UIElementMusicSelect uiElementMusicSelect;
-    [SerializeField] private UIElementGamePlay uiElementGamePlay;
-    [SerializeField] private UIElementResult uiElementResult;
+    public UIElementIntro UIElementIntro;
+    public UIElementMain UIElementMain;
+    public UIElementAlbumSelect UIElementAlbumSelect;
+    public UIElementMusicSelect UIElementMusicSelect;
+    public UIElementGamePlay UIElementGamePlay;
+    public UIElementResult UIElementResult;
+
     [Header("UI Setting Panel")]
-    [SerializeField] private UIElementSetting uiElementSetting;
+    public UIElementSetting UIElementSetting;
+
     [Header("UI Fade Panel")]
-    [SerializeField] private UIElementFadePanel uiElementFadePanel;
+    public UIElementPopUp UIElementPopUp;
+
+    [Header("UI Fade Panel")]
+    public UIElementFadePanel UIElementFadePanel;
 
     public const int startPanel = 0;
 
@@ -61,12 +66,12 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
 
     private void Init()
     {
-        if (uiElementSetting == null)
+        if (UIElementSetting == null)
         {
             Debug.LogError("UIElementSetting 이 없습니다.");
         }
 
-        if (uiElementFadePanel == null)
+        if (UIElementFadePanel == null)
         {
             Debug.LogError("UIElementFadePanel 이 없습니다.");
         }
@@ -90,8 +95,11 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
             }
         }
 
-        //// 화면 전환 시 버튼 영역 제어  // 잠시 하이드 처리하겠습니다 KD_Han
-        uiElementSetting.PanelViewController(index);
+        // 화면 전환 시 버튼 영역 제어  // 잠시 하이드 처리하겠습니다 KD_Han
+        if (UIElementSetting)
+        {
+            UIElementSetting.PanelViewController(index);
+        }
     }
 
 
@@ -104,20 +112,20 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
     {
         if (GlobalState.Instance.CurrentPanelIndex == (int)GlobalData.UIMODE.SELECT_ALBUM)
         {
-            if (uiElementFadePanel)
+            if (UIElementFadePanel)
             {
-                uiElementFadePanel.BetweenMainToAlbumTransition();
-                uiElementFadePanel.TransitionSequence.InsertCallback(1f, () => WantShowPanel((int)GlobalData.UIMODE.MAIN));
+                UIElementFadePanel.MainToAlbum();
+                UIElementFadePanel.TransitionSequence.InsertCallback(1f, () => WantShowPanel((int)GlobalData.UIMODE.MAIN));
             }
         }
         else if(GlobalState.Instance.CurrentPanelIndex == (int)GlobalData.UIMODE.INTRO)
         {
-            if (uiElementFadePanel)
+            if (UIElementFadePanel)
             {
-                uiElementFadePanel.IntroToMain(1f, 1f, 1f, 2f);
+                UIElementFadePanel.IntroToMain(1f, 1f, 1f, 2f);
 
-                uiElementFadePanel.TransitionSequence.InsertCallback(2f, () => SoundManager.Instance.TurnOnGameBackGround());
-                uiElementFadePanel.TransitionSequence.InsertCallback(3f, () => WantShowPanel((int)GlobalData.UIMODE.MAIN));
+                UIElementFadePanel.TransitionSequence.InsertCallback(2f, () => SoundManager.Instance.TurnOnGameBackGround());
+                UIElementFadePanel.TransitionSequence.InsertCallback(3f, () => WantShowPanel((int)GlobalData.UIMODE.MAIN));
             }
         }
     }
@@ -126,17 +134,17 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
     {
         if (GlobalState.Instance.CurrentPanelIndex == (int)GlobalData.UIMODE.SELECT_MUSIC)
         {
-            uiElementAlbumSelect.ShowHideAlbumList(1.5f);
-            uiElementFadePanel.BetweenAlbumToMusicTransition(0.5f, 0f);
-            uiElementFadePanel.TransitionSequence.InsertCallback(1f, () => WantShowPanel((int)GlobalData.UIMODE.SELECT_ALBUM));
+            UIElementAlbumSelect.ShowHideAlbumList(1.5f);
+            UIElementFadePanel.AlbumToMusic(0.5f, 0f);
+            UIElementFadePanel.TransitionSequence.InsertCallback(1f, () => WantShowPanel((int)GlobalData.UIMODE.SELECT_ALBUM));
             SoundManager.Instance.TurnOnGameBackGround();
         }
         else if (GlobalState.Instance.CurrentPanelIndex == (int)GlobalData.UIMODE.MAIN)
         {
-            if (uiElementFadePanel)
+            if (UIElementFadePanel)
             {
-                uiElementFadePanel.BetweenMainToAlbumTransition();
-                uiElementFadePanel.TransitionSequence.InsertCallback(1f, () => WantShowPanel((int)GlobalData.UIMODE.SELECT_ALBUM));
+                UIElementFadePanel.MainToAlbum();
+                UIElementFadePanel.TransitionSequence.InsertCallback(1f, () => WantShowPanel((int)GlobalData.UIMODE.SELECT_ALBUM));
             }
         }
     }
@@ -146,8 +154,8 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
         if (GlobalState.Instance.CurrentPanelIndex == (int)GlobalData.UIMODE.SELECT_ALBUM)
         {
             //uiElementAlbumSelect.SelectAlbum();
-            uiElementFadePanel.BetweenAlbumToMusicTransition(0.5f, 0f);
-            uiElementFadePanel.TransitionSequence.InsertCallback(1f, () => WantShowPanel((int)GlobalData.UIMODE.SELECT_MUSIC));
+            UIElementFadePanel.AlbumToMusic(0.5f, 0f);
+            UIElementFadePanel.TransitionSequence.InsertCallback(1f, () => WantShowPanel((int)GlobalData.UIMODE.SELECT_MUSIC));
             //WantShowPanel((int)GlobalData.UIMODE.SELECT_MUSIC);
         }
         else if (GlobalState.Instance.CurrentPanelIndex == (int)GlobalData.UIMODE.GAME)
@@ -172,5 +180,41 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
     public void GoPanelResult()
     {
         WantShowPanel((int)GlobalData.UIMODE.RESULT);
+    }
+
+
+    public void MakeTutorial(GameObject tutorial, Transform tutorialBase, Image image, float duration, float delay, float stay)
+    {
+        if (!DataManager.dataFileYn)
+        {
+            var uiTutorial = Instantiate(tutorial, this.transform);
+            image = uiTutorial.GetComponent<Image>();
+
+            if (!image) return;
+
+            image.color = Color.clear;
+            ShowTutorial(image, duration, delay, stay);
+        }
+    }
+
+
+    void ShowTutorial(Image image, float duration, float delay, float stay)
+    {
+        var tween = image.DOColor(Color.white, duration);
+        tween.SetAutoKill().SetEase(Ease.OutQuad).SetDelay(delay).OnComplete(() => HideAlbumTutorial(image, duration, stay));
+    }
+
+    void HideAlbumTutorial(Image image, float duration, float stay)
+    {
+        var tween = image.DOColor(Color.clear, duration);
+        tween.SetAutoKill().SetEase(Ease.OutQuad).SetDelay(stay).OnComplete(() => OnCompleteTutorialTween(image));
+    }
+
+    void OnCompleteTutorialTween(Image image)
+    {
+        if (image)
+        {
+            Destroy(image);
+        }
     }
 }

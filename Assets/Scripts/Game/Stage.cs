@@ -54,11 +54,11 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     protected BMWReader bmwReader = null;        // 채보 스크립트
     protected AudioSource audioSource = null;
-    protected GlobalState state = new GlobalState();
-    protected UserData userData = new UserData();
+    protected GlobalState state;
+    protected UserData userData;
 
-    protected string _title = string.Empty;      // 곡 제목
-    protected string _artist = string.Empty;     // 작곡가
+    protected string _title = "";                // 곡 제목
+    protected string _artist = "";               // 작곡가
 
     protected float _bpm = 0;                    // Bar Per Minute
     protected float _bar = 0;                    // Bar
@@ -130,6 +130,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
         // Get Values
         GetMusicInfo();
+
         // Set Values
         SetMusicInfo();
 
@@ -145,11 +146,32 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
         ClearRate.text = $"Clear Rate\n0%";
 
+        ShowCurrentLine();
+
+        // 음악 정보 팝업 호출
+        if (UIManager.Instance.UIElementPopUp)
+        {
+            UIManager.Instance.UIElementPopUp.SetPopUpMusicInfo();
+        }
+    }
+
+    void ShowCurrentLine()
+    {
         if (TextCurrentLine != null)
         {
             TextCurrentLine.text = $"Current Line : {_currentLine}";
+
+            if (!state.DevMode)
+            {
+                TextCurrentLine.gameObject.SetActive(false);
+            }
         }
     }
+
+    //public void ResetStage()
+    //{
+    //    Init();
+    //}
 
     //protected virtual void InitConfigSettings()
     //{
@@ -192,8 +214,8 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     protected virtual void Start()
     {
-        //StartGame();
-        Invoke($"{nameof(StartGame)}", 1f);
+        StartGame();
+        //Invoke($"{nameof(StartGame)}", 1f);
     }
 
     protected virtual void StartGame()
@@ -214,6 +236,9 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             _bpm = bmwReader.MusicInfoItem.BPM;
             _bar = bmwReader.MusicInfoItem.Bar;
         }
+
+        // Sound Fade In 
+        SoundManager.Instance.FadeInMusicVolume(0.5f);
     }
 
     protected virtual void SetMusicInfo()
@@ -443,7 +468,10 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         // 테스트 끝난후 배포시에 삭제 예정
         if (TextCurrentLine != null)
         {
-            TextCurrentLine.text = $"Current Line : {_currentLine}";
+            if (state.DevMode)
+            {
+                TextCurrentLine.text = $"Current Line : {_currentLine}";
+            }
         }
     }
 
@@ -466,11 +494,16 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     {
         var beatItem = bmwReader.ChartingItem[_currentLine];
 
+        //if (StageAnim.clip == null) return;
+
         if (beatItem.AnimationIndex >= 0 && bmwReader.AnimationItem.Count > beatItem.AnimationIndex)
         {
             var animItem = bmwReader.AnimationItem[beatItem.AnimationIndex];
 
             _animationName = animItem.AnimationName;
+
+            if (!StageAnim[_animationName]) return;
+
 
             StageAnim.Rewind(_animationName);
             StageAnim[_animationName].normalizedTime = 0f;
@@ -537,7 +570,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     protected virtual void ShowChartingItems()
     {
-        if (_isAutoMode)
+        if (_isAutoMode || state.ShowDodge)
         {
             ShowDodgePoint();
         }
@@ -713,9 +746,8 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             //ResetGlobalState();
 
             // TO DO : Go Panel Result
-            SoundManager.Instance.ForceAudioStop();           
-            UIManager.Instance.GoPanelResult();
-            SoundManager.Instance.TurnOnGameBackGround();
+            SoundManager.Instance.ForceAudioStop();
+            UIManager.Instance.UIElementFadePanel.StageToResult();
         }
     }
 
@@ -732,8 +764,9 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
             // TO DO : Go Panel Music Select
             SoundManager.Instance.ForceAudioStop();
-            UIManager.Instance.GoPanelMusicSelect();
-            SoundManager.Instance.TurnOnGameBackGround();
+
+            //UIManager.Instance.GoPanelMusicSelect();
+            UIManager.Instance.UIElementFadePanel.StageToMusic();
         }
     }
 
@@ -745,34 +778,6 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
         // Save Total Play Time
         state.StagePlayTime = (int)_playTime;
-
-        switch (_albumIndex)
-        {
-            case 0: DataManager.dataAlbum1ClearYn[_stageIndex] = "Y"; break;
-            case 1: DataManager.dataAlbum2ClearYn[_stageIndex] = "Y"; break;
-            case 2: DataManager.dataAlbum3ClearYn[_stageIndex] = "Y"; break;
-            case 3: DataManager.dataAlbum4ClearYn[_stageIndex] = "Y"; break;
-        }
-
-        int _clearCount = 0;
-        for (int i = 0; i < DataManager.dataAlbum1ClearYn.Length; i++)
-        {
-            _clearCount += DataManager.dataAlbum1ClearYn[i] == "Y" || DataManager.dataAlbum1ClearYn[i] == "P" ? 1 : 0; 
-        }
-        for (int j = 0; j < DataManager.dataAlbum2ClearYn.Length; j++)
-        {
-            _clearCount += DataManager.dataAlbum2ClearYn[j] == "Y" || DataManager.dataAlbum2ClearYn[j] == "P" ? 1 : 0;
-        }
-        for (int k = 0; k < DataManager.dataAlbum3ClearYn.Length; k++)
-        {
-            _clearCount += DataManager.dataAlbum3ClearYn[k] == "Y" || DataManager.dataAlbum3ClearYn[k] == "P" ? 1 : 0;
-        }
-        for (int m = 0; m < DataManager.dataAlbum4ClearYn.Length; m++)
-        {
-            _clearCount += DataManager.dataAlbum4ClearYn[m] == "Y" || DataManager.dataAlbum4ClearYn[m] == "P" ? 1 : 0;
-        }
-
-        DataManager.dataClearStageCount = _clearCount;
     }
 
     protected virtual void OperateBallMovement()

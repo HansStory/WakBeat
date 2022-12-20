@@ -372,6 +372,7 @@ MonoBehaviour:
   - {fileID: 7921288866019692938, guid: 663c68a6b803de7418db183677221222, type: 3}
   TextCurrentLine: {fileID: 8985386085652165365}
   _tmpText: {fileID: 2448427893885750226}
+  TextCurrentLine: {fileID: 0}
 --- !u!1 &4423836732642508599
 GameObject:
   m_ObjectHideFlags: 0
@@ -514,7 +515,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 77763c4e097050e4a9f3d64180b4c5d0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -655,6 +656,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3569041610793075511}
     m_Modifications:
+    - target: {fileID: 886907512476628208, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7d81092bf06fc1b4a9963853f15dc59a, type: 3}
+    - target: {fileID: 968746176848530390, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 968746176848530390, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 968746176848530390, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 968746176848530390, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1992493566946292139, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -751,6 +772,14 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3122672544244235560, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3683866465161761983, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9c34d4be762ced547a54ae7f1d7ba3c8, type: 3}
     - target: {fileID: 8443865313433940930, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
       propertyPath: m_Name
       value: PlayGround

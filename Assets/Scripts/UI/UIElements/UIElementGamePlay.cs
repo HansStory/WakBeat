@@ -18,8 +18,17 @@ public class UIElementGamePlay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        FinishGame();
-        OnClickEsc();
+        if (DataManager.dataBackgroundProcActive)
+        {
+            if (!GlobalState.Instance.IsTweening)
+            {
+                if (GlobalState.Instance.DevMode)
+                {
+                    FinishGame();
+                    OnClickEsc();
+                }
+            }
+        }
     }
 
     private void OnEnable()
@@ -36,33 +45,17 @@ public class UIElementGamePlay : MonoBehaviour
 
     void FinishGame()
     {
-        if (DataManager.dataBackgroundProcActive)
+        if (Input.GetKeyDown(KeyCode.Return))
         {
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                Stage.Instance.FinishGame();
-                //SoundManager.Instance.ForceAudioStop();
-
-                //GameFactory.Instance.DistroyStage();
-                //UIManager.Instance.GoPanelResult();
-
-                //SoundManager.Instance.TurnOnGameBackGround();
-            }
+            Stage.Instance.FinishGame();
         }
     }
 
     void OnClickEsc()
     {
-        if (DataManager.dataBackgroundProcActive)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                Stage.Instance.GoBackSelectStage();
-                //SoundManager.Instance.ForceAudioStop();
-
-                //GameFactory.Instance.DistroyStage();
-                //UIManager.Instance.GoPanelMusicSelect();
-            }
+            Stage.Instance.GoBackSelectStage();
         }
     }
 }

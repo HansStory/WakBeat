@@ -41,6 +41,7 @@ public class GameFactory : MonoBehaviourSingleton<GameFactory>
     {
         if (stage != null)
         {
+            SoundManager.Instance.ForceAudioStop();
             Destroy(stage);
         }
     }

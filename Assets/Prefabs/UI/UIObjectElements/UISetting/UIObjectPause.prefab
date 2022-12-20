@@ -96,8 +96,8 @@ MonoBehaviour:
   ButtonBack: {fileID: 511045551950195808}
   ButtonRestart: {fileID: 6110522676001950172}
   ButtonHome: {fileID: 933749662913252941}
-  _PanelMusicInfo: {fileID: 0}
   _PopupMusicInfo: {fileID: 5611391142765583243, guid: 009f7d35d81088e4f96bea9e479b9028, type: 3}
+  UIElementPopUp: {fileID: 0}
 --- !u!1 &1609770341168419420
 GameObject:
   m_ObjectHideFlags: 0

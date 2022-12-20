@@ -103,6 +103,9 @@ public class UIElementFadePanel : MonoBehaviourSingleton<UIElementFadePanel>
     {
         imageWhite.gameObject.SetActive(true);
 
+        // Check Tweening
+        GlobalState.Instance.IsTweening = true;
+
         TransitionSequence = DOTween.Sequence().SetAutoKill(false).OnStart(() =>
         {
             imageWhite.color = Color.black;
@@ -112,15 +115,22 @@ public class UIElementFadePanel : MonoBehaviourSingleton<UIElementFadePanel>
             imageWhite.DOColor(Color.white, toWhiteTime).SetDelay(blackToClear + holdTime);
 
             TransitionTween = imageWhite.DOColor(Color.clear, toClearTime).SetDelay(blackToClear + holdTime + toWhiteTime).SetEase(Ease.InExpo);
-            TransitionTween.OnComplete(() => { imageWhite.gameObject.SetActive(false); });
+            TransitionTween.OnComplete(() => { OnCompleteIntroToMain(); });
         });
     }
+
+    private void OnCompleteIntroToMain()
+    {
+        GlobalState.Instance.IsTweening = false;
+        imageWhite.gameObject.SetActive(false);
+    }
+
     #endregion
 
     #region Transition Between Main To Album
-    public void BetweenMainToAlbumTransition()
+    public void MainToAlbum()
     {
-        InitBetweenMainToTransitionTweening();
+        InitMainToAlbum();
 
         TransitionSequence = DOTween.Sequence().SetAutoKill(false).OnStart(() =>
         {
@@ -129,42 +139,57 @@ public class UIElementFadePanel : MonoBehaviourSingleton<UIElementFadePanel>
             fadeYellow.transform.DOScale(Vector3.zero, TransitionTime).SetEase(curveYellow.Curve);
             fadeOrange.transform.DOScale(Vector3.zero, TransitionTime).SetEase(curveOrange.Curve);
 
-            TransitionTween = fadeIvory.transform.DOScale(Vector3.zero, TransitionTime).SetEase(curveIvory.Curve);
-            TransitionTween.OnComplete(() => { transitionPanel.SetActive(false); });
+            TransitionTween = fadeIvory.transform.DOScale(Vector3.zero, TransitionTime).SetEase(curveIvory.Curve).SetAutoKill();
+            TransitionTween.OnComplete(() => { OnCompleteMainToAlbum(); });
         });
 
         SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.MainSelect);
     }
 
-    private void InitBetweenMainToTransitionTweening()
+    private void InitMainToAlbum()
     {
         DOTween.PauseAll();
         transitionPanel.SetActive(true);
+
+        // Check Tweening
+        GlobalState.Instance.IsTweening = true;
 
         fadeClear.transform.localScale = fadeClearOriginScale;
         fadeRed.transform.localScale = Vector3.one;
         fadeYellow.transform.localScale = Vector3.one;
         fadeOrange.transform.localScale = Vector3.one;
     }
+
+    private void OnCompleteMainToAlbum()
+    {
+        GlobalState.Instance.IsTweening = false;
+        transitionPanel.SetActive(false);
+    }
     #endregion
 
+    #region Album To Music Select
     Tween fadeInTween;
     Tween fadeOutTween;
-    public void BetweenAlbumToMusicTransition(float transitionTime, float delay)
+    public void AlbumToMusic(float transitionTime, float delay)
     {
-        InitBetweenAlbumToMusicTransitionTweening();
+        InitAlbumToMusic();
 
-        TransitionSequence = DOTween.Sequence().SetAutoKill(false).OnStart(() =>
+        TransitionSequence = DOTween.Sequence().SetAutoKill().OnStart(() =>
         {
             fadeInTween = fadeBackGround.DOColor(Color.white, transitionTime);
-            fadeInTween.SetDelay(delay);
-            fadeInTween.OnComplete(() => { fadeOutTween = fadeBackGround.DOColor(whiteAlpha0, transitionTime + transitionTime).SetDelay(0.5f).OnComplete(() => { fadeBackGround.gameObject.SetActive(false); }); });
+            fadeInTween.SetDelay(delay).SetAutoKill().OnComplete(() => 
+            { fadeOutTween = fadeBackGround.DOColor(whiteAlpha0, transitionTime + transitionTime)
+                .SetDelay(0.5f).SetAutoKill().OnComplete(() => { OnCompleteAlbumToMusic(); }); 
+            });
         });
 
     }
 
-    void InitBetweenAlbumToMusicTransitionTweening()
+    void InitAlbumToMusic()
     {
+        // Check Tweening
+        GlobalState.Instance.IsTweening = true;
+
         if (fadeBackGround)
         {
             fadeBackGround.gameObject.SetActive(true);
@@ -173,23 +198,158 @@ public class UIElementFadePanel : MonoBehaviourSingleton<UIElementFadePanel>
         }
     }
 
+    private void OnCompleteAlbumToMusic()
+    {
+        GlobalState.Instance.IsTweening = false;
+        fadeBackGround.gameObject.SetActive(false);
+    }
+
     void SetFadeBackGroundImages()
     {
+        var state = GlobalState.Instance;
+        var albumInfo = GlobalData.Instance.Album;
+
         switch (GlobalState.Instance.AlbumIndex)
         {
             case (int)GlobalData.ALBUM.ISEDOL:
-                fadeBackGround.sprite = GlobalData.Instance.Album.FirstAlbumMusicBackground[GlobalState.Instance.StageIndex];
+                fadeBackGround.sprite = albumInfo.FirstAlbumMusicBackground[state.StageIndex];
                 break;
             case (int)GlobalData.ALBUM.CONTEST:
-                fadeBackGround.sprite = GlobalData.Instance.Album.SecondAlbumMusicBackground[GlobalState.Instance.StageIndex];
+                fadeBackGround.sprite = albumInfo.SecondAlbumMusicBackground[state.StageIndex];
                 break;
             case (int)GlobalData.ALBUM.GOMIX:
-                fadeBackGround.sprite = GlobalData.Instance.Album.ThirdAlbumMusicBackground[GlobalState.Instance.StageIndex];
+                fadeBackGround.sprite = albumInfo.ThirdAlbumMusicBackground[state.StageIndex];
                 break;
             case (int)GlobalData.ALBUM.WAKALOID:
-                fadeBackGround.sprite = GlobalData.Instance.Album.ForthAlbumMusicBackground[GlobalState.Instance.StageIndex];
+                fadeBackGround.sprite = albumInfo.ForthAlbumMusicBackground[state.StageIndex];
                 break;
         }
     }
+    #endregion
 
+    #region Transition Between MusicSelect To Stage
+    #region Music To Stage
+    public void MusicToStage()
+    {
+        InitMusicToStage();
+       
+        imageBlack.DOColor(Color.black, 0.3f).SetAutoKill()
+        .SetEase(Ease.OutQuad).OnComplete(() => OnBlackMusicToStage());
+    }
+
+
+    private void OnBlackMusicToStage()
+    {
+        UIManager.Instance.GoPanelGamePlay();
+
+        imageBlack.DOColor(Color.clear, 0.3f).SetAutoKill().SetDelay(0.2f)
+        .SetEase(Ease.InQuad).OnComplete(() => OnCompleteTweening());
+    }
+    #endregion
+
+    #region Stage To Music
+    public void StageToMusic()
+    {
+        InitMusicToStage();
+
+        imageBlack.DOColor(Color.black, 0.3f).SetAutoKill()
+        .SetEase(Ease.OutQuad).OnComplete(() => OnBlackStageToMusic());
+    }
+
+    private void OnBlackStageToMusic()
+    {
+        UIManager.Instance.GoPanelMusicSelect();       
+
+        imageBlack.DOColor(Color.clear, 0.3f).SetAutoKill().SetDelay(0.2f)
+        .SetEase(Ease.InQuad).OnComplete(() => OnCompleteStageToMusic());
+    }
+
+
+    private void OnCompleteStageToMusic()
+    {
+        SoundManager.Instance.TurnOnSelectedMusic();
+        SoundManager.Instance.FadeInMusicVolume(0.5f);
+
+        OnCompleteTweening();
+    }
+    #endregion
+
+    private void InitMusicToStage()
+    {
+        GlobalState.Instance.IsTweening = true;
+        SoundManager.Instance.FadeOutMusicVolume(0.3f);
+
+        imageBlack.gameObject.SetActive(true);
+        imageBlack.color = Color.clear;
+    }
+    #endregion 
+
+    #region Stage To Result
+    public void StageToResult()
+    {
+        InitTweening();
+
+        imageBlack.DOColor(Color.black, 0.3f).SetAutoKill()
+        .SetEase(Ease.OutQuad).OnComplete(() => OnBlackStageToResult());
+    }
+
+    private void OnBlackStageToResult()
+    {
+        UIManager.Instance.GoPanelResult();
+
+        imageBlack.DOColor(Color.clear, 0.3f).SetAutoKill().SetDelay(0.2f)
+        .SetEase(Ease.InQuad).OnComplete(() => OnCompleteTweening());
+    }
+    #endregion
+
+    #region Result To Stage
+    public void ResultToStage()
+    {
+        InitTweening();
+
+        imageBlack.DOColor(Color.black, 0.3f).SetAutoKill()
+        .SetEase(Ease.OutQuad).OnComplete(() => OnBlackResultToStage());
+    }
+
+    private void OnBlackResultToStage()
+    {
+        UIManager.Instance.GoPanelGamePlay();
+
+        imageBlack.DOColor(Color.clear, 0.3f).SetAutoKill().SetDelay(0.2f)
+        .SetEase(Ease.InQuad).OnComplete(() => OnCompleteTweening());
+    }
+
+    #endregion
+
+    #region Result To MusicSelect
+    public void ResultToMusicSelect()
+    {
+        InitTweening();
+
+        imageBlack.DOColor(Color.black, 0.3f).SetAutoKill()
+        .SetEase(Ease.OutQuad).OnComplete(() => OnBlackResultToMusicSelect());
+    }
+
+    private void OnBlackResultToMusicSelect()
+    {
+        UIManager.Instance.GoPanelMusicSelect();
+
+        imageBlack.DOColor(Color.clear, 0.3f).SetAutoKill().SetDelay(0.2f)
+        .SetEase(Ease.InQuad).OnComplete(() => OnCompleteTweening());
+    }
+    #endregion
+
+    private void InitTweening()
+    {
+        GlobalState.Instance.IsTweening = true;
+
+        imageBlack.gameObject.SetActive(true);
+        imageBlack.color = Color.clear;
+    }
+
+    private void OnCompleteTweening()
+    {
+        GlobalState.Instance.IsTweening = false;
+        imageBlack.gameObject.SetActive(false);
+    }
 }

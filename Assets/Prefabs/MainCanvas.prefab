@@ -899,14 +899,15 @@ MonoBehaviour:
   - {fileID: 1540329811842453614}
   - {fileID: 4909700514306408954}
   - {fileID: 6348713623591929678}
-  uiElementIntro: {fileID: 3308140980372552514}
-  uiElementMain: {fileID: 7259526366007449554}
-  uiElementAlbumSelect: {fileID: 2891796843693401576}
-  uiElementMusicSelect: {fileID: 4588499267154039872}
-  uiElementGamePlay: {fileID: 9185301295036426862}
-  uiElementResult: {fileID: 4384552546890004474}
-  uiElementSetting: {fileID: 4791045139548083712}
-  uiElementFadePanel: {fileID: 5668455341216472545}
+  UIElementIntro: {fileID: 3308140980372552514}
+  UIElementMain: {fileID: 7259526366007449554}
+  UIElementAlbumSelect: {fileID: 2891796843693401576}
+  UIElementMusicSelect: {fileID: 4588499267154039872}
+  UIElementGamePlay: {fileID: 9185301295036426862}
+  UIElementResult: {fileID: 4384552546890004474}
+  UIElementSetting: {fileID: 4791045139548083712}
+  UIElementFadePanel: {fileID: 5668455341216472545}
+  UIElementPopUp: {fileID: 2543967168251537698}
 --- !u!1001 &126084238971799201
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2057,3 +2058,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5826753486790406745, guid: 2a916a2a440c0ff46a1c4d81b1f6c20d, type: 3}
   m_PrefabInstance: {fileID: 8208680433080174194}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2543967168251537698 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5955706999031344976, guid: 2a916a2a440c0ff46a1c4d81b1f6c20d, type: 3}
+  m_PrefabInstance: {fileID: 8208680433080174194}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c173766631ec724588a2e35bb2d0b82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GlobalState : MonoBehaviourSingleton<GlobalState>
@@ -10,31 +11,84 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
         set { _currentPanelIndex = value; }
     }
 
-    private int _albumIndex = (int)GlobalData.ALBUM.ISEDOL;
+    private int _albumIndex = 0;
     public int AlbumIndex
     {
         get { return _albumIndex; }
         set { _albumIndex = value; }
     }
 
-    public void SetmyAlbumIndex(int index)
+    public void SetMyAlbumIndex(int index)
     {
         _albumIndex = index;
     }
 
-    private int _stageIndex = (int)GlobalData.STAGE.STAGE1;
+    private int _stageIndex = 0;
     public int StageIndex
     {
         get { return _stageIndex; }
         set { _stageIndex = value; }
     }
 
-    public void SetmyStageIndex(int index)
+    public void SetMyStageIndex(int index)
     {
         _stageIndex = index;
     }
 
-    //---------------------------Global Sound State ---------------------------------
+    //public List<int> AlbumStageCount = new List<int>();
+
+    // 앨범의 스테이지 수 체크
+    private int _albumStageCount = 0;
+    public int AlbumStageCount
+    {
+        get { return _albumStageCount; }
+        set { _albumStageCount = value; }
+    }
+
+    private int _album1StageCount = 0;
+    public int Album1StageCount
+    {
+        get { return _album1StageCount; }
+        set { _album1StageCount = value; }
+    }
+
+    private int _album2StageCount = 0;
+    public int Album2StageCount
+    {
+        get { return _album2StageCount; }
+        set { _album2StageCount = value; }
+    }
+
+    private int _album3StageCount = 0;
+    public int Album3StageCount
+    {
+        get { return _album3StageCount; }
+        set { _album3StageCount = value; }
+    }
+
+    private int _album4StageCount = 0;
+    public int Album4StageCount
+    {
+        get { return _album4StageCount; }
+        set { _album4StageCount = value; }
+    }
+
+    private int _album5StageCount = 0;
+    public int Album5StageCount
+    {
+        get { return _album5StageCount; }
+        set { _album5StageCount = value; }
+    }
+
+    // Tweening 상태 체크 (여러 입력을 방지하기 위해서)
+    private bool isTweening = false;
+    public bool IsTweening
+    {
+        get { return isTweening; }
+        set { isTweening = value; }
+    }
+
+    //--------------------------- Global Sound State ---------------------------------
     private int _bgmIndex = 0;
     public int BGMIndex
     {
@@ -220,7 +274,7 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
     }
 
     //---------------------- Game Result Variable -----------------
-    private int _stageMusicLength = 0;
+    private int _stageMusicLength = 1;
     public int StageMusicLength
     {
         get { return _stageMusicLength; }
@@ -228,7 +282,7 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
     }
 
     // Stage의 총 Play Time
-    private int _stagePlayTime = 0;
+    private int _stagePlayTime = 1;
     public int StagePlayTime
     {
         get { return _stagePlayTime; }
@@ -244,7 +298,7 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
     }
 
     // 사용한 아이템 종류
-    private string _usedItems = string.Empty;
+    private string _usedItems = "없음";
     public string UsedItems
     {
         get { return _usedItems; }

@@ -72,6 +72,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3632a0bb115bdc64f969ae3ab367199f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AlbumInfoDEV: {fileID: 11400000, guid: 66b140db730262d4e9688835768e7aab, type: 2}
+  AlbumInfoRelease: {fileID: 11400000, guid: 769e331fedd2dc54e987971b4a89f30f, type: 2}
   Information: {fileID: 11400000, guid: edaa916523a20cf439e936e0d4620bc8, type: 2}
   Album: {fileID: 11400000, guid: 66b140db730262d4e9688835768e7aab, type: 2}
   Shop: {fileID: 11400000, guid: dbecb26b32772324080a1e61d75459a6, type: 2}
@@ -88,6 +90,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 981ded55004ee2645a362cb2291bdf24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  size: 80
+  color: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &2543171890323714320
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -122,7 +122,7 @@ public class UIObjectButton : MonoBehaviour
             SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingOut);
             UIElementSetting.Instance.ButtonClickControll("Pause", "Open");
             // 버튼 이벤트 Lock
-            DataManager.dataBackgroundProcActive = false;
+            //DataManager.dataBackgroundProcActive = true;
         }
     }
 

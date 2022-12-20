@@ -11,6 +11,7 @@ public class StageCharting : Stage
     public TMP_Dropdown DropDownStage;
     public TMP_Text TextGameMode;
     public TMP_Text TextAutoMode;
+    public TMP_Text TextShowMode;
 
     public TMP_Text TextPause;
 
@@ -25,7 +26,8 @@ public class StageCharting : Stage
     public TMP_Text TextHalfAngle;
 
     private bool _isShowDebugtab = true;
-    private static int savePointNum = 0;       // Save Point Beat Item Line
+    //private static int savePointNum = 0;       // Save Point Beat Item Line
+    private bool _isShowDodgePoint;
 
     //------------ For Debuging -----------
     public TMP_Text[] DebugElements;
@@ -50,12 +52,15 @@ public class StageCharting : Stage
 
         CreateSpawnPoint();
 
+        _isShowDodgePoint = state.ShowDodge;
+
         //if (TextCurrentLine != null)
         //{
         //    TextCurrentLine.text = $"Current Line : {_currentLine}";
         //}
         TextGameMode.text = $"Game Mode \n {_isGameMode}";
         TextAutoMode.text = $"Auto Mode \n {_isAutoMode}";
+        TextShowMode.text = $"Show Mode \n {_isShowDodgePoint}";
     }
 
     protected override void Start()
@@ -88,7 +93,6 @@ public class StageCharting : Stage
     protected override void Update()
     {
         base.Update();
-        ShowFrame();
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -187,7 +191,7 @@ public class StageCharting : Stage
         _currentLine = -1;
         _timer = 0f;
         _playTime = 0f;
-        savePointNum = 0;
+        //savePointNum = 0;
         _totalBeatCount = 0;
 
         _isPlay = false;
@@ -301,13 +305,38 @@ public class StageCharting : Stage
                 col.enabled = _isAutoMode;
             }
 
-            if (!_isAutoMode)
-            {
-                dodge.SetActive(false);
-            }
+            //if (!_isAutoMode)
+            //{
+            //    dodge.SetActive(false);
+            //}
+        }
+
+        if (!_isShowDodgePoint)
+        {
+            DodgePointBase.gameObject.SetActive(_isAutoMode);
+        }
+        else
+        {
+            DodgePointBase.gameObject.SetActive(true);
         }
 
         TextAutoMode.text = $"Auto Mode \n {_isAutoMode}";
+    }
+
+    public void OnClickShowDodgePoint()
+    {
+        _isShowDodgePoint = !_isShowDodgePoint;
+
+        if (!_isAutoMode)
+        {
+            DodgePointBase.gameObject.SetActive(_isShowDodgePoint);
+        }
+        else
+        {
+            DodgePointBase.gameObject.SetActive(true);
+        }
+
+        TextShowMode.text = $"Show Mode \n {_isShowDodgePoint}";
     }
 
     public void OnClickLoad()
@@ -395,60 +424,6 @@ public class StageCharting : Stage
         else
         {
             TextHalfAngle.text = "Hide\nQuater Angle";
-        }
-    }
-
-    // On GUI Frame Check
-    private float deltaTime = 0.0f;
-    private bool isShow = false;
-    protected virtual void ShowFrame()
-    {
-        deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
-
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            isShow = !isShow;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            Application.targetFrameRate = 30;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            Application.targetFrameRate = 60;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            Application.targetFrameRate = 144;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            Application.targetFrameRate = -1;
-        }
-    }
-
-    [SerializeField, Range(1, 100)] private int size = 50;
-    [SerializeField] private Color color = Color.green;
-    private void OnGUI()
-    {
-        if (isShow)
-        {
-            GUIStyle style = new GUIStyle();
-
-            Rect rect = new Rect(100, 150, Screen.width, Screen.height);
-            style.alignment = TextAnchor.UpperLeft;
-            style.fontSize = size;
-            style.normal.textColor = color;
-
-            float ms = deltaTime * 1000f;
-            float fps = 1.0f / deltaTime;
-            string text = string.Format("{0:0.} FPS ({1:0.0} ms)", fps, ms);
-
-            GUI.Label(rect, text, style);
         }
     }
 }
