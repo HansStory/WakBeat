@@ -287,6 +287,16 @@ public class UIObjectShop : MonoBehaviour
         {
             SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + Index).Find("Open").Find("SkillButton").Find("ButtonOn").gameObject.SetActive(false);
             SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + Index).Find("Open").Find("SkillButton").Find("ButtonOff").gameObject.SetActive(true);
+
+            if(Index == 3)
+            {
+
+            }
+            switch(Index)
+            {
+                case 3: GlobalState.Instance.ShowDodge = false; break;
+                case 4: GlobalState.Instance.AutoMode = false; break;
+            }
         }
         else if (Division.Equals("Off"))
         {
@@ -307,11 +317,23 @@ public class UIObjectShop : MonoBehaviour
                     string _SkillName = "";
                     switch(i)
                     {
-                        case 0: _SkillName = "까방권"; break;
-                        case 1: _SkillName = "일시무적"; break;
-                        case 2: _SkillName = "뉴가메"; break;
-                        case 3: _SkillName = "분석안"; break;
-                        case 4: _SkillName = "자율주행"; break;
+                        case 0: 
+                            _SkillName = "까방권";
+                            break;
+                        case 1: 
+                            _SkillName = "일시무적"; 
+                            break;
+                        case 2: 
+                            _SkillName = "뉴가메"; 
+                            break;
+                        case 3: 
+                            _SkillName = "분석안";
+                            GlobalState.Instance.ShowDodge = true;
+                            break;
+                        case 4: 
+                            _SkillName = "자율주행";
+                            GlobalState.Instance.AutoMode = true;
+                            break;
                     }
                     GlobalState.Instance.UsedItems = _SkillName;
                 }
