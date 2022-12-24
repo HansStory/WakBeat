@@ -22,9 +22,9 @@ public class AlbumInfo : ScriptableObject
     [Header("[ Stage Icon Images ]")]
     public Sprite[] StageIcons;
 
-    [Space(10)]
-    [Header("[ First Album Music Information ]")]
-    public ScriptableObject[] album1Stage;
+    //[Space(10)]
+    //[Header("[ First Album Music Information ]")]
+    //public ScriptableObject[] album1Stage;
 
     [Space(10)]
     [Header("[ First Album Music Information ]")]
