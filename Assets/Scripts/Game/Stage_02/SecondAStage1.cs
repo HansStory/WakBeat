@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 
 public class SecondAStage1 : Stage
@@ -17,49 +18,6 @@ public class SecondAStage1 : Stage
         SetBackGroundSprite(GlobalData.Instance.StageInfo.BackGroundSkins[1]);
     }
 
-    protected override void Update()
-    {
-        base.Update();
-        if (_currentLine >= 5 && _timer > 2.1f)
-        {
-            BackGroundSkin.enabled = false;
-        }
-        else if (_currentLine < 5)
-        {
-            BackGroundSkin.enabled = true;
-        }
-        // if (Stage._currentLine == 2 && _timer > 1.5f)
-        // {
-        //     if (_timer <= 2.13)
-        //     {
-        //         _tmpText.text = "12:23";
-        //     }
-        //     else
-        //     {
-        //         _tmpText.text = "12:24";
-        //     }
-        // }
-        // else if (Stage._currentLine == 3)
-        // {
-        //     _tmpText.text = "12:25";
-        // }
-        // else if (_currentLine < 2)
-        // {
-        //     _tmpText.alpha = 255f;
-        //     _tmpText.text = "12:22";
-        // }
-        //
-        // if (Stage._currentLine >= 5)
-        // {
-        //     float _inRadius = inRadius - obstacleHeightHalf + ballHeightHalf;
-        //     float _outRadius = outRadius + obstacleHeightHalf - ballHeightHalf;
-        //
-        //     CreateInObstacle(1, _inRadius);
-        //     CreateOutObstacle(1, _outRadius);
-        // }
-        
-    }
-
     private float ballHeightHalf = 15.5f;
     private float obstacleHeightHalf = 56.5f;
     protected override void CreateObstacles()
@@ -73,9 +31,30 @@ public class SecondAStage1 : Stage
         CreateInObstacle(1, _inRadius);
         CreateOutObstacle(1, _outRadius);
     }
-    
 
-    protected override void ShowOutObstacles()
+    protected override void ShowChartingItems()
+    {
+        if (_isAutoMode || state.ShowDodge)
+        {
+            ShowDodgePoint();
+        }
+
+        if (_currentLine <= 5)
+        {
+            ShowInObstacles();
+            ShowOutObstacles();
+        }
+        else
+        {
+            ShowInTreeObstacles();
+            ShowOutTreeObstacles();
+        }
+
+        ShowSavePoint();
+    }
+
+
+    private void ShowOutTreeObstacles()
     {
         var beatItem = bmwReader.ChartingItem[_currentLine];
 
@@ -102,7 +81,7 @@ public class SecondAStage1 : Stage
         }
     }
 
-    protected override void ShowInObstacles()
+    private void ShowInTreeObstacles()
     {
         if (_currentLine >= bmwReader.ChartingItem.Count) return;
 
@@ -130,32 +109,24 @@ public class SecondAStage1 : Stage
         }
     }
 
-    protected override void ResetSavePointState()
+    protected override void PlayProcess()
     {
-        base.ResetSavePointState();
-        if (_currentLine >= bmwReader.ChartingItem.Count) return;
+        base.PlayProcess();
 
-        var beatItem = bmwReader.ChartingItem[_currentLine];
-
-        if (beatItem != null)
+        switch (_currentLine)
         {
-            // Hide
-            foreach (var dodgeList in DodgePointLists)
-            {
-                dodgeList.SetActive(false);
-            }
-            
-            // Hide
-            foreach (var inList in InObstacleLists)
-            {
-                inList.SetActive(false);
-            }
-            
-            // Hide
-            foreach (var inList in OutObstacleLists)
-            {
-                inList.SetActive(false);
-            }
+            case 5:
+                Invoke(nameof(HideObstacles), 2.11f);
+                break;
+        }
+    }
+
+    void HideObstacles()
+    {
+        for (int i = 0; i < 72; i++)
+        {
+            InObstacleLists[i].SetActive(false);
+            OutObstacleLists[i].SetActive(false);
         }
     }
 
