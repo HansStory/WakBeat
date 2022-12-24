@@ -147,7 +147,7 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
     {
         DevMode = Config.Instance.DevMode;
         GameMode = Config.Instance.GameMode;
-        AutoMode = Config.Instance.AutoMode;      
+        //AutoMode = Config.Instance.AutoMode;      
     }
 
 

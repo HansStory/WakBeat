@@ -288,10 +288,6 @@ public class UIObjectShop : MonoBehaviour
             SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + Index).Find("Open").Find("SkillButton").Find("ButtonOn").gameObject.SetActive(false);
             SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + Index).Find("Open").Find("SkillButton").Find("ButtonOff").gameObject.SetActive(true);
 
-            if(Index == 3)
-            {
-
-            }
             switch(Index)
             {
                 case 3: GlobalState.Instance.ShowDodge = false; break;

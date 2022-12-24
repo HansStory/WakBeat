@@ -206,6 +206,44 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
             dataSkillUnLockYn = GlobalState.Instance.UserData.data.shopData.skillUnLockYn;
             dataSkillUsingYn = GlobalState.Instance.UserData.data.shopData.skillUsingYn;
 
+            if(null != dataSkillUsingYn && dataSkillUsingYn.Length > 0)
+            {
+                for(int i = 0; i < dataSkillUsingYn.Length; i++)
+                {
+                    if (dataSkillUsingYn[i].Equals("Y"))
+                    {
+                        switch(i)
+                        {
+                            case 0:
+                                GlobalState.Instance.ShowDodge = false;
+                                GlobalState.Instance.AutoMode = false;
+                                GlobalState.Instance.UsedItems = "까방권";
+                                break;
+                            case 1:
+                                GlobalState.Instance.ShowDodge = false;
+                                GlobalState.Instance.AutoMode = false;
+                                GlobalState.Instance.UsedItems = "일시무적";
+                                break;
+                            case 2:
+                                GlobalState.Instance.ShowDodge = false;
+                                GlobalState.Instance.AutoMode = false;
+                                GlobalState.Instance.UsedItems = "뉴가메";
+                                break;
+                            case 3:
+                                GlobalState.Instance.ShowDodge = true;
+                                GlobalState.Instance.AutoMode = false;
+                                GlobalState.Instance.UsedItems = "분석안"; 
+                                break;
+                            case 4:
+                                GlobalState.Instance.ShowDodge = true;
+                                GlobalState.Instance.AutoMode = true;
+                                GlobalState.Instance.UsedItems = "자율주행";
+                                break;
+                        }
+                    }
+                }
+            }
+
             // 인게임 관련 데이터
             dataClearStageCount = GlobalState.Instance.UserData.data.gameData.clearStageCount;
             dataAlbum1ClearYn = GlobalState.Instance.UserData.data.gameData.album1ClearYn;
@@ -303,6 +341,9 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
             userData.gameData.album2StageProgressLine = dataAlbum2StageProgressLine;
             userData.gameData.album3StageProgressLine = dataAlbum3StageProgressLine;
             userData.gameData.album4StageProgressLine = dataAlbum4StageProgressLine;
+
+            GlobalState.Instance.ShowDodge = false;
+            GlobalState.Instance.AutoMode = false;
         }
 
         // 글로벌 값 호출 즉시 파일에 저장 된 배경음/환경음 볼륨으로 제어
