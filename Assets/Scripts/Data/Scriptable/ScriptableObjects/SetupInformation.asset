@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e20e6d4409bdeb04c997b1e83e317ea9, type: 3}
   m_Name: SetupInformation
   m_EditorClassIdentifier: 
-  Version: 0.9.0
+  Version: 1.0.0
   ProgramName: Orbit or Wakbeat
   Organiation: "\uB290\uADF8\uAC8C\uC784\uC988"
   Participations:

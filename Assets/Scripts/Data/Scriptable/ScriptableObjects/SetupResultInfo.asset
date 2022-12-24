@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bcf0aae8b625a84bbc147280eef4fed, type: 3}
+  m_Name: SetupResultInfo
+  m_EditorClassIdentifier: 
+  FirstAlbumThumnails:
+  - {fileID: 21300000, guid: 37422bb175234eb4cb8fe2ba415ba300, type: 3}
+  - {fileID: 21300000, guid: 6b8a66aa0bbcc06429b6f0fe5e4e9650, type: 3}
+  FirstAlbumTitles:
+  - {fileID: 21300000, guid: b6dd59a44964aa04385513e76ef888ea, type: 3}
+  - {fileID: 21300000, guid: 1b5348d113b50d44a96854ed7edef6a1, type: 3}
+  SecondAlbumThumnails:
+  - {fileID: 21300000, guid: daa595b967a5ea64ea3d1ff5ca75eff4, type: 3}
+  - {fileID: 21300000, guid: 40694210e3dc9774cbfc349380eddc19, type: 3}
+  - {fileID: 21300000, guid: 116b5596c63979e4b9efb527d8743973, type: 3}
+  - {fileID: 21300000, guid: b786e89a506865c4b908ee38c741c4b1, type: 3}
+  SecondAlbumTitles:
+  - {fileID: 21300000, guid: 7a468330180495a45bdeb3045f0b4e0a, type: 3}
+  - {fileID: 21300000, guid: 868f74131c942ee468d84fbd7e2ed2c9, type: 3}
+  - {fileID: 21300000, guid: 1bbb6ee7cdaa4ad41ab283f350f5c252, type: 3}
+  - {fileID: 21300000, guid: c27033cedfdfff547bcac8f62dec5624, type: 3}
+  ThirdAlbumThumnails:
+  - {fileID: 21300000, guid: 9482efe4a934f93499cfbe3b667453e6, type: 3}
+  - {fileID: 21300000, guid: 1f7e1db9324a2d24b9f443fa32306d76, type: 3}
+  - {fileID: 21300000, guid: 40aefa9a9f010804c9541dbc84bd4bd5, type: 3}
+  - {fileID: 21300000, guid: 2746fb65f0da7a84caaf629c18040e8f, type: 3}
+  - {fileID: 21300000, guid: b43537a8d10f0734ba7c28b60658aba8, type: 3}
+  ThirdAlbumTitles:
+  - {fileID: 21300000, guid: 227ca3ca9e677a24ca522dc2cb1594c8, type: 3}
+  - {fileID: 21300000, guid: 7aeefba4e5fd34a48bc5adf15d16496c, type: 3}
+  - {fileID: 21300000, guid: b6317e3f7e6ad2e46a25a40a61aa12c1, type: 3}
+  - {fileID: 21300000, guid: 9c694782c469f7249aeee932d6fdce49, type: 3}
+  - {fileID: 21300000, guid: 45cef7849377c894796dd8c2d1950295, type: 3}
+  FourthAlbumThumnails:
+  - {fileID: 21300000, guid: 8ced1cf083501f5408eb6cea5edb57b4, type: 3}
+  - {fileID: 21300000, guid: 250b0448ef86a174c93dbf76d544f5fb, type: 3}
+  - {fileID: 21300000, guid: cd992d3853dcfa34ead3b14dad6143e2, type: 3}
+  - {fileID: 21300000, guid: f695640323f6bee43b6ad457cf80f4b1, type: 3}
+  FourthAlbumTitles:
+  - {fileID: 21300000, guid: 50f9786a66a90724cb4c6be87023cbc6, type: 3}
+  - {fileID: 21300000, guid: c3f84b1c42228dd4b8ca50ae901ba6bd, type: 3}
+  - {fileID: 21300000, guid: 361009489e045b946bfdc92308685b73, type: 3}
+  - {fileID: 21300000, guid: 02dc01651c8c4594d9e9da3d0820fc52, type: 3}
+  StarOn: {fileID: 21300000, guid: 3389f0f5332e084438abe35e7f8a5716, type: 3}
+  StarOff: {fileID: 21300000, guid: 43ee2a85f7278494db1f1107bf70a9bb, type: 3}
