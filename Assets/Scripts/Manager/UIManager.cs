@@ -214,7 +214,7 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
     {
         if (image)
         {
-            Destroy(image);
+            Destroy(image.gameObject);
         }
     }
 }
