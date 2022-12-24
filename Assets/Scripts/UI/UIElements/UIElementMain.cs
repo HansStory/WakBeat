@@ -38,7 +38,13 @@ public class UIElementMain : MonoBehaviour
     public void OnClickStartButton()
     {
         //isKeyStop = true;
-        UIManager.Instance.GoPanelAlbumSelect();
+        if (DataManager.dataBackgroundProcActive)
+        {
+            if (!GlobalState.Instance.IsTweening)
+            {
+                UIManager.Instance.GoPanelAlbumSelect();
+            }
+        }
     }
 
     void InputExcute()
