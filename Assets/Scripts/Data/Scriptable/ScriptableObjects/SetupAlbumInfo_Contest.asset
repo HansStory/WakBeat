@@ -34,11 +34,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: abc305832c485e141aefc2922cf1ce75, type: 3}
   - {fileID: 21300000, guid: af3bc157d13e33345b5dae82defd92bc, type: 3}
   - {fileID: 21300000, guid: 3864f808d63e25846b3a6fb80daad51e, type: 3}
-  album1Stage:
-  - {fileID: 11400000}
-  - {fileID: 11400000}
-  - {fileID: 11400000}
-  - {fileID: 11400000}
   FirstAlbumMusicBackground:
   - {fileID: 21300000, guid: ab7e8359b825e44418b8581ca46c493e, type: 3}
   - {fileID: 21300000, guid: 6b34cec4b2816a946912adfeed3588d4, type: 3}
@@ -55,22 +50,22 @@ MonoBehaviour:
   SecondAlbumMusicLevel:
   - {fileID: 21300000, guid: 068efd2156c6ad347ba9e6fd2635a85d, type: 3}
   ThirdAlbumMusicBackground:
-  - {fileID: 21300000, guid: ab7e8359b825e44418b8581ca46c493e, type: 3}
-  - {fileID: 21300000, guid: ab7e8359b825e44418b8581ca46c493e, type: 3}
-  - {fileID: 21300000, guid: ab7e8359b825e44418b8581ca46c493e, type: 3}
+  - {fileID: 21300000, guid: 92d59cb16f2f13c4bb90e0dd7dfad6b8, type: 3}
+  - {fileID: 21300000, guid: ca336f04758f8994f89fa842e8e7cefb, type: 3}
+  - {fileID: 21300000, guid: 806a8381386dfe044b68930c7f590153, type: 3}
   ThirdAlbumMusicCircle:
-  - {fileID: 21300000, guid: a935e03e094e44a4c9c0d447f5259744, type: 3}
-  - {fileID: 21300000, guid: a935e03e094e44a4c9c0d447f5259744, type: 3}
-  - {fileID: 21300000, guid: a935e03e094e44a4c9c0d447f5259744, type: 3}
+  - {fileID: 21300000, guid: cf204a21736f0264993d05a4574fd4a8, type: 3}
+  - {fileID: 21300000, guid: cdb5b7b16e350a147bb441f04c9154fc, type: 3}
+  - {fileID: 21300000, guid: 0e7d873b354ad484081c6eb5887b1504, type: 3}
   ThirdAlbumMusicLevel:
   - {fileID: 21300000, guid: 70b90cae5b26de048b6a37d15df35e3c, type: 3}
   - {fileID: 21300000, guid: 8675ea4769ce36a469b0b295f63f1ad5, type: 3}
   - {fileID: 21300000, guid: 299c827aacfef27449ff4bfead7c1d36, type: 3}
   ForthAlbumMusicBackground:
-  - {fileID: 21300000, guid: ab7e8359b825e44418b8581ca46c493e, type: 3}
+  - {fileID: 21300000, guid: a4979225264110845937324c4a34db3d, type: 3}
   - {fileID: 21300000, guid: 34ca5f2bf81439340a7083505f418169, type: 3}
   ForthAlbumMusicCircle:
-  - {fileID: 21300000, guid: a935e03e094e44a4c9c0d447f5259744, type: 3}
+  - {fileID: 21300000, guid: 8ca7f7e344d65e649a3db590cdb3de99, type: 3}
   - {fileID: 21300000, guid: 25c9b6910a40b76448b30c3a766b585e, type: 3}
   ForthAlbumMusicLevel:
   - {fileID: 21300000, guid: 7df184cfb578b334587516e9dce4d0d0, type: 3}
