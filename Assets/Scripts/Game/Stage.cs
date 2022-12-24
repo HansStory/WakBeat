@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-//using System.IO;
 using DG.Tweening;
 
 public abstract class Stage : MonoBehaviourSingleton<Stage>
@@ -42,6 +41,9 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     [Header("[ Save Point ]")]
     public GameObject[] SavePoint;
+
+    [Header("[ Default Save Point Effect ]")]
+    public Image[] SavePointCircles;            // TO DO : Effect 분리작업 필요
 
     public Text TextCurrentLine = null;        // 테스트 끝난후 배포시에 제거하겠습니다.
 
@@ -934,6 +936,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         state.SaveMusicPlayingTime = audioSource.time;
         state.SavePointAngle = Center.transform.localEulerAngles.z;
 
+        //TO DO : 각자 스테이지에서 구현할 것 
         EnterSavePointEffect();
     }
 
@@ -944,6 +947,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         var beatItem = bmwReader.ChartingItem[_currentLine];
         _timer = _savePointTime;
 
+        TweenClearRate();
         audioSource.time = GlobalState.Instance.SaveMusicPlayingTime;
 
         if (GlobalState.Instance.SavePoint > 0)
@@ -965,6 +969,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         {
             StageAnim.Stop();
         }
+
         PlayProcess();
     }
 
@@ -982,10 +987,65 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         PlayerDieAndSavePointPlay();
     }
 
-    //TO DO : Add Effect
+    //-------------------------- Save Point Effect --------------------------------
+    public Color[] EffectColor;
+    private Color _whiteAlpha0 = new Color(1,1,1,0);
+    Tween savePointEffect;
     protected virtual void EnterSavePointEffect()
     {
+        if (SavePointCircles == null) return;
 
+        float _effectDuration = 0.2f;
+
+        for (int i = 0; i < SavePointCircles.Length; i++)
+        {
+            // Set Scale
+            SavePointCircles[i].rectTransform.localScale = Vector2.zero;
+
+            // Set Color
+            if (EffectColor[i] == null) EffectColor[i] = Color.red;
+            SavePointCircles[i].color = EffectColor[i];
+
+            // Enable
+            SavePointCircles[i].gameObject.SetActive(true);
+
+            // Tween
+            var tween = SavePointCircles[i].rectTransform.DOScale(Vector2.one, _effectDuration);
+            tween.SetEase(Ease.InCubic).OnComplete(() => { HideEffect(); });
+        }
+    }
+
+    protected virtual void HideEffect()
+    {
+        float _fadeDuration = 0.6f;
+
+        for (int i = 0; i < SavePointCircles.Length; i++)
+        {
+            var tween = SavePointCircles[i].DOColor(_whiteAlpha0, _fadeDuration);
+            tween.SetEase(Ease.InQuart);//.OnComplete(() => SavePointCircles[i].gameObject.SetActive(false));
+        }
+    }
+
+    protected virtual void GetDefaultColor()
+    {
+        EffectColor[0] = new Color32(100, 100, 185, 255);
+        EffectColor[1] = new Color32(255, 130, 126, 255);
+        EffectColor[2] = new Color32(255, 148, 255, 255);
+        EffectColor[3] = new Color32(242, 252, 137, 255);
+        EffectColor[4] = new Color32(147, 255, 255, 200);
+        EffectColor[5] = new Color32(0, 0, 0, 90);
+        EffectColor[6] = new Color32(115, 181, 116, 200);
+    }
+
+    protected virtual void SetEffectCircleColor(Color fst, Color snd, Color third, Color fourth, Color fifth, Color six, Color seven)
+    {
+        EffectColor[0] = fst;
+        EffectColor[1] = snd;
+        EffectColor[2] = third;
+        EffectColor[3] = fourth;
+        EffectColor[4] = fifth;
+        EffectColor[5] = six;
+        EffectColor[6] = seven;
     }
 
     // -------------- UI Setting Function ---------------
@@ -1005,48 +1065,9 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
                 Time.timeScale = 1;
                 audioSource.Play();
             }
+
         }
+
     }
-
-    // Do Tween Basic (완성본때 삭제 예정)
-    #region Basic Tween
-    Tween moveTween;
-    protected virtual void DoMovePlayGround(Vector3 targetVector, float Duration, float delay, Ease easeType)
-    {
-        moveTween.Pause();
-        PlayGround.localPosition = PlayGround.localPosition;
-
-        moveTween = PlayGround.DOLocalMove(targetVector, Duration);
-        moveTween.SetDelay(delay);
-        moveTween.SetEase(easeType);
-    }
-
-    Tween doScaleTween;
-    protected virtual void DoScalePlayGround(Vector3 targetScale, float Duration, float delay, Ease easeType)
-    {
-        doScaleTween.Pause();
-        PlayGround.localScale = PlayGround.localScale;
-
-        doScaleTween = PlayGround.DOScale(targetScale, Duration);
-        doScaleTween.SetDelay(delay);
-        doScaleTween.SetEase(easeType);
-    }
-
-    Tween doRotateTween;
-    protected virtual void DoRotatePlayGround(Vector3 targetRotate, float Duration, float delay, Ease easeType)
-    {
-        doRotateTween.Pause();
-        PlayGround.localEulerAngles = PlayGround.localEulerAngles;
-
-        doRotateTween = PlayGround.DOLocalRotate(targetRotate, Duration);
-        doRotateTween.SetDelay(delay);
-        doRotateTween.SetEase(easeType);
-    }
-
-    //protected void PlayerInit()
-    //{
-    //    Ball.transform.localPosition = Vector3.zero;
-    //}
-    #endregion
 
 }
