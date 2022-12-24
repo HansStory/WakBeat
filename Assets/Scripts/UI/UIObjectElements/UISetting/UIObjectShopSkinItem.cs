@@ -62,6 +62,9 @@ public class UIObjectShopSkinItem : MonoBehaviour
     private void Unlock()
     {
         buttonLock.gameObject.SetActive(false);
+
+        // 버튼 사운드 출력
+        SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
     }
 
     // 스킬 사용 > 미사용
@@ -69,6 +72,9 @@ public class UIObjectShopSkinItem : MonoBehaviour
     {
         buttonOn.gameObject.SetActive(false);
         buttonOff.gameObject.SetActive(true);
+
+        // 버튼 사운드 출력
+        SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
     }
 
     // 스킬 미사용 > 사용
@@ -76,5 +82,8 @@ public class UIObjectShopSkinItem : MonoBehaviour
     {
         buttonOn.gameObject.SetActive(true);
         buttonOff.gameObject.SetActive(false);
+
+        // 버튼 사운드 출력
+        SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
     }
 }

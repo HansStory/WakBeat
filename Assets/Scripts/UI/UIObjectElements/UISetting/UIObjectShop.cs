@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-
+using Mono.Cecil;
 
 public class UIObjectShop : MonoBehaviour
 {
@@ -90,7 +90,7 @@ public class UIObjectShop : MonoBehaviour
                     SkillInfo.SkillLockExplanationSprite = SkillLockExplanation[SkillIndex];
                     SkillInfo.SkillIndex = SkillIndex;
                     // 스킬 버튼 이벤트 호출
-                    SkillInfo.SetButtonEvent();
+                    //SkillInfo.SetButtonEvent();
                     SkillInfo.gameObject.SetActive(true);
                 }
             }
@@ -118,6 +118,17 @@ public class UIObjectShop : MonoBehaviour
             SkinGroup.transform.Find("SkinItems").Find("Viewport").Find("Content").Find("Skin_Prefab_" + Index).Find("ItemButtons").Find("ButtonBuy").GetComponent<Button>().onClick.AddListener(() => SetSkinButtonEvent(PrefabIndex, "Buy"));
             SkinGroup.transform.Find("SkinItems").Find("Viewport").Find("Content").Find("Skin_Prefab_" + Index).Find("ItemButtons").Find("ButtonOn").GetComponent<Button>().onClick.AddListener(() => SetSkinButtonEvent(PrefabIndex, "On"));
             SkinGroup.transform.Find("SkinItems").Find("Viewport").Find("Content").Find("Skin_Prefab_" + Index).Find("ItemButtons").Find("ButtonOff").GetComponent<Button>().onClick.AddListener(() => SetSkinButtonEvent(PrefabIndex, "Off"));
+        }
+
+        // 2022.12.24 > 스킬 사용도 단수로 변경으로 인해 스킬도 하나만 On 되어야 하므로 이쪽에서 작성
+        for(int Index = 0; Index < SkillCount; Index++)
+        {
+            var Prefab = SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + Index).GetComponent<UIObjectShopSkillItem>();
+            int PrefabIndex = Prefab.SkillIndex;
+
+            SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + Index).Find("Open").Find("SkillButton").Find("ButtonOn").GetComponent<Button>().onClick.AddListener(() => SetSkillButtonEvent(PrefabIndex, "On"));
+            SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + Index).Find("Open").Find("SkillButton").Find("ButtonOff").GetComponent<Button>().onClick.AddListener(() => SetSkillButtonEvent(PrefabIndex, "Off"));
+            SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + Index).Find("Lock").Find("SkillButton").Find("ButtonLock").GetComponent<Button>().onClick.AddListener(() => SetSkillButtonEvent(PrefabIndex, "Lock"));
         }
     }
 
@@ -263,6 +274,57 @@ public class UIObjectShop : MonoBehaviour
     public void SetUnLockSkin(int Index)
     {
         SkinGroup.transform.Find("SkinItems").Find("Viewport").Find("Content").Find("Skin_Prefab_" + Index).Find("ItemButtons").Find("ButtonBuy").gameObject.SetActive(false);
+    }
+
+    // 상점 > 스킬 > 각 버튼 별 이벤트 정의
+    public void SetSkillButtonEvent(int Index, string Division)
+    {
+        if (Division.Equals("Lock"))
+        {
+            SetUnLockSkill(Index);
+        }
+        else if (Division.Equals("On"))
+        {
+            SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + Index).Find("Open").Find("SkillButton").Find("ButtonOn").gameObject.SetActive(false);
+            SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + Index).Find("Open").Find("SkillButton").Find("ButtonOff").gameObject.SetActive(true);
+        }
+        else if (Division.Equals("Off"))
+        {
+            // 미사용 > 사용 > 전환 시 나머지 스킨 미사용으로 전환
+            for (int i = 0; i < SkillCount; i++)
+            {
+                if (i != Index)
+                {
+                    SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + i).Find("Open").Find("SkillButton").Find("ButtonOn").gameObject.SetActive(false);
+                    SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + i).Find("Open").Find("SkillButton").Find("ButtonOff").gameObject.SetActive(true);
+                }
+                else
+                {
+                    SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + i).Find("Open").Find("SkillButton").Find("ButtonOn").gameObject.SetActive(true);
+                    SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + i).Find("Open").Find("SkillButton").Find("ButtonOff").gameObject.SetActive(false);
+
+                    // 인 게임에서 사용 될 현 사용 스킬 명 저장
+                    string _SkillName = "";
+                    switch(i)
+                    {
+                        case 0: _SkillName = "까방권"; break;
+                        case 1: _SkillName = "일시무적"; break;
+                        case 2: _SkillName = "뉴가메"; break;
+                        case 3: _SkillName = "분석안"; break;
+                        case 4: _SkillName = "자율주행"; break;
+                    }
+                    GlobalState.Instance.UsedItems = _SkillName;
+                }
+            }
+        }
+
+        SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
+    }
+
+    // 스킬 잠금 해제
+    public void SetUnLockSkill(int Index)
+    {
+        SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + Index).Find("Lock").gameObject.SetActive(false);
     }
 
     // 클리어 스테이지 수에 따라 혹은 잠금 해제한 스킬 잠금 영역 비활성화
