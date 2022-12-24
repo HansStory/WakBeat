@@ -292,6 +292,10 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         {
             BallSkin.sprite = ball;
         }
+        else
+        {
+            Debug.LogError("Ball Skin Is Null. Check Setup Album Info");
+        }
     }
 
     protected virtual void SetCircleSprite(Sprite circle)
@@ -773,11 +777,39 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     // TO DO : 게임 플레이 결과 Global Data나 Global Stage에 저장 -> 그 데이터로 결과창 구현 로직 처리
     protected virtual void SaveGameResult()
     {
-        int _stageIndex = (int)GlobalState.Instance.StageIndex;
-        int _albumIndex = (int)GlobalState.Instance.AlbumIndex;
+        int _stageIndex = GlobalState.Instance.StageIndex;
+        int _albumIndex = GlobalState.Instance.AlbumIndex;
 
         // Save Total Play Time
         state.StagePlayTime = (int)_playTime;
+
+        switch (_albumIndex)
+        {
+            case 0: DataManager.dataAlbum1ClearYn[_stageIndex] = "Y"; break;
+            case 1: DataManager.dataAlbum2ClearYn[_stageIndex] = "Y"; break;
+            case 2: DataManager.dataAlbum3ClearYn[_stageIndex] = "Y"; break;
+            case 3: DataManager.dataAlbum4ClearYn[_stageIndex] = "Y"; break;
+        }
+
+        int _clearCount = 0;
+        for (int i = 0; i < DataManager.dataAlbum1ClearYn.Length; i++)
+        {
+            _clearCount += DataManager.dataAlbum1ClearYn[i] == "Y" || DataManager.dataAlbum1ClearYn[i] == "P" ? 1 : 0;
+        }
+        for (int j = 0; j < DataManager.dataAlbum2ClearYn.Length; j++)
+        {
+            _clearCount += DataManager.dataAlbum2ClearYn[j] == "Y" || DataManager.dataAlbum2ClearYn[j] == "P" ? 1 : 0;
+        }
+        for (int k = 0; k < DataManager.dataAlbum3ClearYn.Length; k++)
+        {
+            _clearCount += DataManager.dataAlbum3ClearYn[k] == "Y" || DataManager.dataAlbum3ClearYn[k] == "P" ? 1 : 0;
+        }
+        for (int m = 0; m < DataManager.dataAlbum4ClearYn.Length; m++)
+        {
+            _clearCount += DataManager.dataAlbum4ClearYn[m] == "Y" || DataManager.dataAlbum4ClearYn[m] == "P" ? 1 : 0;
+        }
+
+        DataManager.dataClearStageCount = _clearCount;
     }
 
     protected virtual void OperateBallMovement()
@@ -819,7 +851,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             else
             {
                 // 키 분리 구분 > 통합
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.anyKeyDown)
                 {
                     IntegrationChangeDirection();                    
                 }
