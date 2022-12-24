@@ -7,6 +7,7 @@ public class GlobalData : MonoBehaviourSingleton<GlobalData>
     public AlbumInfo Album;
     public ShopInfo Shop;
     public StageInfo StageInfo;
+    public ResultInfo ResultInfo;
 
     public void Start()
     {

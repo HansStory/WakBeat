@@ -9,10 +9,17 @@ using DG.Tweening;
 public class UIElementResult : MonoBehaviour
 {
     public Transform ResultBanner;
+    public Image ResultTitle;
+    public Image ResultThumnail;
     public Image OriginLink;
     public Image ReMixLink;
 
+    public Image[] ImageLevels;
+
+    public TMP_Text[] RightTexts;
+
     private GlobalState state;
+    private ResultInfo resultInfo;
 
     private Vector2 originStartVector = new Vector2(-416f, -180f);
     private Vector2 originTargetVector = new Vector2(21.2f, -180f);
@@ -24,10 +31,12 @@ public class UIElementResult : MonoBehaviour
     private string _originURL = string.Empty;
     private string _reMixURL = string.Empty;
 
-    void Start()
+    void Awake()
     {
         GetWakZooURL();
+
         state = GlobalState.Instance;
+        resultInfo = GlobalData.Instance.ResultInfo;
     }
 
     private void OnEnable()
@@ -35,17 +44,163 @@ public class UIElementResult : MonoBehaviour
         SoundManager.Instance.TurnOnResultAudio();
 
         GetMusicURL();
-        InitTexts();
+
+        SetResultImages();
+        SetTextStageResult();
 
         TweenResultBanner();
 
         TweenLink(OriginLink, originStartVector, originTargetVector, 0.5f);
         TweenLink(ReMixLink, remixLinkStartVector, remixLinkTargetVector, 0.8f);
-
-        //TweenTexts();
-        ShowText();
     }
 
+    private void OnDisable()
+    {
+        ReSetStageLevel();
+    }
+
+    //---------------------------------------------------------------------------------------------
+    void SetResultImages()
+    {
+        switch (GlobalState.Instance.AlbumIndex)
+        {
+            case (int)GlobalData.ALBUM.ISEDOL:
+                switch (GlobalState.Instance.StageIndex)
+                {
+                    case (int)GlobalData.STAGE.STAGE1:
+                        GetResultImages(resultInfo.FirstAlbumTitles, resultInfo.FirstAlbumThumnails, (int)GlobalData.STAGE.STAGE1, 1);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE2:
+                        GetResultImages(resultInfo.FirstAlbumTitles, resultInfo.FirstAlbumThumnails, (int)GlobalData.STAGE.STAGE2, 2);
+                        break;
+                }
+                break;
+            case (int)GlobalData.ALBUM.CONTEST:
+                switch (GlobalState.Instance.StageIndex)
+                {
+                    case (int)GlobalData.STAGE.STAGE1:
+                        GetResultImages(resultInfo.SecondAlbumTitles, resultInfo.SecondAlbumThumnails, (int)GlobalData.STAGE.STAGE1, 1);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE2:
+                        GetResultImages(resultInfo.SecondAlbumTitles, resultInfo.SecondAlbumThumnails, (int)GlobalData.STAGE.STAGE2, 3);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE3:
+                        GetResultImages(resultInfo.SecondAlbumTitles, resultInfo.SecondAlbumThumnails, (int)GlobalData.STAGE.STAGE3, 4);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE4:
+                        GetResultImages(resultInfo.SecondAlbumTitles, resultInfo.SecondAlbumThumnails, (int)GlobalData.STAGE.STAGE4, 5);
+                        break;
+                }
+                break;
+            case (int)GlobalData.ALBUM.GOMIX:
+                switch (GlobalState.Instance.StageIndex)
+                {
+                    case (int)GlobalData.STAGE.STAGE1:
+                        GetResultImages(resultInfo.ThirdAlbumTitles, resultInfo.ThirdAlbumThumnails, (int)GlobalData.STAGE.STAGE1, 1);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE2:
+                        GetResultImages(resultInfo.ThirdAlbumTitles, resultInfo.ThirdAlbumThumnails, (int)GlobalData.STAGE.STAGE2, 2);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE3:
+                        GetResultImages(resultInfo.ThirdAlbumTitles, resultInfo.ThirdAlbumThumnails, (int)GlobalData.STAGE.STAGE3, 3);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE4:
+                        GetResultImages(resultInfo.ThirdAlbumTitles, resultInfo.ThirdAlbumThumnails, (int)GlobalData.STAGE.STAGE4, 4);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE5:
+                        GetResultImages(resultInfo.ThirdAlbumTitles, resultInfo.ThirdAlbumThumnails, (int)GlobalData.STAGE.STAGE5, 5);
+                        break;
+                }
+                break;
+            case (int)GlobalData.ALBUM.WAKALOID:
+                switch (GlobalState.Instance.StageIndex)
+                {
+                    case (int)GlobalData.STAGE.STAGE1:
+                        GetResultImages(resultInfo.FourthAlbumTitles, resultInfo.FourthAlbumThumnails, (int)GlobalData.STAGE.STAGE1, 1);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE2:
+                        GetResultImages(resultInfo.FourthAlbumTitles, resultInfo.FourthAlbumThumnails, (int)GlobalData.STAGE.STAGE2, 2);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE3:
+                        GetResultImages(resultInfo.FourthAlbumTitles, resultInfo.FourthAlbumThumnails, (int)GlobalData.STAGE.STAGE3, 3);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE4:
+                        GetResultImages(resultInfo.FourthAlbumTitles, resultInfo.FourthAlbumThumnails, (int)GlobalData.STAGE.STAGE4, 5);
+                        break;
+                }      
+                break;
+        }
+    }
+
+    void GetResultImages(Sprite[] title, Sprite[] thumnail, int stage, int level)
+    {
+        ResultTitle.sprite = title[stage];
+
+        ResultThumnail.sprite = thumnail[stage];
+        ResultThumnail.SetNativeSize();
+
+        GetStageLevel(level);
+    }
+
+    void GetStageLevel(int level)
+    {
+        for (int i = 0; i < level; i++)
+        {
+            ImageLevels[i].sprite = resultInfo.StarOn;
+        }
+    }
+
+    void ReSetStageLevel()
+    {
+        for (int i = 0; i < ImageLevels.Length; i++)
+        {
+            ImageLevels[i].sprite = resultInfo.StarOff;
+        }
+    }
+
+    //---------------------------------------------------------------------------------------------
+    private static int MusicLength = 0;
+    private static int TotalPlayTime = 1;
+    private static int DeathCount = 2;
+    private static int UsedItem = 3;
+
+    private void SetTextStageResult()
+    {
+        SetStageMusicLength();
+        SetPlayTime();
+        SetPlayerDeathCount();
+        SetUsedItem();
+    }
+
+    private void SetStageMusicLength()
+    {
+        if (state.StageMusicLength == 0) return;
+
+        int min = state.StageMusicLength / 60;
+        int sec = state.StageMusicLength % 60;
+        RightTexts[MusicLength].text = $"{min} : {sec.ToString("D2")}";
+    }
+
+    private void SetPlayTime()
+    {
+        if (state.StageMusicLength == 0) return;
+
+        int min = state.StagePlayTime / 60;
+        int sec = state.StagePlayTime % 60;
+        RightTexts[TotalPlayTime].text = $"{min} : {sec.ToString("D2")}";
+    }
+
+    private void SetPlayerDeathCount()
+    {
+        RightTexts[DeathCount].text = $"{state.PlayerDeadCount} 회";
+    }
+
+    private void SetUsedItem()
+    {
+        RightTexts[UsedItem].text = $"{state.UsedItems}";
+    }
+
+    //---------------------------------------------------------------------------------------------
     private void TweenResultBanner()
     {
         var fadeImages = ResultBanner.GetComponentsInChildren<Image>();
@@ -71,131 +226,8 @@ public class UIElementResult : MonoBehaviour
         linkImage.DOColor(Color.white, 1f).SetDelay(delay).SetEase(Ease.OutCubic).SetAutoKill();
         linkImage.transform.DOLocalMove(targetVector, 1f).SetDelay(delay).SetEase(Ease.OutCubic).SetAutoKill();
     }
-
-    //----------------------------------------------------------------
-    public Text[] LeftTexts;
-    public Text[] RightTexts;
-
-    private static int MusicLength = 0;
-    private static int TotalPlayTime = 1;
-    private static int DeathCount = 2;
-    private static int UsedItem = 3;
-
-    private void InitTexts()
-    {
-        //ColorClearTexts(LeftTexts);
-        //ColorClearTexts(RightTexts);
-
-        //ColorClearTMPTexts(TestLeftTexts);
-        //ColorClearTMPTexts(TestRightTexts);
-
-        //SetTextStageResult();
-    }
-    private void ColorClearTexts(Text[] texts)
-    {
-        for (int i = 0; i < texts.Length; i++)
-        {
-            texts[i].color = Color.clear;
-        }
-    }
-
-    private void ColorClearTMPTexts(TMP_Text[] texts)
-    {
-        for (int i = 0; i < texts.Length; i++)
-        {
-            texts[i].color = Color.clear;
-        }
-    }
-
-    private void SetTextStageResult()
-    {
-        SetStageMusicLength();
-        SetPlayTime();
-        SetPlayerDeathCount();
-        SetUsedItem();
-    }
-
-    private void SetStageMusicLength()
-    {
-        if (state.StageMusicLength == 0) return;
-
-        int min = state.StageMusicLength / 60;
-        int sec = state.StageMusicLength % 60;
-        TestRightTexts[MusicLength].text = $"{min} : {sec}";
-    }
-
-    private void SetPlayTime()
-    {
-        if (state.StageMusicLength == 0) return;
-
-        int min = state.StagePlayTime / 60;
-        int sec = state.StagePlayTime % 60;
-        TestRightTexts[TotalPlayTime].text = $"{min} : {sec}";
-    }
-
-    private void SetPlayerDeathCount()
-    {
-        TestRightTexts[DeathCount].text = $"{state.PlayerDeadCount}ȸ";
-    }
-
-    private void SetUsedItem()
-    {
-        TestRightTexts[UsedItem].text = $"{state.UsedItems}";
-    }
-
-
-    private void TweenTexts()
-    {
-        float delay = 2f;
-
-        for (int i = 0; i < LeftTexts.Length; i++)
-        {
-            TweenText(i, 0.3f, delay);
-            delay += 0.3f;
-        }
-    }
-
-    private void TweenText(int index, float duration, float delay)
-    { 
-        LeftTexts[index].DOColor(Color.black, duration).SetAutoKill().SetEase(Ease.InOutCubic).SetDelay(delay);
-        RightTexts[index].DOColor(Color.black, duration).SetAutoKill().SetEase(Ease.InOutCubic).SetDelay(delay);
-    }
-
-    public TMP_Text[] TestLeftTexts;
-    public TMP_Text[] TestRightTexts;
-
-    private void ShowText()
-    {
-        Invoke($"{nameof(ShowText0)}", 2.0f);
-        Invoke($"{nameof(ShowText1)}", 2.3f);
-        Invoke($"{nameof(ShowText2)}", 2.6f);
-        Invoke($"{nameof(ShowText3)}", 2.9f);
-    }
-
-    private void ShowText0()
-    {
-        TestLeftTexts[0].gameObject.SetActive(true);
-        TestRightTexts[0].gameObject.SetActive(true);
-    }
-
-    private void ShowText1()
-    {
-        TestLeftTexts[1].gameObject.SetActive(true);
-        TestRightTexts[1].gameObject.SetActive(true);
-    }
-
-    private void ShowText2()
-    {
-        TestLeftTexts[2].gameObject.SetActive(true);
-        TestRightTexts[2].gameObject.SetActive(true);
-    }
-
-    private void ShowText3()
-    {
-        TestLeftTexts[3].gameObject.SetActive(true);
-        TestRightTexts[3].gameObject.SetActive(true);
-    }
-
+    
+    //---------------------------------------------------------------------------------------------
     void Update()
     {
         InputExcute();
@@ -337,7 +369,6 @@ public class UIElementResult : MonoBehaviour
         if (DataManager.dataBackgroundProcActive)
         {
             UIElementFadePanel.Instance.ResultToStage();
-            //UIManager.Instance.GoPanelGamePlay();
         }
     }
 
