@@ -169,7 +169,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5169928731878262964
 RectTransform:
   m_ObjectHideFlags: 0
@@ -420,7 +420,7 @@ GameObject:
   - component: {fileID: 3075168470060437205}
   - component: {fileID: 8523551009542276170}
   m_Layer: 5
-  m_Name: Graph
+  m_Name: PanelGraph
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -630,7 +630,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 37.5%
+  m_text: 0%
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: da3884c2b7f03b7438e32e92c09a88f3, type: 2}
   m_sharedMaterial: {fileID: 770192811735841749, guid: da3884c2b7f03b7438e32e92c09a88f3, type: 2}
@@ -792,7 +792,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4676346747891226500
 RectTransform:
   m_ObjectHideFlags: 0
