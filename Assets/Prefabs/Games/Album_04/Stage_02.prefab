@@ -235,6 +235,7 @@ MonoBehaviour:
   DodgePointBase: {fileID: 8081847212461026836}
   DodgePointLists: []
   Obstacles:
+  - {fileID: 5128582855503444759, guid: 55bd180e804ff2444841f94944dc1927, type: 3}
   - {fileID: 5128582855503444759, guid: 2988b58b41eeae344bf70c0a7dfbcca6, type: 3}
   - {fileID: 5128582855503444759, guid: 1fdb2de42ba50d14ca642f7a9d51b871, type: 3}
   ObstacleInBase: {fileID: 6447761825843056367}
