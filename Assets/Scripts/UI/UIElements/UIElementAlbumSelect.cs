@@ -142,10 +142,10 @@ public class UIElementAlbumSelect : MonoBehaviour
             {
                 InputDown();
                 InputUp();
+                InputReturn();
 
                 if (GlobalState.Instance.DevMode)
                 {
-                    InputReturn();
                     InputEscape();
                 }
             }

@@ -236,10 +236,10 @@ public class UIElementMusicSelect : MonoBehaviour
             {
                 InputRightArrow();
                 InputLeftArrow();
+                InputReturn();
 
                 if (GlobalState.Instance.DevMode)
                 {
-                    InputReturn();
                     InputEscape();
                 }
             }
