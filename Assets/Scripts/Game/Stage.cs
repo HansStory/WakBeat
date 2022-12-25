@@ -18,6 +18,9 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     [Header("[ Animation ]")]
     public Animation StageAnim;
 
+    [Header("[ Video Player ]")]
+    public VideoPlayer videoPlayer = null;
+
     [Header("[ Tween Elements ]")]
     public Image InCircleFade;
     public Image OutCircleFade;
@@ -59,8 +62,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     protected float ballRadius = 0;
     protected float variableRadius;
 
-    protected BMWReader bmwReader = null;        // 채보 스크립트
-    protected VideoPlayer videoPlayer = null;
+    protected BMWReader bmwReader = null;        // 채보 스크립트   
     protected AudioSource audioSource = null;
     protected GlobalState state;
     protected UserData userData;
@@ -709,6 +711,8 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         _currentLine = 0;
         _isPlay = true;
 
+        if (videoPlayer) videoPlayer.Play();
+
         SoundManager.Instance.TurnOnStageMusic();
         PlayProcess();
     }
@@ -867,6 +871,8 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
         state.SavePointAngle = Center.transform.localEulerAngles.z;
 
+        if(videoPlayer) state.SaveVideoTime = (float)videoPlayer.time;
+
         //TO DO : 각자 스테이지에서 구현할 것 
         EnterSavePointEffect();
     }
@@ -875,7 +881,8 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     {
         _timer = state.SavePointTime;
         _currentLine = state.SavePointLine;
-        audioSource.time = state.SaveMusicTime;       
+        audioSource.time = state.SaveMusicTime;
+        videoPlayer.time = state.SaveVideoTime;
 
         InitHP();
         _usedBarrier = false;
@@ -1179,11 +1186,15 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             {
                 Time.timeScale = 0;
                 audioSource.Pause();
+
+                if(videoPlayer) videoPlayer.Pause();
             }
             else
             {
                 Time.timeScale = 1;
                 audioSource.Play();
+
+                if (videoPlayer) videoPlayer.Play();
             }
         }
     }
