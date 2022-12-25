@@ -2,10 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using static UnityEngine.Rendering.DebugUI;
 using UnityEngine.Video;
-using System.Threading;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 
 public abstract class Stage : MonoBehaviourSingleton<Stage>
 {
@@ -207,54 +204,6 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         ResetGlobalState();
     }
 
-    public virtual void ResetGlobalState()
-    {
-        state.SavePointTime = 0f;
-        state.SavePointLine = 0;
-        state.SaveMusicTime = 0.0f;
-        state.SavePointAngle = bmwReader.ChartingItem[0].BallAngle;
-
-        state.IsPlayerDied = false;
-        state.PlayerDeadCount = 0;
-    }
-
-    protected virtual void Start()
-    {
-        StartGame();
-    }
-
-    protected virtual void StartGame()
-    {
-        _currentLine = 0;       
-        _isPlay = true;
-
-        SoundManager.Instance.TurnOnStageMusic();
-        PlayProcess();
-    }
-
-    protected virtual void GetMusicInfo()
-    {
-        if (bmwReader)
-        {
-            _title = bmwReader.MusicInfoItem.Title;
-            _artist = bmwReader.MusicInfoItem.Artist;
-            _bpm = bmwReader.MusicInfoItem.BPM;
-            _bar = bmwReader.MusicInfoItem.Bar;
-        }
-
-        // Sound Fade In 
-        SoundManager.Instance.FadeInMusicVolume(0.5f);
-    }
-
-    protected virtual void SetMusicInfo()
-    {
-        // Sound 제어 부
-        audioSource = SoundManager.Instance.MusicAudio;
-
-        SoundManager.Instance.SetStageMusic();
-        state.StageMusicLength = (int)audioSource.clip.length;
-    }
-
     protected virtual void InitHP()
     {
         if (state.UseBonusHP) // Shop Skill에서 처리 해줘야 함[완료]
@@ -287,6 +236,40 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         Center.transform.localEulerAngles = new Vector3(0f, 0f, -ballAngle);
 
         Player.transform.localPosition = Center.transform.localPosition + Center.transform.up * ballRadius;
+    }
+
+    public virtual void ResetGlobalState()
+    {
+        state.SavePointTime = 0f;
+        state.SavePointLine = 0;
+        state.SaveMusicTime = 0.0f;
+        state.SavePointAngle = bmwReader.ChartingItem[0].BallAngle;
+
+        state.IsPlayerDied = false;
+        state.PlayerDeadCount = 0;
+    }
+
+    protected virtual void GetMusicInfo()
+    {
+        if (bmwReader)
+        {
+            _title = bmwReader.MusicInfoItem.Title;
+            _artist = bmwReader.MusicInfoItem.Artist;
+            _bpm = bmwReader.MusicInfoItem.BPM;
+            _bar = bmwReader.MusicInfoItem.Bar;
+        }
+
+        // Sound Fade In 
+        SoundManager.Instance.FadeInMusicVolume(0.5f);
+    }
+
+    protected virtual void SetMusicInfo()
+    {
+        // Sound 제어 부
+        audioSource = SoundManager.Instance.MusicAudio;
+
+        SoundManager.Instance.SetStageMusic();
+        state.StageMusicLength = (int)audioSource.clip.length;
     }
 
     protected virtual void GetBallSkin()
@@ -418,7 +401,6 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         }
     }
 
-    private int _savePointLine = 0;
     protected virtual void CreateSavePoint(int savePointType)
     {
         GameObject savePoint = Instantiate(SavePoint[savePointType], Container);
@@ -443,7 +425,6 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             _ballSpeed = bmwReader.ChartingItem[0].Speed;
         }
     }
-
 
     protected virtual void InitCalculateTick()
     {
@@ -718,6 +699,23 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         }
     }
 
+    protected virtual void Start()
+    {
+        StartGame();
+    }
+
+    protected virtual void StartGame()
+    {
+        _currentLine = 0;
+        _isPlay = true;
+
+        SoundManager.Instance.TurnOnStageMusic();
+        PlayProcess();
+    }
+
+
+    //------------------------------------ Play Game ----------------------------------------
+    #region Play Game!!!
     protected virtual void Update()
     {
         if (_isPlay)
@@ -749,80 +747,6 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         {
             FinishGame();
         }
-    }
-
-    public virtual void FinishGame()
-    {
-        _isPlay = false;
-
-        if (DataManager.dataBackgroundProcActive)
-        {
-            //Save Stage Result At GlobalState 
-            SaveGameResult();
-
-            //ResetGlobalState();
-
-            // TO DO : Go Panel Result
-            SoundManager.Instance.ForceAudioStop();
-            UIManager.Instance.UIElementFadePanel.StageToResult();
-        }
-    }
-
-    public virtual void GoBackSelectStage()
-    {
-        _isPlay = false;
-
-        if (DataManager.dataBackgroundProcActive)
-        {
-            SaveGameResult();
-
-            //Reset GlobalState Value
-            ResetGlobalState();
-
-            // TO DO : Go Panel Music Select
-            SoundManager.Instance.ForceAudioStop();
-
-            //UIManager.Instance.GoPanelMusicSelect();
-            UIManager.Instance.UIElementFadePanel.StageToMusic();
-        }
-    }
-
-    // TO DO : 게임 플레이 결과 Global Data나 Global Stage에 저장 -> 그 데이터로 결과창 구현 로직 처리
-    protected virtual void SaveGameResult()
-    {
-        int _stageIndex = GlobalState.Instance.StageIndex;
-        int _albumIndex = GlobalState.Instance.AlbumIndex;
-
-        // Save Total Play Time
-        state.StagePlayTime = (int)_playTime;
-
-        switch (_albumIndex)
-        {
-            case 0: DataManager.dataAlbum1ClearYn[_stageIndex] = "Y"; break;
-            case 1: DataManager.dataAlbum2ClearYn[_stageIndex] = "Y"; break;
-            case 2: DataManager.dataAlbum3ClearYn[_stageIndex] = "Y"; break;
-            case 3: DataManager.dataAlbum4ClearYn[_stageIndex] = "Y"; break;
-        }
-
-        int _clearCount = 0;
-        for (int i = 0; i < DataManager.dataAlbum1ClearYn.Length; i++)
-        {
-            _clearCount += DataManager.dataAlbum1ClearYn[i] == "Y" || DataManager.dataAlbum1ClearYn[i] == "P" ? 1 : 0;
-        }
-        for (int j = 0; j < DataManager.dataAlbum2ClearYn.Length; j++)
-        {
-            _clearCount += DataManager.dataAlbum2ClearYn[j] == "Y" || DataManager.dataAlbum2ClearYn[j] == "P" ? 1 : 0;
-        }
-        for (int k = 0; k < DataManager.dataAlbum3ClearYn.Length; k++)
-        {
-            _clearCount += DataManager.dataAlbum3ClearYn[k] == "Y" || DataManager.dataAlbum3ClearYn[k] == "P" ? 1 : 0;
-        }
-        for (int m = 0; m < DataManager.dataAlbum4ClearYn.Length; m++)
-        {
-            _clearCount += DataManager.dataAlbum4ClearYn[m] == "Y" || DataManager.dataAlbum4ClearYn[m] == "P" ? 1 : 0;
-        }
-
-        DataManager.dataClearStageCount = _clearCount;
     }
 
     protected virtual void OperateBallMovement()
@@ -1163,6 +1087,84 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         EffectColor[4] = fifth;
         EffectColor[5] = six;
         EffectColor[6] = seven;
+    }
+    #endregion
+    #endregion
+
+    //----------------------------------- Finish Game ----------------------------------------
+    #region Finish Game!!!
+    public virtual void FinishGame()
+    {
+        _isPlay = false;
+
+        if (DataManager.dataBackgroundProcActive)
+        {
+            //Save Stage Result At GlobalState 
+            SaveGameResult();
+
+            //ResetGlobalState();
+
+            // TO DO : Go Panel Result
+            SoundManager.Instance.ForceAudioStop();
+            UIManager.Instance.UIElementFadePanel.StageToResult();
+        }
+    }
+
+    public virtual void GoBackSelectStage()
+    {
+        _isPlay = false;
+
+        if (DataManager.dataBackgroundProcActive)
+        {
+            SaveGameResult();
+
+            //Reset GlobalState Value
+            ResetGlobalState();
+
+            // TO DO : Go Panel Music Select
+            SoundManager.Instance.ForceAudioStop();
+
+            //UIManager.Instance.GoPanelMusicSelect();
+            UIManager.Instance.UIElementFadePanel.StageToMusic();
+        }
+    }
+
+    // TO DO : 게임 플레이 결과 Global Data나 Global Stage에 저장 -> 그 데이터로 결과창 구현 로직 처리
+    protected virtual void SaveGameResult()
+    {
+        int _stageIndex = GlobalState.Instance.StageIndex;
+        int _albumIndex = GlobalState.Instance.AlbumIndex;
+
+        // Save Total Play Time
+        state.StagePlayTime = (int)_playTime;
+
+        switch (_albumIndex)
+        {
+            case 0: DataManager.dataAlbum1ClearYn[_stageIndex] = "Y"; break;
+            case 1: DataManager.dataAlbum2ClearYn[_stageIndex] = "Y"; break;
+            case 2: DataManager.dataAlbum3ClearYn[_stageIndex] = "Y"; break;
+            case 3: DataManager.dataAlbum4ClearYn[_stageIndex] = "Y"; break;
+        }
+
+        int _clearCount = 0;
+        for (int i = 0; i < DataManager.dataAlbum1ClearYn.Length; i++)
+        {
+            _clearCount += DataManager.dataAlbum1ClearYn[i] == "Y" || DataManager.dataAlbum1ClearYn[i] == "P" ? 1 : 0;
+        }
+        for (int j = 0; j < DataManager.dataAlbum2ClearYn.Length; j++)
+        {
+            _clearCount += DataManager.dataAlbum2ClearYn[j] == "Y" || DataManager.dataAlbum2ClearYn[j] == "P" ? 1 : 0;
+        }
+        for (int k = 0; k < DataManager.dataAlbum3ClearYn.Length; k++)
+        {
+            _clearCount += DataManager.dataAlbum3ClearYn[k] == "Y" || DataManager.dataAlbum3ClearYn[k] == "P" ? 1 : 0;
+        }
+        for (int m = 0; m < DataManager.dataAlbum4ClearYn.Length; m++)
+        {
+            _clearCount += DataManager.dataAlbum4ClearYn[m] == "Y" || DataManager.dataAlbum4ClearYn[m] == "P" ? 1 : 0;
+        }
+
+        DataManager.dataClearStageCount = _clearCount;
     }
     #endregion
 
