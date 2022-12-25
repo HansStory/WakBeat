@@ -53,6 +53,10 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     [Header("[ Default Save Point Effect ]")]
     public Image[] SavePointCircles;            // TO DO : Effect 분리작업 필요
 
+    [Header("[ Clear Image ]")]
+    public Image ClearImage;
+    public AnimCurve ClearCurve;
+
     public Text TextCurrentLine = null;        // 테스트 끝난후 배포시에 제거하겠습니다.
 
     //---------------------------------------------------
@@ -165,6 +169,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         // Key 입력 부
         _keyDivision = null == DataManager.dataKeyDivision ? "Integration" : DataManager.dataKeyDivision;
 
+        ClearImage.gameObject.SetActive(false);
         ClearRate.text = $"Clear Rate\n0%";
 
         ShowCurrentLine();
@@ -701,6 +706,8 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         }
     }
 
+
+    //------------------------------------ Start Game ----------------------------------------
     protected virtual void Start()
     {
         StartGame();
@@ -882,7 +889,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         _timer = state.SavePointTime;
         _currentLine = state.SavePointLine;
         audioSource.time = state.SaveMusicTime;
-        videoPlayer.time = state.SaveVideoTime;
+        if(videoPlayer) videoPlayer.time = state.SaveVideoTime;
 
         InitHP();
         _usedBarrier = false;
@@ -1102,14 +1109,29 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     #region Finish Game!!!
     public virtual void FinishGame()
     {
+        StageClear();
+    }
+
+    public virtual void StageClear()
+    {
+        ClearImage.gameObject.SetActive(true);
+
+        // Alpha 0 to 1
+        ClearImage.DOColor(Color.white, 0.2f).SetAutoKill();
+
+        // Scale Tween
+        var tween = ClearImage.rectTransform.DOScale(Vector2.one, 2f);
+        tween.SetAutoKill().SetEase(ClearCurve.Curve).OnComplete(() => { OnCompleteFinish(); });
+    }
+
+    public virtual void OnCompleteFinish()
+    {
         _isPlay = false;
 
         if (DataManager.dataBackgroundProcActive)
         {
             //Save Stage Result At GlobalState 
             SaveGameResult();
-
-            //ResetGlobalState();
 
             // TO DO : Go Panel Result
             SoundManager.Instance.ForceAudioStop();
