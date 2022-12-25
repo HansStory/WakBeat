@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.CompareTag("SavePoint"))
         {
             Stage.Instance.SavePointEnter();
+            Debug.Log("Enter Save Point");
 
             Destroy(other.gameObject);
         }

@@ -224,16 +224,29 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
         set { _isGameMode = value; }
     }
 
-
-    // TO DO : AutoMode(자율주행 아이템) 일시에 Dodge 포인트도 보이고 충돌처리도 해야함
-    private bool _isAutoMode = false;
-    public bool AutoMode
+    // -------------------------- Skill ------------------------------------
+    private bool _useBonusHP = false;
+    public bool UseBonusHP
     {
-        get { return _isAutoMode; }
-        set { _isAutoMode = value; }
+        get { return _useBonusHP; }
+        set { _useBonusHP = value; }
     }
 
-    // Dodge Point만 보이고 충돌처리 X (아이템 사용시(객관안) 해당 변수로 사용)
+    private bool _useBarrier = false;
+    public bool UseBarrier
+    {
+        get { return _useBarrier; }
+        set { _useBarrier = value; }
+    }
+
+    private bool _useNewGaMe = false;
+    public bool UseNewGaMe
+    {
+        get { return _useNewGaMe; }
+        set { _useNewGaMe = value; }
+    }
+
+    // Dodge Point만 보이고 충돌처리 X (아이템 사용시(객관안) 해당 변수로 사용) [완료]
     private bool _isShowDodge = false;
     public bool ShowDodge
     {
@@ -241,7 +254,16 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
         set { _isShowDodge = value; }
     }
 
-    // Save Point
+    // TO DO : AutoMode(자율주행 아이템) 일시에 Dodge 포인트도 보이고 충돌처리도 해야함 [완료]
+    // TO DO : Dodge포이는튼 안보이고 충돌처리만 해야함
+    private bool _isAutoMode = false;
+    public bool AutoMode
+    {
+        get { return _isAutoMode; }
+        set { _isAutoMode = value; }
+    }
+
+    // ------------------------- Save Point -----------------------------------
     private int _savePoint = 0;
     public int SavePoint
     {

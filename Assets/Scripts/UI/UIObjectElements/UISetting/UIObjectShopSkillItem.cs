@@ -106,17 +106,24 @@ public class UIObjectShopSkillItem : MonoBehaviour
         buttonOn.gameObject.SetActive(false);
         buttonOff.gameObject.SetActive(true);
 
+        var state = GlobalState.Instance;
         switch (SkillIndex)
         {
             case 0:
+                state.UseBonusHP = false;
+                break;
             case 1:
+                state.UseBarrier = false;
+                break;
             case 2:
+                state.UseNewGaMe = false;
+                break;
             case 3:
-                GlobalState.Instance.ShowDodge = false;
+                state.ShowDodge = false;
                 break;
             case 4:
-                GlobalState.Instance.AutoMode = false;
-                Debug.Log(GlobalState.Instance.AutoMode);
+                state.AutoMode = false;
+                Debug.Log(state.AutoMode);
                 break;
         }
 
@@ -130,18 +137,24 @@ public class UIObjectShopSkillItem : MonoBehaviour
         buttonOn.gameObject.SetActive(true);
         buttonOff.gameObject.SetActive(false);
 
+        var state = GlobalState.Instance;
         switch (SkillIndex)
         {
             case 0:
+                state.UseBonusHP = true;
+                break;
             case 1:
+                state.UseBarrier = true;
+                break;
             case 2:
+                state.UseNewGaMe = true;
                 break;
             case 3:
-                GlobalState.Instance.ShowDodge = true;
+                state.ShowDodge = true;
                 break;
             case 4:
-                GlobalState.Instance.AutoMode = true;
-                Debug.Log(GlobalState.Instance.AutoMode); 
+                state.AutoMode = true;
+                Debug.Log(state.AutoMode); 
                 break;
         }
 

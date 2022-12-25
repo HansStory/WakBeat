@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using static UnityEngine.Rendering.DebugUI;
+using UnityEngine.Video;
 
 public abstract class Stage : MonoBehaviourSingleton<Stage>
 {
@@ -55,6 +57,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     protected float variableRadius;
 
     protected BMWReader bmwReader = null;        // 채보 스크립트
+    protected VideoPlayer videoPlayer = null;
     protected AudioSource audioSource = null;
     protected GlobalState state;
     protected UserData userData;
@@ -89,7 +92,11 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     // Key 입력 부
     private string _keyDivision = string.Empty;
 
-    public virtual string Directory
+    // Player HP
+    private int _currentHP = 1;
+      
+
+public virtual string Directory
     {
         get
         {
@@ -136,6 +143,9 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         // Set Values
         SetMusicInfo();
 
+        InitHP();
+        Debug.Log(_currentHP);
+
         InitBallPosition();
         InitBallSpeed();
         InitCalculateTick();
@@ -169,24 +179,6 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             }
         }
     }
-
-    //public void ResetStage()
-    //{
-    //    Init();
-    //}
-
-    //protected virtual void InitConfigSettings()
-    //{
-    //    // Read Config
-    //    _isGameMode = Config.Instance.GameMode;         //물리충돌 설정
-    //    _isAutoMode = Config.Instance.AutoMode;         //AutoMode 설정
-
-    //    var col = Player.GetComponent<Rigidbody2D>();
-    //    if (col)
-    //    {
-    //        col.simulated = _isGameMode;
-    //    }
-    //}
 
     protected virtual void InitGlobalSettings()
     {
@@ -250,6 +242,18 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
         SoundManager.Instance.SetStageMusic();
         state.StageMusicLength = (int)audioSource.clip.length;
+    }
+
+    protected virtual void InitHP()
+    {
+        if (state.UseBonusHP) // Shop Skill에서 처리 해줘야 함
+        {
+            _currentHP = 2;
+        }
+        else
+        {
+            _currentHP = 1;
+        }
     }
 
     protected virtual void InitBallPosition()
@@ -398,7 +402,6 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         }
     }
 
-    Tween SavePointTween;
     protected virtual void CreateSavePoint(int savePointType)
     {
         GameObject savePoint = Instantiate(SavePoint[savePointType], Container);
@@ -408,7 +411,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             savePoint.transform.localPosition = CenterPivot.transform.localPosition + CenterPivot.transform.up * dodgeRadius;
             savePoint.transform.localScale = Vector3.zero;
 
-            SavePointTween = savePoint.transform.DOScale(Vector3.one, 0.2f).SetAutoKill();
+            savePoint.transform.DOScale(Vector3.one, 0.2f).SetAutoKill();
         }
     }
 
@@ -925,10 +928,10 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     protected float _savePointTime = 0f;
     public virtual void SavePointEnter()
     {
-        if (SavePointTween.IsPlaying())
-        {
-            SavePointTween.Kill();
-        }
+        //if (SavePointTween.IsPlaying())
+        //{
+        //    SavePointTween.Kill();
+        //}
 
         _savePointTime = _timer;
 
@@ -943,15 +946,17 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     protected virtual void ResetSavePointState()
     {
         _currentLine = GlobalState.Instance.SavePoint;
-
-        var beatItem = bmwReader.ChartingItem[_currentLine];
         _timer = _savePointTime;
-
-        TweenClearRate();
         audioSource.time = GlobalState.Instance.SaveMusicPlayingTime;
 
+        InitHP();
+
+        TweenClearRate();
+        
         if (GlobalState.Instance.SavePoint > 0)
         {
+            var beatItem = bmwReader.ChartingItem[_currentLine];
+
             GlobalState.Instance.SavePointAngle = beatItem.BallAngle;
 
             AddInterval(beatItem);
@@ -973,13 +978,27 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         PlayProcess();
     }
 
+
     protected virtual void PlayerDieAndSavePointPlay()
+    {        
+        _currentHP--;
+
+        if (_currentHP <= 0)
+        {
+            state.PlayerDeadCount++;
+            ResetSavePointState();
+
+            Debug.Log("Player Die!!");
+        }
+        else
+        {
+            EffectHP();
+        }
+    }
+
+    protected virtual void EffectHP()
     {
-        Debug.Log("Player Die!!");
 
-        state.PlayerDeadCount++;
-
-        ResetSavePointState();
     }
 
     public virtual void PlayerDie()
@@ -1065,9 +1084,41 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
                 Time.timeScale = 1;
                 audioSource.Play();
             }
-
         }
-
     }
 
+    public void InputExcute()
+    {
+        if (state.UseNewGaMe)
+        {
+            InputX();
+        }
+
+        if (state.UseBarrier)
+        {
+            InputZ();
+        }
+    }
+
+    protected virtual void InputX()
+    {
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            CenterPivot.transform.localEulerAngles = Center.transform.localEulerAngles - new Vector3(0, 0, _spawnAngle);
+            CreateSavePoint(0);
+        }
+    }
+
+    protected virtual void InputZ()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+
+        }
+    }
+
+    void Barrier()
+    {
+
+    }
 }
