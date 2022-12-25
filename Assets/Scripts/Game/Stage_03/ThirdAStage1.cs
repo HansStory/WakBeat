@@ -8,8 +8,8 @@ public class ThirdAStage1 : Stage
     {
         base.Init();
 
-        SetBallSkin(GlobalData.Instance.StageInfo.BallSkins[5]);
-        SetCircleSprite(GlobalData.Instance.StageInfo.CircleSkins[0]);
+        SetBallSkin(GlobalData.Instance.StageInfo.BallSkins[9]);
+        SetCircleSprite(GlobalData.Instance.StageInfo.CircleSkins[5]);
     }
 
     protected override void PlayProcess()

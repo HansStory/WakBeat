@@ -116,6 +116,7 @@ MonoBehaviour:
   Center: {fileID: 663921556387402100}
   Player: {fileID: 1939264986128169808}
   StageAnim: {fileID: 3097434870188687003}
+  videoPlayer: {fileID: 0}
   InCircleFade: {fileID: 6173832822445076508}
   OutCircleFade: {fileID: 100186202000373558}
   ClearRate: {fileID: 9175226695559822298}
@@ -131,9 +132,22 @@ MonoBehaviour:
   InObstacleLists: []
   ObstacleOutBase: {fileID: 181122923626944189}
   OutObstacleLists: []
+  ParticleHP: {fileID: 0}
+  ParticleBarrier: {fileID: 0}
   SavePoint:
   - {fileID: 7921288866019692938, guid: 663c68a6b803de7418db183677221222, type: 3}
+  SavePointCircles: []
+  ClearImage: {fileID: 0}
+  ClearCurve: {fileID: 11400000, guid: d109e79e4f1af9543b65c397cab319a4, type: 2}
   TextCurrentLine: {fileID: 8985386085652165365}
+  EffectColor:
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &4423836732642508599
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,6 +305,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 3569041610793075511}
     m_Modifications:
     - target: {fileID: 2004516375445169040, guid: 7e788888c85de4e408ee66202512b788, type: 3}
@@ -382,6 +397,9 @@ PrefabInstance:
       value: StageUIElements
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e788888c85de4e408ee66202512b788, type: 3}
 --- !u!224 &3891009459891483008 stripped
 RectTransform:
@@ -415,6 +433,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 3569041610793075511}
     m_Modifications:
     - target: {fileID: 1992493566946292139, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
@@ -506,6 +525,9 @@ PrefabInstance:
       value: PlayGround
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
 --- !u!224 &181122923626944189 stripped
 RectTransform:

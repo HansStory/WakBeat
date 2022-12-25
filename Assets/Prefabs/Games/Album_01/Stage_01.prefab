@@ -104,7 +104,7 @@ VideoPlayer:
   m_EnabledAudioTracks: 01
   m_DirectAudioMutes: 00
   m_ControlledAudioTrackCount: 1
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_SkipOnDrop: 1
   m_Looping: 0
   m_WaitForFirstFrame: 1
@@ -244,6 +244,7 @@ MonoBehaviour:
   Center: {fileID: 663921556387402100}
   Player: {fileID: 1939264986128169808}
   StageAnim: {fileID: 3097434870188687003}
+  videoPlayer: {fileID: 3868531182280477626}
   InCircleFade: {fileID: 6173832822445076508}
   OutCircleFade: {fileID: 100186202000373558}
   ClearRate: {fileID: 2909946636338155096}
@@ -271,6 +272,8 @@ MonoBehaviour:
   - {fileID: 7082996479560082697}
   - {fileID: 1521491738103141118}
   - {fileID: 2237067830756549441}
+  ClearImage: {fileID: 4965653975424561305}
+  ClearCurve: {fileID: 11400000, guid: 22af87b2fc29e3746aac02a2ba9e2f81, type: 2}
   TextCurrentLine: {fileID: 3135701698048788343}
   EffectColor:
   - {r: 0.39215687, g: 0.39215687, b: 0.7254902, a: 1}
@@ -793,6 +796,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4965653975424561305 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4463515413987612427, guid: 7e788888c85de4e408ee66202512b788, type: 3}
+  m_PrefabInstance: {fileID: 8725755500540045202}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &7082996479560082697 stripped
