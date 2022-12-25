@@ -1,6 +1,6 @@
 #MUSICINFO
 ;Title(곡의 제목) string,Artist(작곡가) string,BPM(Beat per minute) int,Bar(1줄에 들어가는 칸의 수),Time(곡의 재생 시간 초)
-유하,루헝수포쓰,87.5,2,120
+유하,루헝수포쓰,87.5,2,103
 
 #ANIMATION
 ;Index,Stage Name,Animation Name
