@@ -290,9 +290,15 @@ public class UIObjectShop : MonoBehaviour
 
             switch(Index)
             {
+                case 0: GlobalState.Instance.UseBonusHP = false; break;
+                case 1: GlobalState.Instance.UseBarrier = false; break;
+                case 2: GlobalState.Instance.UseNewGaMe = false; break;
                 case 3: GlobalState.Instance.ShowDodge = false; break;
                 case 4: GlobalState.Instance.AutoMode = false; break;
+                default: break;
             }
+
+            GlobalState.Instance.UsedItems = "없음";
         }
         else if (Division.Equals("Off"))
         {
@@ -315,12 +321,15 @@ public class UIObjectShop : MonoBehaviour
                     {
                         case 0: 
                             _SkillName = "까방권";
+                            GlobalState.Instance.UseBonusHP = true;
                             break;
                         case 1: 
-                            _SkillName = "일시무적"; 
+                            _SkillName = "일시무적";
+                            GlobalState.Instance.UseBarrier = true;
                             break;
                         case 2: 
-                            _SkillName = "뉴가메"; 
+                            _SkillName = "뉴가메";
+                            GlobalState.Instance.UseNewGaMe = true;
                             break;
                         case 3: 
                             _SkillName = "분석안";
@@ -330,6 +339,8 @@ public class UIObjectShop : MonoBehaviour
                             _SkillName = "자율주행";
                             GlobalState.Instance.AutoMode = true;
                             break;
+                        default: _SkillName = "없음"; break;
+
                     }
                     GlobalState.Instance.UsedItems = _SkillName;
                 }

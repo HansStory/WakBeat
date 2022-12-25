@@ -83,7 +83,7 @@ public class UIObjectShopSkillItem : MonoBehaviour
         }
     }
 
-    // 버튼 이벤트 세팅
+    // 버튼 이벤트 세팅 > 2022.12.24 : 단수 처리를 위해 Shop.cs 에서 이벤트 처리
     public void SetButtonEvent()
     {
         buttonOn.onClick.AddListener(On);
@@ -91,7 +91,7 @@ public class UIObjectShopSkillItem : MonoBehaviour
         buttonLock.onClick.AddListener(Unlock);
     }
 
-    // 스킬 언락
+    // 스킬 언락 > 2022.12.24 : 단수 처리를 위해 Shop.cs 에서 이벤트 처리
     private void Unlock()
     {
         LockObject.SetActive(false);
@@ -100,63 +100,21 @@ public class UIObjectShopSkillItem : MonoBehaviour
         SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
     }
 
-    // 스킬 사용 > 미사용
+    // 스킬 사용 > 미사용 > 2022.12.24 : 단수 처리를 위해 Shop.cs 에서 이벤트 처리
     private void On()
     {
         buttonOn.gameObject.SetActive(false);
         buttonOff.gameObject.SetActive(true);
 
-        var state = GlobalState.Instance;
-        switch (SkillIndex)
-        {
-            case 0:
-                state.UseBonusHP = false;
-                break;
-            case 1:
-                state.UseBarrier = false;
-                break;
-            case 2:
-                state.UseNewGaMe = false;
-                break;
-            case 3:
-                state.ShowDodge = false;
-                break;
-            case 4:
-                state.AutoMode = false;
-                Debug.Log(state.AutoMode);
-                break;
-        }
-
         // 버튼 사운드 출력
         SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
     }
 
-    // 스킬 미사용 > 사용
+    // 스킬 미사용 > 사용 > 2022.12.24 : 단수 처리를 위해 Shop.cs 에서 이벤트 처리
     private void Off()
     {
         buttonOn.gameObject.SetActive(true);
         buttonOff.gameObject.SetActive(false);
-
-        var state = GlobalState.Instance;
-        switch (SkillIndex)
-        {
-            case 0:
-                state.UseBonusHP = true;
-                break;
-            case 1:
-                state.UseBarrier = true;
-                break;
-            case 2:
-                state.UseNewGaMe = true;
-                break;
-            case 3:
-                state.ShowDodge = true;
-                break;
-            case 4:
-                state.AutoMode = true;
-                Debug.Log(state.AutoMode); 
-                break;
-        }
 
         // 버튼 사운드 출력
         SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
