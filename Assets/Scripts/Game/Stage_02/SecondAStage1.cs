@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class SecondAStage1 : Stage
 {
-    [Header("[ Animation Asset ]")]
-    public TextMeshProUGUI _tmpText;
-
-    private float startToBeforeTempup = 4.62f;
     
     protected override void Init()
     {

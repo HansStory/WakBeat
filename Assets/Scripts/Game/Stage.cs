@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using DG.Tweening;
 using static UnityEngine.Rendering.DebugUI;
 using UnityEngine.Video;
+using System.Threading;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 
 public abstract class Stage : MonoBehaviourSingleton<Stage>
 {
@@ -40,6 +42,10 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     public Transform ObstacleOutBase;
     public List<GameObject> OutObstacleLists = new List<GameObject>();
+
+    [Header("[ Particles ]")]
+    public ParticleSystem ParticleHP;
+    public ParticleSystem ParticleBarrier;
 
     [Header("[ Save Point ]")]
     public GameObject[] SavePoint;
@@ -94,9 +100,12 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     // Player HP
     private int _currentHP = 1;
-      
 
-public virtual string Directory
+    // 한목숨에 Barrier 스킬 사용 여부
+    private bool _usedBarrier = false;
+    private bool _isBarrier = false;
+
+    public virtual string Directory
     {
         get
         {
@@ -139,12 +148,13 @@ public virtual string Directory
 
         // Get Values
         GetMusicInfo();
+        GetDefaultColor();
 
         // Set Values
         SetMusicInfo();
 
         InitHP();
-        Debug.Log(_currentHP);
+        _usedBarrier = false;
 
         InitBallPosition();
         InitBallSpeed();
@@ -198,18 +208,19 @@ public virtual string Directory
     }
 
     public virtual void ResetGlobalState()
-    {        
+    {
+        state.SavePointTime = 0f;
+        state.SavePointLine = 0;
+        state.SaveMusicTime = 0.0f;
         state.SavePointAngle = bmwReader.ChartingItem[0].BallAngle;
+
         state.IsPlayerDied = false;
         state.PlayerDeadCount = 0;
-        state.SaveMusicPlayingTime = 0.0f;
-        state.SavePoint = 0;
     }
 
     protected virtual void Start()
     {
         StartGame();
-        //Invoke($"{nameof(StartGame)}", 1f);
     }
 
     protected virtual void StartGame()
@@ -246,7 +257,7 @@ public virtual string Directory
 
     protected virtual void InitHP()
     {
-        if (state.UseBonusHP) // Shop Skill에서 처리 해줘야 함
+        if (state.UseBonusHP) // Shop Skill에서 처리 해줘야 함[완료]
         {
             _currentHP = 2;
         }
@@ -337,6 +348,15 @@ public virtual string Directory
                     col.enabled = _isAutoMode;
                 }
 
+                var image = dodge.GetComponent<Image>();
+                if (image)
+                {
+                    if (_isAutoMode)
+                    {
+                        image.color = Color.clear;
+                    }
+                }
+
                 DodgePointLists.Add(dodge);
 
                 dodge.SetActive(false);
@@ -345,11 +365,7 @@ public virtual string Directory
             }
         }
 
-        if (_isAutoMode)
-        {
-            DodgePointBase.gameObject.SetActive(_isAutoMode);
-        }
-        else if(state.ShowDodge)
+        if(state.ShowDodge)
         {
             DodgePointBase.gameObject.SetActive(state.ShowDodge);
         }
@@ -402,6 +418,7 @@ public virtual string Directory
         }
     }
 
+    private int _savePointLine = 0;
     protected virtual void CreateSavePoint(int savePointType)
     {
         GameObject savePoint = Instantiate(SavePoint[savePointType], Container);
@@ -409,8 +426,8 @@ public virtual string Directory
         if (savePoint)
         {
             savePoint.transform.localPosition = CenterPivot.transform.localPosition + CenterPivot.transform.up * dodgeRadius;
-            savePoint.transform.localScale = Vector3.zero;
-
+            
+            savePoint.transform.localScale = Vector3.one * 0.3f;
             savePoint.transform.DOScale(Vector3.one, 0.2f).SetAutoKill();
         }
     }
@@ -446,14 +463,9 @@ public virtual string Directory
         Debug.Log($"Tick : {_tick}, Bar : {_bar}, Beat Time : {_beatTime}");
     }
 
-    private void ReadProcess()
-    {
-
-    }
-
     protected virtual void PlayProcess()
     {
-        var beatItem = bmwReader.ChartingItem[_currentLine];    //beatItems[_currentBeat];
+        var beatItem = bmwReader.ChartingItem[_currentLine];
         if (beatItem == null)
         {
             Debug.LogError("PlayPorocess beat Item is null");
@@ -573,7 +585,10 @@ public virtual string Directory
                 beatItem.SpeedTime = 0;
             }
 
-            DOTween.To(() => _ballSpeed, x => _ballSpeed = x, beatItem.Speed, beatItem.SpeedTime);
+            if (beatItem.SpeedTime != 0)
+            {
+                DOTween.To(() => _ballSpeed, x => _ballSpeed = x, beatItem.Speed, beatItem.SpeedTime);
+            }
         }
     }
 
@@ -589,11 +604,6 @@ public virtual string Directory
 
         ShowSavePoint();
     }
-
-    //protected virtual void ShowItems()
-    //{
-    //    var beatItem = bmwReader.ChartingItem[_currentLine];
-    //}
 
     protected virtual void ShowDodgePoint()
     {
@@ -702,20 +712,18 @@ public virtual string Directory
         if (beatItem.SavePoint != -1)
         {
             CenterPivot.transform.localEulerAngles = Vector3.zero;
+            CenterPivot.transform.localEulerAngles = new Vector3(0f, 0f, beatItem.SavePoint * _spawnAngle);
 
-            CenterPivot.transform.Rotate(0f, 0f, beatItem.SavePoint * _spawnAngle);
             CreateSavePoint(0);
-
-            //GlobalState.Instance.SavePointAngle = beatItem.SavePoint * _spawnAngle;
         }
     }
 
-    // Update is called once per frame
     protected virtual void Update()
     {
         if (_isPlay)
         {
             PlayGame();
+            InputExcute();
         }
     }
 
@@ -734,7 +742,7 @@ public virtual string Directory
                 _currentLine++;
                 PlayProcess();
 
-                _timer -= _timer;
+                _timer -= _beatTime;
             }
         }
         else
@@ -925,18 +933,14 @@ public virtual string Directory
     }
     #endregion
 
-    protected float _savePointTime = 0f;
     public virtual void SavePointEnter()
     {
-        //if (SavePointTween.IsPlaying())
-        //{
-        //    SavePointTween.Kill();
-        //}
+        state.SavePointTime = _timer;
 
-        _savePointTime = _timer;
+        state.SavePointLine = _currentLine;
 
-        state.SavePoint = _currentLine;
-        state.SaveMusicPlayingTime = audioSource.time;
+        state.SaveMusicTime = audioSource.time;
+
         state.SavePointAngle = Center.transform.localEulerAngles.z;
 
         //TO DO : 각자 스테이지에서 구현할 것 
@@ -945,39 +949,33 @@ public virtual string Directory
 
     protected virtual void ResetSavePointState()
     {
-        _currentLine = GlobalState.Instance.SavePoint;
-        _timer = _savePointTime;
-        audioSource.time = GlobalState.Instance.SaveMusicPlayingTime;
+        _timer = state.SavePointTime;
+        _currentLine = state.SavePointLine;
+        audioSource.time = state.SaveMusicTime;       
 
         InitHP();
+        _usedBarrier = false;
 
         TweenClearRate();
-        
-        if (GlobalState.Instance.SavePoint > 0)
+
+        var beatItem = bmwReader.ChartingItem[_currentLine];
+
+        if (state.SavePointLine > 0)
         {
-            var beatItem = bmwReader.ChartingItem[_currentLine];
-
-            GlobalState.Instance.SavePointAngle = beatItem.BallAngle;
-
             AddInterval(beatItem);
 
-            Center.transform.localEulerAngles = new Vector3(0f, 0f, -GlobalState.Instance.SavePointAngle);
+            Center.transform.localEulerAngles = new Vector3(0f, 0f, state.SavePointAngle);
             Player.transform.localPosition = Center.transform.localPosition + Center.transform.up * ballRadius;
         }
         else
         {
             InitBallPosition();
-            _isInState = false;
-        }
 
-        if (StageAnim.isPlaying)
-        {
-            StageAnim.Stop();
+            _isInState = false;
         }
 
         PlayProcess();
     }
-
 
     protected virtual void PlayerDieAndSavePointPlay()
     {        
@@ -996,97 +994,16 @@ public virtual string Directory
         }
     }
 
-    protected virtual void EffectHP()
-    {
-
-    }
-
     public virtual void PlayerDie()
     {
-        PlayerDieAndSavePointPlay();
-    }
-
-    //-------------------------- Save Point Effect --------------------------------
-    public Color[] EffectColor;
-    private Color _whiteAlpha0 = new Color(1,1,1,0);
-    Tween savePointEffect;
-    protected virtual void EnterSavePointEffect()
-    {
-        if (SavePointCircles == null) return;
-
-        float _effectDuration = 0.2f;
-
-        for (int i = 0; i < SavePointCircles.Length; i++)
+        if (!_isBarrier)
         {
-            // Set Scale
-            SavePointCircles[i].rectTransform.localScale = Vector2.zero;
-
-            // Set Color
-            if (EffectColor[i] == null) EffectColor[i] = Color.red;
-            SavePointCircles[i].color = EffectColor[i];
-
-            // Enable
-            SavePointCircles[i].gameObject.SetActive(true);
-
-            // Tween
-            var tween = SavePointCircles[i].rectTransform.DOScale(Vector2.one, _effectDuration);
-            tween.SetEase(Ease.InCubic).OnComplete(() => { HideEffect(); });
+            PlayerDieAndSavePointPlay();
         }
     }
 
-    protected virtual void HideEffect()
-    {
-        float _fadeDuration = 0.6f;
-
-        for (int i = 0; i < SavePointCircles.Length; i++)
-        {
-            var tween = SavePointCircles[i].DOColor(_whiteAlpha0, _fadeDuration);
-            tween.SetEase(Ease.InQuart);//.OnComplete(() => SavePointCircles[i].gameObject.SetActive(false));
-        }
-    }
-
-    protected virtual void GetDefaultColor()
-    {
-        EffectColor[0] = new Color32(100, 100, 185, 255);
-        EffectColor[1] = new Color32(255, 130, 126, 255);
-        EffectColor[2] = new Color32(255, 148, 255, 255);
-        EffectColor[3] = new Color32(242, 252, 137, 255);
-        EffectColor[4] = new Color32(147, 255, 255, 200);
-        EffectColor[5] = new Color32(0, 0, 0, 90);
-        EffectColor[6] = new Color32(115, 181, 116, 200);
-    }
-
-    protected virtual void SetEffectCircleColor(Color fst, Color snd, Color third, Color fourth, Color fifth, Color six, Color seven)
-    {
-        EffectColor[0] = fst;
-        EffectColor[1] = snd;
-        EffectColor[2] = third;
-        EffectColor[3] = fourth;
-        EffectColor[4] = fifth;
-        EffectColor[5] = six;
-        EffectColor[6] = seven;
-    }
-
-    // -------------- UI Setting Function ---------------
-    public virtual void OnClickPause()
-    {
-        if (_isPlay)
-        {
-            _isPause = !_isPause;
-
-            if (_isPause)
-            {
-                Time.timeScale = 0;
-                audioSource.Pause();
-            }
-            else
-            {
-                Time.timeScale = 1;
-                audioSource.Play();
-            }
-        }
-    }
-
+    #region Input Extute
+    // ---------------------- Skill Input Excute ---------------------
     public void InputExcute()
     {
         if (state.UseNewGaMe)
@@ -1113,12 +1030,159 @@ public virtual string Directory
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
+            UseBarrier();
+        }
+    }
+    #endregion
 
+    #region Skill Effect
+    protected virtual void EffectHP()
+    {
+        ParticleHP.gameObject.SetActive(true);
+
+        ParticleHP.Play();
+
+        Invoke(nameof(HideParticleHP), 0.3f);
+    }
+
+    void HideParticleHP()
+    {
+        ParticleHP.gameObject.SetActive(false);
+    }
+
+    void UseBarrier()
+    {
+        if (!_usedBarrier)
+        {
+            _isBarrier = true;
+            BarrierEffect();           
+        }
+
+        _usedBarrier = true;
+    }
+
+    protected virtual void BarrierEffect()
+    {
+        ParticleBarrier.gameObject.SetActive(true);
+
+        ParticleBarrier.Play();
+
+        Invoke(nameof(HideParticleBarrier), 3f);
+    }
+
+    void HideParticleBarrier()
+    {
+        ParticleBarrier.gameObject.SetActive(false);
+        _isBarrier = false;
+    }
+    #endregion
+
+    #region Save Point Effect
+    //-------------------------- Save Point Effect --------------------------------
+    public Color[] EffectColor = new Color[7];
+    protected Color[] EffectAlpha0Color = new Color[7];
+
+    protected Color DefaultColor1 = new Color(0.4f, 0.4f, 0.72f, 1f);
+    protected Color DefaultColor2 = new Color(1f, 0.5f, 0.5f, 1f);
+    protected Color DefaultColor3 = new Color(1f, 0.58f, 1f, 1f);
+    protected Color DefaultColor4 = new Color(0.95f, 1f, 0.54f, 1f);
+    protected Color DefaultColor5 = new Color(0.57f, 1f, 1f, 0.78f);
+    protected Color DefaultColor6 = new Color(0, 0, 0, 0.3f);
+    protected Color DefaultColor7 = new Color(0.45f, 0.71f, 0.65f, 0.78f);
+
+    protected Color DefaultAlpha0Color1 = new Color(0.4f, 0.4f, 0.72f, 0f);
+    protected Color DefaultAlpha0Color2 = new Color(1f, 0.5f, 0.5f, 0f);
+    protected Color DefaultAlpha0Color3 = new Color(1f, 0.58f, 1f, 0f);
+    protected Color DefaultAlpha0Color4 = new Color(0.95f, 1f, 0.54f, 0f);
+    protected Color DefaultAlpha0Color5 = new Color(0.57f, 1f, 1f, 0f);
+    protected Color DefaultAlpha0Color6 = new Color(0, 0, 0, 0f);
+    protected Color DefaultAlpha0Color7 = new Color(0.45f, 0.71f, 0.65f, 0f);
+
+    protected virtual void EnterSavePointEffect()
+    {
+        if (SavePointCircles == null) return;
+
+        float _effectDuration = 0.2f;
+
+        for (int i = 0; i < SavePointCircles.Length; i++)
+        {
+            // Set Scale
+            SavePointCircles[i].rectTransform.localScale = Vector2.zero;
+
+            // Set Color
+            if (EffectColor[i] == null) EffectColor[i] = Color.red;
+            SavePointCircles[i].color = EffectColor[i];
+
+            // Enable
+            SavePointCircles[i].gameObject.SetActive(true);
+
+            // Tween
+            var tween = SavePointCircles[i].rectTransform.DOScale(Vector2.one, _effectDuration);
+            tween.SetAutoKill().SetEase(Ease.InCubic).OnComplete(() => { HideEffect(); });
         }
     }
 
-    void Barrier()
+    protected virtual void HideEffect()
     {
+        float _fadeDuration = 0.6f;
 
+        for (int i = 0; i < SavePointCircles.Length; i++)
+        {
+            if (EffectAlpha0Color[i] == null) EffectAlpha0Color[i] = Color.red;
+
+            var tween = SavePointCircles[i].DOColor(EffectAlpha0Color[i], _fadeDuration);
+            tween.SetAutoKill().SetEase(Ease.OutCubic).OnComplete(() => { SavePointCircles[i].gameObject.SetActive(false); });
+        }
+    }
+
+    protected virtual void GetDefaultColor()
+    {
+        EffectColor[0] = DefaultColor1;
+        EffectColor[1] = DefaultColor2;
+        EffectColor[2] = DefaultColor3;
+        EffectColor[3] = DefaultColor4;
+        EffectColor[4] = DefaultColor5;
+        EffectColor[5] = DefaultColor6;
+        EffectColor[6] = DefaultColor7;
+
+        EffectAlpha0Color[0] = DefaultAlpha0Color1;
+        EffectAlpha0Color[1] = DefaultAlpha0Color2;
+        EffectAlpha0Color[2] = DefaultAlpha0Color3;
+        EffectAlpha0Color[3] = DefaultAlpha0Color4;
+        EffectAlpha0Color[4] = DefaultAlpha0Color5;
+        EffectAlpha0Color[5] = DefaultAlpha0Color6;
+        EffectAlpha0Color[6] = DefaultAlpha0Color7;
+    }
+
+    protected virtual void SetEffectCircleColor(Color fst, Color snd, Color third, Color fourth, Color fifth, Color six, Color seven)
+    {
+        EffectColor[0] = fst;
+        EffectColor[1] = snd;
+        EffectColor[2] = third;
+        EffectColor[3] = fourth;
+        EffectColor[4] = fifth;
+        EffectColor[5] = six;
+        EffectColor[6] = seven;
+    }
+    #endregion
+
+    // -------------- UI Setting Function ---------------
+    public virtual void OnClickPause()
+    {
+        if (_isPlay)
+        {
+            _isPause = !_isPause;
+
+            if (_isPause)
+            {
+                Time.timeScale = 0;
+                audioSource.Pause();
+            }
+            else
+            {
+                Time.timeScale = 1;
+                audioSource.Play();
+            }
+        }
     }
 }

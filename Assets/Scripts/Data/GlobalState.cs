@@ -264,26 +264,39 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
     }
 
     // ------------------------- Save Point -----------------------------------
-    private int _savePoint = 0;
-    public int SavePoint
+    private float _savePointTime = 0;
+    public float SavePointTime
     {
-        get => _savePoint;
-        set => _savePoint = value;
+        get { return _savePointTime; }
+        set { _savePointTime = value; }
+    }
+
+    private int _savePointLine = 0;
+    public int SavePointLine
+    {
+        get { return _savePointLine; }
+        set { _savePointLine = value; }
     }
 
     private float _savePointAngle = 0;
     public float SavePointAngle
     {
-        get => _savePointAngle;
-        set => _savePointAngle = value;
+        get { return _savePointAngle; }
+        set { _savePointAngle = value; }
     }
 
-    private float _saveMusicPlayingTime = 0;
-
-    public float SaveMusicPlayingTime
+    private float _saveMusicTime = 0;
+    public float SaveMusicTime
     {
-        get => _saveMusicPlayingTime;
-        set => _saveMusicPlayingTime = value;
+        get { return _saveMusicTime; }
+        set { _saveMusicTime = value; }
+    }
+
+    private float _saveVideoTime = 0;
+    public float SaveVideoTime
+    {
+        get { return _saveVideoTime; }
+        set { _saveVideoTime = value; }
     }
 
     // Player »ç¸Á Ã¼Å©

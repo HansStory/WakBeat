@@ -135,12 +135,13 @@ MonoBehaviour:
   InObstacleLists: []
   ObstacleOutBase: {fileID: 181122923626944189}
   OutObstacleLists: []
+  ParticleHP: {fileID: 2155144368876002428}
+  ParticleBarrier: {fileID: 7261111904000040153}
   SavePoint:
   - {fileID: 7921288866019692938, guid: 663c68a6b803de7418db183677221222, type: 3}
   SavePointCircles: []
   TextCurrentLine: {fileID: 8985386085652165365}
   EffectColor: []
-  anima: {fileID: 0}
 --- !u!1 &4384159868161068670
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,6 +653,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4770955246307033242, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
   m_PrefabInstance: {fileID: 6403117832026946506}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &2155144368876002428 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4986872219413440438, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
+  m_PrefabInstance: {fileID: 6403117832026946506}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4862396563491310177 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1992493566946292139, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
@@ -687,6 +693,11 @@ MonoBehaviour:
 --- !u!224 &6447761825843056367 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 119200830944212261, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
+  m_PrefabInstance: {fileID: 6403117832026946506}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &7261111904000040153 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4330447919777261331, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
   m_PrefabInstance: {fileID: 6403117832026946506}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &7765270866780204917 stripped

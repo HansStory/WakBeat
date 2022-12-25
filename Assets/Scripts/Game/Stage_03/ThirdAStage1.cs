@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class ThirdAStage1 : Stage
 {
-    public Animation anima;
 
     protected override void Init()
     {
