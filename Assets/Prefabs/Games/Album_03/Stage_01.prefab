@@ -38,7 +38,7 @@ RectTransform:
   - {fileID: 4862396563491310177}
   - {fileID: 3891009459891483008}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -93,7 +93,10 @@ Animation:
   m_Enabled: 1
   serializedVersion: 3
   m_Animation: {fileID: 0}
-  m_Animations: []
+  m_Animations:
+  - {fileID: 7400000, guid: 9ba990822f3549d418cfbfa0a2af4985, type: 2}
+  - {fileID: 7400000, guid: a986d4e321ce338418662256e31e1836, type: 2}
+  - {fileID: 7400000, guid: cab334ab606305f458dc6230f22769cb, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
@@ -134,7 +137,10 @@ MonoBehaviour:
   OutObstacleLists: []
   SavePoint:
   - {fileID: 7921288866019692938, guid: 663c68a6b803de7418db183677221222, type: 3}
+  SavePointCircles: []
   TextCurrentLine: {fileID: 8985386085652165365}
+  EffectColor: []
+  anima: {fileID: 0}
 --- !u!1 &4384159868161068670
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,6 +234,7 @@ VideoPlayer:
   m_RenderMode: 2
   m_AspectRatio: 2
   m_DataSource: 0
+  m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
   m_TargetAudioSources:
@@ -401,6 +408,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 3569041610793075511}
     m_Modifications:
     - target: {fileID: 2004516375445169040, guid: 7e788888c85de4e408ee66202512b788, type: 3}
@@ -492,6 +500,9 @@ PrefabInstance:
       value: StageUIElements
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e788888c85de4e408ee66202512b788, type: 3}
 --- !u!224 &3891009459891483008 stripped
 RectTransform:
@@ -525,6 +536,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 3569041610793075511}
     m_Modifications:
     - target: {fileID: 1992493566946292139, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
@@ -616,6 +628,9 @@ PrefabInstance:
       value: PlayGround
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
 --- !u!224 &181122923626944189 stripped
 RectTransform:

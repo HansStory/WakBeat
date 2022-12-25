@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class ThirdAStage1 : Stage
 {
+    public Animation anima;
 
     protected override void Init()
     {
@@ -15,7 +16,6 @@ public class ThirdAStage1 : Stage
     protected override void PlayProcess()
     {
         base.PlayProcess();
-
 
         switch (_currentLine)
         {
