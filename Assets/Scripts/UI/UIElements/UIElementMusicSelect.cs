@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System.Xml;
+using TMPro;
 
 public class UIElementMusicSelect : MonoBehaviour
 {
@@ -27,8 +29,8 @@ public class UIElementMusicSelect : MonoBehaviour
     private GameObject uiObjectMusicTutorial;
     private Image _imageTutorial = null;
 
-    // À½¾Ç Á¤º¸ ÆË¾÷
-    //[SerializeField] private UIElementPopUp UIElementPopUp;
+
+    [SerializeField] private TMP_Text _musicLength;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +42,7 @@ public class UIElementMusicSelect : MonoBehaviour
     {
         SetAudio();
         ResetMusicSelect();
+        ChangeMusicLength();
     }
 
     private void SetAudio()
@@ -254,6 +257,8 @@ public class UIElementMusicSelect : MonoBehaviour
         }
     }
 
+    BMWReader _bmwReader;
+
     public void InputRightFunction()
     {
         var state = GlobalState.Instance;
@@ -263,10 +268,23 @@ public class UIElementMusicSelect : MonoBehaviour
             SoundManager.Instance.TurnOnSelectedMusic();
             ChangeBackGround();
             MoveScrollRect();
+            ChangeMusicLength();
             SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.AlbumMove);
 
             Debug.Log($"Selecte My Stage Index : {state.StageIndex}");
         }
+    }
+
+    void ChangeMusicLength()
+    {
+        _bmwReader = new BMWReader();
+        _bmwReader.ReadFile(GlobalState.Instance.BMWFolderPath + "/" + GlobalState.Instance.BMWFile);
+
+        int time = _bmwReader.MusicInfoItem.Time;
+        int min = time / 60;
+        int sec = time % 60;
+
+        _musicLength.text = $"{min}:{sec.ToString("D2")}";
     }
 
     void InputLeftArrow()
@@ -286,6 +304,7 @@ public class UIElementMusicSelect : MonoBehaviour
             SoundManager.Instance.TurnOnSelectedMusic();
             ChangeBackGround();
             MoveScrollRect();
+            ChangeMusicLength();
             SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.AlbumMove);
 
             Debug.Log($"Selecte My Stage Index : {state.StageIndex}");

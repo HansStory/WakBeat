@@ -168,9 +168,11 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
         // Key 입력 부
         _keyDivision = null == DataManager.dataKeyDivision ? "Integration" : DataManager.dataKeyDivision;
+      
+        if (ClearImage) ClearImage.gameObject.SetActive(false);
 
-        ClearImage.gameObject.SetActive(false);
-        ClearRate.text = $"Clear Rate\n0%";
+        if (!state.DevMode) ClearRate.gameObject.SetActive(false);
+        if (ClearRate) ClearRate.text = $"Clear Rate\n0%";       
 
         ShowCurrentLine();
 
@@ -417,7 +419,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             savePoint.transform.localPosition = CenterPivot.transform.localPosition + CenterPivot.transform.up * dodgeRadius;
             
             savePoint.transform.localScale = Vector3.one * 0.3f;
-            savePoint.transform.DOScale(Vector3.one, 0.2f).SetAutoKill();
+            savePoint.transform.DOScale(Vector3.one, 0.1f).SetAutoKill();
         }
     }
 
@@ -486,15 +488,18 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     protected virtual void TweenClearRate()
     {
-        if (_currentLine > 0)
+        if (!state.DevMode)
         {
-            float _rate = (((float)_currentLine + 1) / (float)_totalBeatCount) * 100f;
-            ClearRate.DOText($"Clear Rate\n{((int)_rate)}%", _tick);
-        }
-        else
-        {
+            if (_currentLine > 0)
+            {
+                float _rate = (((float)_currentLine + 1) / (float)_totalBeatCount) * 100f;
+                ClearRate.DOText($"Clear Rate\n{((int)_rate)}%", _tick);
+            }
+            else
+            {
 
-            ClearRate.DOText($"Clear Rate\n0%", _beatTime);
+                ClearRate.DOText($"Clear Rate\n0%", _beatTime);
+            }
         }
     }
 
@@ -864,7 +869,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     protected virtual void TweenChangeDirection(Image circle, float duration)
     {
         circle.color = Color.black;
-        circle.DOColor(Color.clear, duration);
+        circle.DOColor(Color.clear, duration).SetAutoKill();
     }
     #endregion
 
@@ -1069,7 +1074,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             if (EffectAlpha0Color[i] == null) EffectAlpha0Color[i] = Color.red;
 
             var tween = SavePointCircles[i].DOColor(EffectAlpha0Color[i], _fadeDuration);
-            tween.SetAutoKill().SetEase(Ease.OutCubic).OnComplete(() => { SavePointCircles[i].gameObject.SetActive(false); });
+            tween.SetAutoKill().SetDelay(0.2f).SetEase(Ease.OutCubic).OnComplete(() => { SavePointCircles[i].gameObject.SetActive(false); });
         }
     }
 
@@ -1101,6 +1106,17 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         EffectColor[4] = fifth;
         EffectColor[5] = six;
         EffectColor[6] = seven;
+    }
+
+    protected virtual void SetEffectCircleAlpah0Color(Color fst, Color snd, Color third, Color fourth, Color fifth, Color six, Color seven)
+    {
+        EffectAlpha0Color[0] = fst;
+        EffectAlpha0Color[1] = snd;
+        EffectAlpha0Color[2] = third;
+        EffectAlpha0Color[3] = fourth;
+        EffectAlpha0Color[4] = fifth;
+        EffectAlpha0Color[5] = six;
+        EffectAlpha0Color[6] = seven;
     }
     #endregion
     #endregion
@@ -1145,7 +1161,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
         if (DataManager.dataBackgroundProcActive)
         {
-            SaveGameResult();
+            //SaveGameResult();
 
             //Reset GlobalState Value
             ResetGlobalState();
@@ -1161,11 +1177,15 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     // TO DO : 게임 플레이 결과 Global Data나 Global Stage에 저장 -> 그 데이터로 결과창 구현 로직 처리
     protected virtual void SaveGameResult()
     {
-        int _stageIndex = GlobalState.Instance.StageIndex;
-        int _albumIndex = GlobalState.Instance.AlbumIndex;
-
         // Save Total Play Time
         state.StagePlayTime = (int)_playTime;
+        SaveDataClear();
+    }
+
+    protected virtual void SaveDataClear()
+    {
+        int _stageIndex = GlobalState.Instance.StageIndex;
+        int _albumIndex = GlobalState.Instance.AlbumIndex;
 
         switch (_albumIndex)
         {

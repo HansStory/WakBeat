@@ -46,6 +46,7 @@ public class UIObjectStage : MonoBehaviour
     float smallSize = 0.8f;
 
     [SerializeField] private Image _demoLockImage;
+    [SerializeField] private Image _clearStamp;
 
     void Start()
     {
@@ -61,6 +62,12 @@ public class UIObjectStage : MonoBehaviour
         }
 
         DestroyDemoLock();
+        ShowClearStamps();
+    }
+
+    private void OnEnable()
+    {
+        //ShowClearStamps();
     }
 
     void Update()
@@ -153,7 +160,9 @@ public class UIObjectStage : MonoBehaviour
 
     void DestroyDemoLock()
     {
-        switch (GlobalState.Instance.AlbumIndex)
+        var state = GlobalState.Instance;
+
+        switch (state.AlbumIndex)
         {
             case (int)GlobalData.ALBUM.ISEDOL:
                 switch (StageIndex)
@@ -173,10 +182,13 @@ public class UIObjectStage : MonoBehaviour
                         Destroy(_demoLockImage.gameObject);
                         break;
                     case (int)GlobalData.STAGE.STAGE2:
+                        if(state.DevMode) Destroy(_demoLockImage.gameObject);
                         break;
                     case (int)GlobalData.STAGE.STAGE3:
+                        if (state.DevMode) Destroy(_demoLockImage.gameObject);
                         break;
                     case (int)GlobalData.STAGE.STAGE4:
+                        if(state.DevMode) Destroy(_demoLockImage.gameObject);
                         break;
                 }
                 break;
@@ -187,12 +199,16 @@ public class UIObjectStage : MonoBehaviour
                         Destroy(_demoLockImage.gameObject);
                         break;
                     case (int)GlobalData.STAGE.STAGE2:
+                        if(state.DevMode) Destroy(_demoLockImage.gameObject);
                         break;
                     case (int)GlobalData.STAGE.STAGE3:
+                        if(state.DevMode) Destroy(_demoLockImage.gameObject);
                         break;
                     case (int)GlobalData.STAGE.STAGE4:
+                        if(state.DevMode) Destroy(_demoLockImage.gameObject);
                         break;
                     case (int)GlobalData.STAGE.STAGE5:
+                        if(state.DevMode) Destroy(_demoLockImage.gameObject);
                         break;
                 }
                 break;
@@ -200,16 +216,99 @@ public class UIObjectStage : MonoBehaviour
                 switch (StageIndex)
                 {
                     case (int)GlobalData.STAGE.STAGE1:
+                        if(state.DevMode) Destroy(_demoLockImage.gameObject);
                         break;
                     case (int)GlobalData.STAGE.STAGE2:
                         Destroy(_demoLockImage.gameObject);
                         break;
                     case (int)GlobalData.STAGE.STAGE3:
+                        if(state.DevMode) Destroy(_demoLockImage.gameObject);
                         break;
                     case (int)GlobalData.STAGE.STAGE4:
+                        if(state.DevMode) Destroy(_demoLockImage.gameObject);
                         break;
                 }
                 break;
+        }
+    }
+
+    void ShowClearStamps()
+    {
+        switch (GlobalState.Instance.AlbumIndex)
+        {
+            case (int)GlobalData.ALBUM.ISEDOL:
+                switch (StageIndex)
+                {
+                    case (int)GlobalData.STAGE.STAGE1:
+                        CheckDataClear(DataManager.dataAlbum1ClearYn, 0);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE2:
+                        CheckDataClear(DataManager.dataAlbum1ClearYn, 1);
+                        break;
+                }
+                break;
+            case (int)GlobalData.ALBUM.CONTEST:
+                switch (StageIndex)
+                {
+                    case (int)GlobalData.STAGE.STAGE1:
+                        CheckDataClear(DataManager.dataAlbum2ClearYn, 0);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE2:
+                        CheckDataClear(DataManager.dataAlbum2ClearYn, 1);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE3:
+                        CheckDataClear(DataManager.dataAlbum2ClearYn, 2);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE4:
+                        CheckDataClear(DataManager.dataAlbum2ClearYn, 3);
+                        break;
+                }
+                break;
+            case (int)GlobalData.ALBUM.GOMIX:
+                switch (StageIndex)
+                {
+                    case (int)GlobalData.STAGE.STAGE1:
+                        CheckDataClear(DataManager.dataAlbum3ClearYn, 0);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE2:
+                        CheckDataClear(DataManager.dataAlbum3ClearYn, 1);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE3:
+                        CheckDataClear(DataManager.dataAlbum3ClearYn, 2);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE4:
+                        CheckDataClear(DataManager.dataAlbum3ClearYn, 3);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE5:
+                        CheckDataClear(DataManager.dataAlbum3ClearYn, 4);
+                        break;
+                }
+                break;
+            case (int)GlobalData.ALBUM.WAKALOID:
+                switch (StageIndex)
+                {
+                    case (int)GlobalData.STAGE.STAGE1:
+                        CheckDataClear(DataManager.dataAlbum4ClearYn, 0);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE2:
+                        CheckDataClear(DataManager.dataAlbum4ClearYn, 1);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE3:
+                        CheckDataClear(DataManager.dataAlbum4ClearYn, 2);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE4:
+                        CheckDataClear(DataManager.dataAlbum4ClearYn, 3);
+                        break;
+                }
+                break;
+        }
+    }
+
+    void CheckDataClear(string[] clearData, int stage)
+    {
+        if (clearData[stage] == "Y")
+        {
+            _clearStamp.gameObject.SetActive(true);
         }
     }
 }
