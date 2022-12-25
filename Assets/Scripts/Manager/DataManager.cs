@@ -215,26 +215,41 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
                         switch(i)
                         {
                             case 0:
+                                GlobalState.Instance.UseBonusHP = true;
+                                GlobalState.Instance.UseBarrier = false;
+                                GlobalState.Instance.UseNewGaMe = false;
                                 GlobalState.Instance.ShowDodge = false;
                                 GlobalState.Instance.AutoMode = false;
                                 GlobalState.Instance.UsedItems = "까방권";
                                 break;
                             case 1:
+                                GlobalState.Instance.UseBonusHP = false;
+                                GlobalState.Instance.UseBarrier = true;
+                                GlobalState.Instance.UseNewGaMe = false;
                                 GlobalState.Instance.ShowDodge = false;
                                 GlobalState.Instance.AutoMode = false;
                                 GlobalState.Instance.UsedItems = "일시무적";
                                 break;
                             case 2:
+                                GlobalState.Instance.UseBonusHP = false;
+                                GlobalState.Instance.UseBarrier = false;
+                                GlobalState.Instance.UseNewGaMe = true;
                                 GlobalState.Instance.ShowDodge = false;
                                 GlobalState.Instance.AutoMode = false;
                                 GlobalState.Instance.UsedItems = "뉴가메";
                                 break;
                             case 3:
+                                GlobalState.Instance.UseBonusHP = false;
+                                GlobalState.Instance.UseBarrier = false;
+                                GlobalState.Instance.UseNewGaMe = false;
                                 GlobalState.Instance.ShowDodge = true;
                                 GlobalState.Instance.AutoMode = false;
                                 GlobalState.Instance.UsedItems = "분석안"; 
                                 break;
                             case 4:
+                                GlobalState.Instance.UseBonusHP = false;
+                                GlobalState.Instance.UseBarrier = false;
+                                GlobalState.Instance.UseNewGaMe = false;
                                 GlobalState.Instance.ShowDodge = true;
                                 GlobalState.Instance.AutoMode = true;
                                 GlobalState.Instance.UsedItems = "자율주행";
@@ -342,8 +357,13 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
             userData.gameData.album3StageProgressLine = dataAlbum3StageProgressLine;
             userData.gameData.album4StageProgressLine = dataAlbum4StageProgressLine;
 
+            // 스킬 사용여부 세팅
+            GlobalState.Instance.UseBonusHP = false;
+            GlobalState.Instance.UseBarrier = false;
+            GlobalState.Instance.UseNewGaMe = false;
             GlobalState.Instance.ShowDodge = false;
             GlobalState.Instance.AutoMode = false;
+            GlobalState.Instance.UsedItems = "없음";
         }
 
         // 글로벌 값 호출 즉시 파일에 저장 된 배경음/환경음 볼륨으로 제어
