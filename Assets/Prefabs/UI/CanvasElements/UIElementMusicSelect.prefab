@@ -2097,7 +2097,7 @@ RectTransform:
   - {fileID: 7021913403015926586}
   - {fileID: 4414291402457528430}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2165,7 +2165,7 @@ MonoBehaviour:
   uiObjectProgressCircleBase: {fileID: 3540137803790492285}
   scrollRect: {fileID: 3438493075930980602}
   uiObjectMusicTutorial: {fileID: 8863306331170489117, guid: 0e61a0f5bfe3b6d4b960b3e3cb30862c, type: 3}
-  UIElementPopUp: {fileID: 5955706999031344976, guid: 2a916a2a440c0ff46a1c4d81b1f6c20d, type: 3}
+  _musicLength: {fileID: 2214611924591506007}
 --- !u!1 &7212678813710706899
 GameObject:
   m_ObjectHideFlags: 0
