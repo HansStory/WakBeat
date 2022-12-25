@@ -24,11 +24,18 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 82cf6465bca4f2342ba71fea5f872740, type: 3}
   - {fileID: 21300000, guid: 7d81092bf06fc1b4a9963853f15dc59a, type: 3}
   - {fileID: 21300000, guid: 9794cc6bd5feefd44aac1602924e5f23, type: 3}
+  - {fileID: 21300000, guid: e2a189e2399050a4682c8988feb1c7d7, type: 3}
+  - {fileID: 21300000, guid: ba246c5b1d9ce07458c1d3557f3b2b67, type: 3}
+  - {fileID: 21300000, guid: 4d5c1415e34e6464eb9143ec25733e44, type: 3}
   BackGroundSkins:
-  - {fileID: 21300000, guid: 6739c7ff7d0d46241aab5bae250103b2, type: 3}
   - {fileID: 21300000, guid: 77763c4e097050e4a9f3d64180b4c5d0, type: 3}
+  - {fileID: 21300000, guid: 106344063fa46ad468f18b47075eb20c, type: 3}
+  - {fileID: 21300000, guid: 1154d56c0f1651942a4d59123fb89e67, type: 3}
   ObstacleSkins:
   - {fileID: 21300000, guid: 5ce125e2625631547b95d9a66ea484c8, type: 3}
   - {fileID: 21300000, guid: 2819c98dbd2e7854a8038cf63d4ec991, type: 3}
   - {fileID: 21300000, guid: 9751a8acadc3e80469e20bfdd6bd5553, type: 3}
   - {fileID: 21300000, guid: 97296de42f3f81d4badf93efc7456798, type: 3}
+  - {fileID: 21300000, guid: ba3e004fdb883914ea4ef63df8a0748c, type: 3}
+  - {fileID: 21300000, guid: 40ee6c7d6d1a8a14386dffdb5ffbd47a, type: 3}
+  - {fileID: 21300000, guid: dbe6fac1a8c79814c85fad962b376c54, type: 3}
