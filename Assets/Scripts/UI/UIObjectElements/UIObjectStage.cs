@@ -45,6 +45,8 @@ public class UIObjectStage : MonoBehaviour
     [SerializeField] private RectTransform panelStage;
     float smallSize = 0.8f;
 
+    [SerializeField] private Image _demoLockImage;
+
     void Start()
     {
         Init();
@@ -57,8 +59,9 @@ public class UIObjectStage : MonoBehaviour
             stageLevel.gameObject.SetActive(false);
             panelStage.localScale = Vector3.one * smallSize;
         }
-    }
 
+        DestroyDemoLock();
+    }
 
     void Update()
     {
@@ -146,5 +149,67 @@ public class UIObjectStage : MonoBehaviour
         }
 
         UIElementMusicSelect.ShowSelectedStage();
+    }
+
+    void DestroyDemoLock()
+    {
+        switch (GlobalState.Instance.AlbumIndex)
+        {
+            case (int)GlobalData.ALBUM.ISEDOL:
+                switch (StageIndex)
+                {
+                    case (int)GlobalData.STAGE.STAGE1:
+                        Destroy(_demoLockImage.gameObject);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE2:
+                        Destroy(_demoLockImage.gameObject);
+                        break;
+                }
+                break;
+            case (int)GlobalData.ALBUM.CONTEST:
+                switch (StageIndex)
+                {
+                    case (int)GlobalData.STAGE.STAGE1:
+                        Destroy(_demoLockImage.gameObject);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE2:
+                        break;
+                    case (int)GlobalData.STAGE.STAGE3:
+                        break;
+                    case (int)GlobalData.STAGE.STAGE4:
+                        break;
+                }
+                break;
+            case (int)GlobalData.ALBUM.GOMIX:
+                switch (StageIndex)
+                {
+                    case (int)GlobalData.STAGE.STAGE1:
+                        Destroy(_demoLockImage.gameObject);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE2:
+                        break;
+                    case (int)GlobalData.STAGE.STAGE3:
+                        break;
+                    case (int)GlobalData.STAGE.STAGE4:
+                        break;
+                    case (int)GlobalData.STAGE.STAGE5:
+                        break;
+                }
+                break;
+            case (int)GlobalData.ALBUM.WAKALOID:
+                switch (StageIndex)
+                {
+                    case (int)GlobalData.STAGE.STAGE1:
+                        break;
+                    case (int)GlobalData.STAGE.STAGE2:
+                        Destroy(_demoLockImage.gameObject);
+                        break;
+                    case (int)GlobalData.STAGE.STAGE3:
+                        break;
+                    case (int)GlobalData.STAGE.STAGE4:
+                        break;
+                }
+                break;
+        }
     }
 }
