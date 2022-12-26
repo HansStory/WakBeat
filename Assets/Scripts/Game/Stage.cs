@@ -257,6 +257,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         state.SavePointLine = 0;
         state.SaveMusicTime = 0.0f;
         state.SaveVideoTime = 0.0f;
+        state.SaveAnimationTime = 0.0f;
         state.SavePointAngle = bmwReader.ChartingItem[0].BallAngle;
 
         state.IsPlayerDied = false;
@@ -888,7 +889,9 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
         state.SavePointAngle = Center.transform.localEulerAngles.z;
 
-        if(videoPlayer) state.SaveVideoTime = (float)videoPlayer.time;
+        state.SaveAnimationTime = StageAnim[_animationName].time;
+
+        if (videoPlayer) state.SaveVideoTime = (float)videoPlayer.time;
 
         //TO DO : 각자 스테이지에서 구현할 것 
         EnterSavePointEffect();
@@ -899,7 +902,9 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         _timer = state.SavePointTime;
         _currentLine = state.SavePointLine;
         audioSource.time = state.SaveMusicTime;
-        if(videoPlayer) videoPlayer.time = state.SaveVideoTime;
+       
+        if (videoPlayer) videoPlayer.time = state.SaveVideoTime;
+        StageAnim[_animationName].time = state.SaveAnimationTime;
 
         var savePoint = GameObject.Find("SavePoint(Clone)");
         if (savePoint) Destroy(savePoint);

@@ -299,6 +299,14 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
         set { _saveVideoTime = value; }
     }
 
+
+    private float _saveAnimationTime = 0;
+    public float SaveAnimationTime
+    {
+        get { return _saveAnimationTime; }
+        set { _saveAnimationTime = value; }
+    }
+
     // Player »ç¸Á Ã¼Å©
     private bool _isPlayerDied = false;
 
