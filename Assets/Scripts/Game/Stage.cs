@@ -889,7 +889,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
         state.SavePointAngle = Center.transform.localEulerAngles.z;
 
-        state.SaveAnimationTime = StageAnim[_animationName].time;
+        if (StageAnim[_animationName]) state.SaveAnimationTime = StageAnim[_animationName].time;
 
         if (videoPlayer) state.SaveVideoTime = (float)videoPlayer.time;
 
@@ -904,7 +904,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         audioSource.time = state.SaveMusicTime;
        
         if (videoPlayer) videoPlayer.time = state.SaveVideoTime;
-        StageAnim[_animationName].time = state.SaveAnimationTime;
+        if (StageAnim[_animationName]) StageAnim[_animationName].time = state.SaveAnimationTime;
 
         var savePoint = GameObject.Find("SavePoint(Clone)");
         if (savePoint) Destroy(savePoint);
