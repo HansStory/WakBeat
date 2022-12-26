@@ -1,10 +1,19 @@
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
+using UnityEditorInternal.Profiling.Memory.Experimental;
+
 
 public class SecondAStage1 : Stage
 {
-    
+    [SerializeField] private RectTransform spotLightTransform;
+    [SerializeField] private Image _backGround;
+    [SerializeField] private Image _maskingImage;
+
+    private bool isLight = true;
+
     protected override void Init()
     {
         base.Init();
@@ -112,7 +121,8 @@ public class SecondAStage1 : Stage
         switch (_currentLine)
         {
             case 5:
-                Invoke(nameof(HideObstacles), 2.11f);
+                DestroySpotLight();
+                Invoke(nameof(HideObstacles), 3 * _tick);
                 break;
         }
     }
@@ -123,6 +133,41 @@ public class SecondAStage1 : Stage
         {
             InObstacleLists[i].SetActive(false);
             OutObstacleLists[i].SetActive(false);
+        }
+    }
+
+    void DestroySpotLight()
+    {
+        var tween = spotLightTransform.DOScale(Vector3.one * 200f, _tick).SetAutoKill();
+        tween.SetDelay(3 * _tick).SetEase(Ease.OutQuart).OnComplete(() => { OnCompleteTween(); }) ;
+    }
+
+    private void OnCompleteTween()
+    {
+        isLight = false;
+        _backGround.gameObject.SetActive(isLight);
+    }
+
+    protected override void ResetSavePointState()
+    {
+        base.ResetSavePointState();
+
+        if (state.SavePointLine <= 0)
+        {
+            spotLightTransform.localScale = Vector3.one * 78f;
+
+            isLight = true;
+            _backGround.gameObject.SetActive(isLight);
+        }
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        if (isLight && spotLightTransform)
+        {
+            spotLightTransform.localPosition = Center.transform.localPosition + Center.transform.up * inRadius;
         }
     }
 
