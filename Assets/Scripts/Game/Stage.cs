@@ -874,7 +874,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     protected virtual void TweenChangeDirection(Image circle, float duration)
     {
-        circle.color = Color.black;
+        circle.color = new Color(0f, 0f, 0f, 0.5f);
         circle.DOColor(Color.clear, duration).SetAutoKill();
     }
     #endregion
@@ -1038,13 +1038,13 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     public Color[] EffectColor = new Color[7];
     protected Color[] EffectAlpha0Color = new Color[7];
 
-    protected Color DefaultColor1 = new Color(0.4f, 0.4f, 0.72f, 1f);
-    protected Color DefaultColor2 = new Color(1f, 0.5f, 0.5f, 1f);
-    protected Color DefaultColor3 = new Color(1f, 0.58f, 1f, 1f);
-    protected Color DefaultColor4 = new Color(0.95f, 1f, 0.54f, 1f);
-    protected Color DefaultColor5 = new Color(0.57f, 1f, 1f, 0.78f);
-    protected Color DefaultColor6 = new Color(0, 0, 0, 0.3f);
-    protected Color DefaultColor7 = new Color(0.45f, 0.71f, 0.65f, 0.78f);
+    protected Color DefaultColor1 = new Color(0.4f, 0.4f, 0.72f, 0.8f);
+    protected Color DefaultColor2 = new Color(1f, 0.5f, 0.5f, 0.8f);
+    protected Color DefaultColor3 = new Color(1f, 0.58f, 1f, 0.8f);
+    protected Color DefaultColor4 = new Color(0.95f, 1f, 0.54f, 0.8f);
+    protected Color DefaultColor5 = new Color(0.57f, 1f, 1f, 0.8f);
+    protected Color DefaultColor6 = new Color(0.3f, 0.3f, 0.3f, 0.8f);
+    protected Color DefaultColor7 = new Color(0.45f, 0.71f, 0.65f, 0.8f);
 
     protected Color DefaultAlpha0Color1 = new Color(0.4f, 0.4f, 0.72f, 0f);
     protected Color DefaultAlpha0Color2 = new Color(1f, 0.5f, 0.5f, 0f);

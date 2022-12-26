@@ -21,7 +21,7 @@ MonoBehaviour:
   AlbumCircles:
   - {fileID: 21300000, guid: 00b381e070af35e4babaeecd2adc54c5, type: 3}
   - {fileID: 21300000, guid: a237015ff85daff438ad2110c1e97306, type: 3}
-  - {fileID: 21300000, guid: 4c2cb4a37f8e5f348b1604453ee5a076, type: 3}
+  - {fileID: 21300000, guid: 1797df413abfa964ebf692c6868818c4, type: 3}
   - {fileID: 21300000, guid: d532b445cbe49ca4fb1eb3ab16d972d3, type: 3}
   AlbumTitles:
   - {fileID: 21300000, guid: 4cc94190a5d7a63469b45cca76b0f840, type: 3}
