@@ -37,7 +37,7 @@ RectTransform:
   - {fileID: 4862396563491310177}
   - {fileID: 3891009459891483008}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -116,6 +116,7 @@ MonoBehaviour:
   Center: {fileID: 663921556387402100}
   Player: {fileID: 1939264986128169808}
   StageAnim: {fileID: 3097434870188687003}
+  videoPlayer: {fileID: 0}
   InCircleFade: {fileID: 6173832822445076508}
   OutCircleFade: {fileID: 100186202000373558}
   ClearRate: {fileID: 9175226695559822298}
@@ -131,9 +132,22 @@ MonoBehaviour:
   InObstacleLists: []
   ObstacleOutBase: {fileID: 181122923626944189}
   OutObstacleLists: []
+  ParticleHP: {fileID: 0}
+  ParticleBarrier: {fileID: 0}
   SavePoint:
   - {fileID: 7921288866019692938, guid: 663c68a6b803de7418db183677221222, type: 3}
+  SavePointCircles: []
+  ClearImage: {fileID: 0}
+  ClearCurve: {fileID: 0}
   TextCurrentLine: {fileID: 8985386085652165365}
+  EffectColor:
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &4423836732642508599
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,7 +184,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 1280, y: 1280}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7705259695062424627
 CanvasRenderer:
@@ -200,7 +214,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f79d99ed9528bf84e9754d30a7c32b99, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 99c472e0777486248a3beafffba7b842, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -291,6 +305,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 3569041610793075511}
     m_Modifications:
     - target: {fileID: 2004516375445169040, guid: 7e788888c85de4e408ee66202512b788, type: 3}
@@ -382,6 +397,9 @@ PrefabInstance:
       value: StageUIElements
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e788888c85de4e408ee66202512b788, type: 3}
 --- !u!224 &3891009459891483008 stripped
 RectTransform:
@@ -415,6 +433,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 3569041610793075511}
     m_Modifications:
     - target: {fileID: 1992493566946292139, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
@@ -506,6 +525,9 @@ PrefabInstance:
       value: PlayGround
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
 --- !u!224 &181122923626944189 stripped
 RectTransform:
