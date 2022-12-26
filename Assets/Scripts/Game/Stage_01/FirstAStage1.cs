@@ -1,4 +1,5 @@
 
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,8 +15,6 @@ public class FirstAStage1 : Stage
 
         SetBallSkin(GlobalData.Instance.StageInfo.BallSkins[5]);
         SetCircleSprite(GlobalData.Instance.StageInfo.CircleSkins[0]);
-        //SetBackGroundSprite(GlobalData.Instance.StageInfo.BackGroundSkins[0]);
-
     }
 
     protected override void PlayProcess()
@@ -28,39 +27,11 @@ public class FirstAStage1 : Stage
                 isClockEffect = true;
                 break;
             case 80:
-                ChangeObstaclesSkin();
-                ChangeBallSkin();
+                SetObstaclesSkin(7);
+                SetBallSkin(GlobalData.Instance.StageInfo.BallSkins[10]);
                 ChangeCircle();
                 break;
         }
-    }
-
-    void ChangeObstaclesSkin()
-    {
-        var stageInfo = GlobalData.Instance.StageInfo;
-
-        foreach (var obstacle in InObstacleLists)
-        {
-            var skin = obstacle.GetComponent<Image>();
-            if (skin)
-            {
-                skin.sprite = stageInfo.ObstacleSkins[7];
-            }
-        }
-
-        foreach (var obstacle in OutObstacleLists)
-        {
-            var skin = obstacle.GetComponent<Image>();
-            if (skin)
-            {
-                skin.sprite = stageInfo.ObstacleSkins[7];
-            }
-        }
-    }
-
-    void ChangeBallSkin()
-    {
-        BallSkin.sprite = GlobalData.Instance.StageInfo.BallSkins[10];
     }
 
     void ChangeCircle()

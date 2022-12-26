@@ -429,6 +429,35 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         }
     }
 
+    protected virtual void SetObstaclesSkin(int ballType)
+    {
+        var stageInfo = GlobalData.Instance.StageInfo;
+
+        foreach (var obstacle in InObstacleLists)
+        {
+            var skin = obstacle.GetComponent<Image>();
+            if (skin)
+            {
+                if (stageInfo.ObstacleSkins[ballType])
+                {
+                    skin.sprite = stageInfo.ObstacleSkins[ballType];
+                }
+            }
+        }
+
+        foreach (var obstacle in OutObstacleLists)
+        {
+            var skin = obstacle.GetComponent<Image>();
+            if (skin)
+            {
+                if (stageInfo.ObstacleSkins[ballType])
+                {
+                    skin.sprite = stageInfo.ObstacleSkins[ballType];
+                }
+            }
+        }
+    }
+
     protected virtual void InitBallSpeed()
     {
         if (bmwReader.ChartingItem[0].Speed == -1)
@@ -523,7 +552,6 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             _animationName = animItem.AnimationName;
 
             if (!StageAnim[_animationName]) return;
-
 
             StageAnim.Rewind(_animationName);
             StageAnim[_animationName].normalizedTime = 0f;
@@ -874,7 +902,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     protected virtual void TweenChangeDirection(Image circle, float duration)
     {
-        circle.color = new Color(0f, 0f, 0f, 0.5f);
+        circle.color = new Color(0f, 0f, 0f, 0.2f);
         circle.DOColor(Color.clear, duration).SetAutoKill();
     }
     #endregion
