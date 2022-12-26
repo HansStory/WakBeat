@@ -170,8 +170,8 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         _keyDivision = null == DataManager.dataKeyDivision ? "Integration" : DataManager.dataKeyDivision;
       
         if (ClearImage) ClearImage.gameObject.SetActive(false);
+        if (!state.DevMode) ClearRate.gameObject.SetActive(false);     
 
-        if (!state.DevMode) ClearRate.gameObject.SetActive(false);
         if (ClearRate) ClearRate.text = $"Clear Rate\n0%";       
 
         ShowCurrentLine();
@@ -192,6 +192,10 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             if (!state.DevMode)
             {
                 TextCurrentLine.gameObject.SetActive(false);
+            }
+            else
+            {
+               TextCurrentLine.gameObject.SetActive(true);
             }
         }
     }
@@ -252,6 +256,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         state.SavePointTime = 0f;
         state.SavePointLine = 0;
         state.SaveMusicTime = 0.0f;
+        state.SaveVideoTime = 0.0f;
         state.SavePointAngle = bmwReader.ChartingItem[0].BallAngle;
 
         state.IsPlayerDied = false;
@@ -895,6 +900,9 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         _currentLine = state.SavePointLine;
         audioSource.time = state.SaveMusicTime;
         if(videoPlayer) videoPlayer.time = state.SaveVideoTime;
+
+        var savePoint = GameObject.Find("SavePoint(Clone)");
+        if (savePoint) Destroy(savePoint);
 
         InitHP();
         _usedBarrier = false;
