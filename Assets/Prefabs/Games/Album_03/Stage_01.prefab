@@ -94,9 +94,7 @@ Animation:
   serializedVersion: 3
   m_Animation: {fileID: 0}
   m_Animations:
-  - {fileID: 7400000, guid: 9ba990822f3549d418cfbfa0a2af4985, type: 2}
-  - {fileID: 7400000, guid: a986d4e321ce338418662256e31e1836, type: 2}
-  - {fileID: 7400000, guid: cab334ab606305f458dc6230f22769cb, type: 2}
+  - {fileID: 7400000, guid: 9696943d0abbe2d4fb00b568d0333f5d, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
