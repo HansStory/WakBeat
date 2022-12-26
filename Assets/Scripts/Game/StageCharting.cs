@@ -60,7 +60,10 @@ public class StageCharting : Stage
         //}
         TextGameMode.text = $"Game Mode \n {_isGameMode}";
         TextAutoMode.text = $"Auto Mode \n {_isAutoMode}";
-        TextShowMode.text = $"Show Mode \n {_isShowDodgePoint}";
+        if (TextShowMode)
+        {
+            TextShowMode.text = $"Show Mode \n {_isShowDodgePoint}";
+        }
     }
 
     protected override void Start()
@@ -171,13 +174,13 @@ public class StageCharting : Stage
 
         state.IsPlayerDied = false;
         state.PlayerDeadCount = 0;
-        state.SavePoint = 0;
+        state.SavePointLine = 0;
         state.SavePointAngle = bmwReader.ChartingItem[0].BallAngle;
         
-        _savePointTime = 0f;
+        state.SavePointTime = 0f;
 
         TextPause.text = "Pause";
-        ClearRate.text = $"Clear Rate\n0%";
+        if (ClearRate) ClearRate.text = $"Clear Rate\n0%";
     }
 
 
@@ -221,6 +224,11 @@ public class StageCharting : Stage
             GameObject savePoint = GameObject.Find("SavePoint(Clone)");
             Destroy(savePoint);
         }
+    }
+
+    protected override void GetBallSkin()
+    {
+
     }
 
     private void ResetAudio()
