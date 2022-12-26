@@ -105,9 +105,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: be5c1a9e2b689d4488489951f55e8d57, type: 3}
   - {fileID: 21300000, guid: ab896a086f744184d97590e8c099c7d1, type: 3}
   Album3MusicBannerImage:
-  - {fileID: 21300000, guid: 2af7e8dea22676d499295ab2f0e6afe5, type: 3}
-  - {fileID: 21300000, guid: 14d478aa55dc03c46a52ba92272d2945, type: 3}
-  - {fileID: 21300000, guid: 57f101925fda12f49b22b76f7a068188, type: 3}
+  - {fileID: 21300000, guid: ec26c83763c061d409d2be92e61d1331, type: 3}
+  - {fileID: 21300000, guid: 9d9fab643968b304e8d6ec5cc4ba77f6, type: 3}
+  - {fileID: 21300000, guid: eab374242828f0740b53c35d33422302, type: 3}
   - {fileID: 21300000, guid: 967e3aba3b7af4446b43afe834d042b4, type: 3}
   - {fileID: 21300000, guid: af6faa0e3c4c61443a3c5d03eb7b1cea, type: 3}
   Album4MusicBannerImage:
