@@ -1,9 +1,6 @@
-using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 
 
 public class SecondAStage1 : Stage
