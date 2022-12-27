@@ -21,7 +21,7 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
     // 스킬 개수
     static int _skillCount = 5;
     // 스킨 해금 조건 배열
-    static int[] _skinUnLockCondition = { 1, 2, 3, 5, 7 };
+    static int[] _skinUnLockCondition = { 1, 2, 3, 5 };
     // 스킬 해금 조건 배열
     static int[] _skillUnLockCondition = { 1, 2, 3, 5, 7 };
     // 앨범 별 스테이지 수
@@ -30,7 +30,7 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
     static int _album3StageCount = 5;
     static int _album4StageCount = 4;
     // 상점 강제 해금 사용 여부 > True : 강제 해금 사용 / False : 강제 해금 미사용
-    static Boolean _shopCompulsionActive = true;
+    static Boolean _shopCompulsionActive = false;
     // 인게임 관련 데이터
     // 배경 프로세스 진행 여부 > True : 진행 / False : 미진행(팝업 창 용)
     static Boolean _backgroundProcActive = true;
