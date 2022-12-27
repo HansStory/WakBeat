@@ -18,6 +18,8 @@ public class SecondAStage1 : Stage
         SetBallSkin(GlobalData.Instance.StageInfo.BallSkins[4]);
         SetCircleSprite(GlobalData.Instance.StageInfo.CircleSkins[1]);
         SetBackGroundSprite(GlobalData.Instance.StageInfo.BackGroundSkins[1]);
+
+        SetEffectColor();
     }
 
     private float ballHeightHalf = 15.5f;
@@ -165,6 +167,19 @@ public class SecondAStage1 : Stage
         if (isLight && spotLightTransform)
         {
             spotLightTransform.localPosition = Center.transform.localPosition + Center.transform.up * inRadius;
+        }
+    }
+
+    private void SetEffectColor()
+    {
+        for (int i = 0; i < EffectColor.Length; i++)
+        {
+            EffectColor[i] = new Color(0.815f, 0.811f, 0.815f, 0.8f);
+        }
+
+        for (int i = 0; i < EffectAlpha0Color.Length; i++)
+        {
+            EffectAlpha0Color[i] = new Color(0.815f, 0.811f, 0.815f, 0f);
         }
     }
 
