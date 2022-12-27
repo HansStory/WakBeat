@@ -49,6 +49,5 @@ public class FirstAStage2 : Stage
     protected override void Update()
     {
         base.Update();
-        Debug.Log(StageAnim[_animationName].time);
     }
 }
