@@ -17,6 +17,11 @@ public class ShopInfo : ScriptableObject
     public Sprite[] SkillIcon;
     public Sprite[] SkillLockExplanation;
 
+    [Space(10)]
+    [Header("[ Shop Video Info]")]
+    public Sprite[] VideoTitle;
+    public Sprite[] VideoIcon;
+
     /*
     [Header("[ Shop Info List (Prefabs) ]")]
     public List<SkillItemInfo> SkillItemInfos;

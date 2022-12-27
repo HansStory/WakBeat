@@ -46,3 +46,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 1f4c3d7119504c443a3671a85e21133d, type: 3}
   - {fileID: 21300000, guid: 072a1193a57153844a5c2272b351b777, type: 3}
   - {fileID: 21300000, guid: 4d5f80c4f9f673a46b31e934dc0c3183, type: 3}
+  VideoTitle:
+  - {fileID: 21300000, guid: 4cfe001e2119b53429311a49c78cbfa5, type: 3}
+  VideoIcon:
+  - {fileID: 21300000, guid: b25b6c1fd25859f45969bb34c6f498f5, type: 3}

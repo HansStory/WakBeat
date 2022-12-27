@@ -20,6 +20,8 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
     static int _skinCount = 4;
     // 스킬 개수
     static int _skillCount = 5;
+    // 비디오 개수
+    static int _videoCount = 1;
     // 스킨 해금 조건 배열
     static int[] _skinUnLockCondition = { 1, 2, 3, 5 };
     // 스킬 해금 조건 배열
@@ -452,6 +454,13 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
     {
         get { return _skillCount; }
         set { _skillCount = value;  }
+    }
+
+    // 상점 비디오 개수
+    public static int dataVideoCount
+    {
+        get { return _videoCount; }
+        set { _videoCount = value; }
     }
 
     // 상점 스킬 사용 여부
