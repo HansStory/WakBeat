@@ -15,6 +15,7 @@ public class UIObjectShop : MonoBehaviour
     public GameObject TabObject;
     private int SkinCount = DataManager.dataSkinCount;
     private int SkillCount = DataManager.dataSkillCount;
+    private int VideoCount = DataManager.dataVideoCount;
     // 팝업창 호출 시 UI 제어
     private float _duration = 0.15f;
     // 버튼 사운드
@@ -30,6 +31,8 @@ public class UIObjectShop : MonoBehaviour
     [SerializeField] private Transform SkillPanel;
     // 비디오 아이템 오브젝트
     public GameObject VideoGroup;
+    [SerializeField] private GameObject VideoPrefab;
+    [SerializeField] private Transform VideoPanel;
     // 글로벌 데이터 용 전역변수
     public string[] _SkinUnLockYn = new string[DataManager.dataSkinCount];
     public string[] _SkinUsingYn = new string[DataManager.dataSkinCount];
@@ -50,8 +53,12 @@ public class UIObjectShop : MonoBehaviour
         var SkillExplanation = GlobalData.Instance.Shop.SkillExplanation;
         var SkillLockExplanation = GlobalData.Instance.Shop.SkillLockExplanation;
 
+        // 비디오 데이터 가져오기
+        var VideoTitle = GlobalData.Instance.Shop.VideoTitle;
+        var VideoIcon = GlobalData.Instance.Shop.VideoIcon;
+
         // 스킨 프리팹 복제
-        for(int SkinIndex = 0; SkinIndex < SkinTitle.Length; SkinIndex++)
+        for (int SkinIndex = 0; SkinIndex < SkinTitle.Length; SkinIndex++)
         {
             var _Skin = (GameObject)Instantiate(SkinPrefab, SkinPanel);
             var SkinInfo = _Skin.GetComponent<UIObjectShopSkinItem>();
@@ -95,6 +102,25 @@ public class UIObjectShop : MonoBehaviour
                 }
             }
         }
+
+        // 비디오 프리펩 복제
+        for(int VideoIndex = 0; VideoIndex < VideoTitle.Length; VideoIndex++)
+        {
+            var _Video = (GameObject)Instantiate(VideoPrefab, VideoPanel);
+            var VideoInfo = _Video.GetComponent<UIObjectShopVideoItem>();
+
+            if(VideoInfo)
+            {
+                if(VideoTitle.Length == VideoIcon.Length)
+                {
+                    VideoInfo.name = "Video_Prefab_" + VideoIndex;
+                    VideoInfo.VideoTitleSprite = VideoTitle[VideoIndex];
+                    VideoInfo.VideoIconSprite = VideoIcon[VideoIndex];
+
+                    VideoInfo.gameObject.SetActive(true);
+                }
+            }
+        }
     }
 
     // 각 버튼 별 이벤트 정의
@@ -129,6 +155,14 @@ public class UIObjectShop : MonoBehaviour
             SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + Index).Find("Open").Find("SkillButton").Find("ButtonOn").GetComponent<Button>().onClick.AddListener(() => SetSkillButtonEvent(PrefabIndex, "On"));
             SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + Index).Find("Open").Find("SkillButton").Find("ButtonOff").GetComponent<Button>().onClick.AddListener(() => SetSkillButtonEvent(PrefabIndex, "Off"));
             SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + Index).Find("Lock").Find("SkillButton").Find("ButtonLock").GetComponent<Button>().onClick.AddListener(() => SetSkillButtonEvent(PrefabIndex, "Lock"));
+        }
+
+        for(int Index = 0; Index < VideoCount; Index++)
+        {
+            var Prefab = VideoGroup.transform.Find("VideoItems").Find("Viewport").Find("Content").Find("Video_Prefab_" + Index).GetComponent<UIObjectShopVideoItem>();
+            int PrefabIndex = Prefab.VideoIndex;
+
+            VideoGroup.transform.Find("VideoItems").Find("Viewport").Find("Content").Find("Video_Prefab_" + Index).Find("ItemButtons").Find("ButtonPlay").GetComponent<Button>().onClick.AddListener(() => SetVideoButtonEvent(PrefabIndex, "Play"));
         }
     }
 
@@ -364,6 +398,20 @@ public class UIObjectShop : MonoBehaviour
             if (DataManager.dataClearStageCount >= DataManager.dataSkillUnLockCondition[Index] || _SkillUnLockYn[Index].Equals("Y"))
             {
                 SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + Index).Find("Lock").gameObject.SetActive(false);
+            }
+        }
+    }
+
+    // 상점 > 비디오 > 각 버튼 별 이벤트 정의
+    public void SetVideoButtonEvent(int Index, string Division)
+    {
+        var config = Config.Instance;
+
+        if (Division.Equals("Play"))
+        {
+            switch(Index)
+            {
+                case 0: Application.OpenURL(config.CREDIT); break;
             }
         }
     }

@@ -55,6 +55,9 @@ public class Config : MonoBehaviourSingleton<Config>
     public string GAMEMODE { get; internal set; }
     public string AUTOMODE { get; internal set; }
 
+    //------------------------- Shop > Video ------------------------
+    public string CREDIT { get; internal set; }
+
 
     private bool _isDevMode = false;
     public bool DevMode
@@ -165,6 +168,9 @@ public class Config : MonoBehaviourSingleton<Config>
         GAMEMODE = string.Empty;
         AUTOMODE = string.Empty;
 
+        //------------------------- Shop > Video ------------------------
+        CREDIT = string.Empty;
+
         LoadConfig();
     }
 
@@ -228,5 +234,8 @@ public class Config : MonoBehaviourSingleton<Config>
         DEVKEY = iniFile["SYSTEM"]["DEVKEY"].ToString().Trim();
         GAMEMODE = iniFile["SYSTEM"]["GAMEMODE"].ToString().Trim();
         AUTOMODE = iniFile["SYSTEM"]["AUTOMODE"].ToString().Trim();
+
+        //------------------------- Shop > Video ------------------------
+        CREDIT = iniFile["URL"]["CREDIT"].ToString().Trim();
     }
 }
