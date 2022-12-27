@@ -29,11 +29,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3fa7163844a05d2489bf9f2b095f11c4, type: 3}
   - {fileID: 21300000, guid: f9bb9a905b509c14bbac4307e1128009, type: 3}
   StageIcons:
-  - {fileID: 21300000, guid: 1389d8c9c8d07d04cb32cb7c375a3976, type: 3}
-  - {fileID: 21300000, guid: e6168bd3b7c498849acb700770681db7, type: 3}
-  - {fileID: 21300000, guid: abc305832c485e141aefc2922cf1ce75, type: 3}
-  - {fileID: 21300000, guid: af3bc157d13e33345b5dae82defd92bc, type: 3}
-  - {fileID: 21300000, guid: 3864f808d63e25846b3a6fb80daad51e, type: 3}
+  - {fileID: 21300000, guid: b55fe154b4559d8488fab7458d73aa87, type: 3}
+  - {fileID: 21300000, guid: fd7127f9cebfa8a4db64e0a653df7257, type: 3}
+  - {fileID: 21300000, guid: 264413c50b277e14b830c5b293ae3d5f, type: 3}
+  - {fileID: 21300000, guid: 365ca624b916a114494642f36655f263, type: 3}
+  - {fileID: 21300000, guid: 07a850c72e91d4f4d9e68ee5594de294, type: 3}
   FirstAlbumMusicBackground:
   - {fileID: 21300000, guid: ab7e8359b825e44418b8581ca46c493e, type: 3}
   - {fileID: 21300000, guid: 6b34cec4b2816a946912adfeed3588d4, type: 3}
