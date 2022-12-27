@@ -118,6 +118,9 @@ public class UIElementSetting : MonoBehaviourSingleton<UIElementSetting>
 
                 Background.SetActive(false);
                 PanelPause.SetActive(false);
+
+                // 게임 일시 정지 프로세스 > 해제
+                Stage.Instance.OnClickPause();
             }
         }
     }

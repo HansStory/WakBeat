@@ -32,10 +32,7 @@ public class UIObjectPause : MonoBehaviour
         //DataManager.dataBackgroundProcActive = true;
 
         // 창 닫기 버튼 이벤트
-        UIElementSetting.Instance.ButtonClickControll("Pause", "Close");
-
-        // 게임 일시 정지 프로세스 > 실행
-        Stage.Instance.OnClickPause();       
+        UIElementSetting.Instance.ButtonClickControll("Pause", "Close"); 
 
         if (Division.Equals("Back")) 
         {

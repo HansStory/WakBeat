@@ -772,6 +772,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         {
             PlayGame();
             InputExcute();
+            CallPause();
         }
     }
 
@@ -999,6 +1000,24 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         if (state.UseBarrier)
         {
             InputZ();
+        }
+    }
+
+    // 일시정지 창 호출
+    public void CallPause()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(_isPause)
+            {
+                SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingOut);
+                UIElementSetting.Instance.ButtonClickControll("Pause", "Close");
+            } 
+            else
+            {
+                SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingOut);
+                UIElementSetting.Instance.ButtonClickControll("Pause", "Open");
+            }
         }
     }
 
