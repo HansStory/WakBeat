@@ -583,7 +583,7 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
     // Start is called before the first frame update
     void Start()
     {
-
+        dataShopCompulsionActive = !Config.Instance.DevMode;
     }
 
     // Update is called once per frame
