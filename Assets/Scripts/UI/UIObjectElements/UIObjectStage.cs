@@ -158,6 +158,24 @@ public class UIObjectStage : MonoBehaviour
         UIElementMusicSelect.ShowSelectedStage();
     }
 
+    public void OnClickDemoStageCircle()
+    {
+        var direction = GlobalState.Instance.StageIndex - StageIndex;
+
+        switch (direction)
+        {
+            case -1:
+                UIElementMusicSelect.InputRightFunction();
+                break;
+            case 1:
+                UIElementMusicSelect.InputLeftFunction();
+                ShowMyIndex();
+                break;
+        }
+
+        UIElementMusicSelect.ShowSelectedStage();
+    }
+
     void DestroyDemoLock()
     {
         var state = GlobalState.Instance;
