@@ -3,7 +3,8 @@ using UnityEngine.UI;
 
 public class FirstAStage1 : Stage
 {
-    public ParticleSystem ClockEffect;
+    public ParticleSystem Clock3Effect;
+    public ParticleSystem Clock12Effect;
 
     private bool isClockEffect = false;
 
@@ -47,16 +48,32 @@ public class FirstAStage1 : Stage
         }
         else
         {
-            ClockEffect.gameObject.SetActive(true);
-            ClockEffect.Play();
+            if (_currentLine < 95)
+            {
+                Clock3Effect.gameObject.SetActive(true);
+                Clock3Effect.Play();
 
-            Invoke(nameof(HideClockEffect), 3f);
+                Invoke(nameof(HideClock3Effect), 3f);
+            }
+            else
+            {
+                Clock12Effect.gameObject.SetActive(true);
+                Clock12Effect.Play();
+
+                Invoke(nameof(HideClock12Effect), 3f);
+            }
+
         }
     }
 
-    void HideClockEffect()
+    void HideClock3Effect()
     {
-        ClockEffect.gameObject.SetActive(false);
+        Clock3Effect.gameObject.SetActive(false);
+    }
+
+    void HideClock12Effect()
+    {
+        Clock3Effect.gameObject.SetActive(false);
     }
 
     protected override void Update()
