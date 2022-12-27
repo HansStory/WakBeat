@@ -538,7 +538,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         }
     }
 
-    private string _animationName = string.Empty;
+    protected string _animationName = string.Empty;
     protected virtual void PlayAnimation(string animationName)
     {
         var beatItem = bmwReader.ChartingItem[_currentLine];
@@ -782,6 +782,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
         Center.transform.Rotate(0f, 0f, (Time.deltaTime / _beatTime) * -_ballSpeed);
         OperateBallMovement();
+
 
         if (_currentLine < bmwReader.ChartingItem.Count - 1)
         {
