@@ -12,6 +12,8 @@ public class FirstAStage2 : Stage
         SetBallSkin(GlobalData.Instance.StageInfo.BallSkins[7]);
         SetCircleSprite(GlobalData.Instance.StageInfo.CircleSkins[3]);
         SetBackGroundSprite(GlobalData.Instance.StageInfo.BackGroundSkins[1]);
+
+        SetEffectColor();
     }
 
     protected override void PlayProcess()
@@ -45,9 +47,21 @@ public class FirstAStage2 : Stage
         Debug.Log("Stop Ball Time : " + StageAnim[_animationName].time);
     }
 
-
     protected override void Update()
     {
         base.Update();
+    }
+
+    private void SetEffectColor()
+    {
+        for (int i = 0; i < EffectColor.Length; i++)
+        {
+            EffectColor[i] = new Color(0.929f, 0.933f, 0.803f, 0.8f);
+        }
+
+        for (int i = 0; i < EffectAlpha0Color.Length; i++)
+        {
+            EffectAlpha0Color[i] = new Color(0.929f, 0.933f, 0.803f, 0f);
+        }
     }
 }
