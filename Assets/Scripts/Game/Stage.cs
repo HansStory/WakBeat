@@ -1079,7 +1079,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     protected Color DefaultAlpha0Color3 = new Color(1f, 0.58f, 1f, 0f);
     protected Color DefaultAlpha0Color4 = new Color(0.95f, 1f, 0.54f, 0f);
     protected Color DefaultAlpha0Color5 = new Color(0.57f, 1f, 1f, 0f);
-    protected Color DefaultAlpha0Color6 = new Color(0, 0, 0, 0f);
+    protected Color DefaultAlpha0Color6 = new Color(0.3f, 0.3f, 0.3f, 0f);
     protected Color DefaultAlpha0Color7 = new Color(0.45f, 0.71f, 0.65f, 0f);
 
     protected virtual void EnterSavePointEffect()
