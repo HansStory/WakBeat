@@ -167,6 +167,8 @@ public class UIObjectStage : MonoBehaviour
             case -1:
                 UIElementMusicSelect.InputRightFunction();
                 break;
+            case 0: //TO DO «ÿ±› ¿Ã∆Â∆Æ
+                break;
             case 1:
                 UIElementMusicSelect.InputLeftFunction();
                 ShowMyIndex();
