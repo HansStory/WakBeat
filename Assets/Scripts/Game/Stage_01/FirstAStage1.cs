@@ -26,7 +26,7 @@ public class FirstAStage1 : Stage
                 isClockEffect = true;
                 break;
             case 80:
-                SetObstaclesSkin(7);
+                SetObstaclesSkin(7, Color.white);
                 SetBallSkin(GlobalData.Instance.StageInfo.BallSkins[10]);
                 ChangeCircle();
                 break;

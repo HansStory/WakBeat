@@ -429,7 +429,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         }
     }
 
-    protected virtual void SetObstaclesSkin(int ballType)
+    protected virtual void SetObstaclesSkin(int ballType, Color color)
     {
         var stageInfo = GlobalData.Instance.StageInfo;
 
@@ -441,6 +441,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
                 if (stageInfo.ObstacleSkins[ballType])
                 {
                     skin.sprite = stageInfo.ObstacleSkins[ballType];
+                    skin.color = color;
                 }
             }
         }
@@ -453,6 +454,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
                 if (stageInfo.ObstacleSkins[ballType])
                 {
                     skin.sprite = stageInfo.ObstacleSkins[ballType];
+                    skin.color = color;
                 }
             }
         }

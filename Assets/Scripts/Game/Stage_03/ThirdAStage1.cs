@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,6 +20,8 @@ public class ThirdAStage1 : Stage
         switch (_currentLine)
         {
             case 0:
+                SetBallSkin(GlobalData.Instance.StageInfo.BallSkins[9]);
+                SetCircleSprite(GlobalData.Instance.StageInfo.CircleSkins[5]);
                 ChangeSkinAlpha();
                 break;
             case 1:
@@ -49,36 +50,11 @@ public class ThirdAStage1 : Stage
 
     void ChangeSkinAlpha()
     {
-        BallSkin.color = new Color(1, 1, 1, 0.5f);
-        CircleSkin.color = new Color(1, 1, 1, 0.5f);
+        var alphaColor = new Color(1, 1, 1, 0.5f);
 
-        var stageInfo = GlobalData.Instance.StageInfo;
-
-        foreach (var obstacle in InObstacleLists)
-        {
-            var skin = obstacle.GetComponent<Image>();
-            if (skin)
-            {
-                if (stageInfo.ObstacleSkins[6])
-                {
-                    skin.sprite = stageInfo.ObstacleSkins[6];
-                    skin.color = new Color(1, 1, 1, 0.5f);
-                }
-            }
-        }
-
-        foreach (var obstacle in OutObstacleLists)
-        {
-            var skin = obstacle.GetComponent<Image>();
-            if (skin)
-            {
-                if (stageInfo.ObstacleSkins[6])
-                {
-                    skin.sprite = stageInfo.ObstacleSkins[6];
-                    skin.color = new Color(1, 1, 1, 0.5f);
-                }
-            }
-        }
+        BallSkin.color = alphaColor;
+        CircleSkin.color = alphaColor;
+        SetObstaclesSkin(6, alphaColor);
     }
 
     void ChangeSkinWhite()
@@ -86,40 +62,18 @@ public class ThirdAStage1 : Stage
         BallSkin.color = Color.white;
         CircleSkin.color = Color.white;
 
-        var stageInfo = GlobalData.Instance.StageInfo;
-
-        foreach (var obstacle in InObstacleLists)
-        {
-            var skin = obstacle.GetComponent<Image>();
-            if (skin)
-            {
-                if (stageInfo.ObstacleSkins[6])
-                {
-                    skin.sprite = stageInfo.ObstacleSkins[6];
-                    skin.color = Color.white;
-                }
-            }
-        }
-
-        foreach (var obstacle in OutObstacleLists)
-        {
-            var skin = obstacle.GetComponent<Image>();
-            if (skin)
-            {
-                if (stageInfo.ObstacleSkins[6])
-                {
-                    skin.sprite = stageInfo.ObstacleSkins[6];
-                    skin.color = Color.white;
-                }
-            }
-        }
+        SetObstaclesSkin(6, Color.white);
     }
 
     void ChangeSkinPixel()
     {
         CircleSkin.sprite = GlobalData.Instance.StageInfo.CircleSkins[8];
+        CircleSkin.color = Color.black;
+
         BallSkin.sprite = GlobalData.Instance.StageInfo.BallSkins[11];
-        SetObstaclesSkin(8);
+        BallSkin.color = Color.black;
+
+        SetObstaclesSkin(8, Color.black);
     }
 
 

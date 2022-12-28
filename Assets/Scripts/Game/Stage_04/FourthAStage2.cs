@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.UI;
 
 public class FourthAStage2 : Stage
@@ -29,9 +30,11 @@ public class FourthAStage2 : Stage
                 break;
             case 33:
                 ChangeBackGroundBlack();
+                Debug.Log(StageAnim[_animationName].time);
                 break;
             case 41:
                 ChangeBackGroundOrange();
+                Debug.Log(StageAnim[_animationName].time); 
                 break;
             case 47:
                 ChangeBackGroundBlack();
@@ -56,13 +59,13 @@ public class FourthAStage2 : Stage
     {
         SetBallSkin(GlobalData.Instance.StageInfo.BallSkins[10]);
         SetCircleSprite(GlobalData.Instance.StageInfo.CircleSkins[6]);
-        SetObstaclesSkin(7);
+        SetObstaclesSkin(7, Color.white);
     }
 
     private void ChangeBackGroundOrange()
     {
         SetBallSkin(GlobalData.Instance.StageInfo.BallSkins[6]);
         SetCircleSprite(GlobalData.Instance.StageInfo.CircleSkins[2]);
-        SetObstaclesSkin(3);
+        SetObstaclesSkin(3, Color.white);
     }
 }
