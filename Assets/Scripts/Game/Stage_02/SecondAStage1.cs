@@ -120,8 +120,8 @@ public class SecondAStage1 : Stage
         switch (_currentLine)
         {
             case 5:
-                DestroySpotLight();
-                Invoke(nameof(HideObstacles), 3 * _tick);
+                DestroySpotLight(2.5f * _tick);
+                Invoke(nameof(HideObstacles), 3 *_tick);
                 break;
         }
     }
@@ -135,10 +135,10 @@ public class SecondAStage1 : Stage
         }
     }
 
-    void DestroySpotLight()
+    void DestroySpotLight(float delay)
     {
         var tween = spotLightTransform.DOScale(Vector3.one * 200f, _tick).SetAutoKill();
-        tween.SetDelay(3 * _tick).SetEase(Ease.OutQuart).OnComplete(() => { OnCompleteTween(); }) ;
+        tween.SetDelay(delay).SetEase(Ease.OutQuart).OnComplete(() => { OnCompleteTween(); }) ;
     }
 
     private void OnCompleteTween()
