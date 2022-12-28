@@ -100,7 +100,7 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
             if (null == DataManager.dataSkinUnLockYn || DataManager.dataSkinUnLockYn.Length <= 0 
                 || (Array.IndexOf(DataManager.dataSkinUnLockYn, "N") < 0 && Array.IndexOf(DataManager.dataSkinUnLockYn, "Y") < 0)
                 || null == DataManager.dataSkinUsingYn || DataManager.dataSkinUsingYn.Length <= 0 
-                || (Array.IndexOf(DataManager.dataSkinUsingYn, "N") < 0 && Array.IndexOf(DataManager.dataSkinUnLockYn, "Y") < 0))
+                || (Array.IndexOf(DataManager.dataSkinUsingYn, "N") < 0 && Array.IndexOf(DataManager.dataSkinUsingYn, "Y") < 0))
             {
                 DataManager.dataSkinUnLockYn = new string[DataManager.dataSkinCount];
                 DataManager.dataSkinUsingYn = new string[DataManager.dataSkinCount];
@@ -119,6 +119,7 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
                     }
                 }
             }
+
             if(null == DataManager.dataSkillUnLockYn || DataManager.dataSkillUnLockYn.Length <= 0 
                 || (Array.IndexOf(DataManager.dataSkillUnLockYn, "N") < 0 && Array.IndexOf(DataManager.dataSkillUnLockYn, "Y") < 0)
                 || null == DataManager.dataSkillUsingYn || DataManager.dataSkillUsingYn.Length <= 0 
@@ -175,6 +176,11 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
         // Json 데이터 가져옴
         var userData = GetUserData();
 
+        if(File.Exists(_path + _fileName))
+        {
+            File.Delete(_path + _fileName);
+        }
+
         // 파일에 데이터 작성하여 저장
         File.WriteAllText(_path + _fileName, userData);
     }
@@ -192,7 +198,7 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
             var jsonUserData = File.ReadAllText(_path + _fileName);
             GlobalState.Instance.UserData = JsonUtility.FromJson<JsonUserData>(jsonUserData);
 
-            Debug.Log($"Load User Data : {jsonUserData}");
+            //Debug.Log($"Load User Data : {jsonUserData}");
 
             // DataManager에 파일에서 가져온 데이터 넣기
             // 설정 데이터 세팅
@@ -203,7 +209,7 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
             dataOuterOperationKey = GlobalState.Instance.UserData.data.settingData.outerOperationKey;
 
             // 상점 데이터 세팅
-            dataSkinUnLockYn = GlobalState.Instance.UserData.data.shopData.skillUnLockYn;
+            dataSkinUnLockYn = GlobalState.Instance.UserData.data.shopData.skinUnLockYn;
             dataSkinUsingYn = GlobalState.Instance.UserData.data.shopData.skinUsingYn;
             dataSkillUnLockYn = GlobalState.Instance.UserData.data.shopData.skillUnLockYn;
             dataSkillUsingYn = GlobalState.Instance.UserData.data.shopData.skillUsingYn;
