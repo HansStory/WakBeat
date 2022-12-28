@@ -22,25 +22,31 @@ public class FourthAStage2 : Stage
 
         switch (_currentLine)
         {
-            case 16:
-                Invoke(nameof(HidePlayGround), _tick);
+            case 0:
+                ChangeBackGroundBlack();
+                break;
+            case 2:
+                ChangeBackGroundOrange();
                 break;
             case 17:
-                Invoke(nameof(ShowPlayGround), _tick);
+                HidePlayGround();
+                break;
+            case 18:
+                ShowPlayGround();
                 break;
             case 33:
-                ChangeBackGroundBlack();
+                Invoke(nameof(ChangeBackGroundBlack),_tick);
                 Debug.Log(StageAnim[_animationName].time);
                 break;
             case 41:
-                ChangeBackGroundOrange();
+                Invoke(nameof(ChangeBackGroundOrange), _tick + (_tick/2f));
                 Debug.Log(StageAnim[_animationName].time); 
                 break;
             case 47:
-                ChangeBackGroundBlack();
+                Invoke(nameof(ChangeBackGroundBlack), _tick);
                 break;
             case 49:
-                ChangeBackGroundOrange();
+                Invoke(nameof(ChangeBackGroundOrange), _tick + (_tick / 2f));
                 break;
         }
     }
