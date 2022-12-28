@@ -124,7 +124,7 @@ RectTransform:
   - {fileID: 385569164114786340}
   - {fileID: 3890234786825703533}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Background: {fileID: 4666646610972379104}
+  _UIElementPopUp: {fileID: 3483037167288237080}
   AlbumInfoPrefab: {fileID: 8855130136538181678, guid: 7fd5dbedc2b76c340bd27a5105c80c47, type: 3}
   AlbumInfoPanel: {fileID: 385569164114786340}
   MusicInfoPrefab: {fileID: 5611391142765583243, guid: 009f7d35d81088e4f96bea9e479b9028, type: 3}

@@ -11,6 +11,7 @@ using UnityEngine.UI;
 public class UIElementPopUp : MonoBehaviour
 {
     public GameObject Background;
+    [SerializeField] private GameObject _UIElementPopUp;
     [SerializeField] private GameObject AlbumInfoPrefab;
     [SerializeField] private Transform AlbumInfoPanel;
     [SerializeField] private GameObject MusicInfoPrefab;
@@ -28,6 +29,10 @@ public class UIElementPopUp : MonoBehaviour
             PopUpInfo.ContentImage.sprite = GlobalData.Instance.Album.AlbumInfomationImage[AlbumIndex];
             // Close 버튼 이벤트
             _PopUp.transform.Find("ButtonClose").GetComponent<Button>().onClick.AddListener(() => SetButtonEvent("Album", _PopUp));
+
+            _UIElementPopUp.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 0);
+            _UIElementPopUp.gameObject.GetComponent<RectTransform>().offsetMax = new Vector2(0, 0);
+            _UIElementPopUp.gameObject.GetComponent<RectTransform>().offsetMin = new Vector2(0, 0);
 
             _PopUp.SetActive(true);
             Background.SetActive(true);
