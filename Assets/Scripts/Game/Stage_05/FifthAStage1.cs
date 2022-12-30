@@ -10,7 +10,7 @@ public class FifthAStage1 : Stage
 
         SetBallSkin(GlobalData.Instance.StageInfo.BallSkins[12]);
         SetCircleSprite(GlobalData.Instance.StageInfo.CircleSkins[9]);
-        SetObstaclesSkin(9, Color.white);
+        SetObstaclesSkin(9, Color.red);
     }
 
     protected override void PlayProcess()
@@ -20,13 +20,10 @@ public class FifthAStage1 : Stage
         switch (_currentLine)
         {
             case 0:
-                SetObstaclesSkin(9, Color.white);
                 break;
             case 5:
-                SetObstaclesSkin(10, Color.white);
                 break;
             case 10:
-                SetObstaclesSkin(11, Color.white);
                 break;
             case 12:
                 break;
