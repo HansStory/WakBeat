@@ -22,10 +22,6 @@ public class AlbumInfo : ScriptableObject
     [Header("[ Stage Icon Images ]")]
     public Sprite[] StageIcons;
 
-    //[Space(10)]
-    //[Header("[ First Album Music Information ]")]
-    //public ScriptableObject[] album1Stage;
-
     [Space(10)]
     [Header("[ First Album Music Information ]")]
     public Sprite[] FirstAlbumMusicBackground;
@@ -51,6 +47,12 @@ public class AlbumInfo : ScriptableObject
     public Sprite[] ForthAlbumMusicLevel;
 
     [Space(10)]
+    [Header("[ Fifth Album Music Information ]")]
+    public Sprite[] FifthAlbumMusicBackground;
+    public Sprite[] FifthAlbumMusicCircle;
+    public Sprite[] FifthAlbumMusicLevel;
+
+    [Space(10)]
     [Header("[ Album Infomation Image ]")]
     public Sprite[] AlbumInfomationImage;
 
@@ -60,4 +62,5 @@ public class AlbumInfo : ScriptableObject
     public Sprite[] Album2MusicBannerImage;
     public Sprite[] Album3MusicBannerImage;
     public Sprite[] Album4MusicBannerImage;
+    public Sprite[] Album5MusicBannerImage;
 }

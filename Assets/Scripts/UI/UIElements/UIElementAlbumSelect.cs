@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -111,6 +110,10 @@ public class UIElementAlbumSelect : MonoBehaviour
                 InitAlbumTween(albumCircle, animCurve, 1f, 0.8f);
                 break;
             case (int)GlobalData.ALBUM.WAKALOID:
+                InitAlbumPos(rectTransform, _outUpPos, _smallSize);
+                InitAlbumTween(albumCircle, animCurve, 1f, 0.7f);
+                break;
+            case (int)GlobalData.ALBUM.CONTEST2:
                 InitAlbumPos(rectTransform, _upPos, _smallSize);
                 InitAlbumTween(albumCircle, animCurve, 1f, 0.7f);
                 break;

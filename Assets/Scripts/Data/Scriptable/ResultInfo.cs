@@ -27,6 +27,12 @@ public class ResultInfo : ScriptableObject
     public Sprite[] FourthAlbumTitles;
 
     [Space(10)]
+    [Header("[ Fifth Album Thumnail ]")]
+    public Sprite[] FifthAlbumThumnails;
+    [Header("[ Fifth Album Title ]")]
+    public Sprite[] FifthAlbumTitles;
+
+    [Space(10)]
     public Sprite StarOn;
     public Sprite StarOff;
 }

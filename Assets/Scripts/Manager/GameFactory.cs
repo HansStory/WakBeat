@@ -8,6 +8,7 @@ public class GameFactory : MonoBehaviourSingleton<GameFactory>
     [SerializeField] private GameObject[] album2StageList;
     [SerializeField] private GameObject[] album3StageList;
     [SerializeField] private GameObject[] album4StageList;
+    [SerializeField] private GameObject[] album5StageList;
 
     [SerializeField] private Transform creatGameBase;
 
@@ -33,6 +34,9 @@ public class GameFactory : MonoBehaviourSingleton<GameFactory>
                 break;
             case (int)GlobalData.ALBUM.WAKALOID:
                 stage = GameObject.Instantiate(album4StageList[GlobalState.Instance.StageIndex], creatGameBase);
+                break;
+            case (int)GlobalData.ALBUM.CONTEST2:
+                stage = GameObject.Instantiate(album5StageList[GlobalState.Instance.StageIndex], creatGameBase);
                 break;
         }
     }

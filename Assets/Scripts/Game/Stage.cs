@@ -349,9 +349,12 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
                 var image = dodge.GetComponent<Image>();
                 if (image)
                 {
-                    if (_isAutoMode)
+                    if (!state.DevMode)
                     {
-                        image.color = Color.clear;
+                        if (_isAutoMode)
+                        {
+                            image.color = Color.clear;
+                        }
                     }
                 }
 
@@ -525,7 +528,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     protected virtual void TweenClearRate()
     {
-        if (!state.DevMode)
+        if (state.DevMode)
         {
             if (_currentLine > 0)
             {

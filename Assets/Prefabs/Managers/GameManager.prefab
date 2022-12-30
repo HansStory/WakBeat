@@ -48,7 +48,7 @@ MonoBehaviour:
   - {fileID: 4143023116079684940, guid: 3810dc9215d65b94cb0c4ea4c2f80c77, type: 3}
   - {fileID: 4143023116079684940, guid: dd1052d8431343d4a915f17cef772fd9, type: 3}
   album2StageList:
-  - {fileID: 4143023116079684940, guid: e606671bca4107c438391b102c0ea1b6, type: 3}
+  - {fileID: 4143023116079684940, guid: f9ef4ad4bc3d09146884d6cef18bd2b8, type: 3}
   - {fileID: 4143023116079684940, guid: f100c26391d6c28418d044799939283b, type: 3}
   - {fileID: 4143023116079684940, guid: 92c32d5aa0d49dc40bbf553f595a5629, type: 3}
   - {fileID: 4143023116079684940, guid: f631f05bd0ddc804bb71a24fe56f4063, type: 3}
@@ -63,4 +63,6 @@ MonoBehaviour:
   - {fileID: 4143023116079684940, guid: b18736bed2f6e7442b7c8a43d2f18cab, type: 3}
   - {fileID: 4143023116079684940, guid: 321848c417e2e5b4984f16f04c3e694f, type: 3}
   - {fileID: 4143023116079684940, guid: 6fdceaa8afbd01846bda0c7a3d87520a, type: 3}
+  album5StageList:
+  - {fileID: 4143023116079684940, guid: 354be6d128c5ef141bf41dc0b329acc7, type: 3}
   creatGameBase: {fileID: 0}

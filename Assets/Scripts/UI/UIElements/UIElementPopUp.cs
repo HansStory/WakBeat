@@ -55,6 +55,7 @@ public class UIElementPopUp : MonoBehaviour
             case 1: musicBanner = GlobalData.Instance.Album.Album2MusicBannerImage[StageIndex]; break;
             case 2: musicBanner = GlobalData.Instance.Album.Album3MusicBannerImage[StageIndex]; break;
             case 3: musicBanner = GlobalData.Instance.Album.Album4MusicBannerImage[StageIndex]; break;
+            case 4: musicBanner = GlobalData.Instance.Album.Album5MusicBannerImage[StageIndex]; break;
         }
 
         if (PopUpInfo)

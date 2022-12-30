@@ -34,6 +34,7 @@ public class GlobalData : MonoBehaviourSingleton<GlobalData>
         CONTEST,
         GOMIX,
         WAKALOID,
+        CONTEST2,
         FESTIVAL,
     }
 

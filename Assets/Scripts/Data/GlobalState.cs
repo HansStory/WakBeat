@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GlobalState : MonoBehaviourSingleton<GlobalState>
@@ -174,6 +172,9 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
                     break;
                 case (int)GlobalData.ALBUM.WAKALOID:
                     _bmwFolderPath = path + "Album_04";
+                    break;
+                case (int)GlobalData.ALBUM.CONTEST2:
+                    _bmwFolderPath = path + "Album_05";
                     break;
             }
 

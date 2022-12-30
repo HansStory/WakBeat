@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 using DG.Tweening;
 
 public class UIManager : MonoBehaviourSingleton<UIManager>
@@ -41,12 +38,7 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
     public GameObject[] MainPanels;
 
     [Header("UI Main Panels")]
-    public UIElementIntro UIElementIntro;
-    public UIElementMain UIElementMain;
     public UIElementAlbumSelect UIElementAlbumSelect;
-    public UIElementMusicSelect UIElementMusicSelect;
-    public UIElementGamePlay UIElementGamePlay;
-    public UIElementResult UIElementResult;
 
     [Header("UI Setting Panel")]
     public UIElementSetting UIElementSetting;

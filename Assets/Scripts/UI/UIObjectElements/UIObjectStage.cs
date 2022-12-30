@@ -249,6 +249,14 @@ public class UIObjectStage : MonoBehaviour
                         break;
                 }
                 break;
+            case (int)GlobalData.ALBUM.CONTEST2:
+                switch (StageIndex)
+                {
+                    case (int)GlobalData.STAGE.STAGE1:
+                        Destroy(_demoLockImage.gameObject);
+                        break;
+                }
+                break;
         }
     }
 

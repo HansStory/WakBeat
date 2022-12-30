@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -129,13 +126,24 @@ public class UIElementResult : MonoBehaviour
                         break;
                 }      
                 break;
+            case (int)GlobalData.ALBUM.CONTEST2:
+                switch (GlobalState.Instance.StageIndex)
+                {
+                    case (int)GlobalData.STAGE.STAGE1:
+                        GetResultImages(resultInfo.FifthAlbumTitles, resultInfo.FifthAlbumThumnails, (int)GlobalData.STAGE.STAGE1, 3);
+                        break;
+                }
+                break;
         }
     }
 
     void GetResultImages(Sprite[] title, Sprite[] thumnail, int stage, int level)
     {
+        if (ResultTitle == null) return;
         ResultTitle.sprite = title[stage];
+        ResultTitle.SetNativeSize();
 
+        if (ResultThumnail == null) return;
         ResultThumnail.sprite = thumnail[stage];
         ResultThumnail.SetNativeSize();
 
@@ -343,6 +351,14 @@ public class UIElementResult : MonoBehaviour
                         break;
                     case (int)GlobalData.STAGE.STAGE4:
                         SetMusicURL(config.Origin_Waklio, config.ReMix_Waklio);
+                        break;
+                }
+                break;
+            case (int)GlobalData.ALBUM.CONTEST2:
+                switch (GlobalState.Instance.StageIndex)
+                {
+                    case (int)GlobalData.STAGE.STAGE1:
+                        SetMusicURL(config.Origin_Jungtur, config.ReMix_Jungtur);
                         break;
                 }
                 break;

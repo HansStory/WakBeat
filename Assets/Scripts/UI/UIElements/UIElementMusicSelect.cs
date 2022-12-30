@@ -1,9 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using System.Xml;
 using TMPro;
 
 public class UIElementMusicSelect : MonoBehaviour
@@ -91,6 +89,9 @@ public class UIElementMusicSelect : MonoBehaviour
                 break;
             case (int)GlobalData.ALBUM.WAKALOID:
                 MakeAlbumStage(albumData.ForthAlbumMusicCircle, albumData.ForthAlbumMusicLevel);
+                break;
+            case (int)GlobalData.ALBUM.CONTEST2:
+                MakeAlbumStage(albumData.FifthAlbumMusicCircle, albumData.FifthAlbumMusicLevel);
                 break;
         }
     }
@@ -374,6 +375,9 @@ public class UIElementMusicSelect : MonoBehaviour
                 break;
             case (int)GlobalData.ALBUM.WAKALOID:
                 backGround.sprite = albumData.ForthAlbumMusicBackground[state.StageIndex];
+                break;
+            case (int)GlobalData.ALBUM.CONTEST2:
+                backGround.sprite = albumData.FifthAlbumMusicBackground[state.StageIndex];
                 break;
         }
 

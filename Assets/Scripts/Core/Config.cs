@@ -24,6 +24,8 @@ public class Config : MonoBehaviourSingleton<Config>
     public string Origin_TwistedLove { get; internal set; }
     public string Origin_Waklio { get; internal set; }
 
+    public string Origin_Jungtur { get; internal set; }
+
     //ReMix URL
     //Music       
     public string ReMix_Rewind { get; internal set; }
@@ -44,6 +46,7 @@ public class Config : MonoBehaviourSingleton<Config>
     public string ReMix_BangOff { get; internal set; }
     public string ReMix_TwistedLove { get; internal set; }
     public string ReMix_Waklio { get; internal set; }
+    public string ReMix_Jungtur { get; internal set; }
 
     //BackGroundMusic
     public string BGM_01 { get; internal set; }
@@ -137,6 +140,7 @@ public class Config : MonoBehaviourSingleton<Config>
         Origin_BangOff = string.Empty;
         Origin_TwistedLove = string.Empty;
         Origin_Waklio = string.Empty;
+        Origin_Jungtur = string.Empty;
 
         // Remix URL
         ReMix_Rewind = string.Empty;
@@ -157,6 +161,7 @@ public class Config : MonoBehaviourSingleton<Config>
         ReMix_BangOff = string.Empty;
         ReMix_TwistedLove = string.Empty;
         ReMix_Waklio = string.Empty;
+        ReMix_Jungtur = string.Empty;
 
         //BGM
         BGM_01 = string.Empty;
@@ -203,6 +208,8 @@ public class Config : MonoBehaviourSingleton<Config>
         Origin_TwistedLove = iniFile["URL"]["Origin_TwistedLove"].ToString().Trim();
         Origin_Waklio = iniFile["URL"]["Origin_Waklio"].ToString().Trim();
 
+        Origin_Jungtur = iniFile["URL"]["Origin_Jungtur"].ToString().Trim();
+
         // Remix URL
         ReMix_Rewind = iniFile["URL"]["ReMix_Rewind"].ToString().Trim();
         ReMix_WinterSpring = iniFile["URL"]["ReMix_WinterSpring"].ToString().Trim();
@@ -222,6 +229,8 @@ public class Config : MonoBehaviourSingleton<Config>
         ReMix_BangOff = iniFile["URL"]["ReMix_BangOff"].ToString().Trim();
         ReMix_TwistedLove = iniFile["URL"]["ReMix_TwistedLove"].ToString().Trim();
         ReMix_Waklio = iniFile["URL"]["ReMix_Waklio"].ToString().Trim();
+
+        ReMix_Jungtur = iniFile["URL"]["ReMix_Jungtur"].ToString().Trim();
 
         // BGM
         BGM_01 = iniFile["URL"]["BGM_01"].ToString().Trim();

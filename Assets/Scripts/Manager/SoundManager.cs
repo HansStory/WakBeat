@@ -27,11 +27,13 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     [SerializeField] private AudioClip[] album2HighLightClips;
     [SerializeField] private AudioClip[] album3HighLightClips;
     [SerializeField] private AudioClip[] album4HighLightClips;
+    [SerializeField] private AudioClip[] album5HighLightClips;
 
     [SerializeField] private AudioClip[] album1StageClips;
     [SerializeField] private AudioClip[] album2StageClips;
     [SerializeField] private AudioClip[] album3StageClips;
     [SerializeField] private AudioClip[] album4StageClips;
+    [SerializeField] private AudioClip[] album5StageClips;
 
 
     private int backgroundMusicIndex;
@@ -139,6 +141,10 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
                 MusicAudioSource.clip = album4HighLightClips[GlobalState.Instance.StageIndex];
                 SelectedAlbumMusicLength = album4HighLightClips.Length - 1;
                 break;
+            case (int)GlobalData.ALBUM.CONTEST2:
+                MusicAudioSource.clip = album5HighLightClips[GlobalState.Instance.StageIndex];
+                SelectedAlbumMusicLength = album5HighLightClips.Length - 1;
+                break;
         }
     }
 
@@ -166,6 +172,9 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
                 break;
             case (int)GlobalData.ALBUM.WAKALOID:
                 MusicAudioSource.clip = album4StageClips[GlobalState.Instance.StageIndex];
+                break;
+            case (int)GlobalData.ALBUM.CONTEST2:
+                MusicAudioSource.clip = album5StageClips[GlobalState.Instance.StageIndex];
                 break;
         }
     }

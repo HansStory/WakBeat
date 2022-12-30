@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -178,7 +176,8 @@ public class UIElementFadePanel : MonoBehaviourSingleton<UIElementFadePanel>
         {
             fadeInTween = fadeBackGround.DOColor(Color.white, transitionTime);
             fadeInTween.SetDelay(delay).SetAutoKill().OnComplete(() => 
-            { fadeOutTween = fadeBackGround.DOColor(whiteAlpha0, transitionTime + transitionTime)
+            { 
+                fadeOutTween = fadeBackGround.DOColor(whiteAlpha0, transitionTime + transitionTime)
                 .SetDelay(0.5f).SetAutoKill().OnComplete(() => { OnCompleteAlbumToMusic(); }); 
             });
         });
@@ -222,6 +221,9 @@ public class UIElementFadePanel : MonoBehaviourSingleton<UIElementFadePanel>
                 break;
             case (int)GlobalData.ALBUM.WAKALOID:
                 fadeBackGround.sprite = albumInfo.ForthAlbumMusicBackground[state.StageIndex];
+                break;
+            case (int)GlobalData.ALBUM.CONTEST2:
+                fadeBackGround.sprite = albumInfo.FifthAlbumMusicBackground[state.StageIndex];
                 break;
         }
     }

@@ -22,6 +22,12 @@ public class FirstAStage1 : Stage
 
         switch (_currentLine)
         {
+            case 0:
+                if(_isAutoMode) ChangeDodgeColor(Color.green);
+                break;
+            case 15:
+                if (!state.ShowDodge) HideDodge();
+                break;
             case 79:
                 isClockEffect = true;
                 break;
@@ -31,6 +37,46 @@ public class FirstAStage1 : Stage
                 ChangeCircle();
                 break;
         }
+    }
+
+    void ChangeDodgeColor(Color color)
+    {
+        foreach (var dodge in DodgePointLists)
+        {
+            var image = dodge.GetComponent<Image>();
+            if (image)
+            {
+                image.color = color;
+            }
+        }
+    }
+
+    void HideDodge()
+    {
+        foreach (var dodgeList in DodgePointLists)
+        {
+            dodgeList.SetActive(false);
+        }
+    }
+
+    protected override void ShowChartingItems()
+    {
+        if (_currentLine <= 14)
+        {
+            ShowDodgePoint();
+        }
+        else
+        {
+            if (_isAutoMode || state.ShowDodge)
+            {
+                ShowDodgePoint();
+            }
+        }
+
+        ShowInObstacles();
+        ShowOutObstacles();
+
+        ShowSavePoint();
     }
 
     void ChangeCircle()
@@ -62,7 +108,6 @@ public class FirstAStage1 : Stage
 
                 Invoke(nameof(HideClock12Effect), 3f);
             }
-
         }
     }
 
