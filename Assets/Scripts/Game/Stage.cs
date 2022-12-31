@@ -620,9 +620,12 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             }
             else
             {
-                if (speedChangeTween.IsPlaying())
+                if (speedChangeTween != null)
                 {
-                    speedChangeTween.Pause();
+                    if (speedChangeTween.IsPlaying())
+                    {
+                        speedChangeTween.Pause();
+                    }
                 }
 
                 _ballSpeed = beatItem.Speed;
