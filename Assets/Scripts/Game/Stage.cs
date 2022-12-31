@@ -611,22 +611,24 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     {
         var beatItem = bmwReader.ChartingItem[_currentLine];
 
-        if (beatItem.Speed >= 0)
+        if (beatItem.Speed > 0)
         {
-            if (beatItem.SpeedTime < 0)
+            if (beatItem.SpeedTime > 0)
             {
+                speedChangeTween = DOTween.To(() => _ballSpeed, x => _ballSpeed = x, beatItem.Speed, beatItem.SpeedTime).
+                SetEase(Ease.Linear).SetAutoKill();
+            }
+            else
+            {
+                if (speedChangeTween.IsPlaying())
+                {
+                    speedChangeTween.Pause();
+                }
+
+                _ballSpeed = beatItem.Speed;
                 beatItem.SpeedTime = 0;
             }
 
-            if (beatItem.SpeedTime != 0)
-            {
-                //if (speedChangeTween != null)
-                //{
-                //    speedChangeTween.Pause();
-                //}
-                DOTween.To(() => _ballSpeed, x => _ballSpeed = x, beatItem.Speed, beatItem.SpeedTime).
-                    SetEase(Ease.Linear).SetAutoKill();
-            }
         }
     }
 
@@ -801,9 +803,9 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             if (_timer > _beatTime)
             {                
                 _currentLine++;
-                PlayProcess();
-
                 _timer -= _beatTime;
+
+                PlayProcess();
             }
         }
         else
