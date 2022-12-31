@@ -53,13 +53,11 @@ public class StageCharting : Stage
         CreateSpawnPoint();
 
         _isShowDodgePoint = state.ShowDodge;
-
-        //if (TextCurrentLine != null)
-        //{
-        //    TextCurrentLine.text = $"Current Line : {_currentLine}";
-        //}
+        
         TextGameMode.text = $"Game Mode \n {_isGameMode}";
         TextAutoMode.text = $"Auto Mode \n {_isAutoMode}";
+        TextShowMode.text = $"Show Dodge \n {_isAutoMode}";
+
         if (TextShowMode)
         {
             TextShowMode.text = $"Show Mode \n {_isShowDodgePoint}";
@@ -68,7 +66,7 @@ public class StageCharting : Stage
 
     protected override void Start()
     {
-        
+        TextCurrentLine.gameObject.SetActive(true);
     }
 
     private void CreateSpawnPoint()
@@ -109,6 +107,11 @@ public class StageCharting : Stage
 
         DebugElements[BallAngle].text = $"Ball Angle : {Mathf.Abs(Center.transform.localEulerAngles.z - 360f).ToString("F2")}";
         DebugElements[SongTotalTime].text = $"현재 곡의 진행 시간 : {audioSource.time.ToString("F2")}";
+
+        if (state.AlbumIndex == (int)GlobalData.ALBUM.CONTEST2)
+        {
+            DebugElements[BallSpeed].text = $"Ball Speed : {(int)_ballSpeed}";
+        }
     }
 
     protected override void PlayProcess()
@@ -133,8 +136,8 @@ public class StageCharting : Stage
             CalculateTick();
 
             DebugElements[Bar].text = $"Bar : {beatItem.Bar}";
-            DebugElements[TickTime].text = $"1Bar에 걸리는 시간 : {_tick}초";
-            DebugElements[LineTime].text = $"1줄에 걸리는 시간 : {_beatTime}초";
+            DebugElements[TickTime].text = $"1Bar Time : {_tick}초";
+            DebugElements[LineTime].text = $"1Line Time : {_beatTime}초";
         }
     }
 
@@ -344,7 +347,16 @@ public class StageCharting : Stage
             DodgePointBase.gameObject.SetActive(true);
         }
 
-        TextShowMode.text = $"Show Mode \n {_isShowDodgePoint}";
+        TextShowMode.text = $"Show Dodge \n {_isShowDodgePoint}";
+    }
+
+    protected override void ShowChartingItems()
+    {
+        ShowDodgePoint();
+        ShowInObstacles();
+        ShowOutObstacles();
+
+        ShowSavePoint();
     }
 
     public void OnClickLoad()

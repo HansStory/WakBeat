@@ -183,7 +183,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         }
     }
 
-    void ShowCurrentLine()
+    protected virtual void ShowCurrentLine()
     {
         if (TextCurrentLine != null)
         {
@@ -606,6 +606,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         }
     }
 
+    Tween speedChangeTween;
     protected virtual void ChangeBallSpeed()
     {
         var beatItem = bmwReader.ChartingItem[_currentLine];
@@ -619,7 +620,12 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
             if (beatItem.SpeedTime != 0)
             {
-                DOTween.To(() => _ballSpeed, x => _ballSpeed = x, beatItem.Speed, beatItem.SpeedTime);
+                //if (speedChangeTween != null)
+                //{
+                //    speedChangeTween.Pause();
+                //}
+                DOTween.To(() => _ballSpeed, x => _ballSpeed = x, beatItem.Speed, beatItem.SpeedTime).
+                    SetEase(Ease.Linear).SetAutoKill();
             }
         }
     }
