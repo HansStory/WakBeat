@@ -281,7 +281,7 @@ Animation:
   serializedVersion: 3
   m_Animation: {fileID: 0}
   m_Animations:
-  - {fileID: 7400000, guid: e1d791f6f59c8274a904896e2e1a6f2a, type: 2}
+  - {fileID: 7400000, guid: 40251c7a989055b428e0acf3e1b59c58, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
