@@ -25,7 +25,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b179cf6ac91d8c442b4ccd1290364985, type: 3}
   - {fileID: 21300000, guid: 0ebeded6627a0544ca8aefd534441f1c, type: 3}
   - {fileID: 21300000, guid: 7e06b184c7f5af841b98ac95b96e7b93, type: 3}
-  - {fileID: 21300000, guid: eb48292a43a555f4b99e3564169847b2, type: 3}
+  - {fileID: 21300000, guid: 8ac08b215f3eb4d4fa52367a32931879, type: 3}
   CircleSkins:
   - {fileID: 21300000, guid: 82cf6465bca4f2342ba71fea5f872740, type: 3}
   - {fileID: 21300000, guid: 7d81092bf06fc1b4a9963853f15dc59a, type: 3}
@@ -36,7 +36,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ff8e27f0e05291042b281f7c0cab4e89, type: 3}
   - {fileID: 21300000, guid: 3b49f2e774214d545bd68d3130258121, type: 3}
   - {fileID: 21300000, guid: f1d5aae2919a7f74bb843fe44a9b4780, type: 3}
-  - {fileID: 21300000, guid: e8b1acabb634a0846a5e253a4afb8bfd, type: 3}
+  - {fileID: 21300000, guid: d8ae73599404601409afed04bd5c2d17, type: 3}
   BackGroundSkins:
   - {fileID: 21300000, guid: 77763c4e097050e4a9f3d64180b4c5d0, type: 3}
   - {fileID: 21300000, guid: 1154d56c0f1651942a4d59123fb89e67, type: 3}
