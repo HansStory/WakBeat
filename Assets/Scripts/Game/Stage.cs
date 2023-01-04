@@ -68,6 +68,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     protected BMWReader bmwReader = null;        // 채보 스크립트   
     protected AudioSource audioSource = null;
+    protected SoundManager SoundManager = null;
     protected GlobalState state;
     protected UserData userData;
 
@@ -282,6 +283,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     {
         // Sound 제어 부
         audioSource = SoundManager.Instance.MusicAudio;
+        SoundManager = SoundManager.Instance;
 
         SoundManager.Instance.SetStageMusic();
         state.StageMusicLength = (int)audioSource.clip.length;
@@ -1207,6 +1209,9 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     public virtual void StageClear()
     {
+        // Clear SFX
+        SoundManager.PlaySoundFX((int)GlobalData.SFX.Clear);
+
         ClearImage.gameObject.SetActive(true);
 
         // Alpha 0 to 1

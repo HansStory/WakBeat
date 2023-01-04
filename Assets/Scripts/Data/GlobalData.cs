@@ -56,5 +56,6 @@ public class GlobalData : MonoBehaviourSingleton<GlobalData>
         SettingOut,
         SettingIn,
         VolumeControl,
+        Clear,
     }
 }

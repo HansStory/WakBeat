@@ -51,6 +51,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     public Sprite CurrentSongSprite => bgmTextSprites[GlobalState.Instance.BGMIndex];
 
     public AudioSource MusicAudio => MusicAudioSource;
+    public AudioSource SFXAudio => SFXAudioSource;
 
     private void Awake()
     {

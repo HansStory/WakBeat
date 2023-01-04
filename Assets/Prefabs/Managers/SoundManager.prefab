@@ -183,12 +183,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3ae0cf1c4dfd7a14f964faa2541a8d8e, type: 3}
   - {fileID: 8300000, guid: e3c421cb894547f478bbb9424ec81a78, type: 3}
   - {fileID: 8300000, guid: 82cb96d42f5015848a4328fbfa680725, type: 3}
+  - {fileID: 8300000, guid: 281019825b71df24baad8b49bf75198f, type: 3}
   backgroundClips:
   - {fileID: 8300000, guid: eb5de20ffa9e4f04391aaddc86817b95, type: 3}
   - {fileID: 8300000, guid: aeebf76311b1fef4f84d3e32d4f35919, type: 3}
   - {fileID: 8300000, guid: 718366ee8f89f0340b755ad3e53c0ae9, type: 3}
   - {fileID: 8300000, guid: 639a6b334ef2e7b4f9969577b4408f2f, type: 3}
-  resultClip: {fileID: 8300000, guid: ea43e10e4b318f241af277a466482b3f, type: 3}
+  resultClip: {fileID: 8300000, guid: aef5c392a51519941a415c41618f7519, type: 3}
   bgmTextSprites:
   - {fileID: 21300000, guid: 0bd9cd7b1bdfb1b428f3cb0348bbe66f, type: 3}
   - {fileID: 21300000, guid: d1b707127883e9f46b0b37de2421f8d1, type: 3}
