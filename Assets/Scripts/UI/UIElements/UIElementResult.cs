@@ -205,7 +205,39 @@ public class UIElementResult : MonoBehaviour
 
     private void SetUsedItem()
     {
-        RightTexts[UsedItem].text = $"{state.UsedItems}";
+        string _usingItems = "";
+        string PrintString = "";
+
+        for(int i = 0; i < DataManager.dataSkillCount; i++)
+        {
+            if (state.UsedItems[i].Equals("Y"))
+            {
+                switch(i)
+                {
+                    case 0: _usingItems = "까방권";  break;
+                    case 1: _usingItems = "일시무적"; break;
+                    case 2: _usingItems = "뉴가메"; break;
+                    case 3: _usingItems = "분석안"; break;
+                    case 4: _usingItems = "자율주행"; break;
+                }
+
+                if(PrintString.Length > 0)
+                {
+                    PrintString += ", " + _usingItems;
+                } 
+                else
+                {
+                    PrintString += _usingItems;
+                }
+            }
+        }
+
+        if (PrintString.Length <= 0)
+        {
+            PrintString = "없음";
+        }
+
+        RightTexts[UsedItem].text = $"{PrintString}";
     }
 
     //---------------------------------------------------------------------------------------------
