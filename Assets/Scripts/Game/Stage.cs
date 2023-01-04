@@ -1266,11 +1266,36 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
         switch (_albumIndex)
         {
-            case 0: DataManager.dataAlbum1ClearYn[_stageIndex] = state.PlayerDeadCount > 0 ? "Y" : "P"; break;
-            case 1: DataManager.dataAlbum2ClearYn[_stageIndex] = state.PlayerDeadCount > 0 ? "Y" : "P"; break;
-            case 2: DataManager.dataAlbum3ClearYn[_stageIndex] = state.PlayerDeadCount > 0 ? "Y" : "P"; break;
-            case 3: DataManager.dataAlbum4ClearYn[_stageIndex] = state.PlayerDeadCount > 0 ? "Y" : "P"; break;
-            case 4: DataManager.dataAlbum5ClearYn[_stageIndex] = state.PlayerDeadCount > 0 ? "Y" : "P"; break;
+            case 0: 
+                if(!DataManager.dataAlbum1ClearYn[_stageIndex].Equals("P"))
+                {
+                    DataManager.dataAlbum1ClearYn[_stageIndex] = state.PlayerDeadCount > 0 ? "Y" : "P";
+                }
+                break;
+            case 1:
+                if (!DataManager.dataAlbum2ClearYn[_stageIndex].Equals("P"))
+                {
+                    DataManager.dataAlbum2ClearYn[_stageIndex] = state.PlayerDeadCount > 0 ? "Y" : "P";
+                }
+                break;
+            case 2:
+                if (!DataManager.dataAlbum3ClearYn[_stageIndex].Equals("P"))
+                {
+                    DataManager.dataAlbum3ClearYn[_stageIndex] = state.PlayerDeadCount > 0 ? "Y" : "P";
+                }
+                break;
+            case 3:
+                if (!DataManager.dataAlbum4ClearYn[_stageIndex].Equals("P"))
+                {
+                    DataManager.dataAlbum4ClearYn[_stageIndex] = state.PlayerDeadCount > 0 ? "Y" : "P";
+                }
+                break;
+            case 4:
+                if (!DataManager.dataAlbum5ClearYn[_stageIndex].Equals("P"))
+                {
+                    DataManager.dataAlbum5ClearYn[_stageIndex] = state.PlayerDeadCount > 0 ? "Y" : "P";
+                }
+                break;
         }
 
         int _clearCount = 0;
