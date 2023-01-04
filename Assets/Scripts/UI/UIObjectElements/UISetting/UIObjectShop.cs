@@ -324,19 +324,60 @@ public class UIObjectShop : MonoBehaviour
 
             switch(Index)
             {
-                case 0: GlobalState.Instance.UseBonusHP = false; break;
-                case 1: GlobalState.Instance.UseBarrier = false; break;
-                case 2: GlobalState.Instance.UseNewGaMe = false; break;
-                case 3: GlobalState.Instance.ShowDodge = false; break;
-                case 4: GlobalState.Instance.AutoMode = false; break;
-                default: break;
+                case 0: 
+                    GlobalState.Instance.UseBonusHP = false;
+                    GlobalState.Instance.UsedItems[Index] = "N";
+                    break;
+                case 1: 
+                    GlobalState.Instance.UseBarrier = false;
+                    GlobalState.Instance.UsedItems[Index] = "N";
+                    break;
+                case 2: 
+                    GlobalState.Instance.UseNewGaMe = false; 
+                    GlobalState.Instance.UsedItems[Index] = "N";
+                    break;
+                case 3: 
+                    GlobalState.Instance.ShowDodge = false;
+                    GlobalState.Instance.UsedItems[Index] = "N";
+                    break;
+                case 4: 
+                    GlobalState.Instance.AutoMode = false;
+                    GlobalState.Instance.UsedItems[Index] = "N";
+                    break;
             }
-
-            GlobalState.Instance.UsedItems = "없음";
         }
         else if (Division.Equals("Off"))
         {
+            // 2022.01.04 > 스킬 복수 사용 가능 처리
+            SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + Index).Find("Open").Find("SkillButton").Find("ButtonOn").gameObject.SetActive(true);
+            SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + Index).Find("Open").Find("SkillButton").Find("ButtonOff").gameObject.SetActive(false);
+
+            switch (Index)
+            {
+                case 0:
+                    GlobalState.Instance.UseBonusHP = true;
+                    GlobalState.Instance.UsedItems[Index] = "Y";
+                    break;
+                case 1:
+                    GlobalState.Instance.UseBarrier = true;
+                    GlobalState.Instance.UsedItems[Index] = "Y";
+                    break;
+                case 2:
+                    GlobalState.Instance.UseNewGaMe = true;
+                    GlobalState.Instance.UsedItems[Index] = "Y";
+                    break;
+                case 3:
+                    GlobalState.Instance.ShowDodge = true;
+                    GlobalState.Instance.UsedItems[Index] = "Y";
+                    break;
+                case 4:
+                    GlobalState.Instance.AutoMode = true;
+                    GlobalState.Instance.UsedItems[Index] = "Y";
+                    break;
+            }
+
             // 미사용 > 사용 > 전환 시 나머지 스킨 미사용으로 전환
+            /*
             for (int i = 0; i < SkillCount; i++)
             {
                 if (i != Index)
@@ -406,6 +447,7 @@ public class UIObjectShop : MonoBehaviour
                     GlobalState.Instance.UsedItems = _SkillName;
                 }
             }
+            */
         }
 
         SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);

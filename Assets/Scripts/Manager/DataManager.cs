@@ -31,6 +31,7 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
     static int _album2StageCount = 4;
     static int _album3StageCount = 5;
     static int _album4StageCount = 4;
+    static int _album5StageCount = 1;
     // 상점 강제 해금 사용 여부 > True : 강제 해금 사용 / False : 강제 해금 미사용
     static Boolean _shopCompulsionActive = false;
     // 인게임 관련 데이터
@@ -66,11 +67,13 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
     static string[] _album2ClearYn;
     static string[] _album3ClearYn;
     static string[] _album4ClearYn;
+    static string[] _album5ClearYn;
     // 앨범 별 스테이지 진행률
     static int[] _album1StageProgressLine;
     static int[] _album2StageProgressLine;
     static int[] _album3StageProgressLine;
     static int[] _album4StageProgressLine;
+    static int[] _album5StageProgressLine;
 
     public static string GetUserData()
     {
@@ -163,10 +166,12 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
         gameData.album2ClearYn = DataManager.dataAlbum2ClearYn;
         gameData.album3ClearYn = DataManager.dataAlbum3ClearYn;
         gameData.album4ClearYn = DataManager.dataAlbum4ClearYn;
+        gameData.album5ClearYn = DataManager.dataAlbum5ClearYn;
         gameData.album1StageProgressLine = DataManager.dataAlbum1StageProgressLine;
         gameData.album2StageProgressLine = DataManager.dataAlbum2StageProgressLine;
         gameData.album3StageProgressLine = DataManager.dataAlbum3StageProgressLine;
         gameData.album4StageProgressLine = DataManager.dataAlbum4StageProgressLine;
+        gameData.album5StageProgressLine = DataManager.dataAlbum5StageProgressLine;
 
         return userData.ToJson();
     }
@@ -198,7 +203,7 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
             var jsonUserData = File.ReadAllText(_path + _fileName);
             GlobalState.Instance.UserData = JsonUtility.FromJson<JsonUserData>(jsonUserData);
 
-            //Debug.Log($"Load User Data : {jsonUserData}");
+            Debug.Log($"Load User Data : {jsonUserData}");
 
             // DataManager에 파일에서 가져온 데이터 넣기
             // 설정 데이터 세팅
@@ -218,51 +223,68 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
             {
                 for(int i = 0; i < dataSkillUsingYn.Length; i++)
                 {
-                    if (dataSkillUsingYn[i].Equals("Y"))
+                    switch(i)
                     {
-                        switch(i)
-                        {
-                            case 0:
+                        case 0:
+                            if (dataSkillUsingYn[i].Equals("Y"))
+                            {
                                 GlobalState.Instance.UseBonusHP = true;
-                                GlobalState.Instance.UseBarrier = false;
-                                GlobalState.Instance.UseNewGaMe = false;
-                                GlobalState.Instance.ShowDodge = false;
-                                GlobalState.Instance.AutoMode = false;
-                                GlobalState.Instance.UsedItems = "까방권";
-                                break;
-                            case 1:
+                                GlobalState.Instance.UsedItems[i] = "Y";
+                            }
+                            else
+                            {
                                 GlobalState.Instance.UseBonusHP = false;
+                                GlobalState.Instance.UsedItems[i] = "N";
+                            }
+                            break;
+                        case 1:
+                            if (dataSkillUsingYn[i].Equals("Y"))
+                            {
                                 GlobalState.Instance.UseBarrier = true;
-                                GlobalState.Instance.UseNewGaMe = false;
-                                GlobalState.Instance.ShowDodge = false;
-                                GlobalState.Instance.AutoMode = false;
-                                GlobalState.Instance.UsedItems = "일시무적";
-                                break;
-                            case 2:
-                                GlobalState.Instance.UseBonusHP = false;
+                                GlobalState.Instance.UsedItems[i] = "Y";
+                            }
+                            else
+                            {
                                 GlobalState.Instance.UseBarrier = false;
+                                GlobalState.Instance.UsedItems[i] = "N";
+                            }
+                            break;
+                        case 2:
+                            if (dataSkillUsingYn[i].Equals("Y"))
+                            {
                                 GlobalState.Instance.UseNewGaMe = true;
+                                GlobalState.Instance.UsedItems[i] = "Y";
+                            }
+                            else
+                            {
+                                GlobalState.Instance.UseNewGaMe = false;
+                                GlobalState.Instance.UsedItems[i] = "N";
+                            }
+                            break;
+                        case 3:
+                            if (dataSkillUsingYn[i].Equals("Y"))
+                            {
+                                GlobalState.Instance.ShowDodge = true;
+                                GlobalState.Instance.UsedItems[i] = "Y";
+                            }
+                            else
+                            {
                                 GlobalState.Instance.ShowDodge = false;
-                                GlobalState.Instance.AutoMode = false;
-                                GlobalState.Instance.UsedItems = "뉴가메";
-                                break;
-                            case 3:
-                                GlobalState.Instance.UseBonusHP = false;
-                                GlobalState.Instance.UseBarrier = false;
-                                GlobalState.Instance.UseNewGaMe = false;
-                                GlobalState.Instance.ShowDodge = true;
-                                GlobalState.Instance.AutoMode = false;
-                                GlobalState.Instance.UsedItems = "분석안"; 
-                                break;
-                            case 4:
-                                GlobalState.Instance.UseBonusHP = false;
-                                GlobalState.Instance.UseBarrier = false;
-                                GlobalState.Instance.UseNewGaMe = false;
-                                GlobalState.Instance.ShowDodge = true;
+                                GlobalState.Instance.UsedItems[i] = "N";
+                            }
+                            break;
+                        case 4:
+                            if (dataSkillUsingYn[i].Equals("Y"))
+                            {
                                 GlobalState.Instance.AutoMode = true;
-                                GlobalState.Instance.UsedItems = "자율주행";
-                                break;
-                        }
+                                GlobalState.Instance.UsedItems[i] = "Y";
+                            }
+                            else
+                            {
+                                GlobalState.Instance.AutoMode = false;
+                                GlobalState.Instance.UsedItems[i] = "N";
+                            }
+                            break;
                     }
                 }
             }
@@ -273,10 +295,12 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
             dataAlbum2ClearYn = GlobalState.Instance.UserData.data.gameData.album2ClearYn;
             dataAlbum3ClearYn = GlobalState.Instance.UserData.data.gameData.album3ClearYn;
             dataAlbum4ClearYn = GlobalState.Instance.UserData.data.gameData.album4ClearYn;
+            dataAlbum5ClearYn = GlobalState.Instance.UserData.data.gameData.album5ClearYn;
             dataAlbum1StageProgressLine = GlobalState.Instance.UserData.data.gameData.album1StageProgressLine;
             dataAlbum2StageProgressLine = GlobalState.Instance.UserData.data.gameData.album2StageProgressLine;
             dataAlbum3StageProgressLine = GlobalState.Instance.UserData.data.gameData.album3StageProgressLine;
             dataAlbum4StageProgressLine = GlobalState.Instance.UserData.data.gameData.album4StageProgressLine;
+            dataAlbum5StageProgressLine = GlobalState.Instance.UserData.data.gameData.album5StageProgressLine;
         } 
         else
         {
@@ -300,10 +324,12 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
             dataAlbum2ClearYn = new string[dataAlbum2StageCount];
             dataAlbum3ClearYn = new string[dataAlbum3StageCount];
             dataAlbum4ClearYn = new string[dataAlbum4StageCount];
+            dataAlbum5ClearYn = new string[dataAlbum5StageCount];
             dataAlbum1StageProgressLine = new int[dataAlbum1StageCount];
             dataAlbum2StageProgressLine = new int[dataAlbum2StageCount];
             dataAlbum3StageProgressLine = new int[dataAlbum3StageCount];
             dataAlbum4StageProgressLine = new int[dataAlbum4StageCount];
+            dataAlbum5StageProgressLine = new int[dataAlbum5StageCount];
 
             for (int i = 0; i < dataSkinCount; i++)
             {
@@ -323,6 +349,7 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
             {
                 dataSkillUnLockYn[i] = "N";
                 dataSkillUsingYn[i] = "N";
+                GlobalState.Instance.UsedItems[i] = "N";
             }
 
             userData.settingData.BGMValue = (float)dataBGMValue;
@@ -354,16 +381,23 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
                 dataAlbum4ClearYn[i] = "N";
                 dataAlbum4StageProgressLine[i] = 0;
             }
+            for (int i = 0; i < dataAlbum5StageCount; i++)
+            {
+                dataAlbum5ClearYn[i] = "N";
+                dataAlbum5StageProgressLine[i] = 0;
+            }
 
             userData.gameData.clearStageCount = (int)dataClearStageCount;
             userData.gameData.album1ClearYn = dataAlbum1ClearYn;
             userData.gameData.album2ClearYn = dataAlbum2ClearYn;
             userData.gameData.album3ClearYn = dataAlbum3ClearYn;
             userData.gameData.album4ClearYn = dataAlbum4ClearYn;
+            userData.gameData.album5ClearYn = dataAlbum5ClearYn;
             userData.gameData.album1StageProgressLine = dataAlbum1StageProgressLine;
             userData.gameData.album2StageProgressLine = dataAlbum2StageProgressLine;
             userData.gameData.album3StageProgressLine = dataAlbum3StageProgressLine;
             userData.gameData.album4StageProgressLine = dataAlbum4StageProgressLine;
+            userData.gameData.album5StageProgressLine = dataAlbum5StageProgressLine;
 
             // 스킬 사용여부 세팅
             GlobalState.Instance.UseBonusHP = false;
@@ -371,7 +405,6 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
             GlobalState.Instance.UseNewGaMe = false;
             GlobalState.Instance.ShowDodge = false;
             GlobalState.Instance.AutoMode = false;
-            GlobalState.Instance.UsedItems = "없음";
         }
 
         // 글로벌 값 호출 즉시 파일에 저장 된 배경음/환경음 볼륨으로 제어
@@ -539,6 +572,13 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
         set { _album4StageCount = value; }
     }
 
+    // 앨범 5 스테이지 개수
+    public static int dataAlbum5StageCount
+    {
+        get { return _album5StageCount; }
+        set { _album5StageCount = value; }
+    }
+
     // 앨범 1의 스테이지 별 클리어 여부
     public static string[] dataAlbum1ClearYn
     {
@@ -567,6 +607,13 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
         set { _album4ClearYn = value; }
     }
 
+    // 앨범 5의 스테이지 별 클리어 여부
+    public static string[] dataAlbum5ClearYn
+    {
+        get { return _album5ClearYn; }
+        set { _album5ClearYn = value; }
+    }
+
     // 앨범 1의 스테이지 별 진행률
     public static int[] dataAlbum1StageProgressLine
     {
@@ -593,6 +640,13 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
     {
         get { return _album4StageProgressLine; }
         set { _album4StageProgressLine = value; }
+    }
+
+    // 앨범 5의 스테이지 별 진행률
+    public static int[] dataAlbum5StageProgressLine
+    {
+        get { return _album5StageProgressLine; }
+        set { _album5StageProgressLine = value; }
     }
 
     // Start is called before the first frame update

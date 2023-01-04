@@ -98,11 +98,13 @@ public class GameData : DataBase
     public string[] album2ClearYn = new string[DataManager.dataAlbum2StageCount];
     public string[] album3ClearYn = new string[DataManager.dataAlbum3StageCount];
     public string[] album4ClearYn = new string[DataManager.dataAlbum4StageCount];
+    public string[] album5ClearYn = new string[DataManager.dataAlbum5StageCount];
     // 앨범 별 스테이지 진행률 배열
     public int[] album1StageProgressLine = new int[DataManager.dataAlbum1StageCount];
     public int[] album2StageProgressLine = new int[DataManager.dataAlbum2StageCount];
     public int[] album3StageProgressLine = new int[DataManager.dataAlbum3StageCount];
     public int[] album4StageProgressLine = new int[DataManager.dataAlbum4StageCount];
+    public int[] album5StageProgressLine = new int[DataManager.dataAlbum5StageCount];
 }
 
 [Serializable]

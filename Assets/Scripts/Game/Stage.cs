@@ -1266,10 +1266,11 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
         switch (_albumIndex)
         {
-            case 0: DataManager.dataAlbum1ClearYn[_stageIndex] = "Y"; break;
-            case 1: DataManager.dataAlbum2ClearYn[_stageIndex] = "Y"; break;
-            case 2: DataManager.dataAlbum3ClearYn[_stageIndex] = "Y"; break;
-            case 3: DataManager.dataAlbum4ClearYn[_stageIndex] = "Y"; break;
+            case 0: DataManager.dataAlbum1ClearYn[_stageIndex] = state.PlayerDeadCount > 0 ? "Y" : "P"; break;
+            case 1: DataManager.dataAlbum2ClearYn[_stageIndex] = state.PlayerDeadCount > 0 ? "Y" : "P"; break;
+            case 2: DataManager.dataAlbum3ClearYn[_stageIndex] = state.PlayerDeadCount > 0 ? "Y" : "P"; break;
+            case 3: DataManager.dataAlbum4ClearYn[_stageIndex] = state.PlayerDeadCount > 0 ? "Y" : "P"; break;
+            case 4: DataManager.dataAlbum5ClearYn[_stageIndex] = state.PlayerDeadCount > 0 ? "Y" : "P"; break;
         }
 
         int _clearCount = 0;
@@ -1288,6 +1289,10 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         for (int m = 0; m < DataManager.dataAlbum4ClearYn.Length; m++)
         {
             _clearCount += DataManager.dataAlbum4ClearYn[m] == "Y" || DataManager.dataAlbum4ClearYn[m] == "P" ? 1 : 0;
+        }
+        for (int n = 0; n < DataManager.dataAlbum5ClearYn.Length; n++)
+        {
+            _clearCount += DataManager.dataAlbum5ClearYn[n] == "Y" || DataManager.dataAlbum5ClearYn[n] == "P" ? 1 : 0;
         }
 
         DataManager.dataClearStageCount = _clearCount;

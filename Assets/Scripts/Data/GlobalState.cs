@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GlobalState : MonoBehaviourSingleton<GlobalState>
 {
@@ -342,8 +343,8 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
     }
 
     // 사용한 아이템 종류
-    private string _usedItems = "없음";
-    public string UsedItems
+    private string[] _usedItems = new string[DataManager.dataSkillCount];
+    public string[] UsedItems
     {
         get { return _usedItems; }
         set { _usedItems = value; }
