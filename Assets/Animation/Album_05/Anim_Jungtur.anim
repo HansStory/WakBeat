@@ -2946,7 +2946,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -5
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -13338,7 +13338,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -5
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -14944,13 +14944,6 @@ AnimationClip:
     messageOptions: 0
   - time: 16.5
     functionName: ChangeBlack
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 16.516666
-    functionName: ChangeWhite
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
