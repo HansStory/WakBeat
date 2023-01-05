@@ -505,6 +505,8 @@ MonoBehaviour:
   panelStage: {fileID: 5573296087902644251}
   _demoLockImage: {fileID: 8887501301441723898}
   _clearStamp: {fileID: 5899637558945813191}
+  _nomalClearStamp: {fileID: 21300000, guid: 13e725f0f0a720d43b3388b26e823e22, type: 3}
+  _perfectClearStamp: {fileID: 21300000, guid: bdd2f675369f9dc42b0abd8959c0530e, type: 3}
 --- !u!1 &7732676806236544338
 GameObject:
   m_ObjectHideFlags: 0

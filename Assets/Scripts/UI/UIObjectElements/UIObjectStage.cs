@@ -46,7 +46,10 @@ public class UIObjectStage : MonoBehaviour
     float smallSize = 0.8f;
 
     [SerializeField] private Image _demoLockImage;
+
     [SerializeField] private Image _clearStamp;
+    [SerializeField] private Sprite _nomalClearStamp;
+    [SerializeField] private Sprite _perfectClearStamp;
 
     void Start()
     {
@@ -344,6 +347,13 @@ public class UIObjectStage : MonoBehaviour
     {
         if (clearData[stage] == "Y")
         {
+            _clearStamp.sprite = _nomalClearStamp;
+            _clearStamp.gameObject.SetActive(true);
+        }
+
+        if (clearData[stage] == "P")
+        {
+            _clearStamp.sprite = _perfectClearStamp;
             _clearStamp.gameObject.SetActive(true);
         }
     }
