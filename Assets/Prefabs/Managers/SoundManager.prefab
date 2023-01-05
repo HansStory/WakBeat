@@ -216,6 +216,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: cc4ee0cf064c15a4098034e5182bdc4b, type: 3}
   album5HighLightClips:
   - {fileID: 8300000, guid: 9b54ae22376b44f4bb8c4f3ed16ff558, type: 3}
+  - {fileID: 8300000, guid: 0ed19e9c2dfe7df4a8ba5cdeea3a77b9, type: 3}
   album1StageClips:
   - {fileID: 8300000, guid: 9b520a9b46b941845a26ea389f6f01d7, type: 3}
   - {fileID: 8300000, guid: 36b9ead65b94b524b9185f1613a98f92, type: 3}
@@ -237,6 +238,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 227ac6e775459e446ae0db1c85de8370, type: 3}
   album5StageClips:
   - {fileID: 8300000, guid: a6e9472c55dea674089ea81243dd0519, type: 3}
+  - {fileID: 8300000, guid: 859c528fc4eea6a4094ef5e846d0c842, type: 3}
   SelectedAlbumMusicLength: 0
 --- !u!1 &7520883019599040233
 GameObject:
