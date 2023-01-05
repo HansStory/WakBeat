@@ -41,6 +41,12 @@ public class UIElementMusicSelect : MonoBehaviour
         SetAudio();
         ResetMusicSelect();
         ChangeMusicLength();
+        SetStageClearRate();
+    }
+
+    void SetStageClearRate()
+    {
+
     }
 
     private void SetAudio()
@@ -266,10 +272,15 @@ public class UIElementMusicSelect : MonoBehaviour
         if (state.StageIndex < state.AlbumStageCount)
         {
             state.StageIndex++;
+
             SoundManager.Instance.TurnOnSelectedMusic();
+
             ChangeBackGround();
+
             MoveScrollRect();
+
             ChangeMusicLength();
+
             SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.AlbumMove);
 
             Debug.Log($"Selecte My Stage Index : {state.StageIndex}");
@@ -302,10 +313,15 @@ public class UIElementMusicSelect : MonoBehaviour
         if (0 < state.StageIndex)
         {
             state.StageIndex--;
+
             SoundManager.Instance.TurnOnSelectedMusic();
+
             ChangeBackGround();
+
             MoveScrollRect();
+
             ChangeMusicLength();
+
             SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.AlbumMove);
 
             Debug.Log($"Selecte My Stage Index : {state.StageIndex}");
