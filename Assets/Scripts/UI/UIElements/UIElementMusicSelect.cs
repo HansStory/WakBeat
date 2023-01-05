@@ -9,31 +9,32 @@ public class UIElementMusicSelect : MonoBehaviour
     // 쌍방 참조... 나중에 해결책 찾기...
     public List<UIObjectStage> UIObjectStages = new List<UIObjectStage>();
 
-    [SerializeField] private GameObject uiObjectStage;
-    [SerializeField] private Transform uiObjectStageBase;
+    [SerializeField] private GameObject _uiObjectStage;
+    [SerializeField] private Transform _uiObjectStageBase;
 
-    [SerializeField] private Image stageText;
-    [SerializeField] private Image backGround;
+    [SerializeField] private Image _stageText;
+    [SerializeField] private Image _backGround;
 
-    [SerializeField] private GameObject uiObjectProgressBar;
-    [SerializeField] private Transform uiObjectProgressBarBase;
+    [SerializeField] private GameObject _uiObjectProgressBar;
+    [SerializeField] private Transform _uiObjectProgressBarBase;
 
-    [SerializeField] private GameObject uiObjectProgressCircle;
-    [SerializeField] private Transform uiObjectProgressCircleBase;
+    [SerializeField] private GameObject _uiObjectProgressCircle;
+    [SerializeField] private Transform _uiObjectProgressCircleBase;
 
-    [SerializeField] private ScrollRect scrollRect;
+    [SerializeField] private ScrollRect _scrollRect;
 
     [SerializeField] 
-    private GameObject uiObjectMusicTutorial;
+    private GameObject _uiObjectMusicTutorial;
     private Image _imageTutorial = null;
 
-
     [SerializeField] private TMP_Text _musicLength;
+
+    [SerializeField] private Slider _musicClearSlider;
 
     // Start is called before the first frame update
     void Start()
     {
-        UIManager.Instance.MakeTutorial(uiObjectMusicTutorial, this.transform, _imageTutorial, 0.4f, 1f, 2f);
+        UIManager.Instance.MakeTutorial(_uiObjectMusicTutorial, this.transform, _imageTutorial, 0.4f, 1f, 2f);
     }
 
     private void OnEnable()
@@ -46,7 +47,52 @@ public class UIElementMusicSelect : MonoBehaviour
 
     void SetStageClearRate()
     {
+        var alubmIndex = GlobalState.Instance.AlbumIndex;
 
+        switch (alubmIndex)
+        {
+            case (int)GlobalData.ALBUM.ISEDOL:
+                CheckClear(DataManager.dataAlbum1ClearYn, DataManager.dataAlbum1StageCount);
+                break;
+            case (int)GlobalData.ALBUM.CONTEST:
+                CheckClear(DataManager.dataAlbum2ClearYn, DataManager.dataAlbum2StageCount);
+                break;
+            case (int)GlobalData.ALBUM.GOMIX:
+                CheckClear(DataManager.dataAlbum3ClearYn, DataManager.dataAlbum3StageCount);
+                break;
+            case (int)GlobalData.ALBUM.WAKALOID:
+                CheckClear(DataManager.dataAlbum4ClearYn, DataManager.dataAlbum4StageCount);
+                break;
+            case (int)GlobalData.ALBUM.CONTEST2:
+                CheckClear(DataManager.dataAlbum5ClearYn, DataManager.dataAlbum5StageCount);
+                break;
+        }
+    }
+
+    void CheckClear(string[] album, int alubmCount)
+    {
+        int albumClearCount = 0;
+
+        for (int i = 0; i < album.Length; i++)
+        {
+            if (album[i].Contains("Y") || album[i].Contains("P"))
+            {
+                albumClearCount++;
+            }
+        }
+
+        float rate = 0f;
+
+        if (albumClearCount == 0)
+        {
+            rate = 0f;
+            _musicClearSlider.value = rate;
+        }
+        else
+        {
+            rate = (float)albumClearCount / (float)alubmCount;
+            _musicClearSlider.value = rate;
+        }
     }
 
     private void SetAudio()
@@ -58,7 +104,7 @@ public class UIElementMusicSelect : MonoBehaviour
         soundManager.TurnOnSelectedMusic();
         soundManager.FadeInMusicVolume(1f);
 
-        scrollRect.content.anchoredPosition = Vector2.zero;
+        _scrollRect.content.anchoredPosition = Vector2.zero;
     }
 
     private void ResetMusicSelect()
@@ -117,7 +163,7 @@ public class UIElementMusicSelect : MonoBehaviour
         int _stageIndex = 0;
         foreach (var stages in stageCircles)
         {
-            var _stage = GameObject.Instantiate(uiObjectStage, uiObjectStageBase);
+            var _stage = GameObject.Instantiate(_uiObjectStage, _uiObjectStageBase);
             var stageInfo = _stage.GetComponent<UIObjectStage>();
 
             if (stageInfo)
@@ -150,7 +196,7 @@ public class UIElementMusicSelect : MonoBehaviour
 
         for (int i = 1; i < _stageCircles.Length; i++)
         {
-            var progressBar = GameObject.Instantiate(uiObjectProgressBar, uiObjectProgressBarBase);
+            var progressBar = GameObject.Instantiate(_uiObjectProgressBar, _uiObjectProgressBarBase);
 
             if (progressBar)
             {
@@ -165,7 +211,7 @@ public class UIElementMusicSelect : MonoBehaviour
         int _progressIndex = 0;
         foreach (var stage in _stageCircles)
         {
-            var progressCircle = GameObject.Instantiate(uiObjectProgressCircle, uiObjectProgressCircleBase);
+            var progressCircle = GameObject.Instantiate(_uiObjectProgressCircle, _uiObjectProgressCircleBase);
             //var progressCircleInfo = progressCircle.GetComponent<UIObjectProgressCircle>();
             if (progressCircle)
             {
@@ -187,7 +233,7 @@ public class UIElementMusicSelect : MonoBehaviour
 
     void DestroyAlbumStage()
     {
-        Transform[] childList = uiObjectStageBase.gameObject.GetComponentsInChildren<Transform>();
+        Transform[] childList = _uiObjectStageBase.gameObject.GetComponentsInChildren<Transform>();
 
         if (childList != null)
         {
@@ -203,7 +249,7 @@ public class UIElementMusicSelect : MonoBehaviour
 
     void DestroyProgressBar()
     {
-        Transform[] childList = uiObjectProgressBarBase.gameObject.GetComponentsInChildren<Transform>();
+        Transform[] childList = _uiObjectProgressBarBase.gameObject.GetComponentsInChildren<Transform>();
 
         if (childList != null)
         {
@@ -219,7 +265,7 @@ public class UIElementMusicSelect : MonoBehaviour
 
     void DestroyProgressCircle()
     {
-        Transform[] childList = uiObjectProgressCircleBase.gameObject.GetComponentsInChildren<Transform>();
+        Transform[] childList = _uiObjectProgressCircleBase.gameObject.GetComponentsInChildren<Transform>();
 
         if (childList != null)
         {
@@ -370,7 +416,7 @@ public class UIElementMusicSelect : MonoBehaviour
 
         float wantScrollRect = currentStage / StageLength;
 
-        scrollRect.DOHorizontalNormalizedPos(wantScrollRect, _duration);
+        _scrollRect.DOHorizontalNormalizedPos(wantScrollRect, _duration);
     }
 
     void ChangeBackGround()
@@ -381,24 +427,24 @@ public class UIElementMusicSelect : MonoBehaviour
         switch (GlobalState.Instance.AlbumIndex)
         {
             case (int)GlobalData.ALBUM.ISEDOL:
-                backGround.sprite = albumData.FirstAlbumMusicBackground[state.StageIndex];
+                _backGround.sprite = albumData.FirstAlbumMusicBackground[state.StageIndex];
                 break;
             case (int)GlobalData.ALBUM.CONTEST:
-                backGround.sprite = albumData.SecondAlbumMusicBackground[state.StageIndex];
+                _backGround.sprite = albumData.SecondAlbumMusicBackground[state.StageIndex];
                 break;
             case (int)GlobalData.ALBUM.GOMIX:
-                backGround.sprite = albumData.ThirdAlbumMusicBackground[state.StageIndex];
+                _backGround.sprite = albumData.ThirdAlbumMusicBackground[state.StageIndex];
                 break;
             case (int)GlobalData.ALBUM.WAKALOID:
-                backGround.sprite = albumData.ForthAlbumMusicBackground[state.StageIndex];
+                _backGround.sprite = albumData.ForthAlbumMusicBackground[state.StageIndex];
                 break;
             case (int)GlobalData.ALBUM.CONTEST2:
-                backGround.sprite = albumData.FifthAlbumMusicBackground[state.StageIndex];
+                _backGround.sprite = albumData.FifthAlbumMusicBackground[state.StageIndex];
                 break;
         }
 
         // stage Text 변경 시켜주는곳
-        stageText.sprite = albumData.StageIcons[state.StageIndex];
+        _stageText.sprite = albumData.StageIcons[state.StageIndex];
     }
 
 }

@@ -357,7 +357,7 @@ GameObject:
   - component: {fileID: 7898319079903284035}
   - component: {fileID: 4541299205545137970}
   m_Layer: 5
-  m_Name: BackGround
+  m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1793,17 +1793,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIObjectStages: []
-  uiObjectStage: {fileID: 5952784753668188542, guid: e2bddcc87c62f7d408a1e3a04236c13c, type: 3}
-  uiObjectStageBase: {fileID: 1231211995838327652}
-  stageText: {fileID: 4194553801300975069}
-  backGround: {fileID: 2016310017232859330}
-  uiObjectProgressBar: {fileID: 2850716672374084683, guid: d4ba90bbdc736a84bbb05173ecfc9370, type: 3}
-  uiObjectProgressBarBase: {fileID: 327196779073382223}
-  uiObjectProgressCircle: {fileID: 7270189117128891702, guid: 5312cec2809604b4eb4657ace1dede99, type: 3}
-  uiObjectProgressCircleBase: {fileID: 3540137803790492285}
-  scrollRect: {fileID: 3438493075930980602}
-  uiObjectMusicTutorial: {fileID: 8863306331170489117, guid: 0e61a0f5bfe3b6d4b960b3e3cb30862c, type: 3}
+  _uiObjectStage: {fileID: 5952784753668188542, guid: e2bddcc87c62f7d408a1e3a04236c13c, type: 3}
+  _uiObjectStageBase: {fileID: 1231211995838327652}
+  _stageText: {fileID: 4194553801300975069}
+  _backGround: {fileID: 2016310017232859330}
+  _uiObjectProgressBar: {fileID: 2850716672374084683, guid: d4ba90bbdc736a84bbb05173ecfc9370, type: 3}
+  _uiObjectProgressBarBase: {fileID: 327196779073382223}
+  _uiObjectProgressCircle: {fileID: 7270189117128891702, guid: 5312cec2809604b4eb4657ace1dede99, type: 3}
+  _uiObjectProgressCircleBase: {fileID: 3540137803790492285}
+  _scrollRect: {fileID: 3438493075930980602}
+  _uiObjectMusicTutorial: {fileID: 5611391142765583243, guid: 009f7d35d81088e4f96bea9e479b9028, type: 3}
   _musicLength: {fileID: 2214611924591506007}
+  _musicClearSlider: {fileID: 4541299205545137970}
 --- !u!1 &7695171977082257434
 GameObject:
   m_ObjectHideFlags: 0
