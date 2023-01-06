@@ -1326,6 +1326,9 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         }
 
         DataManager.dataClearStageCount = _clearCount;
+
+        // 설정 데이터 변경 후 파일 저장
+        DataManager.SaveUserData();
     }
     #endregion
 
