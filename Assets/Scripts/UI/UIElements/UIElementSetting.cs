@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class UIElementSetting : MonoBehaviourSingleton<UIElementSetting>
 {
@@ -109,6 +109,8 @@ public class UIElementSetting : MonoBehaviourSingleton<UIElementSetting>
                 Background.SetActive(true);
                 PanelPause.SetActive(true);
 
+                PanelButton.transform.Find("UIObjectButton").Find("ButtonPause").GetComponent<Button>().interactable = false;
+
                 // 게임 일시 정지 프로세스 > 실행
                 Stage.Instance.OnClickPause();
             }
@@ -118,6 +120,8 @@ public class UIElementSetting : MonoBehaviourSingleton<UIElementSetting>
 
                 Background.SetActive(false);
                 PanelPause.SetActive(false);
+
+                PanelButton.transform.Find("UIObjectButton").Find("ButtonPause").GetComponent<Button>().interactable = true;
 
                 // 게임 일시 정지 프로세스 > 해제
                 Stage.Instance.OnClickPause();

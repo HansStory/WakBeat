@@ -837,30 +837,33 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     protected bool _isInState = false;
     public virtual void InputChangeDirection()
     {
-        if (Input.anyKey && null != Input.inputString && "" != Input.inputString)
+        if(DataManager.dataBackgroundProcActive)
         {
-            if (_keyDivision.Equals("Separation"))
+            if (Input.anyKey && null != Input.inputString && "" != Input.inputString)
             {
-                var innerKey = DataManager.dataInnerOperationKey;
-                var outKey = DataManager.dataOuterOperationKey;
-
-                // 키 분리 구분 > 분리
-                if (innerKey != null && innerKey.Length > 0 && outKey != null && outKey.Length > 0)
+                if (_keyDivision.Equals("Separation"))
                 {
-                    SeperateChangeDirection();                   
+                    var innerKey = DataManager.dataInnerOperationKey;
+                    var outKey = DataManager.dataOuterOperationKey;
+
+                    // 키 분리 구분 > 분리
+                    if (innerKey != null && innerKey.Length > 0 && outKey != null && outKey.Length > 0)
+                    {
+                        SeperateChangeDirection();                   
+                    }
+                    else
+                    {
+                        // 키 분리 구분 > 분리 > 커스텀 한 키가 없을 땐 스페이스로 통일
+                        IntegrationChangeDirection();
+                    }
                 }
                 else
                 {
-                    // 키 분리 구분 > 분리 > 커스텀 한 키가 없을 땐 스페이스로 통일
-                    IntegrationChangeDirection();
-                }
-            }
-            else
-            {
-                // 키 분리 구분 > 통합
-                if (Input.anyKeyDown)
-                {
-                    IntegrationChangeDirection();                    
+                    // 키 분리 구분 > 통합
+                    if (Input.anyKeyDown)
+                    {
+                        IntegrationChangeDirection();                    
+                    }
                 }
             }
         }
