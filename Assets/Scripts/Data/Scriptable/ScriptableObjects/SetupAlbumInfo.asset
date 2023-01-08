@@ -44,8 +44,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a935e03e094e44a4c9c0d447f5259744, type: 3}
   - {fileID: 21300000, guid: df571a6c1bd6a5744b21ad70cd4baa55, type: 3}
   FirstAlbumMusicLevel:
-  - {fileID: 21300000, guid: b7b56a275fcf26c488ddf455b85c95d9, type: 3}
-  - {fileID: 21300000, guid: 1906fed4570cc0b418c6447b9c7fe33d, type: 3}
+  - {fileID: 21300000, guid: 88af056998323c447896fca3f8078926, type: 3}
+  - {fileID: 21300000, guid: 1b7fcc766f4c96a4fb25a38e4b27fece, type: 3}
   SecondAlbumMusicBackground:
   - {fileID: 21300000, guid: 72d40efdef180584d856e665bbf3af58, type: 3}
   - {fileID: 21300000, guid: 27da3e5dc4451514fa83718c01e7a7af, type: 3}
@@ -57,10 +57,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 0a5ad61b5faec804ab956e3dc8a70f7d, type: 3}
   - {fileID: 21300000, guid: 57fec0d1a3c9df9429f5a8365cd31247, type: 3}
   SecondAlbumMusicLevel:
-  - {fileID: 21300000, guid: 068efd2156c6ad347ba9e6fd2635a85d, type: 3}
-  - {fileID: 21300000, guid: 6c949ca8e237137449817374519dafb6, type: 3}
-  - {fileID: 21300000, guid: 2d4214dbccb474840b0cc23a4ed56f65, type: 3}
-  - {fileID: 21300000, guid: 3b82797ffaf165847b821ed233e4af29, type: 3}
+  - {fileID: 21300000, guid: 5093fdb8c9161e34c897fd67e546e4e3, type: 3}
+  - {fileID: 21300000, guid: 73ad70402d571ba46a754a1417807eb2, type: 3}
+  - {fileID: 21300000, guid: 2c394ce4f0756de43a369d1e10e6f72d, type: 3}
+  - {fileID: 21300000, guid: 4f81db640e30c0b4ebcd9bf8e0652482, type: 3}
   ThirdAlbumMusicBackground:
   - {fileID: 21300000, guid: 92d59cb16f2f13c4bb90e0dd7dfad6b8, type: 3}
   - {fileID: 21300000, guid: ca336f04758f8994f89fa842e8e7cefb, type: 3}
@@ -74,11 +74,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a935e03e094e44a4c9c0d447f5259744, type: 3}
   - {fileID: 21300000, guid: a935e03e094e44a4c9c0d447f5259744, type: 3}
   ThirdAlbumMusicLevel:
-  - {fileID: 21300000, guid: 70b90cae5b26de048b6a37d15df35e3c, type: 3}
-  - {fileID: 21300000, guid: 8675ea4769ce36a469b0b295f63f1ad5, type: 3}
-  - {fileID: 21300000, guid: 299c827aacfef27449ff4bfead7c1d36, type: 3}
-  - {fileID: 21300000, guid: cb710264fb5e0584097a6abe2cb107c7, type: 3}
-  - {fileID: 21300000, guid: 057915c37b59742449ab1ec831d2f69f, type: 3}
+  - {fileID: 21300000, guid: dab92fa4703177c43a80dc5f12767b7a, type: 3}
+  - {fileID: 21300000, guid: 0d04a385fc6d25b4783177ff5dc02d0e, type: 3}
+  - {fileID: 21300000, guid: c63dd331934e66e4fa2a447d7461146c, type: 3}
+  - {fileID: 21300000, guid: b26ed445d1139d641b00167f51c2250f, type: 3}
+  - {fileID: 21300000, guid: 7f6485f1efe4ce04fab78dc04fbd751e, type: 3}
   ForthAlbumMusicBackground:
   - {fileID: 21300000, guid: a4979225264110845937324c4a34db3d, type: 3}
   - {fileID: 21300000, guid: 34ca5f2bf81439340a7083505f418169, type: 3}
@@ -90,10 +90,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: bf1966cf6981da44bb0aebd0da72049b, type: 3}
   - {fileID: 21300000, guid: 7bf0d5b81dc6ed94c8a2232868db13a5, type: 3}
   ForthAlbumMusicLevel:
-  - {fileID: 21300000, guid: 7df184cfb578b334587516e9dce4d0d0, type: 3}
-  - {fileID: 21300000, guid: ae1e25670afb0cd4498de0f283ea247c, type: 3}
-  - {fileID: 21300000, guid: 667d75efbfa2d524fb0e9ec0231c9ab0, type: 3}
-  - {fileID: 21300000, guid: 3c26ceed537893f4fae51b14613d1461, type: 3}
+  - {fileID: 21300000, guid: e53cac43ab31155499d3781e7e9f7e7b, type: 3}
+  - {fileID: 21300000, guid: 9c892d03bbdae634bbfae0a1851ec0a0, type: 3}
+  - {fileID: 21300000, guid: 08eec026d7029654ba4d6519efeecf0d, type: 3}
+  - {fileID: 21300000, guid: 7b0039887f88bb34b9d39715de2b6dfb, type: 3}
   FifthAlbumMusicBackground:
   - {fileID: 21300000, guid: 9d1650003b0c84e4b9b45a92b96bba75, type: 3}
   - {fileID: 21300000, guid: 7b99169c61040e545b39ffaa94ee656e, type: 3}
@@ -101,7 +101,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 7150d7f1801172447b8c9d554a00bd93, type: 3}
   - {fileID: 21300000, guid: 6e075fbd95823784bad02863ecb613de, type: 3}
   FifthAlbumMusicLevel:
-  - {fileID: 21300000, guid: ab27ac55d049b20498d16fda0dc4e5c8, type: 3}
+  - {fileID: 21300000, guid: 71256b65236d1dd45a67c0efd39d36c3, type: 3}
   - {fileID: 21300000, guid: 619c9e9d59deac14c9b434817b5f0a8f, type: 3}
   AlbumInfomationImage:
   - {fileID: 21300000, guid: 5ffc543a6f8d2b543a988f6fb17dbddb, type: 3}
