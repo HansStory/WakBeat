@@ -1,0 +1,111 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 12_1_SettingShopSkinsAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: c830f1eecc146ee41a23cc1de4e43a33, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys:
+    - 061dc330e6270b64b801ec15ed65836f: 21300000
+    - 93e1e2e1830f0ed40a3480367de10871: 21300000
+    - e5d58322751431c41819976934ab1fbd: 21300000
+    - e7e3286261fd8ea4ba422520af725a65: 21300000
+    - 78f1138216b749046b103639a61e68ee: 21300000
+    - eddf17a2323f6e541937bae63ebc273d: 21300000
+    - 0f6bbf034fa825b4194c471e1e8c45a1: 21300000
+    - a66d67e3ef4eca64ea5093f0732b445d: 21300000
+    - 87fb1324b20005b49b23390aa00bd6a3: 21300000
+    - 6a9561d41cbf15747a2c372c72361fc1: 21300000
+    - 846d896555c5360469f03c3cb1153471: 21300000
+    - 3f312dc535b5cd940995d007ee8a996c: 21300000
+    - 4ab85586dd94dd74c8213d83b3c97a9f: 21300000
+    - ea6f8967511df5f4db677586717bac72: 21300000
+    - c36b30385e89d2b4baaa8a87cb9055de: 21300000
+    - dfc1538834632614aa9dcb8732b1d083: 21300000
+    - 1a5373a8c0785bd499f98f82226a55a5: 21300000
+    - 1c592f89b6315ea4fa9564faee664f80: 21300000
+    - 97ef745cc2f2c9743988c2d2fd95e301: 21300000
+    - 7b132d2f988877742ac3c0c3dd06dbef: 21300000
+    - 6758163ff11ee2c45ac1709866414c25: 21300000
+    - f9f7d38f2d3f794429e9e6c9564afd25: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 061dc330e6270b64b801ec15ed65836f, type: 3}
+  - {fileID: 21300000, guid: 93e1e2e1830f0ed40a3480367de10871, type: 3}
+  - {fileID: 21300000, guid: e5d58322751431c41819976934ab1fbd, type: 3}
+  - {fileID: 21300000, guid: e7e3286261fd8ea4ba422520af725a65, type: 3}
+  - {fileID: 21300000, guid: 78f1138216b749046b103639a61e68ee, type: 3}
+  - {fileID: 21300000, guid: eddf17a2323f6e541937bae63ebc273d, type: 3}
+  - {fileID: 21300000, guid: 0f6bbf034fa825b4194c471e1e8c45a1, type: 3}
+  - {fileID: 21300000, guid: a66d67e3ef4eca64ea5093f0732b445d, type: 3}
+  - {fileID: 21300000, guid: 87fb1324b20005b49b23390aa00bd6a3, type: 3}
+  - {fileID: 21300000, guid: 6a9561d41cbf15747a2c372c72361fc1, type: 3}
+  - {fileID: 21300000, guid: 846d896555c5360469f03c3cb1153471, type: 3}
+  - {fileID: 21300000, guid: 3f312dc535b5cd940995d007ee8a996c, type: 3}
+  - {fileID: 21300000, guid: 4ab85586dd94dd74c8213d83b3c97a9f, type: 3}
+  - {fileID: 21300000, guid: ea6f8967511df5f4db677586717bac72, type: 3}
+  - {fileID: 21300000, guid: c36b30385e89d2b4baaa8a87cb9055de, type: 3}
+  - {fileID: 21300000, guid: dfc1538834632614aa9dcb8732b1d083, type: 3}
+  - {fileID: 21300000, guid: 1a5373a8c0785bd499f98f82226a55a5, type: 3}
+  - {fileID: 21300000, guid: 1c592f89b6315ea4fa9564faee664f80, type: 3}
+  - {fileID: 21300000, guid: 97ef745cc2f2c9743988c2d2fd95e301, type: 3}
+  - {fileID: 21300000, guid: 7b132d2f988877742ac3c0c3dd06dbef, type: 3}
+  - {fileID: 21300000, guid: 6758163ff11ee2c45ac1709866414c25, type: 3}
+  - {fileID: 21300000, guid: f9f7d38f2d3f794429e9e6c9564afd25, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - 07_Blue_Icon
+  - 09_Green_Icon
+  - 16_Shopping
+  - 21_Video_OFF
+  - 11_Orange_Icon
+  - 03_bg
+  - 18_Skill_ON
+  - 02_bg
+  - 08_Blue_Text
+  - 19_Skin_OFF
+  - 17_Skill_OFF
+  - 13_Button_Buy
+  - 06_Black_Text
+  - 14_Button_OFF
+  - 10_Green_Text
+  - 22_Video_ON
+  - 12_Orange_Text
+  - 15_Button_ON
+  - 20_Skin_ON
+  - 04_bg
+  - 23_X
+  - 05_Black_Icon
+  m_RenderDataMap: {}
+  m_Tag: 12_1_SettingShopSkinsAtlas
+  m_IsVariant: 0

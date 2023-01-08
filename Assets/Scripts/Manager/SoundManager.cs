@@ -42,7 +42,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
         get => backgroundMusicIndex;
         private set
         {
-            backgroundMusicIndex = MyUtil.RepeatIndex(value, backgroundClips.Length);
+            //backgroundMusicIndex = MyUtil.RepeatIndex(value, backgroundClips.Length);
         }
     }
 

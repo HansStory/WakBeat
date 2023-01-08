@@ -24,13 +24,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a237015ff85daff438ad2110c1e97306, type: 3}
   - {fileID: 21300000, guid: 1797df413abfa964ebf692c6868818c4, type: 3}
   - {fileID: 21300000, guid: d532b445cbe49ca4fb1eb3ab16d972d3, type: 3}
-  - {fileID: 21300000, guid: b3e740edcc084724489d01986d1d1132, type: 3}
+  - {fileID: 21300000, guid: 2a4d6d8545b0f0348a6f1d6bc46e28cf, type: 3}
   AlbumTitles:
-  - {fileID: 21300000, guid: 4cc94190a5d7a63469b45cca76b0f840, type: 3}
-  - {fileID: 21300000, guid: 155f3d61f2f3c4e4a9a2670b4bb43359, type: 3}
-  - {fileID: 21300000, guid: 3fa7163844a05d2489bf9f2b095f11c4, type: 3}
-  - {fileID: 21300000, guid: f9bb9a905b509c14bbac4307e1128009, type: 3}
-  - {fileID: 21300000, guid: 49527020bf1fe2b4c968419cc6a6f162, type: 3}
+  - {fileID: 21300000, guid: 9811a87e0cdd0c649b5d8e7cb9e5129e, type: 3}
+  - {fileID: 21300000, guid: 7319caa02e6fcaa4787d4a2795ec20ed, type: 3}
+  - {fileID: 21300000, guid: 99de5e9138c457949804edd7872bdbc0, type: 3}
+  - {fileID: 21300000, guid: 3b30b4840c7e198448edaaf12f051276, type: 3}
+  - {fileID: 21300000, guid: 27f01efecffceb84883013b1d173f973, type: 3}
   StageIcons:
   - {fileID: 21300000, guid: b55fe154b4559d8488fab7458d73aa87, type: 3}
   - {fileID: 21300000, guid: fd7127f9cebfa8a4db64e0a653df7257, type: 3}
@@ -96,16 +96,19 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3c26ceed537893f4fae51b14613d1461, type: 3}
   FifthAlbumMusicBackground:
   - {fileID: 21300000, guid: 9d1650003b0c84e4b9b45a92b96bba75, type: 3}
+  - {fileID: 21300000, guid: 7b99169c61040e545b39ffaa94ee656e, type: 3}
   FifthAlbumMusicCircle:
   - {fileID: 21300000, guid: 7150d7f1801172447b8c9d554a00bd93, type: 3}
+  - {fileID: 21300000, guid: 6e075fbd95823784bad02863ecb613de, type: 3}
   FifthAlbumMusicLevel:
   - {fileID: 21300000, guid: ab27ac55d049b20498d16fda0dc4e5c8, type: 3}
+  - {fileID: 21300000, guid: 619c9e9d59deac14c9b434817b5f0a8f, type: 3}
   AlbumInfomationImage:
   - {fileID: 21300000, guid: 5ffc543a6f8d2b543a988f6fb17dbddb, type: 3}
   - {fileID: 21300000, guid: 158d961069a26ab4db8b655d34f727ab, type: 3}
   - {fileID: 21300000, guid: 74d168d1faf7a384b855d8d4415970f5, type: 3}
-  - {fileID: 21300000, guid: 871c331c10a21614e882a4fbadfba951, type: 3}
-  - {fileID: 21300000, guid: 83f5ff5d824db94418e94a0fdc9529be, type: 3}
+  - {fileID: 21300000, guid: 8fc8e0c1e60a0364ab29e7496521ae23, type: 3}
+  - {fileID: 21300000, guid: 47b8586d60467af4ca8eb24f43b35556, type: 3}
   Album1MusicBannerImage:
   - {fileID: 21300000, guid: 8d9e0787d5759c943ac0a8ccf7adbac9, type: 3}
   - {fileID: 21300000, guid: e0a5f418b1c23604ca0a49efa8fb759a, type: 3}
@@ -127,3 +130,4 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 14ce6cdc05059e146afd14dbd92133ae, type: 3}
   Album5MusicBannerImage:
   - {fileID: 21300000, guid: 28c1432d995df8e4b97e66a4a946306f, type: 3}
+  - {fileID: 21300000, guid: c24dff3364adef94d961e8140cda63a5, type: 3}

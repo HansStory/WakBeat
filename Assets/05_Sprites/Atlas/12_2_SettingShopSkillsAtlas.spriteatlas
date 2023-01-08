@@ -1,0 +1,123 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 12_2_SettingShopSkillsAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: a90fd2986a4dac1478b8c27d4da5ce02, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys:
+    - 0f0be60004bc34843a1031be0eef3a71: 21300000
+    - 0921ac80f4adefd4ea2bf3f0cfb74273: 21300000
+    - 845d51f00f2bab94a8236979fd2e8561: 21300000
+    - 1f4c3d7119504c443a3671a85e21133d: 21300000
+    - c96ff2a150ab1574a9ae4ded4b663d55: 21300000
+    - 5f441a22c085d00489b465af8d2dc0f1: 21300000
+    - 13f14eb2850ac2043bbe4c9b842e8afb: 21300000
+    - ac0263d201fc76d489b5b32c979ff8e8: 21300000
+    - 072a1193a57153844a5c2272b351b777: 21300000
+    - 4d5f80c4f9f673a46b31e934dc0c3183: 21300000
+    - 2901a835c3a3bca46a2b9af0f12a46a2: 21300000
+    - f104e2c5fa5bbc24380050b50aa511fa: 21300000
+    - c3df9906446b0a840b6e123b3fe1350a: 21300000
+    - e68417b6f9ed13c4f829d7d73afa00f8: 21300000
+    - 4dfc7e0782d88c742bb9958945906a5f: 21300000
+    - e9fe7e89df1055241911c424f7fd83fc: 21300000
+    - 8bec1d4af53e47d40b34fb3bbe452797: 21300000
+    - d37ab7ba2d68a794b98b5707ff5960bb: 21300000
+    - d301771b007c5184fb8739684e588da4: 21300000
+    - 1f6dadcb666bd4941a7afbf19d6cab95: 21300000
+    - df9ada3de7ae20048b25a343062e0982: 21300000
+    - fd59bc5daa4f26946a9e044222f08f57: 21300000
+    - 1e44989d96c3ba04a86bc53708fdb3ea: 21300000
+    - c9544e0e2735ecd4db6e157d7950d980: 21300000
+    - bc7a9e2fc84c28549adf1af19a1122e4: 21300000
+    - fa0a84af8f6858041a428cb312214d7a: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 0f0be60004bc34843a1031be0eef3a71, type: 3}
+  - {fileID: 21300000, guid: 0921ac80f4adefd4ea2bf3f0cfb74273, type: 3}
+  - {fileID: 21300000, guid: 845d51f00f2bab94a8236979fd2e8561, type: 3}
+  - {fileID: 21300000, guid: 1f4c3d7119504c443a3671a85e21133d, type: 3}
+  - {fileID: 21300000, guid: c96ff2a150ab1574a9ae4ded4b663d55, type: 3}
+  - {fileID: 21300000, guid: 5f441a22c085d00489b465af8d2dc0f1, type: 3}
+  - {fileID: 21300000, guid: 13f14eb2850ac2043bbe4c9b842e8afb, type: 3}
+  - {fileID: 21300000, guid: ac0263d201fc76d489b5b32c979ff8e8, type: 3}
+  - {fileID: 21300000, guid: 072a1193a57153844a5c2272b351b777, type: 3}
+  - {fileID: 21300000, guid: 4d5f80c4f9f673a46b31e934dc0c3183, type: 3}
+  - {fileID: 21300000, guid: 2901a835c3a3bca46a2b9af0f12a46a2, type: 3}
+  - {fileID: 21300000, guid: f104e2c5fa5bbc24380050b50aa511fa, type: 3}
+  - {fileID: 21300000, guid: c3df9906446b0a840b6e123b3fe1350a, type: 3}
+  - {fileID: 21300000, guid: e68417b6f9ed13c4f829d7d73afa00f8, type: 3}
+  - {fileID: 21300000, guid: 4dfc7e0782d88c742bb9958945906a5f, type: 3}
+  - {fileID: 21300000, guid: e9fe7e89df1055241911c424f7fd83fc, type: 3}
+  - {fileID: 21300000, guid: 8bec1d4af53e47d40b34fb3bbe452797, type: 3}
+  - {fileID: 21300000, guid: d37ab7ba2d68a794b98b5707ff5960bb, type: 3}
+  - {fileID: 21300000, guid: d301771b007c5184fb8739684e588da4, type: 3}
+  - {fileID: 21300000, guid: 1f6dadcb666bd4941a7afbf19d6cab95, type: 3}
+  - {fileID: 21300000, guid: df9ada3de7ae20048b25a343062e0982, type: 3}
+  - {fileID: 21300000, guid: fd59bc5daa4f26946a9e044222f08f57, type: 3}
+  - {fileID: 21300000, guid: 1e44989d96c3ba04a86bc53708fdb3ea, type: 3}
+  - {fileID: 21300000, guid: c9544e0e2735ecd4db6e157d7950d980, type: 3}
+  - {fileID: 21300000, guid: bc7a9e2fc84c28549adf1af19a1122e4, type: 3}
+  - {fileID: 21300000, guid: fa0a84af8f6858041a428cb312214d7a, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - 20_Skill_5_Title
+  - 14_Skill_3_Title
+  - 19_Skill_5_text
+  - 23_Lock_text_3
+  - 06_Button_ON
+  - 21_Lock_text_1
+  - 18_Skill_5_icon
+  - 10_Skill_2_text
+  - 24_Lock_text_4
+  - 25_Lock_text_5
+  - 09_Skill_2_icon
+  - 16_Skill_4_text
+  - 15_Skill_4_icon
+  - 08_Skill_1_Title
+  - 04_Button_Lock
+  - 12_Skill_3_icon
+  - 02_Lock_bg
+  - 22_Lock_text_2
+  - 05_Button_OFF
+  - 11_Skill_2_Title
+  - 03_Lock_icon
+  - 13_Skill_3_text
+  - 17_Skill_4_Title
+  - 07_Skill_1_text
+  - 07_Skill_1_icon
+  - 01_bg
+  m_RenderDataMap: {}
+  m_Tag: 12_2_SettingShopSkillsAtlas
+  m_IsVariant: 0
