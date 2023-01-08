@@ -1802,7 +1802,7 @@ MonoBehaviour:
   _uiObjectProgressCircle: {fileID: 7270189117128891702, guid: 5312cec2809604b4eb4657ace1dede99, type: 3}
   _uiObjectProgressCircleBase: {fileID: 3540137803790492285}
   _scrollRect: {fileID: 3438493075930980602}
-  _uiObjectMusicTutorial: {fileID: 5611391142765583243, guid: 009f7d35d81088e4f96bea9e479b9028, type: 3}
+  _uiObjectMusicTutorial: {fileID: 8863306331170489117, guid: 0e61a0f5bfe3b6d4b960b3e3cb30862c, type: 3}
   _musicLength: {fileID: 2214611924591506007}
   _musicClearSlider: {fileID: 4541299205545137970}
 --- !u!1 &7695171977082257434
