@@ -95,6 +95,8 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     protected static float _spawnAngle = -5f;
 
     protected bool _isPlay = false;              // 게임 진행중 체크
+    protected bool _isFinish = false;            // 게임 종료 체크
+
     protected bool _isPause = false;             // 일시정지 체크
     protected bool _isGameMode = false;          // 게임 모드 체크
     protected bool _isAutoMode = false;          // 오토 모드 체크
@@ -220,14 +222,22 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     protected virtual void InitHP()
     {
-        if (state.UseBonusHP) // Shop Skill에서 처리 해줘야 함[완료]
+        if (state.UseBonusHP && state.UseGreenhorn) // Shop Skill에서 처리 해줘야 함[완료]
+        {
+            _currentHP = 38;
+        }
+        else if (state.UseGreenhorn)
+        {
+            _currentHP = 37;
+        }
+        else if (state.UseBonusHP)
         {
             _currentHP = 2;
         }
         else
         {
             _currentHP = 1;
-        }
+        }             
     }
 
     protected virtual void InitBallPosition()
@@ -809,8 +819,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         StageAnim[_animationName].speed = 1f;
         StageAnim.Play(_animationName);
     }
-
-
+   
     //------------------------------------ Play Game ----------------------------------------
     #region Play Game!!!
     protected virtual void Update()
@@ -831,11 +840,10 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         Center.transform.Rotate(0f, 0f, (Time.deltaTime / _beatTime) * -_ballSpeed);
         OperateBallMovement();
 
-
         if (_currentLine < bmwReader.ChartingItem.Count - 1)
         {
             if (_timer > _beatTime)
-            {                
+            {
                 _currentLine++;
                 _timer -= _beatTime;
 
@@ -844,8 +852,12 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         }
         else
         {
-            FinishGame();
+            if (!_isFinish)
+            {
+                FinishGame();
+            }
         }
+        
     }
 
     protected virtual void OperateBallMovement()
@@ -1236,6 +1248,8 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     #region Finish Game!!!
     public virtual void FinishGame()
     {
+        //DOTween.KillAll();      
+
         StageClear();
     }
 
@@ -1252,6 +1266,8 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         // Scale Tween
         var tween = ClearImage.rectTransform.DOScale(Vector2.one, 2f);
         tween.SetAutoKill().SetEase(ClearCurve.Curve).OnComplete(() => { OnCompleteFinish(); });
+
+        _isFinish = true;
     }
 
     public virtual void OnCompleteFinish()

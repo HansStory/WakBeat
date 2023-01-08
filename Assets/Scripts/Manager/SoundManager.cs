@@ -97,6 +97,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     public void PlaySoundFX(int index)
     {
         SFXAudioSource.Stop();
+
         SFXAudioSource.PlayOneShot(soundFXClip[index]);
     }
 
