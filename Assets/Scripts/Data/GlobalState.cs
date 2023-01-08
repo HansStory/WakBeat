@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UIElements;
+using static GlobalData;
 
 public class GlobalState : MonoBehaviourSingleton<GlobalState>
 {
@@ -160,21 +160,23 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
         {
             var path = Application.streamingAssetsPath + "/BMW/";
 
-            switch (AlbumIndex)
+            ALBUM album = (ALBUM)AlbumIndex;
+
+            switch (album)
             {
-                case (int)GlobalData.ALBUM.ISEDOL:
+                case ALBUM.ISEDOL:
                     _bmwFolderPath = path + "Album_01";
                     break;
-                case (int)GlobalData.ALBUM.CONTEST:
+                case ALBUM.CONTEST:
                     _bmwFolderPath = path + "Album_02";
                     break;
-                case (int)GlobalData.ALBUM.GOMIX:
+                case ALBUM.GOMIX:
                     _bmwFolderPath = path + "Album_03";
                     break;
-                case (int)GlobalData.ALBUM.WAKALOID:
+                case ALBUM.WAKALOID:
                     _bmwFolderPath = path + "Album_04";
                     break;
-                case (int)GlobalData.ALBUM.CONTEST2:
+                case ALBUM.CONTEST2:
                     _bmwFolderPath = path + "Album_05";
                     break;
             }
@@ -189,21 +191,23 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
     {
         get
         {
-            switch (StageIndex)
+            STAGE stage = (STAGE)StageIndex;
+
+            switch (stage)
             {
-                case (int)GlobalData.STAGE.STAGE1:
+                case STAGE.STAGE1:
                     _bmwFile = "Stage_01" + bmw;
                     break;
-                case (int)GlobalData.STAGE.STAGE2:
+                case STAGE.STAGE2:
                     _bmwFile = "Stage_02" + bmw;
                     break;
-                case (int)GlobalData.STAGE.STAGE3:
+                case STAGE.STAGE3:
                     _bmwFile = "Stage_03" + bmw;
                     break;
-                case (int)GlobalData.STAGE.STAGE4:
+                case STAGE.STAGE4:
                     _bmwFile = "Stage_04" + bmw;
                     break;
-                case (int)GlobalData.STAGE.STAGE5:
+                case STAGE.STAGE5:
                     _bmwFile = "Stage_05" + bmw;
                     break;
             }

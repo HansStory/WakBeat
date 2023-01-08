@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
+using static GlobalData;
 
 public class UIElementMusicSelect : MonoBehaviour
 {
@@ -127,22 +128,23 @@ public class UIElementMusicSelect : MonoBehaviour
     void MakeAlbumStages()
     {
         var albumData = GlobalData.Instance.Album;
+        ALBUM album = (ALBUM)GlobalState.Instance.AlbumIndex;
 
-        switch (GlobalState.Instance.AlbumIndex)
+        switch (album)
         {
-            case (int)GlobalData.ALBUM.ISEDOL:
+            case ALBUM.ISEDOL:
                 MakeAlbumStage(albumData.FirstAlbumMusicCircle, albumData.FirstAlbumMusicLevel);
                 break;
-            case (int)GlobalData.ALBUM.CONTEST:
+            case ALBUM.CONTEST:
                 MakeAlbumStage(albumData.SecondAlbumMusicCircle, albumData.SecondAlbumMusicLevel);
                 break;
-            case (int)GlobalData.ALBUM.GOMIX:
+            case ALBUM.GOMIX:
                 MakeAlbumStage(albumData.ThirdAlbumMusicCircle, albumData.ThirdAlbumMusicLevel);
                 break;
-            case (int)GlobalData.ALBUM.WAKALOID:
+            case ALBUM.WAKALOID:
                 MakeAlbumStage(albumData.ForthAlbumMusicCircle, albumData.ForthAlbumMusicLevel);
                 break;
-            case (int)GlobalData.ALBUM.CONTEST2:
+            case ALBUM.CONTEST2:
                 MakeAlbumStage(albumData.FifthAlbumMusicCircle, albumData.FifthAlbumMusicLevel);
                 break;
         }
@@ -424,21 +426,23 @@ public class UIElementMusicSelect : MonoBehaviour
         var albumData = GlobalData.Instance.Album;
         var state = GlobalState.Instance;
 
-        switch (GlobalState.Instance.AlbumIndex)
+        ALBUM album = (ALBUM)GlobalState.Instance.AlbumIndex;
+
+        switch (album)
         {
-            case (int)GlobalData.ALBUM.ISEDOL:
+            case ALBUM.ISEDOL:
                 _backGround.sprite = albumData.FirstAlbumMusicBackground[state.StageIndex];
                 break;
-            case (int)GlobalData.ALBUM.CONTEST:
+            case ALBUM.CONTEST:
                 _backGround.sprite = albumData.SecondAlbumMusicBackground[state.StageIndex];
                 break;
-            case (int)GlobalData.ALBUM.GOMIX:
+            case ALBUM.GOMIX:
                 _backGround.sprite = albumData.ThirdAlbumMusicBackground[state.StageIndex];
                 break;
-            case (int)GlobalData.ALBUM.WAKALOID:
+            case ALBUM.WAKALOID:
                 _backGround.sprite = albumData.ForthAlbumMusicBackground[state.StageIndex];
                 break;
-            case (int)GlobalData.ALBUM.CONTEST2:
+            case ALBUM.CONTEST2:
                 _backGround.sprite = albumData.FifthAlbumMusicBackground[state.StageIndex];
                 break;
         }

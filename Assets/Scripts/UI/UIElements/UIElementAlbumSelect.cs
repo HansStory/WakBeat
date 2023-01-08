@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using static GlobalData;
 
 public class UIElementAlbumSelect : MonoBehaviour
 {
@@ -81,7 +82,9 @@ public class UIElementAlbumSelect : MonoBehaviour
                     albumInfo.AlbumIndex = _albumIndex;
                     albumInfo.UIElementAlbumSelect = this;
 
-                    InitAlbumsPos(_albumIndex, albumInfo.MyRectTransform, albumInfo.AlbumCircle, albumInfo.CurveAlbumCircle);
+                    ALBUM album = (ALBUM)_albumIndex;
+
+                    InitAlbumsPos(album, albumInfo.MyRectTransform, albumInfo.AlbumCircle, albumInfo.CurveAlbumCircle);
                 }
                 else
                 {
@@ -93,27 +96,29 @@ public class UIElementAlbumSelect : MonoBehaviour
         }
     }
 
-    void InitAlbumsPos(int albumIndex, RectTransform rectTransform, Image albumCircle, AnimCurve animCurve)
+    void InitAlbumsPos(ALBUM albumIndex, RectTransform rectTransform, Image albumCircle, AnimCurve animCurve)
     {
+
+
         switch (albumIndex)
         {
-            case (int)GlobalData.ALBUM.ISEDOL:
+            case ALBUM.ISEDOL:
                 InitAlbumPos(rectTransform, _centerPos, _centerSize);
                 InitAlbumTween(albumCircle, animCurve, 1f, 0.5f);
                 break;
-            case (int)GlobalData.ALBUM.CONTEST:
+            case ALBUM.CONTEST:
                 InitAlbumPos(rectTransform, _downPos, _smallSize);
                 InitAlbumTween(albumCircle, animCurve, 1f, 0.6f);
                 break;
-            case (int)GlobalData.ALBUM.GOMIX:
+            case ALBUM.GOMIX:
                 InitAlbumPos(rectTransform, _outDownPos, _smallSize);
                 InitAlbumTween(albumCircle, animCurve, 1f, 0.8f);
                 break;
-            case (int)GlobalData.ALBUM.WAKALOID:
+            case ALBUM.WAKALOID:
                 InitAlbumPos(rectTransform, _outUpPos, _smallSize);
                 InitAlbumTween(albumCircle, animCurve, 1f, 0.7f);
                 break;
-            case (int)GlobalData.ALBUM.CONTEST2:
+            case ALBUM.CONTEST2:
                 InitAlbumPos(rectTransform, _upPos, _smallSize);
                 InitAlbumTween(albumCircle, animCurve, 1f, 0.7f);
                 break;
