@@ -24,11 +24,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 78f1138216b749046b103639a61e68ee, type: 3}
   SkillTitle:
   - {fileID: 21300000, guid: e68417b6f9ed13c4f829d7d73afa00f8, type: 3}
+  - {fileID: 21300000, guid: e68417b6f9ed13c4f829d7d73afa00f8, type: 3}
   - {fileID: 21300000, guid: 1f6dadcb666bd4941a7afbf19d6cab95, type: 3}
   - {fileID: 21300000, guid: 0921ac80f4adefd4ea2bf3f0cfb74273, type: 3}
   - {fileID: 21300000, guid: 1e44989d96c3ba04a86bc53708fdb3ea, type: 3}
   - {fileID: 21300000, guid: 0f0be60004bc34843a1031be0eef3a71, type: 3}
   SkillExplanation:
+  - {fileID: 21300000, guid: c9544e0e2735ecd4db6e157d7950d980, type: 3}
   - {fileID: 21300000, guid: c9544e0e2735ecd4db6e157d7950d980, type: 3}
   - {fileID: 21300000, guid: ac0263d201fc76d489b5b32c979ff8e8, type: 3}
   - {fileID: 21300000, guid: fd59bc5daa4f26946a9e044222f08f57, type: 3}
@@ -36,11 +38,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 845d51f00f2bab94a8236979fd2e8561, type: 3}
   SkillIcon:
   - {fileID: 21300000, guid: bc7a9e2fc84c28549adf1af19a1122e4, type: 3}
+  - {fileID: 21300000, guid: bc7a9e2fc84c28549adf1af19a1122e4, type: 3}
   - {fileID: 21300000, guid: 2901a835c3a3bca46a2b9af0f12a46a2, type: 3}
   - {fileID: 21300000, guid: e9fe7e89df1055241911c424f7fd83fc, type: 3}
   - {fileID: 21300000, guid: c3df9906446b0a840b6e123b3fe1350a, type: 3}
   - {fileID: 21300000, guid: 13f14eb2850ac2043bbe4c9b842e8afb, type: 3}
   SkillLockExplanation:
+  - {fileID: 21300000, guid: 5f441a22c085d00489b465af8d2dc0f1, type: 3}
   - {fileID: 21300000, guid: 5f441a22c085d00489b465af8d2dc0f1, type: 3}
   - {fileID: 21300000, guid: d37ab7ba2d68a794b98b5707ff5960bb, type: 3}
   - {fileID: 21300000, guid: 1f4c3d7119504c443a3671a85e21133d, type: 3}
