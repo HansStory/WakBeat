@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class FifthAStage1 : Stage
 {
     public ParticleSystem CircleParticle;
-    private float frame;
 
     protected override void Init()
     {
@@ -18,45 +17,11 @@ public class FifthAStage1 : Stage
         CircleSkin.color = Color.black;
 
         SetObstaclesSkin(9, Color.red);
-        frame = 1f / 60f;
-        Debug.Log(frame);
     }
 
     protected override void PlayProcess()
     {
         base.PlayProcess();
-
-        switch (_currentLine)
-        {
-            case 0:
-                break;
-            case 12:
-                Invoke(nameof(ChangeWhite), _tick * 2f);
-                break;
-            case 18:
-                ChangeBlack();
-                break;
-            case 50:
-                Invoke(nameof(ChangeWhite), 0.266563f);
-                Invoke(nameof(ChangeBlack), 0.433229f);
-                Invoke(nameof(ChangeWhite), 0.533229f);
-                Invoke(nameof(ChangeBlack), 0.633229f);
-                Invoke(nameof(ChangeWhite), 0.766563f);
-                Debug.Log(_playTime);
-                break;
-            case 51:
-                //Invoke(nameof(ChangeWhite), 0.266563f); 
-                //Invoke(nameof(ChangeBlack), 0.433229f);
-                //Invoke(nameof(ChangeWhite), 0.533229f);
-                //Invoke(nameof(ChangeBlack), 0.633229f);
-                //Invoke(nameof(ChangeWhite), 0.766563f);
-                //Invoke(nameof(ChangeBlack), 0.433229f);
-                //Invoke(nameof(ChangeWhite), 0.533229f);
-                break;
-            case 52:
-                Debug.Log(_playTime);
-                break;
-        }
     }
 
     void ChangeBlack()
