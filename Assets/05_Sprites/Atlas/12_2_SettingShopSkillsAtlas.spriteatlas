@@ -45,7 +45,9 @@ SpriteAtlas:
     - 5f441a22c085d00489b465af8d2dc0f1: 21300000
     - 13f14eb2850ac2043bbe4c9b842e8afb: 21300000
     - ac0263d201fc76d489b5b32c979ff8e8: 21300000
+    - ed5ba8435dcff4b428b2cc914f6e0e66: 21300000
     - 072a1193a57153844a5c2272b351b777: 21300000
+    - eb577d93ba79966468b1f4d284859c23: 21300000
     - 4d5f80c4f9f673a46b31e934dc0c3183: 21300000
     - 2901a835c3a3bca46a2b9af0f12a46a2: 21300000
     - f104e2c5fa5bbc24380050b50aa511fa: 21300000
@@ -53,6 +55,7 @@ SpriteAtlas:
     - e68417b6f9ed13c4f829d7d73afa00f8: 21300000
     - 4dfc7e0782d88c742bb9958945906a5f: 21300000
     - e9fe7e89df1055241911c424f7fd83fc: 21300000
+    - 4bbad8b9243f0824192b3b310a38150b: 21300000
     - 8bec1d4af53e47d40b34fb3bbe452797: 21300000
     - d37ab7ba2d68a794b98b5707ff5960bb: 21300000
     - d301771b007c5184fb8739684e588da4: 21300000
@@ -73,7 +76,9 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 5f441a22c085d00489b465af8d2dc0f1, type: 3}
   - {fileID: 21300000, guid: 13f14eb2850ac2043bbe4c9b842e8afb, type: 3}
   - {fileID: 21300000, guid: ac0263d201fc76d489b5b32c979ff8e8, type: 3}
+  - {fileID: 21300000, guid: ed5ba8435dcff4b428b2cc914f6e0e66, type: 3}
   - {fileID: 21300000, guid: 072a1193a57153844a5c2272b351b777, type: 3}
+  - {fileID: 21300000, guid: eb577d93ba79966468b1f4d284859c23, type: 3}
   - {fileID: 21300000, guid: 4d5f80c4f9f673a46b31e934dc0c3183, type: 3}
   - {fileID: 21300000, guid: 2901a835c3a3bca46a2b9af0f12a46a2, type: 3}
   - {fileID: 21300000, guid: f104e2c5fa5bbc24380050b50aa511fa, type: 3}
@@ -81,6 +86,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: e68417b6f9ed13c4f829d7d73afa00f8, type: 3}
   - {fileID: 21300000, guid: 4dfc7e0782d88c742bb9958945906a5f, type: 3}
   - {fileID: 21300000, guid: e9fe7e89df1055241911c424f7fd83fc, type: 3}
+  - {fileID: 21300000, guid: 4bbad8b9243f0824192b3b310a38150b, type: 3}
   - {fileID: 21300000, guid: 8bec1d4af53e47d40b34fb3bbe452797, type: 3}
   - {fileID: 21300000, guid: d37ab7ba2d68a794b98b5707ff5960bb, type: 3}
   - {fileID: 21300000, guid: d301771b007c5184fb8739684e588da4, type: 3}
@@ -100,7 +106,9 @@ SpriteAtlas:
   - 21_Lock_text_1
   - 18_Skill_5_icon
   - 10_Skill_2_text
+  - 26_Skill_6_icon
   - 24_Lock_text_4
+  - 27_Skill_6_text
   - 25_Lock_text_5
   - 09_Skill_2_icon
   - 16_Skill_4_text
@@ -108,6 +116,7 @@ SpriteAtlas:
   - 08_Skill_1_Title
   - 04_Button_Lock
   - 12_Skill_3_icon
+  - 28_Skill_6_Title
   - 02_Lock_bg
   - 22_Lock_text_2
   - 05_Button_OFF
