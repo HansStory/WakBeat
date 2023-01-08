@@ -360,7 +360,7 @@ public class UIObjectShop : MonoBehaviour
             {
                 case 0:
                     GlobalState.Instance.UseGreenhorn = true;
-                    GlobalState.Instance.UsedItems[Index] = "N";
+                    GlobalState.Instance.UsedItems[Index] = "Y";
                     break;
                 case 1:
                     GlobalState.Instance.UseBonusHP = true;
