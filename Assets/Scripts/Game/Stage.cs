@@ -267,7 +267,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     protected virtual void GetMusicInfo()
     {
-        if (bmwReader)
+        if (bmwReader != null)
         {
             _title = bmwReader.MusicInfoItem.Title;
             _artist = bmwReader.MusicInfoItem.Artist;
@@ -282,8 +282,8 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     protected virtual void SetMusicInfo()
     {
         // Sound Á¦¾î ºÎ
-        audioSource = SoundManager.Instance.MusicAudio;
         SoundManager = SoundManager.Instance;
+        audioSource = SoundManager.MusicAudio;
 
         SoundManager.Instance.SetStageMusic();
         state.StageMusicLength = (int)audioSource.clip.length;
@@ -504,7 +504,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             return;
         }
 
-        PlayAnimation(_animationName);
+        //PlayAnimation(_animationName);
 
         ChangeBar();
 
@@ -772,13 +772,42 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     protected virtual void StartGame()
     {
-        _currentLine = 0;
         _isPlay = true;
 
-        if (videoPlayer) videoPlayer.Play();
+        _currentLine = 0;
 
-        SoundManager.Instance.TurnOnStageMusic();
+        PlayStage();
+
         PlayProcess();
+    }
+
+    protected virtual void PlayStage()
+    {
+        SoundManager.TurnOnStageMusic();
+        PlayThisAnimation();
+        PlayVideo();
+    }
+
+
+    protected virtual void PlayVideo()
+    {
+        if (videoPlayer)
+        {
+            videoPlayer.time = 0f;
+            videoPlayer.playbackSpeed = 1f;
+            videoPlayer.Play();
+        }
+    }
+
+    protected virtual void PlayThisAnimation()
+    {
+        if (StageAnim.clip == null) return;
+
+        _animationName = StageAnim.clip.name;
+
+        StageAnim[_animationName].time = 0f;
+        StageAnim[_animationName].speed = 1f;
+        StageAnim.Play(_animationName);
     }
 
 

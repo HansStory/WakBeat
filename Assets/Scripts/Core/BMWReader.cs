@@ -153,66 +153,72 @@ public class ChartingItem
         //Dodge Point Elements
         DodgePoint = dodgePoint; // For Debuging
 
-        string[] dodgePoints = dodgePoint.Split('|');
+        string[] dodgePoints = dodgePoint.Trim().Split('|');
         DodgePoints = dodgePoints;
 
         for (int i = 0; i < dodgePoints.Length; i++)
         {
-            int idx = Convert.ToInt32(dodgePoints[i]);
+            int.TryParse(dodgePoints[i], out int idx);
+
             DodgePointElements.Add(new DodgePoint(idx));
         }
 
         // Dummy Dodge Point Elements
-        string[] dummyDodges = dummyDodge.Split('|');
+        string[] dummyDodges = dummyDodge.Trim().Split('|');
         DummyDodgePoints = dummyDodges;
 
         for (int i = 0; i < dummyDodges.Length; i++)
         {
-            int idx = Convert.ToInt32(dummyDodges[i]);
+            int.TryParse(dummyDodges[i], out int idx);
+
             DummyDodgePointElements.Add(new DummyDodgePoint(idx));
         }
 
         // Out Obstacle Elements
         OutObstacle = outObstacle; // For Debuging
 
-        string[] outObstacles = outObstacle.Split('|');
+        string[] outObstacles = outObstacle.Trim().Split('|');
         OutObstacles = outObstacles;
 
         for (int i = 0; i < outObstacles.Length; i++)
         {
-            int idx = Convert.ToInt32(outObstacles[i]);
+            int.TryParse(outObstacles[i], out int idx);
+
             OutObstacleElements.Add(new OutObstacle(idx));
         }
 
         // Dummy Out Obstacle Elements
-        string[] dummyOuts = dummyOut.Split('|');
+        string[] dummyOuts = dummyOut.Trim().Split('|');
         DummyOutObstacles = dummyOuts;
 
         for (int i = 0; i < dummyOuts.Length; i++)
         {
-            int idx = Convert.ToInt32(dummyOuts[i]);
+            int.TryParse(dummyOuts[i], out int idx);
+
             DummyOutObstacleElements.Add(new DummyOutObstacle(idx));
         }
 
         // In Obstacle Elements
         InObstacle = inObstacle; // For Debuging
 
-        string[] inObstacles = inObstacle.Split('|');
+        string[] inObstacles = inObstacle.Trim().Split('|');
         InObstacles = inObstacles;
 
         for (int i = 0; i < inObstacles.Length; i++)
         {
-            int idx = Convert.ToInt32(inObstacles[i]);
+            int.TryParse(inObstacles[i], out int idx);
+
             InObstacleElements.Add(new InObstacle(idx));
         }
 
         // Dummy In Obstacle Elements
-        string[] dummyIns = dummyIn.Split('|');
+        string[] dummyIns = dummyIn.Trim().Split('|');
         DummyOutObstacles = dummyIns;
 
         for (int i = 0; i < dummyIns.Length; i++)
         {
-            int idx = Convert.ToInt32(dummyIns[i]);
+            int.TryParse(dummyIns[i], out int idx);
+
             DummyInObstacleElements.Add(new DummyInObstacle(idx));
         }
 
@@ -227,7 +233,7 @@ public class ChartingList : List<ChartingItem>
 
 public class BMWReader : CsvReader
 {
-    private MusicInfoItem _musicInfoItem;
+    private MusicInfoItem _musicInfoItem = null;
     private List<AnimationItem> _animationItem = new List<AnimationItem>();
     private List<ChartingItem> _chartingItem = new List<ChartingItem>();
 
@@ -276,21 +282,29 @@ public class BMWReader : CsvReader
                 {
                     case CSVBLOCK.MusicInfo:
                         count = 0;
-                        _musicInfoItem = new MusicInfoItem(
-                            args[count++].Trim(),
-                            args[count++].Trim(),
-                            float.Parse(args[count++].Trim()),
-                            Convert.ToInt32(args[count++].Trim()),
-                            Convert.ToInt32(args[count++].Trim())                            
-                            );
 
-                        // 작곡가 에 ^ 들어갈시 ,로 변경
-                        if (_musicInfoItem.Artist.Contains("^"))
+                        if (args.Length > 4)
                         {
-                            _musicInfoItem.Artist = _musicInfoItem.Artist.Replace("^", ",");
-                        }
+                            _musicInfoItem = new MusicInfoItem(
+                                args[count++].Trim(),
+                                args[count++].Trim(),
+                                float.Parse(args[count++].Trim()),
+                                Convert.ToInt32(args[count++].Trim()),
+                                Convert.ToInt32(args[count++].Trim())
+                                );
 
-                        Debug.Log($"{_musicInfoItem.Title},{_musicInfoItem.Artist},{_musicInfoItem.BPM},{_musicInfoItem.Time}");
+                            // 작곡가 에 ^ 들어갈시 ,로 변경
+                            if (_musicInfoItem.Artist.Contains("^"))
+                            {
+                                _musicInfoItem.Artist = _musicInfoItem.Artist.Replace("^", ",");
+                            }
+
+                            Debug.Log($"{_musicInfoItem.Title},{_musicInfoItem.Artist},{_musicInfoItem.BPM},{_musicInfoItem.Time}");
+                        }
+                        else
+                        {
+                            Debug.Log("Music Info Arguments Index Error");
+                        }
                         break;
                     case CSVBLOCK.Animation:
                         count = 0;

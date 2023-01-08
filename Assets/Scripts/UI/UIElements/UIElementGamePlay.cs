@@ -6,12 +6,12 @@ public class UIElementGamePlay : MonoBehaviour
 {
     private void Awake()
     {
-        SoundManager.Instance.ForceAudioStop();
+        //SoundManager.Instance.ForceAudioStop();
     }
     // Start is called before the first frame update
     void Start()
     {
-        
+        GameFactory.Instance.CreateStage();
     }
 
 
@@ -33,9 +33,9 @@ public class UIElementGamePlay : MonoBehaviour
 
     private void OnEnable()
     {
-        SoundManager.Instance.TurnOffGameBackground();
-        SoundManager.Instance.ForceAudioStop();
-        GameFactory.Instance.CreateStage();
+        //SoundManager.Instance.TurnOffGameBackground();
+        //SoundManager.Instance.ForceAudioStop();
+        //GameFactory.Instance.CreateStage();
     }
 
     private void OnDisable()

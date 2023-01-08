@@ -1,11 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System.IO;
-using System.Text;
 
-public abstract class CsvReader : MonoBehaviour
+public abstract class CsvReader
 {
     private string _fileName = string.Empty;
 
