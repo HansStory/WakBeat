@@ -19,19 +19,19 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
     // 스킨 개수
     static int _skinCount = 4;
     // 스킬 개수
-    static int _skillCount = 5;
+    static int _skillCount = 6;
     // 비디오 개수
     static int _videoCount = 1;
     // 스킨 해금 조건 배열
     static int[] _skinUnLockCondition = { 1, 2, 3, 5 };
     // 스킬 해금 조건 배열
-    static int[] _skillUnLockCondition = { 1, 2, 3, 5, 7 };
+    static int[] _skillUnLockCondition = { 0, 1, 2, 3, 5, 7 };
     // 앨범 별 스테이지 수
     static int _album1StageCount = 2;
     static int _album2StageCount = 4;
     static int _album3StageCount = 5;
     static int _album4StageCount = 4;
-    static int _album5StageCount = 1;
+    static int _album5StageCount = 2;
     // 상점 강제 해금 사용 여부 > True : 강제 해금 사용 / False : 강제 해금 미사용
     static Boolean _shopCompulsionActive = false;
     // 인게임 관련 데이터
@@ -228,6 +228,18 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
                         case 0:
                             if (dataSkillUsingYn[i].Equals("Y"))
                             {
+                                GlobalState.Instance.UseGreenhorn = true;
+                                GlobalState.Instance.UsedItems[i] = "Y";
+                            }
+                            else
+                            {
+                                GlobalState.Instance.UseGreenhorn = false;
+                                GlobalState.Instance.UsedItems[i] = "N";
+                            }
+                            break;
+                        case 1:
+                            if (dataSkillUsingYn[i].Equals("Y"))
+                            {
                                 GlobalState.Instance.UseBonusHP = true;
                                 GlobalState.Instance.UsedItems[i] = "Y";
                             }
@@ -237,7 +249,7 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
                                 GlobalState.Instance.UsedItems[i] = "N";
                             }
                             break;
-                        case 1:
+                        case 2:
                             if (dataSkillUsingYn[i].Equals("Y"))
                             {
                                 GlobalState.Instance.UseBarrier = true;
@@ -249,7 +261,7 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
                                 GlobalState.Instance.UsedItems[i] = "N";
                             }
                             break;
-                        case 2:
+                        case 3:
                             if (dataSkillUsingYn[i].Equals("Y"))
                             {
                                 GlobalState.Instance.UseNewGaMe = true;
@@ -261,7 +273,7 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
                                 GlobalState.Instance.UsedItems[i] = "N";
                             }
                             break;
-                        case 3:
+                        case 4:
                             if (dataSkillUsingYn[i].Equals("Y"))
                             {
                                 GlobalState.Instance.ShowDodge = true;
@@ -273,7 +285,7 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
                                 GlobalState.Instance.UsedItems[i] = "N";
                             }
                             break;
-                        case 4:
+                        case 5:
                             if (dataSkillUsingYn[i].Equals("Y"))
                             {
                                 GlobalState.Instance.AutoMode = true;
@@ -400,6 +412,7 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
             userData.gameData.album5StageProgressLine = dataAlbum5StageProgressLine;
 
             // 스킬 사용여부 세팅
+            GlobalState.Instance.UseGreenhorn = false;
             GlobalState.Instance.UseBonusHP = false;
             GlobalState.Instance.UseBarrier = false;
             GlobalState.Instance.UseNewGaMe = false;

@@ -227,6 +227,13 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
     }
 
     // -------------------------- Skill ------------------------------------
+    private bool _useGreenhorn = false;
+    public bool UseGreenhorn
+    {
+        get { return _useGreenhorn;  }
+        set { _useGreenhorn = value; }
+    }
+
     private bool _useBonusHP = false;
     public bool UseBonusHP
     {

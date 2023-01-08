@@ -324,23 +324,27 @@ public class UIObjectShop : MonoBehaviour
 
             switch(Index)
             {
-                case 0: 
-                    GlobalState.Instance.UseBonusHP = false;
+                case 0:
+                    GlobalState.Instance.UseGreenhorn = false;
                     GlobalState.Instance.UsedItems[Index] = "N";
                     break;
                 case 1: 
-                    GlobalState.Instance.UseBarrier = false;
+                    GlobalState.Instance.UseBonusHP = false;
                     GlobalState.Instance.UsedItems[Index] = "N";
                     break;
                 case 2: 
-                    GlobalState.Instance.UseNewGaMe = false; 
+                    GlobalState.Instance.UseBarrier = false;
                     GlobalState.Instance.UsedItems[Index] = "N";
                     break;
                 case 3: 
-                    GlobalState.Instance.ShowDodge = false;
+                    GlobalState.Instance.UseNewGaMe = false; 
                     GlobalState.Instance.UsedItems[Index] = "N";
                     break;
                 case 4: 
+                    GlobalState.Instance.ShowDodge = false;
+                    GlobalState.Instance.UsedItems[Index] = "N";
+                    break;
+                case 5: 
                     GlobalState.Instance.AutoMode = false;
                     GlobalState.Instance.UsedItems[Index] = "N";
                     break;
@@ -355,99 +359,30 @@ public class UIObjectShop : MonoBehaviour
             switch (Index)
             {
                 case 0:
+                    GlobalState.Instance.UseGreenhorn = true;
+                    GlobalState.Instance.UsedItems[Index] = "N";
+                    break;
+                case 1:
                     GlobalState.Instance.UseBonusHP = true;
                     GlobalState.Instance.UsedItems[Index] = "Y";
                     break;
-                case 1:
+                case 2:
                     GlobalState.Instance.UseBarrier = true;
                     GlobalState.Instance.UsedItems[Index] = "Y";
                     break;
-                case 2:
+                case 3:
                     GlobalState.Instance.UseNewGaMe = true;
                     GlobalState.Instance.UsedItems[Index] = "Y";
                     break;
-                case 3:
+                case 4:
                     GlobalState.Instance.ShowDodge = true;
                     GlobalState.Instance.UsedItems[Index] = "Y";
                     break;
-                case 4:
+                case 5:
                     GlobalState.Instance.AutoMode = true;
                     GlobalState.Instance.UsedItems[Index] = "Y";
                     break;
             }
-
-            // 미사용 > 사용 > 전환 시 나머지 스킨 미사용으로 전환
-            /*
-            for (int i = 0; i < SkillCount; i++)
-            {
-                if (i != Index)
-                {
-                    SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + i).Find("Open").Find("SkillButton").Find("ButtonOn").gameObject.SetActive(false);
-                    SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + i).Find("Open").Find("SkillButton").Find("ButtonOff").gameObject.SetActive(true);
-                }
-                else
-                {
-                    SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + i).Find("Open").Find("SkillButton").Find("ButtonOn").gameObject.SetActive(true);
-                    SkillGroup.transform.Find("SkillItems").Find("Viewport").Find("Content").Find("Skill_Prefab_" + i).Find("Open").Find("SkillButton").Find("ButtonOff").gameObject.SetActive(false);
-
-                    // 인 게임에서 사용 될 현 사용 스킬 명 저장
-                    string _SkillName = "";
-                    switch(i)
-                    {
-                        case 0: 
-                            _SkillName = "까방권";
-                            GlobalState.Instance.UseBonusHP = true;
-                            GlobalState.Instance.UseBarrier = false;
-                            GlobalState.Instance.UseNewGaMe = false;
-                            GlobalState.Instance.ShowDodge = false;
-                            GlobalState.Instance.AutoMode = false;
-                            break;
-                        case 1: 
-                            _SkillName = "일시무적";
-                            GlobalState.Instance.UseBonusHP = false;
-                            GlobalState.Instance.UseBarrier = true;
-                            GlobalState.Instance.UseNewGaMe = false;
-                            GlobalState.Instance.ShowDodge = false;
-                            GlobalState.Instance.AutoMode = false;
-                            break;
-                        case 2: 
-                            _SkillName = "뉴가메";
-                            GlobalState.Instance.UseBonusHP = false;
-                            GlobalState.Instance.UseBarrier = false;
-                            GlobalState.Instance.UseNewGaMe = true;
-                            GlobalState.Instance.ShowDodge = false;
-                            GlobalState.Instance.AutoMode = false;
-                            break;
-                        case 3: 
-                            _SkillName = "분석안";
-                            GlobalState.Instance.UseBonusHP = false;
-                            GlobalState.Instance.UseBarrier = false;
-                            GlobalState.Instance.UseNewGaMe = false;
-                            GlobalState.Instance.ShowDodge = true;
-                            GlobalState.Instance.AutoMode = false;
-                            break;
-                        case 4: 
-                            _SkillName = "자율주행";
-                            GlobalState.Instance.UseBonusHP = false;
-                            GlobalState.Instance.UseBarrier = false;
-                            GlobalState.Instance.UseNewGaMe = false;
-                            GlobalState.Instance.ShowDodge = false;
-                            GlobalState.Instance.AutoMode = true;
-                            break;
-                        default: 
-                            _SkillName = "없음";
-                            GlobalState.Instance.UseBonusHP = false;
-                            GlobalState.Instance.UseBarrier = false;
-                            GlobalState.Instance.UseNewGaMe = false;
-                            GlobalState.Instance.ShowDodge = false;
-                            GlobalState.Instance.AutoMode = false;
-                            break;
-
-                    }
-                    GlobalState.Instance.UsedItems = _SkillName;
-                }
-            }
-            */
         }
 
         SoundManager.Instance.PlaySoundFX((int)GlobalData.SFX.SettingIn);
