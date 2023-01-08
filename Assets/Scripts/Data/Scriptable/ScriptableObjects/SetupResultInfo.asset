@@ -52,7 +52,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 02dc01651c8c4594d9e9da3d0820fc52, type: 3}
   FifthAlbumThumnails:
   - {fileID: 21300000, guid: 15952dd717842ce4bb6a6d490bb16faa, type: 3}
+  - {fileID: 21300000, guid: 235b7c5fba45e784b9e28c5b49a44529, type: 3}
   FifthAlbumTitles:
   - {fileID: 21300000, guid: 10a26d31a426d4f4e8b7a44ca6d85579, type: 3}
+  - {fileID: 21300000, guid: 807dcc0e0e66e9b40b58262b283f9ca3, type: 3}
   StarOn: {fileID: 21300000, guid: 3389f0f5332e084438abe35e7f8a5716, type: 3}
+  StarHalf: {fileID: 21300000, guid: 08a34a802aee9fb4fae64978ccafd3d7, type: 3}
   StarOff: {fileID: 21300000, guid: 43ee2a85f7278494db1f1107bf70a9bb, type: 3}

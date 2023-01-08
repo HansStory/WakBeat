@@ -39,6 +39,7 @@ SpriteAtlas:
     packedSpriteRenderDataKeys:
     - 40694210e3dc9774cbfc349380eddc19: 21300000
     - 7a468330180495a45bdeb3045f0b4e0a: 21300000
+    - 08a34a802aee9fb4fae64978ccafd3d7: 21300000
     - 8ced1cf083501f5408eb6cea5edb57b4: 21300000
     - aae6da2123bdf8644bf449ae5a2477f1: 21300000
     - 10a26d31a426d4f4e8b7a44ca6d85579: 21300000
@@ -91,6 +92,7 @@ SpriteAtlas:
   m_PackedSprites:
   - {fileID: 21300000, guid: 40694210e3dc9774cbfc349380eddc19, type: 3}
   - {fileID: 21300000, guid: 7a468330180495a45bdeb3045f0b4e0a, type: 3}
+  - {fileID: 21300000, guid: 08a34a802aee9fb4fae64978ccafd3d7, type: 3}
   - {fileID: 21300000, guid: 8ced1cf083501f5408eb6cea5edb57b4, type: 3}
   - {fileID: 21300000, guid: aae6da2123bdf8644bf449ae5a2477f1, type: 3}
   - {fileID: 21300000, guid: 10a26d31a426d4f4e8b7a44ca6d85579, type: 3}
@@ -142,6 +144,7 @@ SpriteAtlas:
   m_PackedSpriteNamesToIndex:
   - clear_album_2_2
   - Title_NobleLick
+  - Star_half
   - clear_album_4_1
   - Link_Oiginal
   - Title_Jungtur

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using static GlobalData;
 
 public class UIElementResult : MonoBehaviour
 {
@@ -59,102 +60,130 @@ public class UIElementResult : MonoBehaviour
     //---------------------------------------------------------------------------------------------
     void SetResultImages()
     {
-        switch (GlobalState.Instance.AlbumIndex)
+        ALBUM album = (ALBUM)GlobalState.Instance.AlbumIndex;
+        STAGE stage = (STAGE)GlobalState.Instance.StageIndex;
+
+        switch (album)
         {
-            case (int)GlobalData.ALBUM.ISEDOL:
-                switch (GlobalState.Instance.StageIndex)
+            case ALBUM.ISEDOL:
+                switch (stage)
                 {
-                    case (int)GlobalData.STAGE.STAGE1:
-                        GetResultImages(resultInfo.FirstAlbumTitles, resultInfo.FirstAlbumThumnails, (int)GlobalData.STAGE.STAGE1, 1);
+                    case STAGE.STAGE1:
+                        GetResultImages(resultInfo.FirstAlbumTitles, resultInfo.FirstAlbumThumnails, STAGE.STAGE1, 2);
                         break;
-                    case (int)GlobalData.STAGE.STAGE2:
-                        GetResultImages(resultInfo.FirstAlbumTitles, resultInfo.FirstAlbumThumnails, (int)GlobalData.STAGE.STAGE2, 2);
+                    case STAGE.STAGE2:
+                        GetResultImages(resultInfo.FirstAlbumTitles, resultInfo.FirstAlbumThumnails, STAGE.STAGE2, 3);
                         break;
                 }
                 break;
-            case (int)GlobalData.ALBUM.CONTEST:
-                switch (GlobalState.Instance.StageIndex)
+            case ALBUM.CONTEST:
+                switch (stage)
                 {
-                    case (int)GlobalData.STAGE.STAGE1:
-                        GetResultImages(resultInfo.SecondAlbumTitles, resultInfo.SecondAlbumThumnails, (int)GlobalData.STAGE.STAGE1, 1);
+                    case STAGE.STAGE1:
+                        GetResultImages(resultInfo.SecondAlbumTitles, resultInfo.SecondAlbumThumnails, STAGE.STAGE1, 2);
                         break;
-                    case (int)GlobalData.STAGE.STAGE2:
-                        GetResultImages(resultInfo.SecondAlbumTitles, resultInfo.SecondAlbumThumnails, (int)GlobalData.STAGE.STAGE2, 3);
+                    case STAGE.STAGE2:
+                        GetResultImages(resultInfo.SecondAlbumTitles, resultInfo.SecondAlbumThumnails, STAGE.STAGE2, 4);
                         break;
-                    case (int)GlobalData.STAGE.STAGE3:
-                        GetResultImages(resultInfo.SecondAlbumTitles, resultInfo.SecondAlbumThumnails, (int)GlobalData.STAGE.STAGE3, 4);
+                    case STAGE.STAGE3:
+                        GetResultImages(resultInfo.SecondAlbumTitles, resultInfo.SecondAlbumThumnails, STAGE.STAGE3, 7);
                         break;
-                    case (int)GlobalData.STAGE.STAGE4:
-                        GetResultImages(resultInfo.SecondAlbumTitles, resultInfo.SecondAlbumThumnails, (int)GlobalData.STAGE.STAGE4, 5);
+                    case STAGE.STAGE4:
+                        GetResultImages(resultInfo.SecondAlbumTitles, resultInfo.SecondAlbumThumnails, STAGE.STAGE4, 10);
                         break;
                 }
                 break;
-            case (int)GlobalData.ALBUM.GOMIX:
-                switch (GlobalState.Instance.StageIndex)
+            case ALBUM.GOMIX:
+                switch (stage)
                 {
-                    case (int)GlobalData.STAGE.STAGE1:
-                        GetResultImages(resultInfo.ThirdAlbumTitles, resultInfo.ThirdAlbumThumnails, (int)GlobalData.STAGE.STAGE1, 1);
+                    case STAGE.STAGE1:
+                        GetResultImages(resultInfo.ThirdAlbumTitles, resultInfo.ThirdAlbumThumnails, STAGE.STAGE1, 5);
                         break;
-                    case (int)GlobalData.STAGE.STAGE2:
-                        GetResultImages(resultInfo.ThirdAlbumTitles, resultInfo.ThirdAlbumThumnails, (int)GlobalData.STAGE.STAGE2, 2);
+                    case STAGE.STAGE2:
+                        GetResultImages(resultInfo.ThirdAlbumTitles, resultInfo.ThirdAlbumThumnails, STAGE.STAGE2, 6);
                         break;
-                    case (int)GlobalData.STAGE.STAGE3:
-                        GetResultImages(resultInfo.ThirdAlbumTitles, resultInfo.ThirdAlbumThumnails, (int)GlobalData.STAGE.STAGE3, 3);
+                    case STAGE.STAGE3:
+                        GetResultImages(resultInfo.ThirdAlbumTitles, resultInfo.ThirdAlbumThumnails, STAGE.STAGE3, 7);
                         break;
-                    case (int)GlobalData.STAGE.STAGE4:
-                        GetResultImages(resultInfo.ThirdAlbumTitles, resultInfo.ThirdAlbumThumnails, (int)GlobalData.STAGE.STAGE4, 4);
+                    case STAGE.STAGE4:
+                        GetResultImages(resultInfo.ThirdAlbumTitles, resultInfo.ThirdAlbumThumnails, STAGE.STAGE4, 8);
                         break;
-                    case (int)GlobalData.STAGE.STAGE5:
-                        GetResultImages(resultInfo.ThirdAlbumTitles, resultInfo.ThirdAlbumThumnails, (int)GlobalData.STAGE.STAGE5, 5);
+                    case STAGE.STAGE5:
+                        GetResultImages(resultInfo.ThirdAlbumTitles, resultInfo.ThirdAlbumThumnails, STAGE.STAGE5, 10);
                         break;
                 }
                 break;
-            case (int)GlobalData.ALBUM.WAKALOID:
-                switch (GlobalState.Instance.StageIndex)
+            case ALBUM.WAKALOID:
+                switch (stage)
                 {
-                    case (int)GlobalData.STAGE.STAGE1:
-                        GetResultImages(resultInfo.FourthAlbumTitles, resultInfo.FourthAlbumThumnails, (int)GlobalData.STAGE.STAGE1, 1);
+                    case STAGE.STAGE1:
+                        GetResultImages(resultInfo.FourthAlbumTitles, resultInfo.FourthAlbumThumnails, STAGE.STAGE1, 3);
                         break;
-                    case (int)GlobalData.STAGE.STAGE2:
-                        GetResultImages(resultInfo.FourthAlbumTitles, resultInfo.FourthAlbumThumnails, (int)GlobalData.STAGE.STAGE2, 2);
+                    case STAGE.STAGE2:
+                        GetResultImages(resultInfo.FourthAlbumTitles, resultInfo.FourthAlbumThumnails, STAGE.STAGE2, 6);
                         break;
-                    case (int)GlobalData.STAGE.STAGE3:
-                        GetResultImages(resultInfo.FourthAlbumTitles, resultInfo.FourthAlbumThumnails, (int)GlobalData.STAGE.STAGE3, 3);
+                    case STAGE.STAGE3:
+                        GetResultImages(resultInfo.FourthAlbumTitles, resultInfo.FourthAlbumThumnails, STAGE.STAGE3, 8);
                         break;
-                    case (int)GlobalData.STAGE.STAGE4:
-                        GetResultImages(resultInfo.FourthAlbumTitles, resultInfo.FourthAlbumThumnails, (int)GlobalData.STAGE.STAGE4, 5);
+                    case STAGE.STAGE4:
+                        GetResultImages(resultInfo.FourthAlbumTitles, resultInfo.FourthAlbumThumnails, STAGE.STAGE4, 10);
                         break;
                 }      
                 break;
-            case (int)GlobalData.ALBUM.CONTEST2:
-                switch (GlobalState.Instance.StageIndex)
+            case ALBUM.CONTEST2:
+                switch (stage)
                 {
-                    case (int)GlobalData.STAGE.STAGE1:
-                        GetResultImages(resultInfo.FifthAlbumTitles, resultInfo.FifthAlbumThumnails, (int)GlobalData.STAGE.STAGE1, 3);
+                    case STAGE.STAGE1:
+                        GetResultImages(resultInfo.FifthAlbumTitles, resultInfo.FifthAlbumThumnails, STAGE.STAGE1, 7);
+                        break;
+                    case STAGE.STAGE2:
+                        GetResultImages(resultInfo.FifthAlbumTitles, resultInfo.FifthAlbumThumnails, STAGE.STAGE2, 8);
                         break;
                 }
                 break;
         }
     }
 
-    void GetResultImages(Sprite[] title, Sprite[] thumnail, int stage, int level)
+    void GetResultImages(Sprite[] title, Sprite[] thumnail, STAGE stage, int level)
     {
         if (ResultTitle == null) return;
-        ResultTitle.sprite = title[stage];
+        ResultTitle.sprite = title[(int)stage];
         ResultTitle.SetNativeSize();
 
         if (ResultThumnail == null) return;
-        ResultThumnail.sprite = thumnail[stage];
+        ResultThumnail.sprite = thumnail[(int)stage];
         ResultThumnail.SetNativeSize();
 
         GetStageLevel(level);
     }
 
+    private int _maxStar = 5;
     void GetStageLevel(int level)
     {
-        for (int i = 0; i < level; i++)
+        bool isLevelEndHP = false;
+
+        for (int i = 0; i < _maxStar; i++)
         {
-            ImageLevels[i].sprite = resultInfo.StarOn;
+            level -= 2;
+
+            if (!isLevelEndHP)
+            {
+                if (level >= 0)
+                {
+                    if (ImageLevels[i] == null) return;
+                    ImageLevels[i].sprite = resultInfo.StarOn;
+                }
+                else
+                {
+                    if (ImageLevels[i] == null) return;
+                    ImageLevels[i].sprite = resultInfo.StarHalf;
+                    isLevelEndHP = true;
+                }
+            }
+            else
+            {
+                ImageLevels[i].sprite = resultInfo.StarOff;
+            }
         }
     }
 
@@ -320,77 +349,83 @@ public class UIElementResult : MonoBehaviour
     {
         var config = Config.Instance;
 
-        switch (GlobalState.Instance.AlbumIndex)
+        ALBUM album = (ALBUM)GlobalState.Instance.AlbumIndex;
+        STAGE stage = (STAGE)GlobalState.Instance.StageIndex;
+
+        switch (album)
         {
-            case (int)GlobalData.ALBUM.ISEDOL:
-                switch (GlobalState.Instance.StageIndex)
+            case ALBUM.ISEDOL:
+                switch (stage)
                 {
-                    case (int)GlobalData.STAGE.STAGE1:
+                    case STAGE.STAGE1:
                         SetMusicURL(config.Origin_Rewind, config.ReMix_Rewind);
                         break;
-                    case (int)GlobalData.STAGE.STAGE2:
+                    case STAGE.STAGE2:
                         SetMusicURL(config.Origin_WinterSpring, config.ReMix_WinterSpring);
                         break;
                 }
                 break;
-            case (int)GlobalData.ALBUM.CONTEST:
-                switch (GlobalState.Instance.StageIndex)
+            case ALBUM.CONTEST:
+                switch (stage)
                 {
-                    case (int)GlobalData.STAGE.STAGE1:
+                    case STAGE.STAGE1:
                         SetMusicURL(config.Origin_NobleLick, config.ReMix_NobleLick);
                         break;
-                    case (int)GlobalData.STAGE.STAGE2:
+                    case STAGE.STAGE2:
                         SetMusicURL(config.Origin_Wakaloid, config.ReMix_Wakaloid);
                         break;
-                    case (int)GlobalData.STAGE.STAGE3:
+                    case STAGE.STAGE3:
                         SetMusicURL(config.Origin_WakGoodAroma100, config.ReMix_WakGoodAroma100);
                         break;
-                    case (int)GlobalData.STAGE.STAGE4:
+                    case STAGE.STAGE4:
                         SetMusicURL(config.Origin_AvantGarde, config.ReMix_AvantGarde);
                         break;
                 }
                 break;
-            case (int)GlobalData.ALBUM.GOMIX:
-                switch (GlobalState.Instance.StageIndex)
+            case ALBUM.GOMIX:
+                switch (stage)
                 {
-                    case (int)GlobalData.STAGE.STAGE1:
+                    case STAGE.STAGE1:
                         SetMusicURL(config.Origin_YouHi, config.ReMix_YouHi);
                         break;
-                    case (int)GlobalData.STAGE.STAGE2:
+                    case STAGE.STAGE2:
                         SetMusicURL(config.Origin_Gotterfly, config.ReMix_Gotterfly);
                         break;
-                    case (int)GlobalData.STAGE.STAGE3:
+                    case STAGE.STAGE3:
                         SetMusicURL(config.Origin_KingADance, config.ReMix_KingADance);
                         break;
-                    case (int)GlobalData.STAGE.STAGE4:
+                    case STAGE.STAGE4:
                         SetMusicURL(config.Origin_IPad, config.ReMix_IPad);
                         break;
-                    case (int)GlobalData.STAGE.STAGE5:
+                    case STAGE.STAGE5:
                         SetMusicURL(config.Origin_ReviveLikeADog, config.ReMix_ReviveLikeADog);
                         break;
                 }
                 break;
-            case (int)GlobalData.ALBUM.WAKALOID:
-                switch (GlobalState.Instance.StageIndex)
+            case ALBUM.WAKALOID:
+                switch (stage)
                 {
-                    case (int)GlobalData.STAGE.STAGE1:
+                    case STAGE.STAGE1:
                         SetMusicURL(config.Origin_GalUseGirl, config.ReMix_GalUseGirl);
                         break;
-                    case (int)GlobalData.STAGE.STAGE2:
+                    case STAGE.STAGE2:
                         SetMusicURL(config.Origin_BangOff, config.ReMix_BangOff);
                         break;
-                    case (int)GlobalData.STAGE.STAGE3:
+                    case STAGE.STAGE3:
                         SetMusicURL(config.Origin_TwistedLove, config.ReMix_TwistedLove);
                         break;
-                    case (int)GlobalData.STAGE.STAGE4:
+                    case STAGE.STAGE4:
                         SetMusicURL(config.Origin_Waklio, config.ReMix_Waklio);
                         break;
                 }
                 break;
-            case (int)GlobalData.ALBUM.CONTEST2:
-                switch (GlobalState.Instance.StageIndex)
+            case ALBUM.CONTEST2:
+                switch (stage)
                 {
-                    case (int)GlobalData.STAGE.STAGE1:
+                    case STAGE.STAGE1:
+                        SetMusicURL(config.Origin_Jungtur, config.ReMix_Jungtur);
+                        break;
+                    case STAGE.STAGE2:
                         SetMusicURL(config.Origin_Jungtur, config.ReMix_Jungtur);
                         break;
                 }

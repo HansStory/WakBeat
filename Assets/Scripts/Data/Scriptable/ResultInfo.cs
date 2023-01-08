@@ -34,5 +34,6 @@ public class ResultInfo : ScriptableObject
 
     [Space(10)]
     public Sprite StarOn;
+    public Sprite StarHalf;
     public Sprite StarOff;
 }
