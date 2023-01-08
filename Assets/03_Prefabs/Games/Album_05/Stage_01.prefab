@@ -104,7 +104,7 @@ VideoPlayer:
   m_EnabledAudioTracks: 01
   m_DirectAudioMutes: 00
   m_ControlledAudioTrackCount: 1
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_SkipOnDrop: 1
   m_Looping: 0
   m_WaitForFirstFrame: 1
@@ -279,11 +279,11 @@ Animation:
   m_GameObject: {fileID: 4143023116079684940}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 0}
+  m_Animation: {fileID: 7400000, guid: 40251c7a989055b428e0acf3e1b59c58, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: 40251c7a989055b428e0acf3e1b59c58, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
 --- !u!114 &5722865894617443393
