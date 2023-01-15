@@ -475,6 +475,29 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         }
     }
 
+    protected virtual void SetObstaclesColor(Color color)
+    {
+        var stageInfo = GlobalData.Instance.StageInfo;
+
+        foreach (var obstacle in InObstacleLists)
+        {
+            var skin = obstacle.GetComponent<Image>();
+            if (skin)
+            {
+                skin.color = color;
+            }
+        }
+
+        foreach (var obstacle in OutObstacleLists)
+        {
+            var skin = obstacle.GetComponent<Image>();
+            if (skin)
+            {
+                skin.color = color;
+            }
+        }
+    }
+
     protected virtual void InitBallSpeed()
     {
         if (bmwReader.ChartingItem[0].Speed == -1)
@@ -777,6 +800,11 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     //------------------------------------ Start Game ----------------------------------------
     protected virtual void Start()
     {
+        //StartGame();
+    }
+
+    protected virtual void OnEnable()
+    {
         StartGame();
     }
 
@@ -908,15 +936,18 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
                 }
             }
 
+            // 안드로이드 화면 터치 방향전환
+#if UNITY_ANDROID
             if (Input.GetMouseButtonDown(0))
             {
                 IntegrationChangeDirection();
 
-                Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
-                Input.mousePosition.y, -Camera.main.transform.position.z));
+                //Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+                //Input.mousePosition.y, -Camera.main.transform.position.z));
 
-                Debug.Log(point);
+                //Debug.Log(point);
             }
+#endif
         }
     }
 
@@ -979,7 +1010,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         circle.color = new Color(0f, 0f, 0f, 0.2f);
         circle.DOColor(Color.clear, duration).SetAutoKill();
     }
-    #endregion
+#endregion
 
     public virtual void SavePointEnter()
     {
@@ -1060,7 +1091,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         }
     }
 
-    #region Input Extute
+#region Input Extute
     // ---------------------- Skill Input Excute ---------------------
     public void InputExcute()
     {
@@ -1109,9 +1140,9 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             UseBarrier();
         }
     }
-    #endregion
+#endregion
 
-    #region Skill Effect
+#region Skill Effect
     protected virtual void EffectHP()
     {
         ParticleHP.gameObject.SetActive(true);
@@ -1151,9 +1182,9 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         ParticleBarrier.gameObject.SetActive(false);
         _isBarrier = false;
     }
-    #endregion
+#endregion
 
-    #region Save Point Effect
+#region Save Point Effect
     //-------------------------- Save Point Effect --------------------------------
     public Color[] EffectColor = new Color[7];
     protected Color[] EffectAlpha0Color = new Color[7];
@@ -1251,11 +1282,11 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         EffectAlpha0Color[5] = six;
         EffectAlpha0Color[6] = seven;
     }
-    #endregion
-    #endregion
+#endregion
+#endregion
 
     //----------------------------------- Finish Game ----------------------------------------
-    #region Finish Game!!!
+#region Finish Game!!!
     public virtual void FinishGame()
     {
         //DOTween.KillAll();      
@@ -1388,7 +1419,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         // 설정 데이터 변경 후 파일 저장
         DataManager.SaveUserData();
     }
-    #endregion
+#endregion
 
     // -------------- UI Setting Function ---------------
     public virtual void OnClickPause()
