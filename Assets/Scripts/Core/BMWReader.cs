@@ -371,7 +371,7 @@ public class BMWReader : CsvReader
         catch(Exception e)
         {
             Debug.unityLogger.LogException(e);
-            Debug.LogError($"Exception : {FileName} : {lineNumber} : {line}");
+            Debug.LogError($"Exception : {Path} : {lineNumber} : {line}");
         }
     }
 }

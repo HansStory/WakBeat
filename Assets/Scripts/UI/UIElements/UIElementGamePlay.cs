@@ -9,12 +9,17 @@ public class UIElementGamePlay : MonoBehaviour
         
     }
 
+
     // Start is called before the first frame update
     void Start()
     {
-        GameFactory.Instance.CreateStage();
+        
     }
 
+    private void OnEnable()
+    {
+        GameFactory.Instance.CreateStage();
+    }
 
     // Update is called once per frame
     void Update()
@@ -31,12 +36,6 @@ public class UIElementGamePlay : MonoBehaviour
             }
         }
     }
-
-    private void OnEnable()
-    {
-
-    }
-
     private void OnDisable()
     {
         GameFactory.Instance.DistroyStage();

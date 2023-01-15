@@ -160,7 +160,7 @@ public class StageCharting : Stage
 
         // Read .bmw file
         bmwReader = new BMWReader();
-        bmwReader.ReadFile(Directory + "/" + BMWFile);       
+        bmwReader.ReadFile(Directory, BMWFile);       
 
         // Get Values
         GetMusicInfo();

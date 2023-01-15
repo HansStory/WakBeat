@@ -176,13 +176,28 @@ public class Config : MonoBehaviourSingleton<Config>
         //------------------------- Shop > Video ------------------------
         CREDIT = string.Empty;
 
-        LoadConfig();
+        LoadConfig("Config.ini");
     }
 
-    void LoadConfig()
+    void LoadConfig(string fileName)
     {
         IniFile iniFile = new IniFile();
-        iniFile.Load("config.ini");
+        string path = string.Empty;
+
+#if UNITY_ANDROID
+        path = UnityEngine.Application.streamingAssetsPath + "/" + fileName;
+
+        UnityEngine.WWW wwwfile = new UnityEngine.WWW(path);
+        while (!wwwfile.isDone) { }
+
+        var filepath = UnityEngine.Application.persistentDataPath + "/" + fileName;
+        System.IO.File.WriteAllBytes(filepath, wwwfile.bytes);
+
+        path = filepath;
+#else
+        path = UnityEngine.Application.streamingAssetsPath + "/" + fileName;       
+#endif
+        iniFile.Load(path);
 
         //-------------------- URL --------------------------------
 

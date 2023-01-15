@@ -140,7 +140,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     {
         // Read .bmw file
         bmwReader = new BMWReader();
-        bmwReader.ReadFile(Directory + "/" + BMWFile);
+        bmwReader.ReadFile(Directory, BMWFile);
 
         //InitConfigSettings();
         InitGlobalSettings();
@@ -906,6 +906,16 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
                         IntegrationChangeDirection();                    
                     }
                 }
+            }
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                IntegrationChangeDirection();
+
+                Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+                Input.mousePosition.y, -Camera.main.transform.position.z));
+
+                Debug.Log(point);
             }
         }
     }
