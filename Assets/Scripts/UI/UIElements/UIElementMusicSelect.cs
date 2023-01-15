@@ -338,7 +338,7 @@ public class UIElementMusicSelect : MonoBehaviour
     void ChangeMusicLength()
     {
         _bmwReader = new BMWReader();
-        _bmwReader.ReadFile(GlobalState.Instance.BMWFolderPath + "/" + GlobalState.Instance.BMWFile);
+        _bmwReader.ReadFile(GlobalState.Instance.BMWFolderPath, GlobalState.Instance.BMWFile);
 
         int time = _bmwReader.MusicInfoItem.Time;
         int min = time / 60;

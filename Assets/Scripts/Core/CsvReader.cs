@@ -1,11 +1,12 @@
 using System;
 using System.IO;
+using UnityEngine;
 
 public abstract class CsvReader
 {
-    private string _fileName = string.Empty;
+    private string _path = string.Empty;
 
-    public string FileName { get { return _fileName; } }
+    public string Path { get { return _path; } }
 
     protected bool _wantScriptReadEnd = false;
     protected virtual void Init()
@@ -13,18 +14,31 @@ public abstract class CsvReader
 
     }
 
-    public bool ReadFile(string fileName_)
+    public bool ReadFile(string directory, string fileName)
     {
         Init();
+        _path = directory + "/" + fileName;
 
-        _fileName = fileName_;
+#if UNITY_ANDROID
+        WWW wwwfile = new WWW(_path);
+        while (!wwwfile.isDone) { }
+
+        var filepath = Application.persistentDataPath + "/" + fileName;
+        File.WriteAllBytes(filepath, wwwfile.bytes);
+
+        _path = filepath;
+#else
+        //_fileName = path;
+#endif
+
+        //_fileName = path;
 
         try
         {
             int lineNumber = 1;
             string line = string.Empty;
 
-            StreamReader theReader = new StreamReader(fileName_);
+            StreamReader theReader = new StreamReader(_path);
 
             _wantScriptReadEnd = false;
             using (theReader)
@@ -57,7 +71,7 @@ public abstract class CsvReader
 
     public void Refresh()
     {
-        ReadFile(_fileName);
+        //ReadFile(_path);
     }
 
 

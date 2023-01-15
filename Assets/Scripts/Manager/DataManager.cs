@@ -10,9 +10,9 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
     // 글로벌 데이터 설정 (불변)
     // 파일 관련 데이터
     // 파일 경로
-    static string _path;
+    static string _path = string.Empty;
     // 파일 명
-    static string _fileName = "save";
+    static string _fileName = "UserData";
     // 파일 여부
     static Boolean _fileYn = false;
     // 상점 관련 데이터
@@ -41,9 +41,9 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
     // 글로벌 데이터 설정 (가변)
     // 설정 관련 데이터
     // 배경음 볼륨
-    static float? _BGMValue;
+    static float _BGMValue = 0.5f;
     // 환경음 볼륨
-    static float? _SFXValue;
+    static float _SFXValue = 0.5f;
     // 키 구분 값 > Integration : 통합, Separation : 분리
     static string _keyDivision;
     // 키 구분 > 분리 > 안쪽 이동 키 배열
@@ -61,7 +61,7 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
     static string[] _skillUsingYn;
     // 인게임 관련 데이터
     // 스테이지 클리어 수
-    static int? _clearStageCount;
+    static int _clearStageCount = 0;
     // 앨범 별 스테이지 클리어 여부
     static string[] _album1ClearYn;
     static string[] _album2ClearYn;
@@ -95,8 +95,8 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
         if (!_fileYn)
         {
             // 설정 관련 데이터
-            settingData.BGMValue = DataManager.dataBGMValue ?? 0.5f;
-            settingData.SFXValue = DataManager.dataSFXValue ?? 0.5f;
+            settingData.BGMValue = DataManager.dataBGMValue;
+            settingData.SFXValue = DataManager.dataSFXValue;
             settingData.keyDivision = DataManager.dataKeyDivision ?? "Integration";
 
             // 상점 관련 데이터
@@ -181,26 +181,29 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
         // Json 데이터 가져옴
         var userData = GetUserData();
 
-        if(File.Exists(_path + _fileName))
+        if(File.Exists(_path))
         {
-            File.Delete(_path + _fileName);
+            File.Delete(_path);
         }
 
         // 파일에 데이터 작성하여 저장
-        File.WriteAllText(_path + _fileName, userData);
+#if UNITY_ANDROID
+        _path = Application.persistentDataPath + "/" + _fileName;
+#endif
+        File.WriteAllText(_path, userData);
     }
 
     public void LoadUserData()
     {
         var userData = GlobalState.Instance.UserData.data;
 
-        if (File.Exists(_path + _fileName))
+        if (File.Exists(_path))
         {
             // 파일 여부 확인
             _fileYn = true;
 
             // 파일에서 데이터 불러옴
-            var jsonUserData = File.ReadAllText(_path + _fileName);
+            var jsonUserData = File.ReadAllText(_path);
             GlobalState.Instance.UserData = JsonUtility.FromJson<JsonUserData>(jsonUserData);
 
             Debug.Log($"Load User Data : {jsonUserData}");
@@ -427,8 +430,27 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
 
     private void Awake()
     {
-        _path = Application.dataPath + "/StreamingAssets/";
+        GetSaveFilePath();
         LoadUserData();
+    }
+
+    public void GetSaveFilePath()
+    {
+#if UNITY_ANDROID
+        _path = Application.persistentDataPath + "/" + _fileName;
+
+        if (!File.Exists(_path)) return;
+
+        //WWW wwwfile = new WWW(path);
+        //while (!wwwfile.isDone) { }
+
+        //var filepath = Application.persistentDataPath + "/" + _fileName;
+        //File.WriteAllBytes(filepath, wwwfile.bytes);
+
+        //_path = filepath;
+#else
+        _path = Application.streamingAssetsPath + "/" + _fileName;
+#endif
     }
 
     // 파일 존재 여부
@@ -453,7 +475,7 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
     }
 
     // 클리어 스테이지 수
-    public static int? dataClearStageCount
+    public static int dataClearStageCount
     {
         get { return _clearStageCount; }
         set { _clearStageCount = value; }
@@ -467,14 +489,14 @@ public class DataManager : MonoBehaviourSingleton<DataManager>
     }
 
     // 설정 > 배경음 크기 값 세팅
-    public static float? dataBGMValue
+    public static float dataBGMValue
     {
         get { return _BGMValue; }
         set { _BGMValue = value; }
     }
 
     // 설정 > 환경음 크기 값 세팅
-    public static float? dataSFXValue
+    public static float dataSFXValue
     {
         get { return _SFXValue; }
         set { _SFXValue = value; }

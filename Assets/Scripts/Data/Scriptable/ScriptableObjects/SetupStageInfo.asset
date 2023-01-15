@@ -41,6 +41,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 77763c4e097050e4a9f3d64180b4c5d0, type: 3}
   - {fileID: 21300000, guid: 1154d56c0f1651942a4d59123fb89e67, type: 3}
   - {fileID: 21300000, guid: 106344063fa46ad468f18b47075eb20c, type: 3}
+  - {fileID: 21300000, guid: b982891417e8ea24881cbf5dbcac81c4, type: 3}
   ObstacleSkins:
   - {fileID: 21300000, guid: 5ce125e2625631547b95d9a66ea484c8, type: 3}
   - {fileID: 21300000, guid: 2819c98dbd2e7854a8038cf63d4ec991, type: 3}
