@@ -164,12 +164,12 @@ GameObject:
   - component: {fileID: 8933267418995818789}
   - component: {fileID: 2694733554232673491}
   m_Layer: 5
-  m_Name: Graph_Rate
+  m_Name: Graph_Perfact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5169928731878262964
 RectTransform:
   m_ObjectHideFlags: 0
@@ -264,7 +264,7 @@ RectTransform:
   - {fileID: 3899640643668798967}
   - {fileID: 6271133483541050210}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -326,6 +326,9 @@ MonoBehaviour:
   album: {fileID: 8846689123083717952, guid: b68e9b6b95220154aa7962575a531b90, type: 3}
   albumBase: {fileID: 8073148781229515021}
   uiObjectAlbumTutorial: {fileID: 1064724037482053982, guid: 9b6fc615392843047bf30849ab5113f9, type: 3}
+  _perfactClearRate: {fileID: 2694733554232673491}
+  _nomalClearRate: {fileID: 8655507637344699110}
+  _textClearRate: {fileID: 5384635039905487655}
   imageBackGround: {fileID: 6155114700117050587}
   UpIndex: 0
   DownIndex: 0
@@ -787,12 +790,12 @@ GameObject:
   - component: {fileID: 7619636297620175211}
   - component: {fileID: 8655507637344699110}
   m_Layer: 5
-  m_Name: Graph_Layer
+  m_Name: Graph_Nomal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4676346747891226500
 RectTransform:
   m_ObjectHideFlags: 0
@@ -834,7 +837,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.34901962}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.3529412}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -933,6 +936,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 6874890300032960467}
     m_Modifications:
     - target: {fileID: 447756514035547357, guid: 1c5ee0386e82a7f4ab32f3c0347c8e54, type: 3}
@@ -1032,6 +1036,9 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c5ee0386e82a7f4ab32f3c0347c8e54, type: 3}
 --- !u!224 &6271133483541050210 stripped
 RectTransform:

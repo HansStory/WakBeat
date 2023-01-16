@@ -128,7 +128,7 @@ MonoBehaviour:
   DodgePointBase: {fileID: 8081847212461026836}
   DodgePointLists: []
   Obstacles:
-  - {fileID: 5128582855503444759, guid: 85f728ef9166ef741bfa48ee31678080, type: 3}
+  - {fileID: 5128582855503444759, guid: 4e2d4f322b55c44419739e651dc57b83, type: 3}
   ObstacleInBase: {fileID: 6447761825843056367}
   InObstacleLists: []
   ObstacleOutBase: {fileID: 181122923626944189}
@@ -261,9 +261,9 @@ VideoPlayer:
   m_DirectAudioMutes: 00
   m_ControlledAudioTrackCount: 1
   m_PlayOnAwake: 0
-  m_SkipOnDrop: 1
+  m_SkipOnDrop: 0
   m_Looping: 0
-  m_WaitForFirstFrame: 1
+  m_WaitForFirstFrame: 0
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
 --- !u!1 &4423836732642508599
@@ -642,6 +642,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3569041610793075511}
     m_Modifications:
+    - target: {fileID: 886907512476628208, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ff8e27f0e05291042b281f7c0cab4e89, type: 3}
+    - target: {fileID: 886907512476628208, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
+      propertyPath: m_Color.b
+      value: 0.3098039
+      objectReference: {fileID: 0}
+    - target: {fileID: 886907512476628208, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
+      propertyPath: m_Color.g
+      value: 0.3098039
+      objectReference: {fileID: 0}
+    - target: {fileID: 886907512476628208, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
+      propertyPath: m_Color.r
+      value: 0.3098039
+      objectReference: {fileID: 0}
+    - target: {fileID: 968746176848530390, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 968746176848530390, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 968746176848530390, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 968746176848530390, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1992493566946292139, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -725,6 +757,22 @@ PrefabInstance:
     - target: {fileID: 1992493566946292139, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3683866465161761983, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0ebeded6627a0544ca8aefd534441f1c, type: 3}
+    - target: {fileID: 3683866465161761983, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
+      propertyPath: m_Color.b
+      value: 0.3098039
+      objectReference: {fileID: 0}
+    - target: {fileID: 3683866465161761983, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
+      propertyPath: m_Color.g
+      value: 0.3098039
+      objectReference: {fileID: 0}
+    - target: {fileID: 3683866465161761983, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
+      propertyPath: m_Color.r
+      value: 0.3098039
       objectReference: {fileID: 0}
     - target: {fileID: 8443865313433940930, guid: 67b1048bf7800d74c85ea807e4a86a5f, type: 3}
       propertyPath: m_Name
