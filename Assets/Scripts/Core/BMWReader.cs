@@ -105,7 +105,7 @@ public class ChartingItem
     public string Interval;              // 시간적인 간격 조정(Delay)
     public float BallAngle;              // 강제로 볼의 각도를 변경
     public float BallAngleTime;          // 볼각도 도달 시간
-    public float Speed;                  // Beat당 공이 몇도 이동하는지
+    public string Speed;                 // Beat당 공이 몇도 이동하는지
     public float SpeedTime;              // 바뀐 Speed로 도달하는 시간
     public string[] DodgePoints;         // 정박 스폰위치
     public string[] DummyDodgePoints;    // 정박 꾸밈용 스폰위치
@@ -128,7 +128,7 @@ public class ChartingItem
     public List<DummyOutObstacle> DummyOutObstacleElements = new List<DummyOutObstacle>();  // 바깥쪽 가시 스폰위치
     public List<DummyInObstacle> DummyInObstacleElements = new List<DummyInObstacle>();     // 안쪽 가시 스폰 위치
 
-    public ChartingItem(int beat, int animationIndex, float bar, string interval, float ballAngle, float ballTime, float speed, float speedTime, string dodgePoint, string dummyDodge, string outObstacle, string dummyOut, string inObstacle, string dummyIn, int savePoint)
+    public ChartingItem(int beat, int animationIndex, float bar, string interval, float ballAngle, float ballTime, string speed, float speedTime, string dodgePoint, string dummyDodge, string outObstacle, string dummyOut, string inObstacle, string dummyIn, int savePoint)
     {
         // Beat
         Beat = beat;
@@ -337,7 +337,7 @@ public class BMWReader : CsvReader
                                 args[count++].Trim(),                         // 정박에서 시작하기위한 Interval // Change float to String
                                 float.Parse(args[count++].Trim()),            // 강제로 볼의 각도를 변경
                                 float.Parse(args[count++].Trim()),            // 변경된 각도까지 도달 하는 시간
-                                float.Parse(args[count++].Trim()),            // Beat당 공이 몇도 이동하는지
+                                args[count++].Trim(),                         // Beat당 공이 몇도 이동하는지
                                 float.Parse(args[count++].Trim()),            // 바뀐 Speed로 도달하는 시간
                                 args[count++].Trim(),                         // 정박 스폰위치
                                 args[count++].Trim(),                         // 정박 더미 스폰위치
