@@ -49,7 +49,6 @@ SpriteAtlas:
     - ebb424221aff419418b5865694dd7576: 21300000
     - ba8f6552bcd6032488c211f31a4cf1e9: 21300000
     - 9c892d03bbdae634bbfae0a1851ec0a0: 21300000
-    - e53cac43ab31155499d3781e7e9f7e7b: 21300000
     - 8ca7f7e344d65e649a3db590cdb3de99: 21300000
     - 365ca624b916a114494642f36655f263: 21300000
     - b55fe154b4559d8488fab7458d73aa87: 21300000
@@ -73,6 +72,7 @@ SpriteAtlas:
     - 2627acbaca9bb13449c6e4b5b5c3a57f: 21300000
     - 0a5ad61b5faec804ab956e3dc8a70f7d: 21300000
     - 0e7d873b354ad484081c6eb5887b1504: 21300000
+    - 890c701cb652278449bc4bf284865c77: 21300000
     - 74fd1d4c5955faf4d88c5756983e35f9: 21300000
     - df571a6c1bd6a5744b21ad70cd4baa55: 21300000
     - 8722668d56444e44c8bde5a3ebb419fa: 21300000
@@ -94,7 +94,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: ebb424221aff419418b5865694dd7576, type: 3}
   - {fileID: 21300000, guid: ba8f6552bcd6032488c211f31a4cf1e9, type: 3}
   - {fileID: 21300000, guid: 9c892d03bbdae634bbfae0a1851ec0a0, type: 3}
-  - {fileID: 21300000, guid: e53cac43ab31155499d3781e7e9f7e7b, type: 3}
   - {fileID: 21300000, guid: 8ca7f7e344d65e649a3db590cdb3de99, type: 3}
   - {fileID: 21300000, guid: 365ca624b916a114494642f36655f263, type: 3}
   - {fileID: 21300000, guid: b55fe154b4559d8488fab7458d73aa87, type: 3}
@@ -118,6 +117,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 2627acbaca9bb13449c6e4b5b5c3a57f, type: 3}
   - {fileID: 21300000, guid: 0a5ad61b5faec804ab956e3dc8a70f7d, type: 3}
   - {fileID: 21300000, guid: 0e7d873b354ad484081c6eb5887b1504, type: 3}
+  - {fileID: 21300000, guid: 890c701cb652278449bc4bf284865c77, type: 3}
   - {fileID: 21300000, guid: 74fd1d4c5955faf4d88c5756983e35f9, type: 3}
   - {fileID: 21300000, guid: df571a6c1bd6a5744b21ad70cd4baa55, type: 3}
   - {fileID: 21300000, guid: 8722668d56444e44c8bde5a3ebb419fa, type: 3}
@@ -138,7 +138,6 @@ SpriteAtlas:
   - ImageDemo
   - ImageOuterProgressBar
   - 02_BangOff_Level
-  - 01_GalUseGirl_Level
   - 01_GalUseGirl_Circle
   - 04_stage4
   - 01_stage1
@@ -162,6 +161,7 @@ SpriteAtlas:
   - 01_NovelLick_Circle
   - 03_WakGoodAroma100_Circle
   - 03_KingADance_Circle
+  - 01_GalUseGirl_Level
   - ImageProgressBar
   - 02_winterspring_Circle
   - ImageInnerProgressBar
