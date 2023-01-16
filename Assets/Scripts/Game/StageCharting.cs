@@ -145,11 +145,12 @@ public class StageCharting : Stage
     {
         base.ChangeBallSpeed();
 
-        var beatItem = bmwReader.ChartingItem[_currentLine];
+        var beatItem = bmwReader.ChartingItem[_currentLine];        
 
-        if (beatItem.Speed >= 0)
+        if (beatItem.Speed.ToUpper() != "NONE")
         {
-            DebugElements[BallSpeed].text = $"Ball Speed : {beatItem.Speed}";
+            float.TryParse(beatItem.Speed, out float speed);
+            DebugElements[BallSpeed].text = $"Ball Speed : {speed}";
         }
     }
 

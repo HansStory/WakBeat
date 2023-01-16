@@ -152,6 +152,9 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         CreateDodgePoint();
         CreateObstacles();
 
+        //Create Skill VFXs
+        //CreateVFX();
+
         // Get Values
         GetMusicInfo();
         GetDefaultColor();
@@ -185,6 +188,23 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
             UIManager.Instance.UIElementPopUp.SetPopUpMusicInfo();
         }
     }
+
+    // TO DO : 다른스킬들도 전부 사용시에만 Instantiate 해서 사용
+    //private ParticleSystem _chanVFX = null;
+    //void CreateVFX()
+    //{
+    //    if (state.UseGreenhorn)
+    //    {
+    //        var vfxGameObject = GameObject.Instantiate(GlobalData.Instance.StageInfo.VFXs[0], Player.transform);
+    //        var vfx = vfxGameObject.transform.GetChild(0).GetComponent<ParticleSystem>();
+
+    //        if (vfx)
+    //        {
+    //            _chanVFX = vfx;
+    //            _chanVFX.gameObject.SetActive(false);
+    //        }
+    //    }
+    //}
 
     protected virtual void ShowCurrentLine()
     {
@@ -271,6 +291,11 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         state.SaveAnimationTime = 0.0f;
         state.SavePointAngle = bmwReader.ChartingItem[0].BallAngle;
 
+        state.BallSprite = null;
+        state.BackGroundSprite = null;
+        state.ObstacleSprite = null;
+        state.ObstacleColor = Color.black;
+
         state.IsPlayerDied = false;
         state.PlayerDeadCount = 0;
     }
@@ -343,6 +368,8 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     protected virtual void CreateDodgePoint()
     {
+        Center.transform.localEulerAngles = Vector3.zero;
+
         for (int i = 0; i < _spawnCount; i++)
         {
             GameObject dodge = Instantiate(DodgePoint, DodgePointBase);
@@ -475,6 +502,27 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         }
     }
 
+    void SetObstaclesSprite(Sprite sprite)
+    {
+        foreach (var obstacle in InObstacleLists)
+        {
+            var skin = obstacle.GetComponent<Image>();
+            if (skin)
+            {
+                skin.sprite = sprite;
+            }
+        }
+
+        foreach (var obstacle in OutObstacleLists)
+        {
+            var skin = obstacle.GetComponent<Image>();
+            if (skin)
+            {
+                skin.sprite = sprite;
+            }
+        }
+    }
+
     protected virtual void SetObstaclesColor(Color color)
     {
         var stageInfo = GlobalData.Instance.StageInfo;
@@ -500,13 +548,15 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     protected virtual void InitBallSpeed()
     {
-        if (bmwReader.ChartingItem[0].Speed == -1)
+        if (bmwReader.ChartingItem[0].Speed.ToUpper() == "NONE")
         {
             _ballSpeed = 360f;
         }
         else
         {
-            _ballSpeed = bmwReader.ChartingItem[0].Speed;
+            float.TryParse(bmwReader.ChartingItem[0].Speed, out float speed);
+
+            _ballSpeed = speed;
         }
     }
 
@@ -646,11 +696,13 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     {
         var beatItem = bmwReader.ChartingItem[_currentLine];
 
-        if (beatItem.Speed > 0)
+        if (beatItem.Speed.ToUpper() != "NONE")
         {
+            float.TryParse(beatItem.Speed, out float speed);
+
             if (beatItem.SpeedTime > 0)
             {
-                speedChangeTween = DOTween.To(() => _ballSpeed, x => _ballSpeed = x, beatItem.Speed, beatItem.SpeedTime).
+                speedChangeTween = DOTween.To(() => _ballSpeed, x => _ballSpeed = x, speed, beatItem.SpeedTime).
                 SetEase(Ease.Linear).SetAutoKill();
             }
             else
@@ -663,11 +715,10 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
                     }
                 }
 
-                _ballSpeed = beatItem.Speed;
+                _ballSpeed = speed;
                 beatItem.SpeedTime = 0;
             }
-
-        }
+        }     
     }
 
     protected virtual void ShowChartingItems()
@@ -821,9 +872,36 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     protected virtual void PlayStage()
     {
+        SaveBallSprite();
+        SaveBGSprite();
+        SaveObstacleSkinColor();
+
+        InitBallPosition();
         SoundManager.TurnOnStageMusic();
         PlayThisAnimation();
         PlayVideo();
+    }
+
+    private void SaveBallSprite()
+    {
+        state.BallSprite = BallSkin.sprite;
+    }
+
+    private void SaveBGSprite()
+    {
+        state.BackGroundSprite = BackGroundSkin.sprite;
+    }
+
+    private void SaveObstacleSkinColor()
+    {
+        var obstacle = ObstacleInBase.GetChild(0).gameObject;
+        var obstacleImage = obstacle.GetComponent<Image>();
+
+        if (obstacleImage)
+        {
+            state.ObstacleSprite = obstacleImage.sprite;
+            state.ObstacleColor = obstacleImage.color;
+        }
     }
 
 
@@ -1028,6 +1106,10 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
         //TO DO : 각자 스테이지에서 구현할 것 
         EnterSavePointEffect();
+
+        SaveBallSprite();
+        SaveBGSprite();
+        SaveObstacleSkinColor();
     }
 
     protected virtual void ResetSavePointState()
@@ -1038,6 +1120,23 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
        
         if (videoPlayer) videoPlayer.time = state.SaveVideoTime;
         if (StageAnim[_animationName]) StageAnim[_animationName].time = state.SaveAnimationTime;
+
+        if (state.BallSprite != null)
+        {
+            BallSkin.sprite = state.BallSprite;
+        }
+
+        if (state.BackGroundSprite != null)
+        {
+            BackGroundSkin.sprite = state.BackGroundSprite;
+        }
+
+        if (state.ObstacleSprite != null)
+        {
+            SetObstaclesSprite(state.ObstacleSprite);
+        }
+
+        SetObstaclesColor(state.ObstacleColor);
 
         var savePoint = GameObject.Find("SavePoint(Clone)");
         if (savePoint) Destroy(savePoint);
@@ -1079,7 +1178,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         }
         else
         {
-            EffectHP();
+            EffectVFX();
         }
     }
 
@@ -1143,7 +1242,53 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 #endregion
 
 #region Skill Effect
-    protected virtual void EffectHP()
+    protected virtual void EffectVFX()
+    {
+        //if (state.UseGreenhorn && !state.UseBonusHP)
+        //{
+        //    EffectChan();
+        //}
+        //else if (state.UseGreenhorn && state.UseBonusHP)
+        //{
+        //    if (_currentHP >= 2)
+        //    {
+        //        EffectChan();
+        //    }
+        //    else
+        //    {
+        //        EffectHP();
+        //    }
+        //}
+        //else if (state.UseBonusHP)
+        //{
+        //    EffectHP();
+        //}
+
+        EffectHP();
+
+        //if (state.UseBonusHP)
+        //{
+        //    EffectHP();
+        //}
+    }
+
+    //void EffectChan()
+    //{
+    //    if (_chanVFX)
+    //    {
+    //        _chanVFX.gameObject.SetActive(true);
+    //        _chanVFX.Play();
+
+    //        Invoke(nameof(HideParticleChan), 0.5f);
+    //    }
+    //}
+
+    //void HideParticleChan()
+    //{
+    //    _chanVFX.gameObject.SetActive(false);
+    //}
+
+    void EffectHP()
     {
         ParticleHP.gameObject.SetActive(true);
 
@@ -1286,7 +1431,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 #endregion
 
     //----------------------------------- Finish Game ----------------------------------------
-#region Finish Game!!!
+    #region Finish Game!!!
     public virtual void FinishGame()
     {
         //DOTween.KillAll();      

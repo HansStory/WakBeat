@@ -117,7 +117,7 @@ public class UIElementResult : MonoBehaviour
                 switch (stage)
                 {
                     case STAGE.STAGE1:
-                        GetResultImages(resultInfo.FourthAlbumTitles, resultInfo.FourthAlbumThumnails, STAGE.STAGE1, 3);
+                        GetResultImages(resultInfo.FourthAlbumTitles, resultInfo.FourthAlbumThumnails, STAGE.STAGE1, 4);
                         break;
                     case STAGE.STAGE2:
                         GetResultImages(resultInfo.FourthAlbumTitles, resultInfo.FourthAlbumThumnails, STAGE.STAGE2, 6);
@@ -172,6 +172,11 @@ public class UIElementResult : MonoBehaviour
                 {
                     if (ImageLevels[i] == null) return;
                     ImageLevels[i].sprite = resultInfo.StarOn;
+
+                    if (level == 0)
+                    {
+                        isLevelEndHP = true;
+                    }
                 }
                 else
                 {

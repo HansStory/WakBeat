@@ -90,7 +90,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: bf1966cf6981da44bb0aebd0da72049b, type: 3}
   - {fileID: 21300000, guid: 7bf0d5b81dc6ed94c8a2232868db13a5, type: 3}
   ForthAlbumMusicLevel:
-  - {fileID: 21300000, guid: e53cac43ab31155499d3781e7e9f7e7b, type: 3}
+  - {fileID: 21300000, guid: 890c701cb652278449bc4bf284865c77, type: 3}
   - {fileID: 21300000, guid: 9c892d03bbdae634bbfae0a1851ec0a0, type: 3}
   - {fileID: 21300000, guid: 08eec026d7029654ba4d6519efeecf0d, type: 3}
   - {fileID: 21300000, guid: 7b0039887f88bb34b9d39715de2b6dfb, type: 3}
@@ -103,6 +103,31 @@ MonoBehaviour:
   FifthAlbumMusicLevel:
   - {fileID: 21300000, guid: 71256b65236d1dd45a67c0efd39d36c3, type: 3}
   - {fileID: 21300000, guid: 619c9e9d59deac14c9b434817b5f0a8f, type: 3}
+  StageCount1:
+  - {fileID: 21300000, guid: 482abfb1b42799141821d0b357e638fc, type: 3}
+  - {fileID: 21300000, guid: d80e1a345798e7845aa7a52d16ef4a8c, type: 3}
+  StageCount2:
+  - {fileID: 21300000, guid: 482abfb1b42799141821d0b357e638fc, type: 3}
+  - {fileID: 21300000, guid: e9bf3229a15732a4e82ae00e28c855a0, type: 3}
+  - {fileID: 21300000, guid: d80e1a345798e7845aa7a52d16ef4a8c, type: 3}
+  StageCount3:
+  - {fileID: 21300000, guid: 482abfb1b42799141821d0b357e638fc, type: 3}
+  - {fileID: 21300000, guid: 353d8f7a5401f4148a03eae3a03468f1, type: 3}
+  - {fileID: 21300000, guid: 6c5ac0f7a3cf4b0428a05b8cde453d8d, type: 3}
+  - {fileID: 21300000, guid: d80e1a345798e7845aa7a52d16ef4a8c, type: 3}
+  StageCount4:
+  - {fileID: 21300000, guid: 482abfb1b42799141821d0b357e638fc, type: 3}
+  - {fileID: 21300000, guid: 31b056aaeba431744b19999b7bff018c, type: 3}
+  - {fileID: 21300000, guid: dc54020427134d5489651f2a85b46b0b, type: 3}
+  - {fileID: 21300000, guid: e828fe95fff81324f8611c7f7ba0f014, type: 3}
+  - {fileID: 21300000, guid: d80e1a345798e7845aa7a52d16ef4a8c, type: 3}
+  StageCount5:
+  - {fileID: 21300000, guid: 482abfb1b42799141821d0b357e638fc, type: 3}
+  - {fileID: 21300000, guid: 6d33502cf0186734f8b6f5bab08118a5, type: 3}
+  - {fileID: 21300000, guid: ab8883e2be469754ebaf09ee8c12ee96, type: 3}
+  - {fileID: 21300000, guid: 9a9e1e816dc5f234189ea6f7ac1e7311, type: 3}
+  - {fileID: 21300000, guid: b109d56caa99b2e44a4c9501ec9b69f1, type: 3}
+  - {fileID: 21300000, guid: d80e1a345798e7845aa7a52d16ef4a8c, type: 3}
   AlbumInfomationImage:
   - {fileID: 21300000, guid: 5ffc543a6f8d2b543a988f6fb17dbddb, type: 3}
   - {fileID: 21300000, guid: 158d961069a26ab4db8b655d34f727ab, type: 3}

@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16fa22e3519a7eb40a7d7edc1bc162a9, type: 3}
   m_Name: SetupStageInfo
   m_EditorClassIdentifier: 
+  VFXs:
+  - {fileID: 59823449437136015, guid: 19fb352e100f1224a96897a2638fe559, type: 3}
   BallSkins:
   - {fileID: 21300000, guid: f9f7d38f2d3f794429e9e6c9564afd25, type: 3}
   - {fileID: 21300000, guid: 061dc330e6270b64b801ec15ed65836f, type: 3}

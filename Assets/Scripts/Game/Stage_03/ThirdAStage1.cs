@@ -1,77 +1,38 @@
-using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ThirdAStage1 : Stage
 {
+    private Color _gray = new Color32(79, 79, 79, 255);
+    private Color _alpha = new Color32(79, 79, 79, 128);
 
     protected override void Init()
     {
         base.Init();
 
-        SetBallSkin(GlobalData.Instance.StageInfo.BallSkins[9]);
-        SetCircleSprite(GlobalData.Instance.StageInfo.CircleSkins[5]);
+        SetBallSkin(GlobalData.Instance.StageInfo.BallSkins[10]);
+        //SetObstaclesColor(_alpha);
     }
 
-    protected override void PlayProcess()
+    void ChangeObstacleAlpha()
     {
-        base.PlayProcess();
-
-        switch (_currentLine)
-        {
-            case 0:
-                SetBallSkin(GlobalData.Instance.StageInfo.BallSkins[9]);
-                SetCircleSprite(GlobalData.Instance.StageInfo.CircleSkins[5]);
-                ChangeSkinAlpha();
-                break;
-            case 1:
-                Invoke(nameof(ChangeSkinWhite), _tick - 0.2f);
-                break;
-            case 9:
-                Invoke(nameof(ChangeSkinAlpha), _tick + 0.2f);
-                break;
-            case 12:
-                Invoke(nameof(ChangeSkinWhite), _tick - 0.5f);
-                break;
-            case 13:
-                Invoke(nameof(ChangeSkinAlpha), _tick - 2f);
-                break;
-            case 14:
-                Invoke(nameof(ChangeSkinWhite), _tick - 0.2f);
-                break;
-            case 20:
-                Invoke(nameof(ChangeSkinAlpha), _tick + 0.15f);
-                break;
-            case 23:
-                Invoke(nameof(ChangeSkinPixel), _tick - 0.2f);
-                break;
-        }
+        SetObstaclesColor(_alpha);
     }
 
-    void ChangeSkinAlpha()
+    void ChangeObstacleGray()
     {
-        var alphaColor = new Color(1, 1, 1, 0.5f);
-
-        BallSkin.color = alphaColor;
-        CircleSkin.color = alphaColor;
-        SetObstaclesSkin(6, alphaColor);
+        SetObstaclesColor(_gray);
     }
 
-    void ChangeSkinWhite()
-    {
-        BallSkin.color = Color.white;
-        CircleSkin.color = Color.white;
-
-        SetObstaclesSkin(6, Color.white);
+    void ChangeObstacleBlack()
+    {       
+        SetObstaclesColor(Color.black);
     }
 
     void ChangeSkinPixel()
     {
         CircleSkin.sprite = GlobalData.Instance.StageInfo.CircleSkins[8];
-        CircleSkin.color = Color.black;
 
         BallSkin.sprite = GlobalData.Instance.StageInfo.BallSkins[11];
-        BallSkin.color = Color.black;
 
         SetObstaclesSkin(8, Color.black);
     }

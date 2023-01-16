@@ -13,46 +13,12 @@ public class FifthAStage1 : Stage
         SetBallSkin(GlobalData.Instance.StageInfo.BallSkins[12]);
         BallSkin.color = Color.black;
 
-        SetCircleSprite(GlobalData.Instance.StageInfo.CircleSkins[9]);
-        CircleSkin.color = Color.black;
-
         SetObstaclesSkin(9, Color.red);
     }
 
     protected override void PlayProcess()
     {
         base.PlayProcess();
-    }
-
-    void ChangeBlack()
-    {
-        ChangeBallBlack();
-        ChangeCircleBlack();
-    }
-
-    void ChangeWhite()
-    {
-        ChangeBallWhite();
-        ChangeCircleWhite();
-    }
-
-    void ChangeBallBlack()
-    {
-        BallSkin.color = Color.black;
-    }
-
-    void ChangeBallWhite()
-    {
-        BallSkin.color = Color.white;
-    }
-    void ChangeCircleBlack()
-    {
-        CircleParticle.startColor = Color.black;
-    }
-
-    void ChangeCircleWhite()
-    {
-        CircleParticle.startColor = Color.white;
     }
 
     public override void OnClickPause()

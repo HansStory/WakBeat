@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using static GlobalData;
 
 public class UIObjectStage : MonoBehaviour
 {
@@ -183,80 +182,86 @@ public class UIObjectStage : MonoBehaviour
 
     void DestroyDemoLock()
     {
+        ALBUM album = (ALBUM)GlobalState.Instance.AlbumIndex;
+        STAGE stage = (STAGE)StageIndex;
+
         var state = GlobalState.Instance;
 
-        switch (state.AlbumIndex)
+        switch (album)
         {
-            case (int)GlobalData.ALBUM.ISEDOL:
-                switch (StageIndex)
+            case ALBUM.ISEDOL:
+                switch (stage)
                 {
-                    case (int)GlobalData.STAGE.STAGE1:
+                    case STAGE.STAGE1:
                         Destroy(_demoLockImage.gameObject);
                         break;
-                    case (int)GlobalData.STAGE.STAGE2:
+                    case STAGE.STAGE2:
                         Destroy(_demoLockImage.gameObject);
                         break;
                 }
                 break;
-            case (int)GlobalData.ALBUM.CONTEST:
-                switch (StageIndex)
+            case ALBUM.CONTEST:
+                switch (stage)
                 {
-                    case (int)GlobalData.STAGE.STAGE1:
+                    case STAGE.STAGE1:
                         Destroy(_demoLockImage.gameObject);
                         break;
-                    case (int)GlobalData.STAGE.STAGE2:
+                    case STAGE.STAGE2:
                         if(state.DevMode) Destroy(_demoLockImage.gameObject);
                         break;
-                    case (int)GlobalData.STAGE.STAGE3:
+                    case STAGE.STAGE3:
                         if (state.DevMode) Destroy(_demoLockImage.gameObject);
                         break;
-                    case (int)GlobalData.STAGE.STAGE4:
+                    case STAGE.STAGE4:
                         if(state.DevMode) Destroy(_demoLockImage.gameObject);
                         break;
                 }
                 break;
-            case (int)GlobalData.ALBUM.GOMIX:
-                switch (StageIndex)
+            case ALBUM.GOMIX:
+                switch (stage)
                 {
-                    case (int)GlobalData.STAGE.STAGE1:
+                    case STAGE.STAGE1:
                         Destroy(_demoLockImage.gameObject);
                         break;
-                    case (int)GlobalData.STAGE.STAGE2:
+                    case STAGE.STAGE2:
                         if(state.DevMode) Destroy(_demoLockImage.gameObject);
                         break;
-                    case (int)GlobalData.STAGE.STAGE3:
+                    case STAGE.STAGE3:
                         if(state.DevMode) Destroy(_demoLockImage.gameObject);
                         break;
-                    case (int)GlobalData.STAGE.STAGE4:
+                    case STAGE.STAGE4:
                         if(state.DevMode) Destroy(_demoLockImage.gameObject);
                         break;
-                    case (int)GlobalData.STAGE.STAGE5:
+                    case STAGE.STAGE5:
                         if(state.DevMode) Destroy(_demoLockImage.gameObject);
                         break;
                 }
                 break;
-            case (int)GlobalData.ALBUM.WAKALOID:
-                switch (StageIndex)
+            case ALBUM.WAKALOID:
+                switch (stage)
                 {
-                    case (int)GlobalData.STAGE.STAGE1:
-                        if(state.DevMode) Destroy(_demoLockImage.gameObject);
-                        break;
-                    case (int)GlobalData.STAGE.STAGE2:
+                    case STAGE.STAGE1:
                         Destroy(_demoLockImage.gameObject);
                         break;
-                    case (int)GlobalData.STAGE.STAGE3:
+                    case STAGE.STAGE2:
+                        Destroy(_demoLockImage.gameObject);
+                        break;
+                    case STAGE.STAGE3:
                         if(state.DevMode) Destroy(_demoLockImage.gameObject);
                         break;
-                    case (int)GlobalData.STAGE.STAGE4:
+                    case STAGE.STAGE4:
                         if(state.DevMode) Destroy(_demoLockImage.gameObject);
                         break;
                 }
                 break;
-            case (int)GlobalData.ALBUM.CONTEST2:
-                switch (StageIndex)
+            case ALBUM.CONTEST2:
+                switch (stage)
                 {
-                    case (int)GlobalData.STAGE.STAGE1:
+                    case STAGE.STAGE1:
                         Destroy(_demoLockImage.gameObject);
+                        break;
+                    case STAGE.STAGE2:
+                        if (state.DevMode) Destroy(_demoLockImage.gameObject);
                         break;
                 }
                 break;

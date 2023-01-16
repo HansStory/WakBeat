@@ -44,27 +44,28 @@ public class UIElementMusicSelect : MonoBehaviour
         ResetMusicSelect();
         ChangeMusicLength();
         SetStageClearRate();
+        MoveScrollRect(0f);
     }
 
     void SetStageClearRate()
     {
-        var alubmIndex = GlobalState.Instance.AlbumIndex;
+        ALBUM alubmIndex = (ALBUM)GlobalState.Instance.AlbumIndex;
 
         switch (alubmIndex)
         {
-            case (int)GlobalData.ALBUM.ISEDOL:
+            case ALBUM.ISEDOL:
                 CheckClear(DataManager.dataAlbum1ClearYn, DataManager.dataAlbum1StageCount);
                 break;
-            case (int)GlobalData.ALBUM.CONTEST:
+            case ALBUM.CONTEST:
                 CheckClear(DataManager.dataAlbum2ClearYn, DataManager.dataAlbum2StageCount);
                 break;
-            case (int)GlobalData.ALBUM.GOMIX:
+            case ALBUM.GOMIX:
                 CheckClear(DataManager.dataAlbum3ClearYn, DataManager.dataAlbum3StageCount);
                 break;
-            case (int)GlobalData.ALBUM.WAKALOID:
+            case ALBUM.WAKALOID:
                 CheckClear(DataManager.dataAlbum4ClearYn, DataManager.dataAlbum4StageCount);
                 break;
-            case (int)GlobalData.ALBUM.CONTEST2:
+            case ALBUM.CONTEST2:
                 CheckClear(DataManager.dataAlbum5ClearYn, DataManager.dataAlbum5StageCount);
                 break;
         }
@@ -100,7 +101,7 @@ public class UIElementMusicSelect : MonoBehaviour
     {
         var soundManager = SoundManager.Instance;
 
-        GlobalState.Instance.StageIndex = 0;
+        //GlobalState.Instance.StageIndex = 0;
         soundManager.TurnOffGameBackground();
         soundManager.TurnOnSelectedMusic();
         soundManager.FadeInMusicVolume(1f);
@@ -117,6 +118,7 @@ public class UIElementMusicSelect : MonoBehaviour
     private void OnDisable()
     {
         DestroyAlbumObjects();
+        //GlobalState.Instance.StageIndex = 0;
     }
 
     void Update()
@@ -325,7 +327,7 @@ public class UIElementMusicSelect : MonoBehaviour
 
             ChangeBackGround();
 
-            MoveScrollRect();
+            MoveScrollRect(0.5f);
 
             ChangeMusicLength();
 
@@ -366,7 +368,7 @@ public class UIElementMusicSelect : MonoBehaviour
 
             ChangeBackGround();
 
-            MoveScrollRect();
+            MoveScrollRect(0.5f);
 
             ChangeMusicLength();
 
@@ -408,7 +410,7 @@ public class UIElementMusicSelect : MonoBehaviour
     }
 
     float _duration = 0.5f;
-    void MoveScrollRect()
+    void MoveScrollRect(float duration)
     {
         var state = GlobalState.Instance;
         float StageLength = state.AlbumStageCount;
@@ -418,7 +420,7 @@ public class UIElementMusicSelect : MonoBehaviour
 
         float wantScrollRect = currentStage / StageLength;
 
-        _scrollRect.DOHorizontalNormalizedPos(wantScrollRect, _duration);
+        _scrollRect.DOHorizontalNormalizedPos(wantScrollRect, duration);
     }
 
     void ChangeBackGround()

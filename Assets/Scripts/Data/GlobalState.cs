@@ -329,6 +329,34 @@ public class GlobalState : MonoBehaviourSingleton<GlobalState>
         set => _isPlayerDied = value;
     }
 
+    private Color32 _color = Color.black;
+    public Color32 ObstacleColor
+    {
+        get { return _color; }
+        set { _color = value; }
+    }
+
+    private Sprite _obstacleSprite = null;
+    public Sprite ObstacleSprite
+    {
+        get { return _obstacleSprite; }
+        set { _obstacleSprite = value; }
+    }
+
+    private Sprite _ballSprite = null;
+    public Sprite BallSprite
+    {
+        get { return _ballSprite; }
+        set { _ballSprite = value; }
+    }
+
+    private Sprite _backGroundSprite = null;
+    public Sprite BackGroundSprite
+    {
+        get { return _backGroundSprite; }
+        set { _backGroundSprite = value; }
+    }
+
     //---------------------- Game Result Variable -----------------
     private int _stageMusicLength = 1;
     public int StageMusicLength

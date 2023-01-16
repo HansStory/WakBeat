@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using DG.Tweening;
 using static GlobalData;
 
@@ -17,6 +18,10 @@ public class UIElementAlbumSelect : MonoBehaviour
     [SerializeField] 
     private GameObject uiObjectAlbumTutorial;
     private Image _imageTutorial = null;
+
+    [SerializeField] private Image _perfactClearRate;
+    [SerializeField] private Image _nomalClearRate;
+    [SerializeField] private TMP_Text _textClearRate;
 
     [SerializeField] private Image imageBackGround;
 
@@ -39,7 +44,8 @@ public class UIElementAlbumSelect : MonoBehaviour
 
     private void OnEnable()
     {
-
+        GlobalState.Instance.StageIndex = 0;
+        SetStageClearRate();
     }
 
     void Start()
@@ -54,6 +60,92 @@ public class UIElementAlbumSelect : MonoBehaviour
         CalculateAlbumBoundary();
 
         UIManager.Instance.MakeTutorial(uiObjectAlbumTutorial, this.transform, _imageTutorial, 0.4f, 2f, 2f);
+    }
+
+    void SetStageClearRate()
+    {
+        ALBUM alubmIndex = (ALBUM)GlobalState.Instance.AlbumIndex;
+        var albumInfo = GlobalData.Instance.Album;
+
+        switch (alubmIndex)
+        {
+            case ALBUM.ISEDOL:
+                DisplayClearRate(DataManager.dataAlbum1ClearYn, albumInfo.StageCount2);
+                SetClearRate(DataManager.dataAlbum1ClearYn, DataManager.dataAlbum1StageCount);
+                break;
+            case ALBUM.CONTEST:
+                DisplayClearRate(DataManager.dataAlbum2ClearYn, albumInfo.StageCount4);
+                SetClearRate(DataManager.dataAlbum2ClearYn, DataManager.dataAlbum2StageCount);
+                break;
+            case ALBUM.GOMIX:
+                DisplayClearRate(DataManager.dataAlbum3ClearYn, albumInfo.StageCount5);
+                SetClearRate(DataManager.dataAlbum3ClearYn, DataManager.dataAlbum3StageCount);
+                break;
+            case ALBUM.WAKALOID:
+                DisplayClearRate(DataManager.dataAlbum4ClearYn, albumInfo.StageCount4);
+                SetClearRate(DataManager.dataAlbum4ClearYn, DataManager.dataAlbum4StageCount);
+                break;
+            case ALBUM.CONTEST2:
+                DisplayClearRate(DataManager.dataAlbum5ClearYn, albumInfo.StageCount2);
+                SetClearRate(DataManager.dataAlbum5ClearYn, DataManager.dataAlbum5StageCount);
+                break;
+        }
+    }
+
+    void SetClearRate(string[] album, int alubmCount)
+    {
+        int albumClearCount = 0;
+
+        for (int i = 0; i < album.Length; i++)
+        {
+            if (album[i].Contains("Y") || album[i].Contains("P"))
+            {
+                albumClearCount++;
+            }
+        }
+
+        float rate = 0f;
+
+        if (albumClearCount == 0)
+        {
+            rate = 0f;
+            _textClearRate.text = $"{rate}%";
+        }
+        else
+        {
+            rate = (float)albumClearCount / (float)alubmCount;
+
+            int displayRate = (int)(rate * 100);
+            _textClearRate.text = $"{displayRate}%";
+        }
+
+    }
+
+    void DisplayClearRate(string[] album, Sprite[] clearSprite)
+    {
+        int albumClearCount = 0;
+        int perfactClear = 0;
+
+        for (int i = 0; i < album.Length; i++)
+        {
+            if (album[i].Contains("Y"))
+            {
+                albumClearCount++;
+            }
+            else if (album[i].Contains("P"))
+            {
+                perfactClear++;
+                albumClearCount++;
+            }
+        }
+
+        SetClearSprite(clearSprite, albumClearCount, perfactClear);
+    }
+
+    void SetClearSprite(Sprite[] clearSprite, int clearCount, int perfactClear)
+    {
+        _nomalClearRate.sprite = clearSprite[clearCount];
+        _perfactClearRate.sprite = clearSprite[perfactClear];
     }
 
     void MakeAlbums()
@@ -250,6 +342,8 @@ public class UIElementAlbumSelect : MonoBehaviour
         {
             GlobalState.Instance.AlbumIndex = 0;
         }
+
+        SetStageClearRate();
     }
 
     void ChangeAlbumIndexInputUp()
@@ -260,6 +354,8 @@ public class UIElementAlbumSelect : MonoBehaviour
         {
             GlobalState.Instance.AlbumIndex = GlobalData.Instance.Album.AlbumCircles.Length - 1;
         }
+
+        SetStageClearRate();
     }
 
     void CalculateAlbumBoundary()

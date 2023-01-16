@@ -53,6 +53,14 @@ public class AlbumInfo : ScriptableObject
     public Sprite[] FifthAlbumMusicLevel;
 
     [Space(10)]
+    public Sprite[] StageCount1;
+    public Sprite[] StageCount2;
+    public Sprite[] StageCount3;
+    public Sprite[] StageCount4;
+    public Sprite[] StageCount5;
+
+
+    [Space(10)]
     [Header("[ Album Infomation Image ]")]
     public Sprite[] AlbumInfomationImage;
 
