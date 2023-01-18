@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,6 +7,7 @@ using UnityEngine.Video;
 
 public abstract class Stage : MonoBehaviourSingleton<Stage>
 {
+    #region Public Member Variable
     [Header("Stage Base")]
     public Image BallSkin;
     public Image CircleSkin;
@@ -58,7 +60,9 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     public AnimCurve ClearCurve;
 
     public Text TextCurrentLine = null;        // 테스트 끝난후 배포시에 제거하겠습니다.
+    #endregion
 
+    #region Protected Member Variable
     //---------------------------------------------------
     protected float dodgeRadius = 334f;
     protected float outRadius = 355f;
@@ -110,6 +114,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     // 한목숨에 Barrier 스킬 사용 여부
     private bool _usedBarrier = false;
     private bool _isBarrier = false;
+    #endregion
 
     public virtual string Directory
     {
@@ -847,8 +852,8 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         }
     }
 
-
     //------------------------------------ Start Game ----------------------------------------
+    #region Start Game
     protected virtual void Start()
     {
         //StartGame();
@@ -856,7 +861,23 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     protected virtual void OnEnable()
     {
-        StartGame();
+        StartCoroutine(PrepareToStartGame());
+    }
+
+    IEnumerator PrepareToStartGame()
+    {
+        if (videoPlayer != null)
+        {
+            videoPlayer.Prepare();
+
+            yield return new WaitUntil(() => videoPlayer.isPrepared);
+
+            StartGame();
+        }
+        else
+        {
+            StartGame();
+        }
     }
 
     protected virtual void StartGame()
@@ -925,8 +946,9 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         StageAnim[_animationName].speed = 1f;
         StageAnim.Play(_animationName);
     }
-   
-    //------------------------------------ Play Game ----------------------------------------
+    #endregion
+
+    //------------------------------------ Play Game -----------------------------------------
     #region Play Game!!!
     protected virtual void Update()
     {
@@ -980,7 +1002,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     }
 
     // 키 입력 처리
-    #region Change Direction
+#region Change Direction
     protected bool _isInState = false;
     public virtual void InputChangeDirection()
     {
@@ -1096,9 +1118,9 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
         state.SavePointLine = _currentLine;
 
-        state.SaveMusicTime = audioSource.time;
-
         state.SavePointAngle = Center.transform.localEulerAngles.z;
+
+        state.SaveMusicTime = audioSource.time;
 
         if (StageAnim[_animationName]) state.SaveAnimationTime = StageAnim[_animationName].time;
 
@@ -1117,7 +1139,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
         _timer = state.SavePointTime;
         _currentLine = state.SavePointLine;
         audioSource.time = state.SaveMusicTime;
-       
+
         if (videoPlayer) videoPlayer.time = state.SaveVideoTime;
         if (StageAnim[_animationName]) StageAnim[_animationName].time = state.SaveAnimationTime;
 
@@ -1566,7 +1588,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
     }
 #endregion
 
-    // -------------- UI Setting Function ---------------
+    // ------------------------------- UI Setting Function -----------------------------------
     public virtual void OnClickPause()
     {
         if (_isPlay)
