@@ -57,6 +57,7 @@ public class Config : MonoBehaviourSingleton<Config>
     public string DEVKEY { get; internal set; }
     public string GAMEMODE { get; internal set; }
     public string AUTOMODE { get; internal set; }
+    public int SCENEINDEX { get; internal set; }
 
     //------------------------- Shop > Video ------------------------
     public string CREDIT { get; internal set; }
@@ -172,6 +173,7 @@ public class Config : MonoBehaviourSingleton<Config>
         DEVKEY = string.Empty;
         GAMEMODE = string.Empty;
         AUTOMODE = string.Empty;
+        SCENEINDEX = 1;
 
         //------------------------- Shop > Video ------------------------
         CREDIT = string.Empty;
@@ -258,6 +260,7 @@ public class Config : MonoBehaviourSingleton<Config>
         DEVKEY = iniFile["SYSTEM"]["DEVKEY"].ToString().Trim();
         GAMEMODE = iniFile["SYSTEM"]["GAMEMODE"].ToString().Trim();
         AUTOMODE = iniFile["SYSTEM"]["AUTOMODE"].ToString().Trim();
+        SCENEINDEX = iniFile["SYSTEM"]["SCENEINDEX"].ToInt();
 
         //------------------------- Shop > Video ------------------------
         CREDIT = iniFile["URL"]["CREDIT"].ToString().Trim();
