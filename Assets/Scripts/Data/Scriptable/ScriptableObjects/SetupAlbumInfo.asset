@@ -40,11 +40,14 @@ MonoBehaviour:
   FirstAlbumMusicBackground:
   - {fileID: 21300000, guid: ab7e8359b825e44418b8581ca46c493e, type: 3}
   - {fileID: 21300000, guid: 6b34cec4b2816a946912adfeed3588d4, type: 3}
+  - {fileID: 21300000, guid: 6b34cec4b2816a946912adfeed3588d4, type: 3}
   FirstAlbumMusicCircle:
   - {fileID: 21300000, guid: a935e03e094e44a4c9c0d447f5259744, type: 3}
   - {fileID: 21300000, guid: df571a6c1bd6a5744b21ad70cd4baa55, type: 3}
+  - {fileID: 21300000, guid: df571a6c1bd6a5744b21ad70cd4baa55, type: 3}
   FirstAlbumMusicLevel:
   - {fileID: 21300000, guid: 88af056998323c447896fca3f8078926, type: 3}
+  - {fileID: 21300000, guid: 1b7fcc766f4c96a4fb25a38e4b27fece, type: 3}
   - {fileID: 21300000, guid: 1b7fcc766f4c96a4fb25a38e4b27fece, type: 3}
   SecondAlbumMusicBackground:
   - {fileID: 21300000, guid: 72d40efdef180584d856e665bbf3af58, type: 3}
@@ -136,6 +139,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 47b8586d60467af4ca8eb24f43b35556, type: 3}
   Album1MusicBannerImage:
   - {fileID: 21300000, guid: 8d9e0787d5759c943ac0a8ccf7adbac9, type: 3}
+  - {fileID: 21300000, guid: e0a5f418b1c23604ca0a49efa8fb759a, type: 3}
   - {fileID: 21300000, guid: e0a5f418b1c23604ca0a49efa8fb759a, type: 3}
   Album2MusicBannerImage:
   - {fileID: 21300000, guid: e42d5fac9da253648b38cf6c17da2a7b, type: 3}

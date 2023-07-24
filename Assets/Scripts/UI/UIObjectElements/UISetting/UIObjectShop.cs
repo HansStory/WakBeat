@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using Mono.Cecil;
 
 public class UIObjectShop : MonoBehaviour
 {

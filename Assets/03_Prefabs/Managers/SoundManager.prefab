@@ -198,6 +198,7 @@ MonoBehaviour:
   album1HighLightClips:
   - {fileID: 8300000, guid: bb4b074e8ab8e5542bc58df84be15630, type: 3}
   - {fileID: 8300000, guid: d6c3461bb224d9246a80478f8d74c4a2, type: 3}
+  - {fileID: 8300000, guid: 7671a2e5d55a8114491e4f5519dac38b, type: 3}
   album2HighLightClips:
   - {fileID: 8300000, guid: 62b14d2fbb6b00a4f92d98af3af9a60d, type: 3}
   - {fileID: 8300000, guid: 636073182517ec442bb52c77b4727423, type: 3}
@@ -220,9 +221,10 @@ MonoBehaviour:
   album1StageClips:
   - {fileID: 8300000, guid: 9b520a9b46b941845a26ea389f6f01d7, type: 3}
   - {fileID: 8300000, guid: 36b9ead65b94b524b9185f1613a98f92, type: 3}
+  - {fileID: 8300000, guid: a5a9a10e56e1afb48a5d95af9ede642c, type: 3}
   album2StageClips:
   - {fileID: 8300000, guid: 0e6053f390505a64bbaeda4bbaf804dc, type: 3}
-  - {fileID: 8300000, guid: 9cd0b8a1ed05d8a4cb566fa3ebe2e38e, type: 3}
+  - {fileID: 8300000, guid: 04ffce859ff654b499123002e511f772, type: 3}
   - {fileID: 8300000, guid: a51d120583f3fe74abc2d4794936c5ea, type: 3}
   - {fileID: 8300000, guid: ae3238c6437ec584eb49781bbd955999, type: 3}
   album3StageClips:
@@ -230,7 +232,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a7af7ba220aa0924289982f727856aa2, type: 3}
   - {fileID: 8300000, guid: f78ae7fff6052e0498c8054efb75b092, type: 3}
   - {fileID: 8300000, guid: 3de10c37e5b4b4944bb7afa3c5b91044, type: 3}
-  - {fileID: 8300000, guid: df3db2a2d04eba74d94a1e5144270020, type: 3}
+  - {fileID: 8300000, guid: beb899783bd5f764f9f5ffe1b7f98e4d, type: 3}
   album4StageClips:
   - {fileID: 8300000, guid: c93678150f26b1341aa1367c93644766, type: 3}
   - {fileID: 8300000, guid: 584869d8b3d7ad24c90e79175e7be7e8, type: 3}

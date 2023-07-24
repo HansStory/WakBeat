@@ -47,6 +47,7 @@ MonoBehaviour:
   album1StageList:
   - {fileID: 4143023116079684940, guid: 3810dc9215d65b94cb0c4ea4c2f80c77, type: 3}
   - {fileID: 4143023116079684940, guid: dd1052d8431343d4a915f17cef772fd9, type: 3}
+  - {fileID: 4143023116079684940, guid: e1bfa6cad9a953048bdf2551ea9d8993, type: 3}
   album2StageList:
   - {fileID: 4143023116079684940, guid: f9ef4ad4bc3d09146884d6cef18bd2b8, type: 3}
   - {fileID: 4143023116079684940, guid: f100c26391d6c28418d044799939283b, type: 3}

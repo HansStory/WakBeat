@@ -62,11 +62,17 @@ public class StageCharting : Stage
         {
             TextShowMode.text = $"Show Mode \n {_isShowDodgePoint}";
         }
+
     }
 
     protected override void Start()
     {
         TextCurrentLine.gameObject.SetActive(true);
+    }
+
+    protected override void OnEnable()
+    {
+        //base.OnEnable();
     }
 
     private void CreateSpawnPoint()

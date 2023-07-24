@@ -198,6 +198,9 @@ public class UIObjectStage : MonoBehaviour
                     case STAGE.STAGE2:
                         Destroy(_demoLockImage.gameObject);
                         break;
+                    case STAGE.STAGE3:
+                        Destroy(_demoLockImage.gameObject);
+                        break;
                 }
                 break;
             case ALBUM.CONTEST:
@@ -207,7 +210,7 @@ public class UIObjectStage : MonoBehaviour
                         Destroy(_demoLockImage.gameObject);
                         break;
                     case STAGE.STAGE2:
-                        if(state.DevMode) Destroy(_demoLockImage.gameObject);
+                        Destroy(_demoLockImage.gameObject);
                         break;
                     case STAGE.STAGE3:
                         if (state.DevMode) Destroy(_demoLockImage.gameObject);
@@ -233,7 +236,7 @@ public class UIObjectStage : MonoBehaviour
                         if(state.DevMode) Destroy(_demoLockImage.gameObject);
                         break;
                     case STAGE.STAGE5:
-                        if(state.DevMode) Destroy(_demoLockImage.gameObject);
+                        Destroy(_demoLockImage.gameObject);
                         break;
                 }
                 break;
@@ -261,7 +264,7 @@ public class UIObjectStage : MonoBehaviour
                         Destroy(_demoLockImage.gameObject);
                         break;
                     case STAGE.STAGE2:
-                        if (state.DevMode) Destroy(_demoLockImage.gameObject);
+                        Destroy(_demoLockImage.gameObject);
                         break;
                 }
                 break;
