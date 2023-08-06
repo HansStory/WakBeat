@@ -1,0 +1,164 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: rock01
+  m_Shader: {fileID: -6465566751694194690, guid: 56a07e0c74110f1449ac4740ff8d869e, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _BUILTIN_SURFACE_TYPE_TRANSPARENT
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_007425c1a684486aa29e3dcb1be51e23:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2D:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2D_1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _main_uv:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _tex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _tex_1:
+        m_Texture: {fileID: 2800000, guid: 08a1a2d085232e544b140656abbef103, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - Boolean_1aeb6cf204554e81807035502ebfd879: 0
+    - Boolean_9c73d3aa38a740539be7b03b652b1b27: 0
+    - Boolean_acb2614a01fd424cb69959de9e70b1ad: 0
+    - Boolean_d88ce8082d8e41719b6526b30865e773: 0
+    - Vector1_87a9a53151c3412faa5b9fa58045e5e4: 0
+    - Vector1_897c0ba32bc84cf0b69a46ac3788e37b: 0
+    - Vector1_b6618a8d693c44eeb04b7ae98b9b32f8: 1
+    - Vector1_c6fa447e5acf426aa5837f2548830109: 3
+    - Vector1_fa41cb3bc71742e99c89d0fbed765b72: 1
+    - _AlphaClip: 0
+    - _AlphaToMask: 0
+    - _BUILTIN_AlphaClip: 0
+    - _BUILTIN_Blend: 0
+    - _BUILTIN_CullMode: 0
+    - _BUILTIN_DstBlend: 10
+    - _BUILTIN_QueueControl: 0
+    - _BUILTIN_QueueOffset: 0
+    - _BUILTIN_SrcBlend: 5
+    - _BUILTIN_Surface: 1
+    - _BUILTIN_ZTest: 4
+    - _BUILTIN_ZWrite: 0
+    - _BUILTIN_ZWriteControl: 0
+    - _Blend: 0
+    - _CastShadows: 0
+    - _Cull: 0
+    - _Dont_use_for_alpha: 0
+    - _DstBlend: 0
+    - _Panner_XorY: 0
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _SrcBlend: 1
+    - _Surface: 1
+    - _Use_Blend_tex: 0
+    - _Use_Panner_custom1z: 0
+    - _Use_burn: 0
+    - _Use_disolve_custom1w: 0
+    - _Use_panner_custom1x: 0
+    - _ZTest: 4
+    - _ZWrite: 0
+    - _ZWriteControl: 0
+    - _alpha: 1
+    - _alpha_clamp_Max: 1
+    - _burn_int: 2
+    - _burn_width: 0.01
+    - _int: 0
+    - _int_1: 1
+    - _int_2: 1
+    - _int_alpha: 1
+    - _power: 1
+    - _power_1: 1
+    - _power_2: 1
+    - _power_4: 1
+    - _reverse: 0
+    - _saturation: 0
+    - _saturation_1: 0
+    m_Colors:
+    - Vector2_534e5a4ce88c44708fc4c8b6b551562b: {r: 0, g: 0, b: 0, a: 0}
+    - Vector2_a3da88831fa840e19b6374d9d10285f2: {r: 1, g: 1, b: 0, a: 0}
+    - Vector2_e139d869944641cabe495ba93317df29: {r: 0, g: 0, b: 0, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Int: {r: 0, g: 0, b: 0, a: 0}
+    - _Panner_time: {r: 0, g: 0, b: 0, a: 0}
+    - _burn_color: {r: 1, g: 0.3818905, b: 0.03301889, a: 0}
+    - _offset: {r: 0, g: 0, b: 0, a: 0}
+    - _offset_1: {r: 0, g: 0, b: 0, a: 0}
+    - _offset_2: {r: 0, g: 0, b: 0, a: 0}
+    - _panner_time: {r: 0, g: 0, b: 0, a: 0}
+    - _tile: {r: 1, g: 1, b: 0, a: 0}
+    - _tile_1: {r: 1, g: 1, b: 0, a: 0}
+    - _tile_2: {r: 1, g: 1, b: 0, a: 0}
+    - _tile_3: {r: 1, g: 1, b: 0, a: 0}
+    - _tile_4: {r: 1, g: 1, b: 0, a: 0}
+  m_BuildTextureStacks: []
+--- !u!114 &994670841859849044
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 639247ca83abc874e893eb93af2b5e44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 0
+--- !u!114 &2641931548781807828
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
