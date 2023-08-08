@@ -43,7 +43,7 @@ Material:
     m_Floats:
     - _Bits: 16
     - _Color_Burn: 1
-    - _Distortion_int: 2
+    - _Distortion_int: 2.82
     - _Fullscreen_DepthWrite: 0
     - _Polar_Length: 1
     - _Polar_Radial: 1
@@ -56,7 +56,7 @@ Material:
     - _Use_double: 0
     m_Colors:
     - _Distortion_Panner: {r: 1, g: 0, b: 0, a: 0}
-    - _Distortion_Tiling: {r: 0, g: 1, b: 0, a: 0}
-    - _FullColor: {r: 1, g: 0, b: 0.09737444, a: 0}
+    - _Distortion_Tiling: {r: 0, g: 0.2, b: 0, a: 0}
+    - _FullColor: {r: 1, g: 0.033018887, b: 0.12782136, a: 0}
     - _second_panner: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
