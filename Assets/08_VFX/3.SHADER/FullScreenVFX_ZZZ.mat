@@ -41,11 +41,18 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Distortion_int: 0.02
+    - _Bits: 16
+    - _Color_Burn: 1
+    - _Distortion_int: 2
+    - _Fullscreen_DepthWrite: 0
     - _Polar_Length: 1
     - _Polar_Radial: 1
+    - _Time_controller: 1
     - _USe_Polar: 0
+    - _UV_interpolation_const: -0.93
     - _Use_Fullscreen_Distortion: 1
+    - _Use_Pixel: 0
+    - _Use_Polar: 0
     - _Use_double: 0
     m_Colors:
     - _Distortion_Panner: {r: 1, g: 0, b: 0, a: 0}

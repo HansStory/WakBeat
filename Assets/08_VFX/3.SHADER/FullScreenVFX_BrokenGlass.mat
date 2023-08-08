@@ -42,6 +42,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _Alpha: 0
+    - _Bits: 16
     - _Color_Burn: 1.99
     - _Distortion_int: 16.6
     - _Float: -0.42
@@ -54,11 +55,12 @@ Material:
     - _UV_interpolation_const: -0.42
     - _UV_interpolation_constance: -0.42
     - _Use_Fullscreen_Distortion: 1
-    - _Use_Polar: 0
+    - _Use_Pixel: 0
+    - _Use_Polar: 1
     - _Use_double: 0
     m_Colors:
     - _Distortion_Panner: {r: 0, g: 0, b: 0, a: 0}
     - _Distortion_Tiling: {r: 0.5, g: 0.5, b: 0, a: 0}
-    - _FullColor: {r: 0.504717, g: 0.6789833, b: 1, a: 0}
+    - _FullColor: {r: 0.5230699, g: 0.5058824, b: 1, a: 0}
     - _second_panner: {r: -0.2, g: -0.2, b: 0, a: 0}
   m_BuildTextureStacks: []
