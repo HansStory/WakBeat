@@ -138,7 +138,7 @@ public abstract class Stage : MonoBehaviourSingleton<Stage>
 
     private void Awake()
     {
-        // Test
+        // Test 22
         Init();
     }
 
