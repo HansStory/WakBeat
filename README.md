@@ -58,7 +58,7 @@
 ## 📂 설치 및 실행 방법
 ```bash
 # 저장소 클론
-git clone https://github.com/YourGitHubID/WakBeat.git
+git clone https://github.com/HansStory/WakBeat.git
 
 # 게임 다운로드 링크
 https://drive.google.com/file/d/1jd1SGcPlqnEQoBjfowXwjRADDlxfCgOb/view?usp=drive_link
